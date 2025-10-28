@@ -1,0 +1,100 @@
+/* 05. blog area css here */
+
+.blog_container{
+    & .owl-nav{
+        position: absolute;
+        display: flex;
+        top: -49px;
+        right: 9px;
+        justify-content: space-between;
+        width: 65px;
+        background: #F8F8F8;
+        padding: 0 10px 0 20px;
+        @media #{$large-mobile}{
+           display: none;
+        }
+        & div{
+            font-size: 20px;
+            transition: .3s;
+            &:hover{
+                color: $secondary_color;
+            }
+        }
+    }
+    
+    & .col-lg-3{
+        flex: 0 0 100%;
+        width: 100%;
+    }
+}
+
+.single_blog{
+    background: $white;
+    border-radius: 4px;
+    @include transition(.3s);
+    &:hover{
+        box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+}
+.blog_thumb{
+    & a{
+        & img{
+            border-radius: 4px 4px 0 0;
+        }
+    }
+}
+.blog_content {
+	padding: 20px 20px;
+    text-align: left;
+    & h4{
+        font-size: 18px;
+        line-height: 22px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        text-transform: capitalize;
+        @media #{$large-mobile}{
+           font-size: 14px;
+        }
+        & a{
+            &:hover{
+                color: $secondary_color;
+                text-decoration: underline;
+            }
+        }
+    }
+    & .post_meta{
+        & p{
+            font-size: 14px;
+            line-height: 20px;
+            & a{
+                color: $secondary_color;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    & .post_desc{
+        margin-top: 14px;
+        & p{
+            font-size: 14px;
+            line-height: 24px;
+        }
+    }
+    & .post_readmore{
+        margin-top: 18px;
+        padding-top: 18px;
+        line-height: 20px;
+        border-top: 1px solid $grey_color;
+        & a{
+            &:hover{
+                color: $secondary_color; 
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+
+
+

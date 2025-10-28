@@ -1,0 +1,204 @@
+/*06. newsletter area css here*/
+.newsletter_area{
+    background: #f8f8f8;
+    border-top: 1px solid #f1f1f1;
+    padding: 59px 0 60px;
+    @media #{$tablet-device}{
+      padding: 60px 0 60px;
+    }
+    @media #{$large-mobile}{
+       padding: 58px 0 25px;
+    }
+}
+.newsletter_container{
+    @media #{$large-mobile}{
+       margin-bottom: 35px;
+    }
+    &.col_3{
+        @media #{$tablet-device}{
+           margin-top: 25px;
+        }
+    }
+    & h3{
+        font-size: 18px;
+        line-height: 18px;
+        font-weight: 500;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        @media #{$large-mobile}{
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    }
+    & p{
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 21px;
+        max-width: 80%;
+        @media #{$large-mobile}{
+            font-size: 13px;
+            line-height: 19px;
+            margin-bottom: 14px;
+            max-width: 95%;
+        }
+    }
+}
+.subscribe_form{
+    @media #{$large-mobile}{
+        width: 100%;
+    }
+    & form{
+        width: 100%;
+        position: relative;
+        background: $white;
+        border-radius: 4px;
+        & input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+           color: #666;
+        }
+        & input::-moz-placeholder { /* Firefox 19+ */
+           color: #666;
+        }
+        & input:-ms-input-placeholder { /* IE 10+ */
+           color: #666;
+        }
+        & input:-moz-placeholder { /* Firefox 18- */
+           color: #666;
+        }
+        & input{
+            width: 100%;
+            border: 1px solid $grey_color;
+            background: none;
+            padding: 0 142px 0 15px;
+            height: 50px;
+            font-size: 13px;
+            color: #666;
+            border-radius: 4px;
+            @media #{$desktop-device}{
+               padding: 0 125px 0 15px;
+            }
+            
+            @media #{$large-mobile}{
+                height: 40px;
+                font-size: 12px;
+                padding: 0 106px 0 15px;
+            }
+        }
+        & button{
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 0 20px;
+            width: 127px;
+            background: $secondary_color;
+            color: $white;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            height: 100%;
+            border: 0;
+            display: block;
+            @include transition(.3s);
+            border-radius: 0 4px 4px 0;
+            &:hover{
+                color: $white;
+                background: $fonts_color;
+            }
+            @media #{$desktop-device}{
+                width: 110px;
+            }
+            @media #{$large-mobile}{
+                font-size: 12px;
+                padding: 0 8px;
+                width: 94px;
+            }
+        }
+    }
+}
+.mailchimp-error {
+	text-align: center;
+	color: green;
+}
+.mailchimp-success {
+	text-align: center;
+    max-width: 510px;
+	color: green;
+    &.active{
+        margin-top: 20px;
+    }
+}
+
+
+.app_img{
+    & ul{
+        & li{
+            display: inline-block;
+            margin-right: 20px;
+            @media #{$laptop-device}{
+                margin-right: 15px;
+            }
+            @media #{$desktop-device}{
+                margin-right: 10px;
+            }
+            @media #{$large-mobile}{
+                margin-bottom: 15px;
+                margin-right: 0;
+                display: block;
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+            &:last-child{
+                margin-right: 0;
+            }
+            & a{
+                & img{
+                    @media #{$laptop-device}{
+                        width: 170px;
+                    }
+                    @media #{$desktop-device}{
+                        width: 143px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+/*home three  css here*/
+.newsletter_three{
+    background: #23232b;
+    border-bottom: 1px solid #2f2f3b;
+    @media #{$tablet-device}{
+      padding: 60px 0 60px;
+    }
+    & .newsletter_container{
+        & h3{
+            color: $white;
+        }
+        & p{
+            color: #999;
+        }
+    }
+    & .subscribe_form{
+        & form{
+            & button{
+                color: $fonts_color;
+                background: $secondary_color2;
+                &:hover{
+                    background: $secondary_color;
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+

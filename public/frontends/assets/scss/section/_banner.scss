@@ -1,0 +1,196 @@
+/*  04. banner section css here  */
+.banner_area{
+    @media #{$large-mobile}{
+      margin-bottom: 30px;
+    }
+}
+.welcome_title {
+	text-align: center;
+    margin-bottom: 50px;
+    @media #{$tablet-device}{
+      margin-bottom: 30px;
+    }
+    @media #{$large-mobile}{
+      margin-bottom: 22px;
+    }
+    & h3{
+        font-size: 14px;
+        line-height: 14px;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: 500;
+        @media #{$large-mobile}{
+          font-size: 13px;
+        }
+    }
+    & h2{
+        font-size: 30px;
+        line-height: 30px;
+        margin: 3px 0 0;
+        text-transform: uppercase;
+        font-weight: 500;
+        & span{
+            color: $secondary_color
+        }
+        @media #{$large-mobile}{
+          font-size: 17px;
+            line-height: 20px
+        }
+    }
+    & p{
+        font-size: 16px;
+        line-height: 20px;
+        margin: 22px 0 0;
+        @media #{$tablet-device}{
+          margin: 18px 0 0;
+        }
+         @media #{$large-mobile}{
+            font-size: 14px;
+            margin: 16px 0 0;
+        }
+    }
+}
+.single_banner{
+    @media #{$large-mobile}{
+       margin-bottom: 30px !important;
+    }
+}
+.banner_thumb{
+    position: relative;
+    overflow: hidden;
+    &::before{
+        background: rgba(255, 255, 255, 0.3);
+        bottom: 0;
+        content: "";
+        left: 50%;
+        position: absolute;
+        right: 51%;
+        top: 0;
+        opacity: 1;
+        pointer-events: none;
+    }
+    &:after{
+        background: rgba(255, 255, 255, 0.6);
+        bottom: 50%;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        opacity: 1;
+        pointer-events: none;
+    }
+    &:hover{
+        &::before{
+            left: 0;
+            right: 0;
+            opacity: 0;
+            -webkit-transition: all 900ms linear;
+            -moz-transition: all 900ms linear;
+            -ms-transition: all 900ms linear;
+            -o-transition: all 900ms linear;
+            transition: all 900ms linear;
+        } 
+        &::after{
+            top: 0;
+            bottom: 0;
+            opacity: 0;
+            -webkit-transition: all 900ms linear;
+            -moz-transition: all 900ms linear;
+            -ms-transition: all 900ms linear;
+            -o-transition: all 900ms linear;
+            transition: all 900ms linear;
+        }
+    }
+    & a{
+        @media #{$large-mobile}{
+           width: 100%;
+        }
+        & img{
+            @media #{$large-mobile}{
+               width: 100%;
+            }
+        }
+    }
+}
+
+.banner_style2{
+    @media #{$large-mobile}{
+       margin-bottom: 0;
+    }
+    & .col-lg-3{
+        flex: 0 0 28%;
+        max-width: 28%;
+        @media #{$large-mobile}{
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
+    }
+    & .col-lg-6{
+        flex: 0 0 44%;
+        max-width: 44%;
+        @media #{$large-mobile}{
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
+    }
+}
+
+
+
+
+
+/*home three css here*/
+.banner_style3{
+    & .banner_thumb{
+        border: 1px solid $grey_color;
+    }
+}
+
+
+.sidebar_banner_area{
+    @media #{$tablet-device}{
+        display: flex;
+        margin-top: 30px;
+    }
+    @media #{$large-mobile}{
+       margin-top: 30px;
+    }
+    & .banner_thumb{
+        border: 1px solid $grey_color;
+        & a{
+            & img{
+                @media #{$tablet-device}{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    & .single_banner{
+        @media #{$tablet-device}{
+            margin-right: 30px;
+            width: 50%;
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+        
+    }
+}
+
+
+.b_fullwidth_thumb{
+    & a{
+        & img{
+           @media #{$large-mobile}{
+              height: 50px;
+            } 
+        }
+    }
+}
+
+
+
+
+
+

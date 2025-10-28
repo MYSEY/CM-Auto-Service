@@ -1,0 +1,60 @@
+/*brand css here*/
+.brand_area{
+    padding: 80px 0;
+    @media #{$large-mobile}{
+       padding: 60px 0;
+    }
+}
+.brand_container{
+    & .single_brand{
+        & img{
+            width: inherit;
+            margin: 0 auto;
+        }
+    }
+    & .firstActiveItem{
+        & .brand_list{
+            border-left: 0;
+        }
+    }
+}
+
+
+.brand_list{
+    border-left: 1px solid $grey_color;
+}
+
+
+.single_brand{
+    border-bottom: 1px solid $grey_color;
+    &:last-child{
+        border-bottom: 0;
+    }
+}
+
+
+
+
+/*home four css here*/
+.brand_four{
+    background: $white;
+    @media #{$large-mobile}{
+       margin-bottom: 59px
+    }
+}
+
+
+.brand_padding{
+    padding: 60px 0;
+}
+
+
+
+
+
+
+
+
+
+
+

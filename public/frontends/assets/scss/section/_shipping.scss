@@ -1,0 +1,127 @@
+/* 21. shipping css here */
+
+.shipping_inner {
+	overflow: hidden;
+    border-bottom: 1px solid #2f2f3b;
+    padding: 43px 0 42px;
+    @media #{$tablet-device}{
+        padding: 43px 0 32px;
+    }
+    @media #{$large-mobile}{
+        padding: 45px 0 46px;
+    }
+}
+.single_shipping{
+    display: flex;
+    align-items: center;
+    width: 20%;
+    float: left;
+    @media #{$tablet-device}{
+        width: 33.33%;
+        margin-bottom: 10px;
+    }
+    @media #{$large-mobile}{
+        width: 100%;
+        justify-content: center;
+    }
+    &:last-child{
+        border-right: 0;
+    }
+}
+
+.shipping_icone{
+    margin-right: 15px;
+    @media #{$desktop-device}{
+        margin-right: 7px;
+    }
+    @media #{$large-mobile}{
+        margin-right: 20px;
+    }
+    & img{
+        @media #{$desktop-device}{
+           width: 45px;
+        }
+    }
+}
+.shipping_content{
+    & h4{
+        font-size: 14px;
+        line-height: 18px;
+        text-transform: capitalize;
+        font-weight: 500;
+        margin-bottom: 3px;
+        color: $white;
+        @media #{$desktop-device}{
+           font-size: 13px;
+        }
+        @media #{$tablet-device}{
+            font-size: 13px;
+        }
+        @media #{$large-mobile}{
+            font-size: 13px;
+        }
+    }
+    & p{
+        font-size: 13px;
+        line-height: 22px;
+        color: #999999;
+        @media #{$desktop-device}{
+            font-size: 12px;
+            line-height: 20px;
+        }
+        
+    }
+}
+
+
+/*home three css here*/
+.shipping_three{
+    @media #{$large-mobile}{
+        margin-bottom: 58px;
+    }
+    & .shipping_content{
+        & h4{
+            color: $fonts_color;
+        }
+        & p{
+            color: $fonts_color;
+        }
+    }
+    & .shipping_inner{
+        padding: 17px 15px;
+        border: 1px solid $grey_color;
+        background: $white;
+    }
+}
+
+
+
+
+/*home four css here*/
+.shipping_four{
+    border-top: 1px solid $grey_color;
+    & .shipping_inner{
+        border-bottom: 0;
+    }
+    & .shipping_content{
+        & h4{
+            color: $fonts_color;
+        }
+        & p{
+            color: $fonts_color;
+        }
+    }
+}
+
+
+.shipping_padding{
+    & .shipping_inner{
+        padding: 47px 0 44px;
+        @media #{$large-mobile}{
+            padding: 45px 0 46px;
+        }
+    }
+}
+
+
+
