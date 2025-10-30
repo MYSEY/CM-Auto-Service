@@ -17,9 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+     protected static $logAttributes = ['name', 'text'];
+    protected $table = 'users';
     protected $fillable = [
+        'profile',
+        'user_name',
         'name',
         'email',
+        'is_active',
+        'branch_default',
+        'role_id',
+        'sex',
+        'date_of_birth',
         'password',
     ];
 

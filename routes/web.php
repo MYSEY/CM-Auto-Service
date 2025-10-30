@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\DashboardController;
 
 /*
+    php artisan make:controller Backend/UserController --resource
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -18,10 +21,8 @@ use App\Http\Controllers\Auth\LoginController;
 Route::get('/', function () {
     return view('layouts.frontend.layouts');
 });
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes();
-
-// Route::post('/login', [LoginController::class, 'login']);
+Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
+    Route::get('dashboard', [DashboardController::class,'index']);
+    Route::resource('users', UserController::class);
+});

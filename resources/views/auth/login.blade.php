@@ -116,18 +116,22 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
-                        <label class="form-label" for="username">Username</label>
-                        <input type="email" id="username" class="form-control" placeholder="your id or email" value="drlantern@gotbootstrap.com">
-                        <span class="help-block">
-                            Your unique username to app
-                        </span>
+                        <label class="form-label" for="user_name">Username</label>
+                        <input type="text" id="user_name" name="user_name" class="form-control @error('user_name') is-invalid @enderror" placeholder="" value="">
+                        @error('user_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="password">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="password" value="password123">
-                        <span class="help-block">
-                            Your password
-                        </span>
+                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="password" value="">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <div class="form-group text-left">
                         <div class="custom-control custom-checkbox">
