@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('frontend.layouts');
+    return view('layouts.frontend.layouts');
 });
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Auth::routes();
+
+Route::post('/login', [App\Http\Controllers\LoginController::class, 'login']);
