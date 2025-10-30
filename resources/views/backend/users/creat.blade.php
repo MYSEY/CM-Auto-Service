@@ -4,7 +4,7 @@
     <div class="col-xl-12">
         <div id="panel-2" class="panel">
             <div class="panel-container collapse show">
-                <div class="panel-hdr bg-success-600">
+                <div class="panel-hdr">
                     <h2>
                         @lang('lang.users')
                     </h2>
@@ -18,7 +18,7 @@
                             <div class="col-md-3">
                                 <label class="form-label">@lang('lang.user_id') <span class="text-danger">*</span></label>
                                 <div class="custom-file">
-                                    <input id="cs_id" type="text" class="form-control @error('cs_id') is-invalid @enderror" name="cs_id" value="{{ $UserID }}" required>
+                                    <input id="cs_id" type="text" class="form-control @error('cs_id') is-invalid @enderror" name="cs_id" value="" required>
                                 </div>
                             </div>
                             <div class="col-md-3">
