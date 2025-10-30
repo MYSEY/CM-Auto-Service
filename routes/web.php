@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +24,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::post('/login', [App\Http\Controllers\LoginController::class, 'login']);
+// Route::post('/login', [LoginController::class, 'login']);

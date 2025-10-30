@@ -113,7 +113,8 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 </a>
             </div>
             <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-                <form action="{{route('login')}}">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="form-group">
                         <label class="form-label" for="username">Username</label>
                         <input type="email" id="username" class="form-control" placeholder="your id or email" value="drlantern@gotbootstrap.com">
