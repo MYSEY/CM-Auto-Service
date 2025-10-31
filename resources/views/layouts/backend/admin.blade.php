@@ -111,7 +111,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="info-card">
+                        {{--  <div class="info-card">
                             <img src="{{asset('backends/img/demo/avatars/avatar-admin.png')}}" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
                             <div class="info-card-text">
                                 <a href="#" class="d-flex align-items-center text-white">
@@ -125,7 +125,7 @@
                             <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
                                 <i class="fal fa-angle-down"></i>
                             </a>
-                        </div>
+                        </div>  --}}
                         <ul id="js-nav-menu" class="nav-menu">
                             <li class="@if (in_array(Request::instance()->segment(2), ['dashboard'])) active @endif">
                                 <a href="{{url('admins/dashboard')}}" title="Dashboard" data-filter-tags="Dashboard">
@@ -267,11 +267,11 @@
                                     <div class="dropdown-header bg-trans-gradient d-flex flex-row py-4 rounded-top">
                                         <div class="d-flex flex-row align-items-center mt-1 mb-1 color-white">
                                             <span class="mr-2">
-                                                <img src="{{asset('backends/img/demo/avatars/avatar-admin.png')}}" class="rounded-circle profile-image" alt="{{Auth::user()->name}}">
+                                                <img src="{{ asset('users/profiles/' . Auth::user()->profile) }}" class="rounded-circle profile-image" alt="{{Auth::user()->name}}">
                                             </span>
                                             <div class="info-card-text">
-                                                <div class="fs-lg text-truncate text-truncate-lg">Dr. Codex Lantern</div>
-                                                <span class="text-truncate text-truncate-md opacity-80">drlantern@gotbootstrap.com</span>
+                                                <div class="fs-lg text-truncate text-truncate-lg">{{ Auth::user()->name }}</div>
+                                                <span class="text-truncate text-truncate-md opacity-80">{{ Auth::user()->email }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1009,5 +1009,5 @@
             });
         </script>
     </body>
-    
+
 </html>
