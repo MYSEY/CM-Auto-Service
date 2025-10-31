@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('password');
             $table->string('sex')->nullable();
-            $table->date('date_of_birth')->nullable();
             $table->integer('is_active')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();

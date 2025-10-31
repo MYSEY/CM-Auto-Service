@@ -18,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.users.index');
+        $data = User::all();
+        return view('backend.users.index',compact('data'));
     }
 
     /**
@@ -34,28 +35,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try{
-            if ($request->hasFile('profile')) {
-                // Handle uploaded file
+            if($request->hasFile('profile')) {
                 $image = $request->file('profile');
-                $ext = $image->getClientOriginalExtension();
-                $imageName = time() . rand(1, 100) . "." . $ext;
-                $fileContents = file_get_contents($image->getRealPath());
-                $s3FullPath = 'public/users/profiles/' . $imageName;
-            } else{
-                $full_path ='';
+                $filename = time().'.'.$image->getClientOriginalName();
+                $image->move(public_path('users/profiles'), $filename);
+            }else{
+                $filename = '';
             }
 
             User::create([
                 'role_id'  => $request->role_id,
-                'branch_default'  => $request->branch_default,
-                'profile'  => $full_path,
+                'profile'  => $filename,
                 'name'  => $request->name,
+                'user_name'  => $request->user_name,
                 'email'  => $request->email,
                 'password'  => Hash::make($request->password),
                 'sex'  => $request->sex,
-                'date_of_birth'  => Carbon::createFromDate($request->date_of_birth)->format('Y-m-d'),
                 'created_by'  => Auth::user()->id,
             ]);
             // if ($user) {
@@ -92,7 +89,14 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try{
+            $data = User::find($id);
+            return view('backend.users.edit',compact('data'));
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Create Users fail','Error');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -100,14 +104,65 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try{
+            if($request->hasFile('profile')) {
+                $image = $request->file('profile');
+                $filename = time().'.'.$image->getClientOriginalName();
+                $image->move(public_path('users/profiles'), $filename);
+            }else{
+                $filename = $request->old_profile;
+            }
+
+            $data = $request->all();
+            $data['profile']    = $filename;
+            $data['user_name']   = $request->user_name;
+            $data['name']    = $request->name;
+            $data['role_id']    = $request->role_id;
+            $data['email']  = $request->email;
+            $data['password']   = $request->password == null ? $request->old_password : Hash::make($request->password);
+            $data['updated_by'] = Auth::user()->id;
+            $user = User::find($request->id);
+            $user->update($data);
+            // if ($user) {
+            //     $user->update($data);
+            //     // Find the role by ID and get its name
+            //     $role = Role::find($request->role_id);
+            //     if ($role) {
+            //         $user->syncRoles($role->name); // Use the role name
+            //     } else {
+            //         Toastr::error('Updated Users fail','Error');
+            //     }
+            // }
+            // if ($user) {
+            //     UserBranch::where('user_id', $request->id)->delete();
+            //     foreach ($request->branches as $value) {
+            //         UserBranch::create([
+            //             'user_id'  => $request->id,
+            //             'branch_id'  => $value,
+            //             'updated_by'  => Auth::user()->id,
+            //         ]);
+            //     }
+            // }
+            DB::commit();
+            Toastr::success('Updated Users successfully.','Success');
+            return redirect('admins/users');
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Updated Users fail','Error');
+            return redirect()->back();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        try{
+            $user->delete();
+            return response()->json(['mg'=>'success'], 200);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 }
