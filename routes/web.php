@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Backend\ProductStatusController;
 use App\Http\Controllers\Backend\ProductCategoryController;
+use App\Http\Controllers\Backend\ProductSubcategoryController;
 
 /*
     php artisan make:controller Backend/UserController --resource
@@ -30,7 +31,8 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);
     Route::resource('users', UserController::class);
     Route::resource('product', ProductController::class);
-    Route::resource('product/category', ProductCategoryController::class);
+    Route::resource('category', ProductCategoryController::class);
+    Route::resource('sub-category', ProductSubcategoryController::class);
     Route::resource('product/status', ProductStatusController::class);
     Route::resource('company', CompanyController::class);
 });

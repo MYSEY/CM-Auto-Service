@@ -151,8 +151,15 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admins/product/category') }}" title="Alerts" data-filter-tags="Product Category alerts">
-                                            <span class="nav-link-text" data-i18n="nav.Product Category">Product Category</span>
+                                          <li class="@if (in_array(Request::instance()->segment(2), ['category'])) active @endif">
+                                        <a href="{{ url('admins/category') }}" title="Alerts" data-filter-tags="Product Category alerts">
+                                            <span class="nav-link-text" data-i18n="nav.Product Category">Category</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                          <li class="@if (in_array(Request::instance()->segment(2), ['sub-category'])) active @endif">
+                                        <a href="{{ url('admins/sub-category') }}" title="Alerts" data-filter-tags="Sub Category alerts">
+                                            <span class="nav-link-text" data-i18n="nav.Product Category">Sub Category</span>
                                         </a>
                                     </li>
                                     <li>
