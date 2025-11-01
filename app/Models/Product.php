@@ -16,6 +16,7 @@ class Product extends Model
     protected $fillable =[
         'status_id',
         'category_id',
+        'sub_category_id',
         'view_counter',
         'name',
         'description',
@@ -27,4 +28,11 @@ class Product extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function getPriceFormatAttribute(){
+        return "$"." ".number_format($this->price,2);
+    }
+    public function getDiscountPriceFormatAttribute(){
+        return "$"." ".number_format($this->discount_price,2);
+    }
 }

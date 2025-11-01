@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * php artisan migrate:refresh --path=database/migrations/2025_11_01_041122_create_products_table.php
      */
     public function up(): void
     {
@@ -15,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->integer('status_id')->unsigned();
             $table->integer('category_id')->unsigned();
+            $table->integer('sub_category_id')->unsigned();
             $table->string('name');
             $table->text('description');
             $table->string('product_photo');

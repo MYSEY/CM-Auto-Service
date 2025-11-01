@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ProductRequesStore;
 
 class ProductController extends Controller
 {
@@ -22,15 +26,41 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.products.creat');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequesStore $request)
     {
-        //
+        dd($request->all());
+        if($request->hasFile('product_photo')) {
+            $image = $request->file('product_photo');
+            $filename = $image->getClientOriginalName();
+            $image->move(public_path('images/products'), $filename);
+        }
+        try {
+            Product::create([
+                'status_id'     => $request->status_id,
+                'category_id'   => $request->category_id,
+                'sub_category_id'   => $request->sub_category_id,
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'product_photo' => $filename,
+                'content'       => $request->content,
+                'price'         => $request->price,
+                'discount_price'=> $request->discount_price,
+                'created_by'    => Auth::user()->id,
+            ]);
+            DB::commit();
+            Toastr::success('Products Created Successfully!','Success');
+            return redirect('admins/product');
+        } catch (\Exception $exp) {
+            DB::rollback();
+            Toastr::error('Products Created fail','Error');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -60,8 +90,13 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        try{
+            $product->delete();
+            return response()->json(['mg'=>'success'], 200);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 }

@@ -22,7 +22,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{{asset('backends/img/favicon/favicon-32x32.png')}}">
         <link rel="mask-icon" href="{{asset('backends/img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
         <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
-
+        <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/formplugins/summernote/summernote.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
@@ -1013,12 +1013,102 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
         <script src="{{asset('backends/js/vendors.bundle.js')}}"></script>
         <script src="{{asset('backends/js/app.bundle.js')}}"></script>
+        <script src="{{ asset('backends/js/formplugins/summernote/summernote.js') }}"></script>
         {{-- toastr --}}
         <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
         {!! Toastr::message() !!}
         @yield('script')
 
         <script>
+            var autoSave = $('#autoSave');
+            var interval;
+            var timer = function()
+            {
+                interval = setInterval(function()
+                {
+                    //start slide...
+                    if (autoSave.prop('checked'))
+                        saveToLocal();
+
+                    clearInterval(interval);
+                }, 3000);
+            };
+
+            //save
+            var saveToLocal = function()
+            {
+                localStorage.setItem('summernoteData', $('#saveToLocal').summernote("code"));
+                console.log("saved");
+            }
+
+            //delete
+            var removeFromLocal = function()
+            {
+                localStorage.removeItem("summernoteData");
+                $('#saveToLocal').summernote('reset');
+            }
+            $(document).ready(function()
+            {
+                //init default
+                $('.js-summernote').summernote(
+                {
+                    height: 200,
+                    tabsize: 2,
+                    placeholder: "Type here...",
+                    dialogsFade: true,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontsize', ['fontsize']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['height', ['height']]
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ],
+                    callbacks:
+                    {
+                        //restore from localStorage
+                        onInit: function(e)
+                        {
+                            $('.js-summernote').summernote("code", localStorage.getItem("summernoteData"));
+                        },
+                        onChange: function(contents, $editable)
+                        {
+                            clearInterval(interval);
+                            timer();
+                        }
+                    }
+                });
+
+                //init mentions example
+                $(".js-hint2mention").summernote(
+                {
+                    height: 100,
+                    toolbar: false,
+                    placeholder: "type starting with @",
+                    hint:
+                    {
+                        mentions: ['jayden', 'sam', 'alvin', 'david'],
+                        match: /\B@(\w*)$/,
+                        search: function(keyword, callback)
+                        {
+                            callback($.grep(this.mentions, function(item)
+                            {
+                                return item.indexOf(keyword) == 0;
+                            }));
+                        },
+                        content: function(item)
+                        {
+                            return '@' + item;
+                        }
+                    }
+                });
+
+            });
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1026,5 +1116,4 @@
             });
         </script>
     </body>
-
 </html>

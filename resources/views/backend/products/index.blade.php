@@ -8,7 +8,7 @@
                     Products
                 </h2>
                 <div class="panel-toolbar">
-                    <a href="{{url('admins/users/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> @lang('lang.add_new')</a>
+                    <a href="{{url('admins/product/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> @lang('lang.add_new')</a>
                 </div>
             </div>
             <div class="panel-container show">
@@ -26,6 +26,7 @@
                                                 <th>@lang('lang.name')</th>
                                                 <th>@lang('lang.description')</th>
                                                 <th>@lang('lang.category')</th>
+                                                <th>@lang('lang.sub_category')</th>
                                                 <th>@lang('lang.status')</th>
                                                 <th>@lang('lang.price')</th>
                                                 <th>@lang('lang.discount_price')</th>
@@ -39,20 +40,23 @@
                                                 <tr>
                                                     <td>{{$key + 1}}</td>
                                                     <td>
-                                                    {{$item->product_photo}}
+                                                        @if ($item->product_photo)
+                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" style="object-fit: cover;width: 100px;height: 50px;" alt="product">
+                                                        @endif
                                                     </td>
                                                     <td>{{$item->name}}</td>
                                                     <td>{{$item->description}}</td>
-                                                    <td>{{$item->category}}</td>
+                                                    <td>{{$item->category_id}}</td>
+                                                    <td>{{$item->sub_category_id}}</td>
                                                     <td>{{$item->status}}</td>
-                                                    <td>{{$item->price}}</td>
-                                                    <td>{{$item->discount_price}}</td>
+                                                    <td>{{$item->PriceFormat}}</td>
+                                                    <td>{{$item->DiscountPriceFormat}}</td>
                                                     <td>{{$item->delivery_note}}</td>
                                                     <td>{{$item->content}}</td>
                                                     <td>
                                                         <div class="d-flex demo">
                                                             <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                            <a href="{{url('admins/users',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
+                                                            <a href="{{url('admins/product',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -69,7 +73,7 @@
         </div>
     </div>
 </div>
-
+<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 @endsection
 @section('script')
 <script>
@@ -106,7 +110,7 @@
             {
                 $.ajax({
                     type: "DELETE",
-                    url: `{{url('/admins/users/${id}')}}`,
+                    url: `{{url('/admins/product/${id}')}}`,
                     success: function (data) {
                         if (data.mg == "success") {
                             toastr.error("Your file has been deleted.", "Deleted!");
