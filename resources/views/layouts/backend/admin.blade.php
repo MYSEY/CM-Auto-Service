@@ -139,11 +139,28 @@
                                     <span class="nav-link-text">@lang('lang.users')</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
                                     <i class="fal fa-cog"></i>
                                     <span class="nav-link-text" data-i18n="nav.product">Product</span>
                                 </a>
+                                <ul>
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['product'])) active @endif">
+                                        <a href="{{ url('admins/product') }}" title="Alerts" data-filter-tags="products alerts">
+                                            <span class="nav-link-text" data-i18n="nav.products">Products</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('admins/product/category') }}" title="Alerts" data-filter-tags="Product Category alerts">
+                                            <span class="nav-link-text" data-i18n="nav.Product Category">Product Category</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url('admins/product/status') }}" title="Alerts" data-filter-tags="Product alerts">
+                                            <span class="nav-link-text" data-i18n="nav.Product">Product Status</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
