@@ -26,6 +26,48 @@
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
+
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/vendors.bundle.css')}}">
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/app.bundle.css')}}">
+            <!-- Place favicon.ico in the root directory -->
+            <link rel="apple-touch-icon" sizes="180x180" href="{{asset('admins/img/favicon/apple-touch-icon.png')}}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{{asset('admins/img/favicon/favicon-32x32.png')}}">
+            <link rel="mask-icon" href="{{asset('admins/img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/datagrid/datatables/datatables.bundle.css')}}">
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/theme-demo.css')}}">
+            <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/formplugins/select2/select2.bundle.css')}}">
+            <!-- DataTables CSS -->
+            <link rel="stylesheet" href="//cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+            <link rel="stylesheet" href="//cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+            <script src="https://cdn.datatables.net/fixedcolumns/5.0.4/js/dataTables.fixedColumns.min.js"></script>
+
+            {{--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">  --}}
+            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+
+
+            {{-- toastr --}}
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/notifications/toastr/toastr.css')}}">
+            <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+            {{--  <link href="{{ mix('css/tailwind.css') }}" rel="stylesheet">  --}}
+            {{--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">  --}}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+            {{-- datepicker --}}
+            <link rel="stylesheet" media="screen, print" href="{{asset('admins/css/formplugins/bootstrap-datepicker/bootstrap-datepicker.css')}}">
+            <link rel="stylesheet" href="{{ asset('admins/css/kswm-table.css') }}">
+            <link rel="stylesheet" href="{{ asset('admins/css/invoice.css') }}">
+            <link rel="stylesheet" href="{{ asset('admins/css/databale-cus.css') }}">
+            {{-- dropzone --}}
+            <link rel="stylesheet" href="{{ asset('admins/css/formplugins/dropzone/dropzone.css') }}">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     </head>
     @yield('style')
     <body class="mod-bg-1 ">

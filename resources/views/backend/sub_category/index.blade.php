@@ -122,7 +122,7 @@
                     success: function (data) {
                         if (data.mg === "success") {
                             toastr.success('@lang("lang.delete_success")', '@lang("lang.success")');
-                            window.location.href = 'category';
+                            window.location.href = 'sub-category';
                         } else {
                             toastr.error('@lang("lang.delete_error")', '@lang("lang.error")');
                         }

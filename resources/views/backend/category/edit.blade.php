@@ -117,14 +117,32 @@
 
 @section('script')
     <script>
-        // Option 1: Live Slug Generation (optional, but helpful)
+
+        // Option 1: Live Slug Generation
+        // 🚨 កែប្រែ: លុបការត្រួតពិនិត្យ (if) ដើម្បីឲ្យវាបំពេញទៅក្នុង slug field គ្រប់ពេល
         document.getElementById('name').addEventListener('input', function() {
-            // Note: For editing, the slug should only be auto-generated if the slug field is EMPTY.
-            if (document.getElementById('slug').value === '') {
-                const nameValue = this.value;
-                const slugValue = nameValue.toLowerCase().replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
-                document.getElementById('slug').value = slugValue;
+            // បំពេញទៅក្នុង slug field គ្រប់ពេល
+            const nameValue = this.value;
+            // 1. Lowercase
+            // 2. Replace all non-URL-safe characters (except space/hyphen) with nothing
+            // 3. Replace spaces with hyphens
+            // 4. Collapse multiple hyphens into one
+            const slugValue = nameValue.toLowerCase().replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+            document.getElementById('slug').value = slugValue;
+        });
+
+        // 🆕 Slug Keypress Restriction (រក្សាទុកដើម្បីការពារការវាយបញ្ចូលដោយដៃ)
+        document.getElementById('slug').addEventListener('keypress', function(event) {
+            const char = String.fromCharCode(event.which);
+            // Regex pattern: allows a-z, 0-9, hyphen (-), and space ( )
+            const pattern = /[a-z0-9- ]/;
+
+            // If the character doesn't match the pattern, prevent the keypress
+            if (!pattern.test(char)) {
+                event.preventDefault();
+                return false;
             }
         });
     </script>
 @endsection
+
