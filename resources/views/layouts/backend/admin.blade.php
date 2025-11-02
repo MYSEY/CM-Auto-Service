@@ -181,7 +181,7 @@
                                     <span class="nav-link-text">@lang('lang.users')</span>
                                 </a>
                             </li>
-                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category'])) active @endif">
+                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-status'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
                                     <i class="fal fa-cog"></i>
                                     <span class="nav-link-text" data-i18n="nav.product">Product</span>
@@ -192,20 +192,18 @@
                                             <span class="nav-link-text" data-i18n="nav.products">Products</span>
                                         </a>
                                     </li>
-                                    <li>
-                                          <li class="@if (in_array(Request::instance()->segment(2), ['category'])) active @endif">
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['category'])) active @endif">
                                         <a href="{{ url('admins/category') }}" title="Alerts" data-filter-tags="Product Category alerts">
                                             <span class="nav-link-text" data-i18n="nav.Product Category">Category</span>
                                         </a>
                                     </li>
-                                    <li>
-                                          <li class="@if (in_array(Request::instance()->segment(2), ['sub-category'])) active @endif">
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['sub-category'])) active @endif">
                                         <a href="{{ url('admins/sub-category') }}" title="Alerts" data-filter-tags="Sub Category alerts">
                                             <span class="nav-link-text" data-i18n="nav.Product Category">Sub Category</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ url('admins/product/status') }}" title="Alerts" data-filter-tags="Product alerts">
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['product-status'])) active @endif">
+                                        <a href="{{ url('admins/product-status') }}" title="Alerts" data-filter-tags="Product alerts">
                                             <span class="nav-link-text" data-i18n="nav.Product">Product Status</span>
                                         </a>
                                     </li>

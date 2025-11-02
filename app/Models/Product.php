@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ProductImage;
 use App\Models\ProductStatus;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
@@ -39,6 +40,9 @@ class Product extends Model
     }
     public function subCategory(){
         return $this->belongsTo(ProductSubCategory::class,'sub_category_id');
+    }
+    public function productImage(){
+        return $this->hasMany(ProductImage::class,'product_id','id');
     }
     public function proStatus(){
         return $this->belongsTo(ProductStatus::class,'status_id');

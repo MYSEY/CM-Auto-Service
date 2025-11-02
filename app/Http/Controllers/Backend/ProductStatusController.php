@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\ProductStatus;
 use Illuminate\Http\Request;
+use App\Models\ProductStatus;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ProductStatusRequest;
 
 class ProductStatusController extends Controller
 {
@@ -22,15 +26,27 @@ class ProductStatusController extends Controller
      */
     public function create()
     {
-        //
+       return view('backend.product_status.creat');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductStatusRequest $request)
     {
-        //
+        try {
+            $data = $request->all();
+            $data['created_by'] = Auth::id();
+            // Create product
+            ProductStatus::create($data);
+            DB::commit();
+            Toastr::success('Product status created successfully!', 'Success');
+            return redirect('admins/product-status');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Product status creation failed: ' . $e->getMessage(), 'Error');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -46,22 +62,48 @@ class ProductStatusController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try{
+            $data = ProductStatus::find($id);
+            return view('backend.product_status.edit',compact('data'));
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Create Users fail','Error');
+            return redirect()->back();
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, ProductStatus $productStatus)
     {
-        //
+       try {
+            // Update product details
+            $productStatus->update([
+                'name'             => $request->name,
+                'description'      => $request->description,
+                'updated_by'       => Auth::id(),
+            ]);
+            DB::commit();
+            Toastr::success('Product status update successfully!', 'Success');
+            return redirect('admins/product-status');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Toastr::error('Product status update failed: ' . $e->getMessage(), 'Error');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ProductStatus $productStatus)
     {
-        //
+        try{
+            $productStatus->delete();
+            return response()->json(['mg'=>'success'], 200);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 }

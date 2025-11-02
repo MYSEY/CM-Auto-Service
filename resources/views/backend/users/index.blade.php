@@ -123,7 +123,7 @@
                     url: `{{url('/admins/users/${id}')}}`,
                     success: function (data) {
                         if (data.mg == "success") {
-                            toastr.error("Your file has been deleted.", "Deleted!");
+                            toastr.success("Your file has been deleted.", "Deleted!");
                             // ✅ Delay reload by 2 seconds
                             setTimeout(() => {
                                 window.location.reload();

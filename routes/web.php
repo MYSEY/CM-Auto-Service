@@ -35,6 +35,6 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::post('product/change/publish/{id}', [ProductController::class,'changePublish']);
     Route::resource('category', ProductCategoryController::class);
     Route::resource('sub-category', ProductSubcategoryController::class);
-    Route::resource('product/status', ProductStatusController::class);
+    Route::resource('product-status', ProductStatusController::class);
     Route::resource('company', CompanyController::class);
 });
