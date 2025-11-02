@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\ProductController;
@@ -23,10 +25,19 @@ use App\Http\Controllers\Backend\ProductSubcategoryController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cleared!";
+});
 
 Route::get('/', [HomePageController::class,'index']);
+Route::get('/logins', [HomePageController::class,'logins']);
+Route::post('/login', [LoginController::class,'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Auth::routes();
 Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);
     Route::resource('users', UserController::class);

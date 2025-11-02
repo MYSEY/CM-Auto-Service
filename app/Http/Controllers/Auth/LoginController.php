@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -38,11 +39,6 @@ class LoginController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('guest')->except('logout');
-    //     $this->middleware('auth')->only('logout');
-    // }
 
     public function login(Request $request){
         try {
@@ -82,7 +78,7 @@ class LoginController extends Controller
     }
     public function logout(Request $request) {
         Auth::logout();
-        Toastr::success('Logout successfully', 'Success');
-        return redirect('login');
+        $company = Company::first();
+        return view('frontends.login',compact('company'));
     }
 }
