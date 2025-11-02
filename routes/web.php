@@ -31,6 +31,8 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);
     Route::resource('users', UserController::class);
     Route::resource('product', ProductController::class);
+    Route::get('product/category/onchange', [ProductController::class,'onchangeCagegory']);
+    Route::post('product/change/publish/{id}', [ProductController::class,'changePublish']);
     Route::resource('category', ProductCategoryController::class);
     Route::resource('sub-category', ProductSubcategoryController::class);
     Route::resource('product/status', ProductStatusController::class);

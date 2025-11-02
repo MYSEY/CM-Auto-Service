@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\ProductStatus;
+use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,10 +28,21 @@ class Product extends Model
         'discount_price',
         'delivery_note',
         'content',
+        'slug',
+        'publish',
+        'status',
         'created_by',
         'updated_by'
     ];
-
+    public function category(){
+        return $this->belongsTo(ProductCategory::class,'category_id');
+    }
+    public function subCategory(){
+        return $this->belongsTo(ProductSubCategory::class,'sub_category_id');
+    }
+    public function proStatus(){
+        return $this->belongsTo(ProductStatus::class,'status_id');
+    }
     public function getPriceFormatAttribute(){
         return "$"." ".number_format($this->price,2);
     }

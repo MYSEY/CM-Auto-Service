@@ -25,6 +25,10 @@ return new class extends Migration
             $table->string('delivery_note')->nullable();
             $table->float('discount_price')->default(0);
             $table->text('content');
+            $table->text('slug');
+            $table->boolean('publish')->default(1);
+            $table->boolean('status')->default(0);
+            $table->tinyInteger('feature')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->dateTime('deleted_at')->nullable();

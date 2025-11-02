@@ -27,7 +27,7 @@ class ProductSubCategory extends Model
         'name',
         'serial_number',
         'description',
-         'is_active',
+        'is_active',
         'created_by',
         'updated_by',
     ];

@@ -63,8 +63,6 @@
                         </div>
                         <div class="header_top_links">
                             <ul>
-                                {{--  <li><a href="login.html">Register</a></li>  --}}
-                                {{-- <li><a href="login.html">login</a></li> --}}
                                 <li><a href="cart.html">Shopping Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
                             </ul>
@@ -79,16 +77,6 @@
                                         <option value="4">original file</option>
                                         <option value="5">file service</option>
                                         <option value="6">online programming</option>
-                                        {{--  <option value="7">Tablets</option>
-                                        <option value="8">Laptops</option>
-                                        <option value="9">Handbags</option>
-                                        <option value="10">Headphone & Speaker</option>
-                                        <option value="11">Herbs & botanicals</option>
-                                        <option value="12">Vegetables</option>
-                                        <option value="13">Shop</option>
-                                        <option value="14">Laptops & Desktops</option>
-                                        <option value="15">Watchs</option>
-                                        <option value="16">Electronic</option>  --}}
                                     </select>
                                </div>
                                 <div class="search_box">
@@ -111,50 +99,8 @@
                                 <li class="menu-item-has-children">
                                     <a href="#">Shop</a>
                                     <ul class="sub-menu">
-                                        {{--  <li class="menu-item-has-children">
-                                            <a href="#">Shop Layouts</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="shop.html">shop</a></li>
-                                                <li><a href="shop-fullwidth.html">Full Width</a></li>
-                                                <li><a href="shop-fullwidth-list.html">Full Width list</a></li>
-                                                <li><a href="shop-right-sidebar.html">Right Sidebar </a></li>
-                                                <li><a href="shop-right-sidebar-list.html"> Right Sidebar list</a></li>
-                                                <li><a href="shop-list.html">List View</a></li>
-                                            </ul>
-                                        </li>  --}}
-                                        {{--  <li class="menu-item-has-children">
-                                            <a href="#">other Pages</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="cart.html">cart</a></li>
-                                                <li><a href="wishlist.html">Wishlist</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="my-account.html">my account</a></li>
-                                                <li><a href="404.html">Error 404</a></li>
-                                            </ul>
-                                        </li>  --}}
-                                        {{--  <li class="menu-item-has-children">
-                                            <a href="#">Product Types</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="product-details.html">product details</a></li>
-                                                <li><a href="product-sidebar.html">product sidebar</a></li>
-                                                <li><a href="product-grouped.html">product grouped</a></li>
-                                                <li><a href="variable-product.html">product variable</a></li>
-                                                <li><a href="product-countdown.html">product countdown</a></li>
-                                            </ul>
-                                        </li>  --}}
                                     </ul>
                                 </li>
-                                {{--  <li class="menu-item-has-children">
-                                    <a href="#">blog</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="blog.html">blog</a></li>
-                                        <li><a href="blog-details.html">blog details</a></li>
-                                        <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
-                                        <li><a href="blog-sidebar.html">blog sidebar</a></li>
-                                        <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
-                                    </ul>
-
-                                </li>  --}}
                                 <li class="menu-item-has-children">
                                     <a href="#">pages </a>
                                     <ul class="sub-menu">
@@ -212,13 +158,6 @@
                                             <li><a href="#">Japanese</a></li>
                                         </ul>
                                     </li>
-                                    {{--  <li class="currency"><a href="#">USD <i class="ion-chevron-down"></i></a>
-                                        <ul class="dropdown_currency">
-                                            <li><a href="#">EUR – Euro</a></li>
-                                            <li><a href="#">GBP – British Pound</a></li>
-                                            <li><a href="#">INR – India Rupee</a></li>
-                                        </ul>
-                                    </li>  --}}
                                 </ul>
                             </div>
                         </div>
@@ -244,7 +183,6 @@
                         <div class="col-lg-2 col-md-4 col-sm-4 col-4">
                             <div class="logo">
                                 <a href="index.html"><img src="{{$company->company_logo}}" alt=""></a>
-                                {{--  <a href="index.html"><img src="{{asset('frontends/assets/img/logo/logo.png')}}" alt=""></a>  --}}
                             </div>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
@@ -253,22 +191,12 @@
                                     <form action="#">
                                        <div class="hover_category">
                                             <select class="select_option" name="select" id="categori2">
-                                                 <option selected value="1">All Categories</option>
-                                                    {{--  <option value="2">file service</option>  --}}
-                                                    <option value="3">ECU sell</option>
-                                                    <option value="4">original file</option>
-                                                    <option value="5">file service</option>
-                                                    <option value="6">online programming</option>
-                                                    {{--  <option value="7">Tablets</option>
-                                                    <option value="8">Laptops</option>
-                                                    <option value="9">Handbags</option>
-                                                    <option value="10">Headphone & Speaker</option>
-                                                    <option value="11">Herbs & botanicals</option>
-                                                    <option value="12">Vegetables</option>
-                                                    <option value="13">Shop</option>
-                                                    <option value="14">Laptops & Desktops</option>
-                                                    <option value="15">Watchs</option>
-                                                    <option value="16">Electronic</option>  --}}
+                                                <option selected value="1">All Categories</option>
+                                                {{--  <option value="2">file service</option>  --}}
+                                                <option value="3">ECU sell</option>
+                                                <option value="4">original file</option>
+                                                <option value="5">file service</option>
+                                                <option value="6">online programming</option>
                                             </select>
                                        </div>
                                         <div class="search_box">
@@ -793,14 +721,15 @@
                     <div class="tab-pane fade show active" id="Sellers" role="tabpanel">
                         <div class="row">
                             <div class="product_carousel product_column5 owl-carousel">
-                                {{-- @foreach($product as $key => $value) --}}
+                                @foreach($product as $key => $item)
                                     <div class="col-lg-3">
                                         <div class="product_items">
                                             <article class="single_product">
                                                 <figure>
                                                     <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product1.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product2.jpg')}}" alt=""></a>
+                                                        <a class="primary_img" href="product-details.html"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
+                                                        {{-- <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product1.jpg')}}" alt=""></a> --}}
+                                                        <a class="secondary_img" href="product-details.html"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
                                                         <div class="label_product">
                                                             <span class="label_sale">-56%</span>
                                                         </div>
@@ -810,8 +739,8 @@
                                                     </div>
                                                     <div class="product_content">
                                                         <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#"> ss</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Nunc Neque Eros</a></h4>
+                                                            <p class="manufacture_product"><a href="#"> Parts</a></p>
+                                                            <h4 class="product_name"><a href="product-details.html">{{ $item->name }}</a></h4>
                                                             <div class="product_rating">
                                                             <ul>
                                                                 <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
@@ -822,8 +751,8 @@
                                                             </ul>
                                                             </div>
                                                             <div class="price_box">
-                                                                <span class="old_price">$320.00</span>
-                                                                <span class="current_price">$120.00</span>
+                                                                <span class="old_price">${{ number_format($item->price,2) }}</span>
+                                                                <span class="current_price">${{ number_format($item->price - $item->discount_price,2) }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
@@ -838,7 +767,7 @@
                                             </article>
                                         </div>
                                     </div>
-                                {{-- @endforeach --}}
+                                @endforeach
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@
             <div class="panel-container collapse show">
                 <div class="panel-hdr">
                     <h2>
-                        @lang('lang.product')
+                        Product
                     </h2>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-     
+
                         {{-- <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -82,10 +82,9 @@
                                     <span class="text-danger">*</span>
                                     <select class="form-control" id="category_id" name="category_id">
                                         <option value="">Please choose ctegories</option>
-                                        <option value="1">Ford</option>
-                                        {{-- @foreach($category as $item)
-                                            <option value="{{ $child->id }}">{{ $child->name }}</option>
-                                        @endforeach --}}
+                                        @foreach($category as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
                                     </select>
                                     <p class="text-danger">{!! $errors->first('category_id') !!}</p>
                                 </div>
@@ -94,15 +93,8 @@
                                 <div class="form-group">
                                     <label for="Category">Sub Category</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="sub_category_id" name="sub_category_id">
+                                    <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
                                         <option value="">Please choose sub ctegories</option>
-                                        <option value="1">FORD_SID209</option>
-                                        <option value="2">FORD_SID208</option>
-                                        <option value="3">FORD_SID206</option>
-                                        <option value="4">FORD_MG1CS017</option>
-                                        {{-- @foreach($category as $item)
-                                            <option value="{{ $child->id }}">{{ $child->name }}</option>
-                                        @endforeach --}}
                                     </select>
                                     <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
                                 </div>
@@ -133,8 +125,8 @@
                         </div>
 
                         <div class="form-group mb-0" style="text-align: right;">
-                            <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
-                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
+                            <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
+                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -146,31 +138,31 @@
 @section('script')
     <script>
         $(function(){
-            document.getElementById('gallery').addEventListener('change', function(e) {
-                const preview = document.getElementById('gallery-preview');
-                preview.innerHTML = ''; // clear previous
-                const files = Array.from(e.target.files);
+            // document.getElementById('gallery').addEventListener('change', function(e) {
+            //     const preview = document.getElementById('gallery-preview');
+            //     preview.innerHTML = ''; // clear previous
+            //     const files = Array.from(e.target.files);
 
-                if (!files.length) return;
+            //     if (!files.length) return;
 
-                files.forEach(file => {
-                    // only preview images
-                    if (!file.type.startsWith('image/')) return;
+            //     files.forEach(file => {
+            //         // only preview images
+            //         if (!file.type.startsWith('image/')) return;
 
-                    const reader = new FileReader();
-                    reader.onload = function(ev) {
-                        const img = document.createElement('img');
-                        img.src = ev.target.result;
-                        img.style.width = '120px';
-                        img.style.height = '120px';
-                        img.style.objectFit = 'cover';
-                        img.style.border = '1px solid #ddd';
-                        img.style.borderRadius = '6px';
-                        preview.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                });
-            });
+            //         const reader = new FileReader();
+            //         reader.onload = function(ev) {
+            //             const img = document.createElement('img');
+            //             img.src = ev.target.result;
+            //             img.style.width = '120px';
+            //             img.style.height = '120px';
+            //             img.style.objectFit = 'cover';
+            //             img.style.border = '1px solid #ddd';
+            //             img.style.borderRadius = '6px';
+            //             preview.appendChild(img);
+            //         };
+            //         reader.readAsDataURL(file);
+            //     });
+            // });
             $(document).on('change','#profile', function() {
                 if (this.files && this.files[0]) {
                     let img = document.querySelector('.image_preview');
@@ -180,6 +172,25 @@
                     img.src = URL.createObjectURL(this.files[0]);
                     document.querySelector(".image_preview").files = this.files;
                 }
+            });
+            $(document).on('change','#category_id',function(){
+                var category_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('admins/product/category/onchange') }}",
+                    data: {
+                        category_id:category_id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        $(".sub_category").empty();
+                        $(".sub_category").empty().append('<option value="">Please Select</option>');
+                        $.each(response.data, function(index, item)
+                        {
+                            $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                });
             });
         });
     </script>

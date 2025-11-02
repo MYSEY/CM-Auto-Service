@@ -8,7 +8,7 @@
                     Products
                 </h2>
                 <div class="panel-toolbar">
-                    <a href="{{url('admins/product/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> @lang('lang.add_new')</a>
+                    <a href="{{url('admins/product/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> Add New</a>
                 </div>
             </div>
             <div class="panel-container show">
@@ -22,17 +22,19 @@
                                         <thead class="">
                                             <tr>
                                                 <th>#</th>
-                                                <th>@lang('lang.product_photo')</th>
-                                                <th>@lang('lang.name')</th>
-                                                <th>@lang('lang.description')</th>
-                                                <th>@lang('lang.category')</th>
-                                                <th>@lang('lang.sub_category')</th>
-                                                <th>@lang('lang.status')</th>
-                                                <th>@lang('lang.price')</th>
-                                                <th>@lang('lang.discount_price')</th>
-                                                <th>@lang('lang.delivery_note')</th>
-                                                <th>@lang('lang.content')</th>
-                                                <th>@lang('lang.action')</th>
+                                                <th>Product photo</th>
+                                                <th>Name</th>
+                                                <th>Category</th>
+                                                <th>Sub Category</th>
+                                                <th>Serial Number</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Price</th>
+                                                <th>Discount price</th>
+                                                <th>Delivery note</th>
+                                                <th>Content</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -45,16 +47,25 @@
                                                         @endif
                                                     </td>
                                                     <td>{{$item->name}}</td>
+                                                    <td>{{ $item->category ? $item->category->name : '' }}</td>
+                                                    <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
+                                                    <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
                                                     <td>{{$item->description}}</td>
-                                                    <td>{{$item->category_id}}</td>
-                                                    <td>{{$item->sub_category_id}}</td>
-                                                    <td>{{$item->status}}</td>
+                                                    <td>{{$item->proStatus ? $item->proStatus->name : ''}}</td>
                                                     <td>{{$item->PriceFormat}}</td>
                                                     <td>{{$item->DiscountPriceFormat}}</td>
                                                     <td>{{$item->delivery_note}}</td>
                                                     <td>{{$item->content}}</td>
                                                     <td>
+                                                        <select class="form-control" id="btnStatus">
+                                                            <option value="1" {{ $item->publish==1 ? 'selected' : '' }}>Publish</option>
+                                                            <option value="0" {{ $item->publish==0 ? 'selected' : '' }}>Pending</option>
+                                                            <option value="2" {{ $item->publish==2 ? 'selected' : '' }}>Un-Publish</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
                                                         <div class="d-flex demo">
+                                                            <input type="text" value="{{ $item->id }}" id="id" hidden>
                                                             <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
                                                             <a href="{{url('admins/product',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
                                                         </div>
@@ -78,21 +89,30 @@
 @section('script')
 <script>
     $(function(){
-        $('body').on('click','#onChangeRole a',function(){
-            let role_id = $(this).attr('data-role-id');
-
+        $("#btnStatus").on('change',function(){
+            var publish = $(this).val();
+            var id = $("#id").val();
             $.ajax({
                 type: "POST",
-                url: "{{url('admins/users/onchange')}}",
+                url: "{{ url('admins/product/change/publish') }}/" + id,
                 data: {
-                    role_id : role_id,
+                    publish:publish,
+                    _token: "{{ csrf_token() }}"
                 },
                 dataType: "JSON",
                 success: function (response) {
-                    if (response.message == 'successfull') {
-                        toastr.success("@lang('lang.data_has_been_save_success')", "@lang('lang.message_title')");
-                        window.location.reload();
+                    if (response.msg === 'success') {
+                        toastr.success('Publish product successfully!');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error('Failed to update status.');
                     }
+                },
+                error: function (xhr) {
+                    toastr.error('Something went wrong.');
+                    console.error(xhr.responseText);
                 }
             });
         });
@@ -102,8 +122,8 @@
             title: "Are you sure?",
             text: "You won't be able to revert this!",
             type: "warning",
-            showCancelButton: `@lang('lang.cancel')`,
-            confirmButtonText: `@lang('lang.deleted')`,
+            showCancelButton: `Cancel`,
+            confirmButtonText: `Deleted`,
         }).then(function(result)
         {
             if (result.value)
