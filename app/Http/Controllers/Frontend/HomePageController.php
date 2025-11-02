@@ -19,4 +19,9 @@ class HomePageController extends Controller
         $company = Company::first();
         return view('frontends.login',compact('company'));
     }
+    public function productDetail(Request $request){
+        $product = Product::with('productImage')->where('id',$request->id)->first();
+        $company = Company::first();
+       return view('frontends.product_detail',compact('product','company'));
+    }
 }

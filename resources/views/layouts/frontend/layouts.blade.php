@@ -15,16 +15,12 @@
 
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
-
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css')}}">
 
 </head>
-
 <body>
-
     <!--header area start-->
-
     <!--offcanvas menu area start-->
     <div class="off_canvars_overlay">
 
@@ -758,14 +754,9 @@
         </div>
     </div>
     <!-- modal area end-->
-<!-- Plugins JS -->
-<script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
-
-<!-- Main JS -->
-<script src="{{asset('frontends/assets/js/main.js')}}"></script>
-
-
-
+    <!-- Plugins JS -->
+    <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
+    <!-- Main JS -->
+    <script src="{{asset('frontends/assets/js/main.js')}}"></script>
 </body>
-
 </html>

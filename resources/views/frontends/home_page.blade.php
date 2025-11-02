@@ -205,9 +205,8 @@
                                             <article class="single_product">
                                                 <figure>
                                                     <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
-                                                        {{-- <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product1.jpg')}}" alt=""></a> --}}
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
+                                                        <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
+                                                        {{-- <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a> --}}
                                                         <div class="label_product">
                                                             <span class="label_sale">-56%</span>
                                                         </div>
@@ -218,15 +217,15 @@
                                                     <div class="product_content">
                                                         <div class="product_content_inner">
                                                             <p class="manufacture_product"><a href="#"> Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">{{ $item->name }}</a></h4>
+                                                            <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->name }}</a></h4>
                                                             <div class="product_rating">
-                                                            <ul>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                            </ul>
+                                                                <ul>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                </ul>
                                                             </div>
                                                             <div class="price_box">
                                                                 <span class="old_price">${{ number_format($item->price,2) }}</span>
