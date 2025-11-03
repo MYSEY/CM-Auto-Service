@@ -12,7 +12,7 @@ class HomePageController extends Controller
 {
     public function index(){
         $company = Company::first();
-        $product = Product::all();
+        $product = Product::with('proStatus')->get();
         $category = ProductCategory::all();
         return view('frontends.home_page',compact('company','product','category'));
     }
@@ -23,10 +23,11 @@ class HomePageController extends Controller
         return view('frontends.login',compact('company','category'));
     }
     public function productDetail(Request $request){
-        $product = Product::with('productImage')->where('id',$request->id)->first();
+        $productDetail = Product::with(['productImage','proStatus'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::all();
-       return view('frontends.product_detail',compact('product','company','category'));
+        $product = Product::with('proStatus')->get();
+       return view('frontends.product_detail',compact('product','productDetail','company','category'));
     }
     public function categoryFilter(Request $request){
         // Build query

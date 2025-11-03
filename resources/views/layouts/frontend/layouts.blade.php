@@ -586,11 +586,11 @@
                                     </div>
                                     <div class="modal_tab_button">
                                         <ul class="nav product_navactive owl-carousel" role="tablist">
-                                            <li >
+                                            <li>
                                                 <a class="nav-link active" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product2.jpg')}}" alt=""></a>
                                             </li>
                                             <li>
-                                                 <a class="nav-link" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product6.jpg')}}" alt=""></a>
+                                                <a class="nav-link" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product6.jpg')}}" alt=""></a>
                                             </li>
                                             <li>
                                                <a class="nav-link button_three" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product9.jpg')}}" alt=""></a>
