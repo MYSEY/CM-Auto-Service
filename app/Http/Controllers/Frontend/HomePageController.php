@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Company;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use App\Http\Controllers\Controller;
 
 class HomePageController extends Controller
 {

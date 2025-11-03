@@ -94,26 +94,13 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#">pages </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="faq.html">Frequently Questions</a></li>
-                                        <li><a href="contact.html">contact</a></li>
-                                        <li><a href="login.html">login</a></li>
-                                        <li><a href="404.html">Error 404</a></li>
-                                        <li><a href="compare.html">compare</a></li>
-                                        <li><a href="privacy-policy.html">privacy policy</a></li>
-                                        <li><a href="coming-soon.html">coming soon</a></li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
                                     <a href="my-account.html">my account</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="about.html">About Us</a>
+                                    <a href="{{url('about-as')}}">About Us</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="contact.html"> Contact Us</a>
+                                    <a href="{{url('contact')}}"> Contact Us</a>
                                 </li>
                             </ul>
                         </div>
@@ -262,7 +249,6 @@
                                                 <div class="cart_button">
                                                     <a class="active" href="checkout.html">Checkout</a>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <!--mini cart end-->
@@ -410,24 +396,11 @@
                                         <li>
                                             <a class="active"  href="/">home<i class=""></i></a>
                                         </li>
-                                        <li class="">
-                                            <a href="shop.html">shop</a>
+                                        <li>
+                                            <a href="{{url('shop')}}">shop</a>
                                         </li>
-                                        <li><a href="#">pages <i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="faq.html">Frequently Questions</a></li>
-                                                <li><a href="contact.html">contact</a></li>
-                                                <li><a href="login.html">login</a></li>
-                                                <li><a href="404.html">Error 404</a></li>
-                                                <li><a href="compare.html">compare</a></li>
-                                                <li><a href="privacy-policy.html">privacy policy</a></li>
-                                                <li><a href="coming-soon.html">coming soon</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="contact.html"> Contact Us</a></li>
+                                        <li><a href="{{url('about-as')}}">About Us</a></li>
+                                        <li><a href="{{url('contact')}}"> Contact Us</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -446,7 +419,7 @@
     <!--header area end-->
 
     <!--top tags area start-->
-    <div class="top_tags_area">
+    {{-- <div class="top_tags_area">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -466,7 +439,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!--top tags area end-->
     @yield('content')
@@ -499,7 +472,7 @@
                                 <h3>Information</h3>
                                 <div class="footer_menu">
                                     <ul>
-                                        <li><a href="about.html">About Us</a></li>
+                                        <li><a href="{{url('about-as')}}">About Us</a></li>
                                         <li><a href="#">New products</a></li>
                                         <li><a href="#">Best sales</a></li>
                                         <li><a href="my-account.html">My Account</a></li>
@@ -625,7 +598,6 @@
                                             <li>
                                                <a class="nav-link" data-bs-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product3.jpg')}}" alt=""></a>
                                             </li>
-
                                         </ul>
                                     </div>
                                 </div>

@@ -10,7 +10,7 @@
                            <div class="slider_content">
                                 <h1>Big sale off <span>Accessories Fidanza</span></h1>
                                 <p>Exclusive Offer -30% Off This Week</p>
-                                <a class="button" href="shop.html">shopping now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                <a class="button" href="{{url('shop')}}">shopping now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                        </div>
                    </div>
@@ -23,7 +23,7 @@
                            <div class="slider_content center">
                                 <h1>Accessories  <span>all kinds of tractor trailer</span></h1>
                                 <p>Exclusive Offer -30% Off This Week</p>
-                                <a class="button" href="shop.html">shopping now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                <a class="button" href="{{url('shop')}}">shopping now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                        </div>
                    </div>
@@ -36,7 +36,7 @@
                            <div class="slider_content">
                                 <h1>High-end <span>New car interior</span> </h1>
                                 <p>Exclusive Offer -20% Off This Week</p>
-                                <a class="button" href="shop.html">shopping now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                <a class="button" href="{{url('shop')}}">shopping now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
                             </div>
                        </div>
                    </div>
@@ -62,21 +62,21 @@
                 <div class="col-lg-4 col-md-4">
                     <figure class="single_banner">
                         <div class="banner_thumb">
-                            <a href="shop.html"><img src="{{asset('frontends/assets/img/bg/banner1.jpg')}}" alt=""></a>
+                            <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/bg/banner1.jpg')}}" alt=""></a>
                         </div>
                     </figure>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <figure class="single_banner">
                         <div class="banner_thumb">
-                            <a href="shop.html"><img src="{{asset('frontends/assets/img/bg/banner2.jpg')}}" alt=""></a>
+                            <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/bg/banner2.jpg')}}" alt=""></a>
                         </div>
                     </figure>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <figure class="single_banner">
                         <div class="banner_thumb">
-                            <a href="shop.html"><img src="{{asset('frontends/assets/img/bg/banner3.jpg')}}" alt=""></a>
+                            <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/bg/banner3.jpg')}}" alt=""></a>
                         </div>
                     </figure>
                 </div>
@@ -93,66 +93,66 @@
                     <div class="categories_product_inner categories_column7 owl-carousel">
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category1.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category1.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Body Parts</a></h4>
+                                <h4><a href="{{url('shop')}}"> Body Parts</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category2.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category2.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Car engine</a></h4>
+                                <h4><a href="{{url('shop')}}"> Car engine</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category3.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category3.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Interiors</a></h4>
+                                <h4><a href="{{url('shop')}}"> Interiors</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category4.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category4.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Lighting & lamp</a></h4>
+                                <h4><a href="{{url('shop')}}"> Lighting & lamp</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category5.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category5.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Repair Parts</a></h4>
+                                <h4><a href="{{url('shop')}}"> Repair Parts</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category6.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category6.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                            <h4><a href="shop.html"> Smart Devices</a></h4>
+                            <h4><a href="{{url('shop')}}"> Smart Devices</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                             <div class="categories_product_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category7.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category7.jpg')}}" alt=""></a>
                             </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Wheels & Tires</a></h4>
+                                <h4><a href="{{url('shop')}}"> Wheels & Tires</a></h4>
                             </div>
                         </div>
                         <div class="single_categories_product">
                         <div class="categories_product_thumb">
-                            <a href="shop.html"><img src="{{asset('frontends/assets/img/s-product/category3.jpg')}}" alt=""></a>
+                            <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/s-product/category3.jpg')}}" alt=""></a>
                         </div>
                             <div class="categories_product_content">
-                                <h4><a href="shop.html"> Smart Devices</a></h4>
+                                <h4><a href="{{url('shop')}}"> Smart Devices</a></h4>
                             </div>
                         </div>
                     </div>
@@ -171,8 +171,7 @@
                     <div class="col-12">
                         <div class="section_title">
                            <h2><span>our</span> Products</h2>
-                            <p>Consectetuer sociis mauris eu augue velit pulvinar ullamcorper
-                                in ac mauris ac vel, interdum sed malesuada curae sit amet non nec quis arcu massa. </p>
+                            <p>Consectetuer sociis mauris eu augue velit pulvinar ullamcorper in ac mauris ac vel, interdum sed malesuada curae sit amet non nec quis arcu massa. </p>
                         </div>
                         <div class="product_tab_btn">
                             <ul class="nav" role="tablist" id="nav-tab">
@@ -796,7 +795,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -836,7 +835,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1089,7 +1088,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1133,7 +1132,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1173,7 +1172,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1217,7 +1216,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1258,7 +1257,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="action_links">
-                                                         <ul>
+                                                        <ul>
                                                             <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                             <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                             <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1284,14 +1283,14 @@
                     <div class="col-lg-6 col-md-6">
                         <figure class="single_banner">
                             <div class="banner_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/bg/banner4.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/bg/banner4.jpg')}}" alt=""></a>
                             </div>
                         </figure>
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <figure class="single_banner">
                             <div class="banner_thumb">
-                                <a href="shop.html"><img src="{{asset('frontends/assets/img/bg/banner5.jpg')}}" alt=""></a>
+                                <a href="{{url('shop')}}"><img src="{{asset('frontends/assets/img/bg/banner5.jpg')}}" alt=""></a>
                             </div>
                         </figure>
                     </div>
@@ -1314,9 +1313,9 @@
                     </div>
                 </div>
                 <div class="product_container">
-                   <div class="row">
+                    <div class="row">
                         <div class="col-lg-6 col-md-12">
-                          <div class="product_style_left">
+                            <div class="product_style_left">
                                 <article class="single_product">
                                     <figure>
                                         <div class="product_thumb">
@@ -1346,7 +1345,7 @@
                                                 <p>Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc.</p>
                                             </div>
                                             <div class="action_links">
-                                                 <ul>
+                                                <ul>
                                                     <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                     <li class="quick_view"><a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-search"></i></a></li>
                                                     <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
@@ -1394,7 +1393,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
-                                                                <ul>
+                                                            <ul>
                                                                 <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                                 <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                 <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1436,7 +1435,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
-                                                             <ul>
+                                                            <ul>
                                                                 <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                                 <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                 <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1478,7 +1477,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
-                                                                <ul>
+                                                            <ul>
                                                                 <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                                 <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                 <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1520,7 +1519,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
-                                                                <ul>
+                                                            <ul>
                                                                 <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                                 <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                 <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1562,7 +1561,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
-                                                                <ul>
+                                                            <ul>
                                                                 <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
                                                                 <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                 <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
@@ -1620,7 +1619,6 @@
                             </div>
                         </div>
                    </div>
-
                 </div>
             </div>
         </div>
@@ -1865,7 +1863,7 @@
                             <h3>GET THE APP</h3>
                             <p>Mazlay App is now available on Google Play & App Store. Get it now.</p>
                             <div class="app_img">
-                               <ul>
+                                <ul>
                                    <li><a href="#"><img src="{{asset('frontends/assets/img/icon/icon-app.jpg')}}" alt=""></a></li>
                                    <li><a href="#"><img src="{{asset('frontends/assets/img/icon/icon1-app.jpg')}}" alt=""></a></li>
                                </ul>

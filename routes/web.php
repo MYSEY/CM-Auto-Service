@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Frontend\AboutAsController;
+use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Backend\ProductStatusController;
@@ -39,6 +42,9 @@ Route::post('/login', [LoginController::class,'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
+Route::resource('contact', ContactController::class);
+Route::resource('about-as', AboutAsController::class);
+Route::resource('shop', ShopController::class);
 
 Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);
