@@ -3,7 +3,7 @@
     <!--slider area start-->
     <section class="slider_section mb-80">
         <div class="slider_area slider_carousel owl-carousel">
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slider1.jpg')}}">
+            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-1.jpg')}}">
                <div class="container">
                    <div class="row">
                        <div class="col-12">
@@ -16,7 +16,7 @@
                    </div>
                </div>
             </div>
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slider2.jpg')}}">
+            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-2.jpg')}}">
                 <div class="container">
                    <div class="row">
                        <div class="col-12">
@@ -29,7 +29,7 @@
                    </div>
                </div>
             </div>
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slider3.jpg')}}">
+            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-3.jpg')}}">
                 <div class="container">
                    <div class="row">
                        <div class="col-12">
