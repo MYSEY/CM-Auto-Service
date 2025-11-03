@@ -16,13 +16,16 @@ class ProductSubcategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-         $data = ProductSubCategory::all();
-         $category = ProductCategory::find(1);
-        return view('backend.sub_category.index',compact('data'));
-    }
+        {
+            $perPageOptions = [10, 30, 50, 100];
+            $perPage = $request->input('per_page', 2);
+            $data = ProductSubCategory::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
 
+            return view('backend.sub_category.index', compact('data', 'perPage', 'perPageOptions'));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */

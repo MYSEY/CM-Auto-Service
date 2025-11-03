@@ -8,7 +8,7 @@
         <li class="breadcrumb-item active">@lang('lang.index')</li> {{-- ផ្លាស់ប្តូរពី @lang('lang.create') --}}
     </ol>
 
-    {{-- 💡 ពិនិត្យមើលសារជូនដំណឹង (Success/Error) --}}
+   {{-- 💡 ពិនិត្យមើលសារជូនដំណឹង (Success/Error) --}}
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {!! session('success') !!}
@@ -31,7 +31,7 @@
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Product Categories List {{-- កែពី Users Infor --}}
+                        Product Categories List
                     </h2>
                     <div class="panel-toolbar">
                         {{-- 💡 ADD NEW Button: ប្រើ route helper --}}
@@ -42,6 +42,43 @@
                     <div class="panel-content">
                         <div class="table-responsive">
                             <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                                {{-- ✅ KHMER: Select Box សម្រាប់ Records Per Page --}}
+                                <div class="row mb-3">
+                                    <div class="col-md-auto">
+                                        <form id="perPageForm" method="GET" action="{{ url('admins/category') }}">
+                                            <div class="input-group input-group-sm">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Showing</span>
+                                                </div>
+                                                <select
+                                                    class="form-control"
+                                                    id="per_page"
+                                                    name="per_page"
+                                                    onchange="document.getElementById('perPageForm').submit();"
+                                                >
+                                                    @foreach ($perPageOptions as $option)
+                                                        <option
+                                                            value="{{ $option }}"
+                                                            @if ($perPage == $option) selected @endif
+                                                        >
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">Records</span>
+                                                </div>
+                                            </div>
+
+                                            {{-- 💡 រក្សាទុក Query Parameters ផ្សេងទៀត --}}
+                                            @foreach(request()->except(['per_page', 'page']) as $key => $value)
+                                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                            @endforeach
+                                        </form>
+                                    </div>
+                                </div>
+                                {{-- ចប់ Select Box --}}
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info">
@@ -59,7 +96,8 @@
                                                 {{-- ត្រូវប្រាកដថា $data ត្រូវបាន pass ពី Controller --}}
                                                 @foreach ($data as $key=>$item)
                                                     <tr>
-                                                        <td>{{$key + 1}}</td>
+                                                         {{-- ✅ KHMER: គណនា Index ឲ្យត្រឹមត្រូវតាមទំព័រ (សម្រាប់ paginate) --}}
+                                                        <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                                                         <td>{{$item->name}}</td>
                                                         <td>{{ Str::limit($item->description, 50) }}</td> {{-- កំណត់ត្រឹម 50 តួអក្សរ --}}
                                                         <td>{{$item->slug}}</td>
@@ -91,6 +129,24 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                         {{-- ✅ ផ្នែកកែសម្រួលដើម្បីបង្ហាញ Pagination Result និង Links --}}
+                                        <div class="row">
+                                            {{-- ផ្នែកទី ១៖ បង្ហាញលទ្ធផល (Showing X to Y of Z results) --}}
+                                            <div class="col-sm-12 col-md-5">
+                                                <div class="dataTables_info" id="dt-basic-example_info" role="status" aria-live="polite">
+                                                    Showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} results
+                                                </div>
+                                            </div>
+
+                                            {{-- ផ្នែកទី ២៖ បង្ហាញ Pagination Links ទៅខាងស្ដាំ --}}
+                                            <div class="col-sm-12 col-md-7">
+                                                <div class="dataTables_paginate paging_simple_numbers">
+                                                    <div class="float-right"> {{-- KHMER: ប្រើ float-right ដើម្បីដាក់ Links ទៅស្តាំ --}}
+                                                        {{ $data->links('pagination::bootstrap-4') }}
+                                                    </div>
+                                                </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

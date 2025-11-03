@@ -15,10 +15,14 @@ class ProductCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = ProductCategory::all();
-        return view('backend.category.index',compact('data'));
+        $perPageOptions = [10, 30, 50, 100];
+        $perPage = $request->input('per_page', 2);
+         $data = ProductCategory::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
+
+        // $data = ProductCategory::all();
+        return view('backend.category.index',compact('data', 'perPage', 'perPageOptions'));
     }
 
     /**

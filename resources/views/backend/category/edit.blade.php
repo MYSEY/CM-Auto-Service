@@ -117,9 +117,7 @@
 
 @section('script')
     <script>
-
         // Option 1: Live Slug Generation
-        // 🚨 កែប្រែ: លុបការត្រួតពិនិត្យ (if) ដើម្បីឲ្យវាបំពេញទៅក្នុង slug field គ្រប់ពេល
         document.getElementById('name').addEventListener('input', function() {
             // បំពេញទៅក្នុង slug field គ្រប់ពេល
             const nameValue = this.value;
