@@ -30,12 +30,17 @@ class HomePageController extends Controller
     }
     public function categoryFilter(Request $request){
         // Build query
-        $query = Product::query();
+        $query = Product::query()->with('category','subCategory');
         // ✅ Filter by category
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
+        if ($request->filled('serial_number')) {
+            $query->whereHas('subCategory', function ($q) use ($request) {
+                $q->where('serial_number', $request->serial_number);
+            });
+        }
         // ✅ Optional: Filter by keyword (search name or description)
         if ($request->filled('keyword')) {
             $query->where(function ($q) use ($request) {

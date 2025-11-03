@@ -191,7 +191,7 @@
                                             </select>
                                         </div>
                                         <div class="search_box">
-                                            <input placeholder="Search product..." type="text">
+                                            <input placeholder="Search product..." type="text" name="serial_number" id="serial_number">
                                             <button type="submit" id="btnSearch">Search</button>
                                         </div>
                                     </form>
@@ -693,30 +693,5 @@
     <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('frontends/assets/js/main.js')}}"></script>
-    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    
 </body>
-<script src="">
-        $(function(){
-            alert('hello');
-            $('#btnSearch').on('click',function(e){
-                e.preventDefault();
-                var category_id = $('#category_id').val();
-                alert(category_id);
-                var search_text = $('.search_box input[type="text"]').val();
-                var url = "{{url('/shop')}}";
-                if(category_id){
-                    url += '?category_id='+category_id;
-                    if(search_text){
-                        url += '&search='+search_text;
-                    }
-                }else{
-                    if(search_text){
-                        url += '?search='+search_text;
-                    }
-                }
-                window.location.href = url;
-            });
-        });
-    </script>
 </html>
