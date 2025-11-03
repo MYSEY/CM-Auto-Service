@@ -69,10 +69,6 @@
                                     <select class="select_option" name="select" id="categori1">
                                         <option selected value="1">All Categories</option>
                                         <option value="2">file service</option>
-                                        <option value="3">ECU sell</option>
-                                        <option value="4">original file</option>
-                                        <option value="5">file service</option>
-                                        <option value="6">online programming</option>
                                     </select>
                                </div>
                                 <div class="search_box">
@@ -184,20 +180,19 @@
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
                             <div class="header_right_box">
                                 <div class="search_container">
-                                    <form action="#">
+                                    <form action="{{url('category/filter')}}" method="GET">
+                                        @csrf
                                        <div class="hover_category">
-                                            <select class="select_option" name="select" id="categori2">
-                                                <option selected value="1">All Categories</option>
-                                                {{--  <option value="2">file service</option>  --}}
-                                                <option value="3">ECU sell</option>
-                                                <option value="4">original file</option>
-                                                <option value="5">file service</option>
-                                                <option value="6">online programming</option>
+                                            <select class="select_option" name="category_id" id="category_id">
+                                                <option selected value="">All Categories</option>
+                                                @foreach($category as $cat)
+                                                    <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                                @endforeach
                                             </select>
-                                       </div>
+                                        </div>
                                         <div class="search_box">
                                             <input placeholder="Search product..." type="text">
-                                            <button type="submit">Search</button>
+                                            <button type="submit" id="btnSearch">Search</button>
                                         </div>
                                     </form>
                                 </div>
@@ -478,59 +473,6 @@
 
     <!--footer area start-->
     <footer class="footer_widgets">
-        <!--shipping area start-->
-        <div class="shipping_area">
-            <div class="container">
-                <div class="shipping_inner">
-                    <div class="single_shipping">
-                        <div class="shipping_icone">
-                            <img src="{{asset('frontends/assets/img/about/shipping1.png')}}" alt="">
-                        </div>
-                        <div class="shipping_content">
-                            <h4>Free Delivery</h4>
-                            <p>For all oders over $120</p>
-                        </div>
-                    </div>
-                    <div class="single_shipping">
-                        <div class="shipping_icone">
-                            <img src="{{asset('frontends/assets/img/about/shipping2.png')}}" alt="">
-                        </div>
-                        <div class="shipping_content">
-                            <h4>Free Delivery</h4>
-                            <p>For all oders over $120</p>
-                        </div>
-                    </div>
-                    <div class="single_shipping">
-                        <div class="shipping_icone">
-                            <img src="{{asset('frontends/assets/img/about/shipping3.png')}}" alt="">
-                        </div>
-                        <div class="shipping_content">
-                            <h4>Free Delivery</h4>
-                            <p>For all oders over $120</p>
-                        </div>
-                    </div>
-                    <div class="single_shipping">
-                        <div class="shipping_icone">
-                            <img src="{{asset('frontends/assets/img/about/shipping4.png')}}" alt="">
-                        </div>
-                        <div class="shipping_content">
-                            <h4>Free Delivery</h4>
-                            <p>For all oders over $120</p>
-                        </div>
-                    </div>
-                    <div class="single_shipping">
-                        <div class="shipping_icone">
-                            <img src="{{asset('frontends/assets/img/about/shipping5.png')}}" alt="">
-                        </div>
-                        <div class="shipping_content">
-                            <h4>Free Delivery</h4>
-                            <p>For all oders over $120</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--shipping area end-->
         <div class="footer_top">
             <div class="container">
                 <div class="row">
@@ -558,11 +500,9 @@
                                 <div class="footer_menu">
                                     <ul>
                                         <li><a href="about.html">About Us</a></li>
-                                        <li><a href="#">Delivery Information</a></li>
                                         <li><a href="#">New products</a></li>
                                         <li><a href="#">Best sales</a></li>
                                         <li><a href="my-account.html">My Account</a></li>
-                                        <li><a href="#">Order History</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -583,16 +523,11 @@
                                 <h3>My Account</h3>
                                 <div class="footer_menu">
                                     <ul>
-                                        <li><a href="#">Sitemap</a></li>
                                         <li><a href="my-account.html">My Account</a></li>
-                                        <li><a href="#">Delivery Information</a></li>
-                                        <li><a href="#">Order History</a></li>
-                                        <li><a href="wishlist.html">Wish List</a></li>
-                                        <li><a href="#">Specials</a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="widgets_container widget_menu">
+                            {{-- <div class="widgets_container widget_menu">
                                 <h3>Extras</h3>
                                 <div class="footer_menu">
                                     <ul>
@@ -617,7 +552,7 @@
                                         <li><a href="#">Estimated Delivery Time</a></li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -628,14 +563,14 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6">
                         <div class="copyright_area">
-                            <p>&copy; 2022 <a href="#" class="text-uppercase">MAZLAY</a>. Made with <i class="fa fa-heart"></i> by <a target="_blank" href="https://www.hasthemes.com">HasThemes</a></p>
+                            <p>&copy; 2025 <a href="#" class="text-uppercase">CM Auto Service</a></p>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    {{-- <div class="col-lg-6 col-md-6">
                        <div class="footer_payment text-right">
                             <img src="{{asset('frontends/assets/img/icon/payment.png')}}" alt="">
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -758,5 +693,30 @@
     <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('frontends/assets/js/main.js')}}"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    
 </body>
+<script src="">
+        $(function(){
+            alert('hello');
+            $('#btnSearch').on('click',function(e){
+                e.preventDefault();
+                var category_id = $('#category_id').val();
+                alert(category_id);
+                var search_text = $('.search_box input[type="text"]').val();
+                var url = "{{url('/shop')}}";
+                if(category_id){
+                    url += '?category_id='+category_id;
+                    if(search_text){
+                        url += '&search='+search_text;
+                    }
+                }else{
+                    if(search_text){
+                        url += '?search='+search_text;
+                    }
+                }
+                window.location.href = url;
+            });
+        });
+    </script>
 </html>
