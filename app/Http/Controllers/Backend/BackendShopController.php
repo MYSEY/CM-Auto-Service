@@ -12,7 +12,7 @@ class BackendShopController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.shops.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class BackendShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.shops.creat');
     }
 
     /**

@@ -139,6 +139,12 @@
                                     <span class="nav-link-text">@lang('lang.users')</span>
                                 </a>
                             </li>
+                            <li class="@if (in_array(Request::instance()->segment(2), ['backend-contact'])) active @endif">
+                                <a href="{{url('admins/backend-contact')}}" title="Contact" data-filter-tags="Contact">
+                                    <i class="fal fa-user"></i>
+                                    <span class="nav-link-text">@lang('lang.contact')</span>
+                                </a>
+                            </li>
                             <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-status'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
                                     <i class="fal fa-cog"></i>
@@ -165,6 +171,7 @@
                                             <span class="nav-link-text" data-i18n="nav.Product">Product Status</span>
                                         </a>
                                     </li>
+
                                 </ul>
                             </li>
                             <li>

@@ -6,7 +6,7 @@
             <div class="panel-container collapse show">
                 <div class="panel-hdr">
                     <h2>
-                        Product
+                        Shops
                     </h2>
                 </div>
             </div>
@@ -20,89 +20,83 @@
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ old('name') }}">
                             <p class="text-danger">{!! $errors->first('name') !!}</p>
                         </div>
+
+                        <div class="form-group">
+                            <label for="title">Logo Company</label>
+                            <span class="text-danger">*</span>
+                            <input type="file" name="logo_company" class="form-control" id="image-input">
+                            <p class="text-danger">{!! $errors->first('logo_company') !!}</p>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="home_no">Home No</label>
+                                    <input type="text" class="form-control" name="home_no" id="home_no" placeholder="Enter home_no" value="{{ old('home_no') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="street_no">Street No</label>
+                                    <input type="text" class="form-control" name="street_no" id="street_no" placeholder="Enter street No" value="{{ old('street_no') }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="provinc">Provinc</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="provinc" name="provinc">
+                                        <option value="">Please choose ctegories</option>
+                                        {{-- @foreach($category as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach --}}
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('provinc') !!}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Category">distric</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="distric" name="distric">
+                                        <option value="">Please choose sub ctegories</option>
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('distric') !!}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="provinc">Commun</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="commun" name="commun">
+                                        <option value="">Please choose ctegories</option>
+                                        {{-- @foreach($category as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach --}}
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('commun') !!}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Category">Villag</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="villag" name="villag">
+                                        <option value="">Please choose sub ctegories</option>
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('villag') !!}</p>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ old('description') }}</textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="title">Photo</label>
-                            <span class="text-danger">*</span>
-                            <input type="file" name="product_photo" class="form-control" id="image-input">
-                            <p class="text-danger">{!! $errors->first('product_photo') !!}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="title">Gallery</label><span class="text-danger">*</span>
-                            <input type="file" name="gallery[]" class="form-control" required multiple accept="'gallery/*">
-                            <p class="text-danger">{!! $errors->first('gallery') !!}</p>
-                        </div>
-                        <!-- preview container -->
-                        <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Price">Price</label>
-                                    <span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" value="{{ old('price') }}">
-                                    <p class="text-danger">{!! $errors->first('price') !!}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Discrount Price">Discount Price</label>
-                                    <span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discrount price" value="{{ old('discount_price') }}">
-                                    <p class="text-danger">{!! $errors->first('discount_price') !!}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Category">Category</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control" id="category_id" name="category_id">
-                                        <option value="">Please choose ctegories</option>
-                                        @foreach($category as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="Category">Sub Category</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
-                                        <option value="">Please choose sub ctegories</option>
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Category">Product Status</label>
-                            <span class="text-danger">*</span>
-                            <select class="form-control" name="status_id">
-                                <option value="">Please Choose Product Status</option>
-                                @foreach ($productStatus as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger">{!! $errors->first('status_id') !!}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="content">Content</label>
-                            <span class="text-danger">*</span>
-                            <textarea class="js-summernote form-control" id="saveToLocal" name="content">{{ old('content') }}</textarea>
-                            <p class="text-danger">{!! $errors->first('content') !!}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="delivery_note">Delivery Note</label>
-                            <textarea type="text" rows="10" class="form-control" name="delivery_note" id="delivery_note">{{ old('delivery_note') }}</textarea>
-                        </div>
-
                         <div class="form-group mb-0" style="text-align: right;">
                             <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
                             <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
