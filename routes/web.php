@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Backend\AddressController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Frontend\AboutAsController;
@@ -60,4 +61,9 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('product-status', ProductStatusController::class);
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
+
+    Route::get('province', [AddressController::class, 'province']);
+    Route::post('district', [AddressController::class, 'district']);
+    Route::post('commune', [AddressController::class, 'commune']);
+    Route::post('village', [AddressController::class, 'village']);
 });
