@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Company;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 
-class ContactController extends Controller
+class FrontendContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,8 +36,12 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 1. Validation (Ensures data integrity)
+
     }
+
+
+
 
     /**
      * Display the specified resource.

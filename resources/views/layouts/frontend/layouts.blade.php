@@ -400,7 +400,7 @@
                                             <a href="{{url('shop')}}">shop</a>
                                         </li>
                                         <li><a href="{{url('about-as')}}">About Us</a></li>
-                                        <li><a href="{{url('contact')}}"> Contact Us</a></li>
+                                        <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
                                     </ul>
                                 </nav>
                             </div>

@@ -172,6 +172,7 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
+
             // Delete product main photo if exists
             if ($product->product_photo && file_exists(public_path('images/products/' . $product->product_photo))) {
                 unlink(public_path('images/products/' . $product->product_photo));
@@ -209,6 +210,7 @@ class ProductController extends Controller
     }
     public function changePublish(Request $request,$id){
         try {
+
             $product = Product::findOrFail($id);
             $product->publish = $request->publish;
             $product->save();

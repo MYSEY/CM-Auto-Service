@@ -9,11 +9,12 @@ use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Frontend\AboutAsController;
-use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Backend\ProductStatusController;
+use App\Http\Controllers\Backend\BackendContactController;
 use App\Http\Controllers\Backend\ProductCategoryController;
+use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Backend\ProductSubcategoryController;
 
 /*
@@ -42,7 +43,7 @@ Route::post('/login', [LoginController::class,'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
-Route::resource('contact', ContactController::class);
+Route::resource('frontend-contact', FrontendContactController::class);
 Route::resource('about-as', AboutAsController::class);
 Route::resource('shop', ShopController::class);
 
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('product', ProductController::class);
     Route::get('product/category/onchange', [ProductController::class,'onchangeCagegory']);
     Route::post('product/change/publish/{id}', [ProductController::class,'changePublish']);
+    Route::resource('backend-contact', BackendContactController::class);
     Route::resource('category', ProductCategoryController::class);
     Route::resource('sub-category', ProductSubcategoryController::class);
     Route::resource('product-status', ProductStatusController::class);
