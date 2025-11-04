@@ -20,19 +20,20 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('home_no')->nullable();
             $table->string('street_no')->nullable();
-            $table->string('provinc')->nullable();
-            $table->string('distric')->nullable();
-            $table->string('commun')->nullable();
-            $table->string('villag')->nullable();
+            $table->string('province')->nullable();
+            $table->string('district')->nullable();
+            $table->string('commune')->nullable();
+            $table->string('village')->nullable();
             $table->text('location')->nullable();
-            $table->string('phone_one')->nullable();
+            $table->string('phone')->nullable();
             $table->string('phone_two')->nullable();
             $table->string('email')->nullable();
             $table->string('facebook')->nullable();
-            $table->string('wechat')->nullable();
             $table->string('website')->nullable();
             $table->boolean('status')->default(0);
-            $table->bigInteger('updated_by');
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

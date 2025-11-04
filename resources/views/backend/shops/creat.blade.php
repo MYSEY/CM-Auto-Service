@@ -12,7 +12,7 @@
             </div>
             <div class="panel-container show">
                 <div class="panel-content">
-                    <form method="POST" action="{{ url('admins/product') }}" enctype="multipart/form-data" novalidate>
+                    <form method="POST" action="{{ url('admins/shops') }}" enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -24,14 +24,14 @@
                         <div class="form-group">
                             <label for="title">Logo Company</label>
                             <span class="text-danger">*</span>
-                            <input type="file" name="logo_company" class="form-control" id="image-input">
+                            <input type="file" name="logo_company" id="logo_company" class="form-control" id="image-input">
                             <p class="text-danger">{!! $errors->first('logo_company') !!}</p>
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="home_no">Home No</label>
-                                    <input type="text" class="form-control" name="home_no" id="home_no" placeholder="Enter home_no" value="{{ old('home_no') }}">
+                                    <input type="text" class="form-control" name="home_no" id="home_no" placeholder="Enter home no" value="{{ old('home_no') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -47,23 +47,23 @@
                                 <div class="form-group">
                                     <label for="provinc">Provinc</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="provinc" name="provinc">
-                                        <option value="">Please choose ctegories</option>
-                                        {{-- @foreach($category as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach --}}
+                                    <select class="form-control select2" id="province" name="province">
+                                        <option value="">Select provice</option>
+                                        @foreach($provice as $item)
+                                            <option value="{{ $item->code  }}">{{ $item->english }}</option>
+                                        @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('provinc') !!}</p>
+                                    <p class="text-danger">{!! $errors->first('province') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Category">distric</label>
+                                    <label for="Category">district</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="distric" name="distric">
-                                        <option value="">Please choose sub ctegories</option>
+                                    <select class="form-control" id="district" name="district">
+                                        <option value="">Select district </option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('distric') !!}</p>
+                                    <p class="text-danger">{!! $errors->first('district') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -72,23 +72,49 @@
                                 <div class="form-group">
                                     <label for="provinc">Commun</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="commun" name="commun">
-                                        <option value="">Please choose ctegories</option>
-                                        {{-- @foreach($category as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach --}}
+                                    <select class="form-control" id="commune" name="commune">
+                                        <option value="">Select commun</option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('commun') !!}</p>
+                                    <p class="text-danger">{!! $errors->first('commune') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Category">Villag</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="villag" name="villag">
-                                        <option value="">Please choose sub ctegories</option>
+                                    <select class="form-control" id="village" name="village">
+                                        <option value="">Select village </option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('villag') !!}</p>
+                                    <p class="text-danger">{!! $errors->first('village') !!}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter phone" value="{{ old('phone') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value="{{ old('email') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="facebook">Facebook</label>
+                                    <input type="text" class="form-control" name="facebook" id="facebook" placeholder="Enter facebook" value="{{ old('facebook') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="website">website</label>
+                                    <input type="text" class="form-control" name="website" id="website" placeholder="Enter Website" value="{{ old('website') }}">
                                 </div>
                             </div>
                         </div>
@@ -98,7 +124,7 @@
                             <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ old('description') }}</textarea>
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">
-                            <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
+                            <a href="{{url('admins/shops')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
                             <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
                         </div>
                     </form>
@@ -111,15 +137,26 @@
 @section('script')
     <script>
         $(function(){
-            $(document).on('change','#profile', function() {
-                if (this.files && this.files[0]) {
-                    let img = document.querySelector('.image_preview');
-                    img.onload = () =>{
-                        URL.revokeObjectURL(img.src);
-                    }
-                    img.src = URL.createObjectURL(this.files[0]);
-                    document.querySelector(".image_preview").files = this.files;
-                }
+            $("#province").on("change", function(){
+                let id = $("#province").val() ?? $("#province").val();
+                let optionSelect = "Province";
+                $('#district').html('<option selected disabled> -- @lang("lang.select") --</option>');
+                $('#commune').html('<option selected disabled> -- @lang("lang.select") --</option>');
+                $('#village').html('<option selected disabled> -- @lang("lang.select") --</option>');
+                showProvince(id, optionSelect);
+            });
+            $("#district").on("change", function(){
+                let id = $("#district").val() ?? $("#district").val();
+                let optionSelect = "District";
+                $('#commune').html('<option selected disabled> -- @lang("lang.select") --</option>');
+                $('#village').html('<option selected disabled> -- @lang("lang.select") --</option>');
+                showProvince(id, optionSelect);
+            });
+            $("#commune").on("change", function(){
+                let id = $("#commune").val() ?? $("#commune").val();
+                let optionSelect = "Commune";
+                $('#village').html('<option selected disabled> -- @lang("lang.select") --</option>');
+                showProvince(id, optionSelect);
             });
             $(document).on('change','#category_id',function(){
                 var category_id = $(this).val();
@@ -141,5 +178,47 @@
                 });
             });
         });
+        function showProvince(id, optionSelect){
+            let url = "";
+            let data = {
+                "_token": "{{ csrf_token() }}",
+            };
+            // Address
+            if (optionSelect == "Province") {
+                url = "{{url('admins/district')}}"
+                data.province = id
+            }else if (optionSelect == "District") {
+                url = "{{url('admins/commune')}}"
+                data.district = id
+            }else if (optionSelect == "Commune") {
+                url = "{{url('admins/village')}}"
+                data.commune = id
+            };
+            $.ajax({
+                type: "POST",
+                url,
+                data,
+                dataType: "JSON",
+                success: function (response) {
+                    var data = response.data;
+                    if (data != '') {
+                        let option = {value: "",text: ""}
+                        $.each(data, function(i, item) {
+                            option = {
+                                value: item.code,
+                                text: item.english,
+                            }
+                            if (optionSelect == "Province") {
+                                $('#district').append($('<option>', option));
+                            }else if(optionSelect == "District"){
+                                $('#commune').append($('<option>', option));
+                            }else if (optionSelect == "Commune") {
+                                $('#village').append($('<option>', option));
+                            }
+                        });
+                    }
+                }
+            });
+        }
     </script>
 @endsection

@@ -136,13 +136,19 @@
                             <li class="@if (in_array(Request::instance()->segment(2), ['users'])) active @endif">
                                 <a href="{{url('admins/users')}}" title="Users" data-filter-tags="User">
                                     <i class="fal fa-user"></i>
-                                    <span class="nav-link-text">@lang('lang.users')</span>
+                                    <span class="nav-link-text">Users</span>
+                                </a>
+                            </li>
+                            <li class="@if (in_array(Request::instance()->segment(2), ['shops'])) active @endif">
+                                <a href="{{ url('admins/shops') }}" title="Alerts" data-filter-tags="ui components alerts">
+                                    <i class="fal fa-user"></i>
+                                    <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Shop</span>
                                 </a>
                             </li>
                             <li class="@if (in_array(Request::instance()->segment(2), ['backend-contact'])) active @endif">
                                 <a href="{{url('admins/backend-contact')}}" title="Contact" data-filter-tags="Contact">
                                     <i class="fal fa-user"></i>
-                                    <span class="nav-link-text">@lang('lang.contact')</span>
+                                    <span class="nav-link-text">Contact</span>
                                 </a>
                             </li>
                             <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-status'])) active @endif">
@@ -180,29 +186,10 @@
                                     <span class="nav-link-text" data-i18n="nav.theme_settings">Settings</span>
                                 </a>
                                 <ul>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Shop</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Category</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Sub Category</span>
-                                        </a>
                                     </li>
                                     <li>
                                         <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
                                             <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Slider</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Contact Us</span>
                                         </a>
                                     </li>
                                 </ul>

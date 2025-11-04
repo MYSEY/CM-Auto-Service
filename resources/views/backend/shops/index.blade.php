@@ -27,35 +27,27 @@
                                                 <th>Description</th>
                                                 <th>Home No</th>
                                                 <th>street No</th>
-                                                <th>villag</th>
-                                                <th>distric</th>
-                                                <th>Price</th>
-                                                <th>commun</th>
-                                                <th>provinc</th>
-                                                <th>location</th>
+                                                <th>Phonee</th>
+                                                <th>Email</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($data as $key=>$item)
+                                            @foreach ($data as $key=>$item)
                                                 <tr>
                                                     <td>{{$key + 1}}</td>
                                                     <td>
-                                                        @if ($item->product_photo)
-                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" style="object-fit: cover;width: 100px;height: 50px;" alt="product">
+                                                        @if ($item->logo_company)
+                                                            <img src="{{ asset('images/logo_company/' . $item->logo_company) }}" style="object-fit: cover;width: 100px;height: 50px;" alt="product">
                                                         @endif
                                                     </td>
                                                     <td>{{$item->name}}</td>
-                                                    <td>{{ $item->category ? $item->category->name : '' }}</td>
-                                                    <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
-                                                    <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
-                                                    <td>{{$item->description}}</td>
-                                                    <td>{{$item->proStatus ? $item->proStatus->name : ''}}</td>
-                                                    <td>{{$item->PriceFormat}}</td>
-                                                    <td>{{$item->DiscountPriceFormat}}</td>
-                                                    <td>{{$item->delivery_note}}</td>
-                                                    <td>{{$item->content}}</td>
+                                                    <td>{{ $item->description}}</td>
+                                                    <td>{{ $item->home_no }}</td>
+                                                    <td>{{ $item->street_no}}</td>
+                                                    <td>{{$item->phone}}</td>
+                                                    <td>{{$item->email}}</td>
                                                     <td>
                                                         <select class="form-control" id="btnStatus">
                                                             <option value="1" {{ $item->publish==1 ? 'selected' : '' }}>Publish</option>
@@ -71,7 +63,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
