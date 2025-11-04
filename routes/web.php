@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Frontend\AboutAsController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Backend\BackendShopController;
 use App\Http\Controllers\Backend\ProductStatusController;
 use App\Http\Controllers\Backend\BackendContactController;
 use App\Http\Controllers\Backend\ProductCategoryController;
@@ -58,4 +59,5 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('sub-category', ProductSubcategoryController::class);
     Route::resource('product-status', ProductStatusController::class);
     Route::resource('company', CompanyController::class);
+    Route::resource('shops', BackendShopController::class);
 });
