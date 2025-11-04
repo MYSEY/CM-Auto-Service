@@ -168,7 +168,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product, $id)
+    public function destroy(Product $product)
     {
         DB::beginTransaction();
         try {
@@ -177,7 +177,7 @@ class ProductController extends Controller
                 unlink(public_path('images/products/' . $product->product_photo));
             }
 
-            // Delete related gallery images if relation exists
+            // Delete related gallery images
             if ($product->images && $product->images->count() > 0) {
                 foreach ($product->images as $image) {
                     $imagePath = public_path($image->path);
@@ -188,14 +188,13 @@ class ProductController extends Controller
                 }
             }
 
-            // Delete the product itself
             $product->delete();
-            return response()->json(['mg'=>'success'], 200);
+            DB::commit();
+
+            return response()->json(['mg' => 'success'], 200);
         } catch (\Exception $e) {
-            return response()->json([
-                'mg' => 'error',
-                'error' => $e->getMessage()
-            ], 500);
+            DB::rollBack();
+            return response()->json(['mg' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
     public function onchangeCagegory(Request $request){
