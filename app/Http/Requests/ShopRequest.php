@@ -23,11 +23,11 @@ class ShopRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'logo_company'=>'required|string',
-            'province'=>'required',
-            'district'=>'required',
+            // 'logo_company'=>'required|string',
+            'province'=>'required|string',
+            'district'=>'required|string',
             'commune'=>'required|string',
-            'village'=>'required|integer',
+            'village'=>'required|string',
         ];
     }
 }
