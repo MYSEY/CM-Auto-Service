@@ -187,10 +187,8 @@ class ProductController extends Controller
                     $image->delete();
                 }
             }
-
             $product->delete();
             DB::commit();
-
             return response()->json(['mg' => 'success'], 200);
         } catch (\Exception $e) {
             DB::rollBack();
