@@ -52,7 +52,7 @@
            <div class="row">
                <div class="col-12">
                    <div class="welcome_title">
-                       <h3>WELCOME TO MAZLAY</h3>
+                       <h3>WELCOME TO CM Auto Service</h3>
                        <h2>CUSTOM <span>SHOPPING STORE ONLINE</span></h2>
                        <p>Designer Accessories. Locally Designed. Globally Crafted.</p>
                    </div>
@@ -886,7 +886,7 @@
                         <div class="section_title title_style2">
                            <div class="title_content">
                                <h2><span>OnSale</span> Products</h2>
-                                <p>The highest discount products of Mazlay </p>
+                                <p>The highest discount products of CM Auto Service </p>
                             </div>
                         </div>
                     </div>
@@ -940,259 +940,50 @@
                             <div class="product_style_right">
                                 <div class="row">
                                     <div class="product_carousel product_column3 owl-carousel">
-                                        <div class="col-lg-3">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product9.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product10.jpg')}}" alt=""></a>
-                                                        <div class="label_product">
-                                                            <span class="label_sale">-44%</span>
+                                        @foreach($product as $key => $item)
+                                            <div class="col-lg-3">
+                                                <article class="single_product">
+                                                    <figure>
+                                                        <div class="product_thumb">
+                                                            <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
+                                                            <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
+                                                            <div class="label_product">
+                                                                <span class="label_sale">{{$item->proStatus? $item->proStatus->name : ''}}</span>
+                                                            </div>
+                                                            <div class="quick_button">
+                                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
+                                                            </div>
                                                         </div>
-                                                        <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Cas Meque Metus</a></h4>
-                                                            <div class="product_rating">
+                                                        <div class="product_content">
+                                                            <div class="product_content_inner">
+                                                                <p class="manufacture_product"><a href="#">Parts</a></p>
+                                                                <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->name }}</a></h4>
+                                                                <div class="product_rating">
+                                                                    <ul>
+                                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="price_box">
+                                                                    <span class="old_price">${{ number_format($item->price,2) }}</span>
+                                                                    <span class="current_price">${{ number_format($item->price - $item->discount_price,2) }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="action_links">
                                                                 <ul>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
+                                                                    <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
+                                                                    <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
                                                                 </ul>
                                                             </div>
-                                                            <div class="price_box">
-                                                                <span class="old_price">$420.00</span>
-                                                                <span class="current_price">$180.00</span>
-                                                            </div>
                                                         </div>
-                                                        <div class="action_links">
-                                                            <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </article>
-                                        </div>
-                                       <div class="col-lg-3">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product3.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product4.jpg')}}" alt=""></a>
-                                                        <div class="label_product">
-                                                            <span class="label_sale">-52%</span>
-                                                        </div>
-                                                        <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Lorem Ipsum Lec</a></h4>
-                                                            <div class="product_rating">
-                                                               <ul>
-                                                                   <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                   <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                   <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                   <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                   <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                               </ul>
-                                                            </div>
-                                                            <div class="price_box">
-                                                                <span class="old_price">$310.00</span>
-                                                                <span class="current_price">$110.00</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="action_links">
-                                                            <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </article>
-                                       </div>
-                                       <div class="col-lg-3">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product9.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product10.jpg')}}" alt=""></a>
-                                                        <div class="label_product">
-                                                            <span class="label_sale">-56%</span>
-                                                        </div>
-                                                        <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Mauris Vel Tellus</a></h4>
-                                                            <div class="product_rating">
-                                                                <ul>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="price_box">
-                                                                <span class="old_price">$420.00</span>
-                                                                <span class="current_price">$180.00</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="action_links">
-                                                            <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </article>
-                                       </div>
-                                       <div class="col-lg-3">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product11.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product12.jpg')}}" alt=""></a>
-                                                        <div class="label_product">
-                                                            <span class="label_sale">-48%</span>
-                                                        </div>
-                                                        <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Donec Non Est</a></h4>
-                                                            <div class="product_rating">
-                                                                <ul>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="price_box">
-                                                                <span class="old_price">$320.00</span>
-                                                                <span class="current_price">$120.00</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="action_links">
-                                                            <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </article>
-                                       </div>
-                                       <div class="col-lg-3">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product1.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product2.jpg')}}" alt=""></a>
-                                                        <div class="label_product">
-                                                            <span class="label_new">new</span>
-                                                        </div>
-                                                        <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Mauris Vel Tellus</a></h4>
-                                                            <div class="product_rating">
-                                                                <ul>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="price_box">
-                                                                <span class="old_price">$420.00</span>
-                                                                <span class="current_price">$180.00</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="action_links">
-                                                            <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </article>
-                                       </div>
-                                       <div class="col-lg-3">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product_thumb">
-                                                        <a class="primary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product5.jpg')}}" alt=""></a>
-                                                        <a class="secondary_img" href="product-details.html"><img src="{{asset('frontends/assets/img/product/product6.jpg')}}" alt=""></a>
-
-                                                        <div class="label_product">
-                                                            <span class="label_sale">-56%</span>
-                                                        </div>
-                                                        <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                            <h4 class="product_name"><a href="product-details.html">Etiam Gravida</a></h4>
-                                                            <div class="product_rating">
-                                                                <ul>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="price_box">
-                                                                <span class="old_price">$420.00</span>
-                                                                <span class="current_price">$180.00</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="action_links">
-                                                                <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </figure>
-                                            </article>
-                                       </div>
+                                                    </figure>
+                                                </article>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -1211,7 +1002,7 @@
                        <div class="section_title title_style2">
                            <div class="title_content">
                                <h2><span>Latest</span>  Blog Posts</h2>
-                                <p>The highest discount products of Mazlay </p>
+                                <p>The highest discount products of CM Auto Service </p>
                             </div>
                         </div>
                       </div>
@@ -1408,13 +1199,13 @@
                             <h3>Follow Us</h3>
                             <p>We make consolidating, marketing and tracking your social media website easy.</p>
                             <div class="footer_social">
-                               <ul>
-                                   <li><a class="facebook" href="#"><i class="icon-facebook"></i></a></li>
-                                   <li><a class="twitter" href="#"><i class="icon-twitter2"></i></a></li>
-                                   <li><a class="rss" href="#"><i class="icon-rss"></i></a></li>
+                                <ul>
+                                   <li><a class="facebook" href="https://www.facebook.com/C.M.Auto.77/"><i class="icon-facebook"></i></a></li>
+                                   <li><a class="twitter" href="https://t.me/CMAUTO"><i class="icon-twitter2"></i></a></li>
+                                   {{-- <li><a class="rss" href="#"><i class="icon-rss"></i></a></li>
                                    <li><a class="youtube" href="#"><i class="icon-youtube"></i></a></li>
                                    <li><a class="google" href="#"><i class="icon-google"></i></a></li>
-                                   <li><a class="instagram2" href="#"><i class="icon-instagram2"></i></a></li>
+                                   <li><a class="instagram2" href="#"><i class="icon-instagram2"></i></a></li> --}}
                                </ul>
                            </div>
                         </div>
@@ -1440,7 +1231,7 @@
                     <div class="col-lg-4 col-md-7">
                         <div class="newsletter_container col_3">
                             <h3>GET THE APP</h3>
-                            <p>Mazlay App is now available on Google Play & App Store. Get it now.</p>
+                            <p>CM Auto Service App is now available on Google Play & App Store. Get it now.</p>
                             <div class="app_img">
                                 <ul>
                                    <li><a href="#"><img src="{{asset('frontends/assets/img/icon/icon-app.jpg')}}" alt=""></a></li>

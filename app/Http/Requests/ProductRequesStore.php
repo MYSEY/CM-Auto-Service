@@ -22,6 +22,7 @@ class ProductRequesStore extends FormRequest
     public function rules(): array
     {
         return [
+            'shop_id' => 'required',
             'name' => 'required|string',
             'product_photo'=>'required',
             'price'=>'required',

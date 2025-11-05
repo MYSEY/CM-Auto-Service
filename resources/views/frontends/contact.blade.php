@@ -65,23 +65,23 @@
                                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                                 </p>
                                 <p>
-                                   <label>  Your Email (required)</label>
+                                   <label> Your Email (required)</label>
                                    <input name="email" placeholder="Email *" type="email" required>
                                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                                 </p>
-                                 <p>
-                                   <label>  Your Phone</label>
+                                <p>
+                                   <label> Your Phone</label>
                                    <input name="phone" placeholder="Phone" type="text">
                                    @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                                 </p>
                                 <p>
-                                   <label>  Subject</label>
+                                   <label> Subject</label>
                                    <input name="subject" placeholder="Subject *" type="text" required>
                                    @error('subject') <span class="text-danger">{{ $message }}</span> @enderror
                                 </p>
                                 <div class="contact_textarea">
-                                   <label>  Your Message (required)</label>
-                                   <textarea placeholder="Message *" name="message"  class="form-control2" required></textarea>
+                                   <label> Your Message (required)</label>
+                                   <textarea placeholder="Message *" name="message" class="form-control2" required></textarea>
                                    @error('message') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                                 <button type="submit"> Send</button>
