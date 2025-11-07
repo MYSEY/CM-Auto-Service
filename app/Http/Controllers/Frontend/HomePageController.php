@@ -21,7 +21,8 @@ class HomePageController extends Controller
     public function logins(){
         $company = Company::first();
         $category = ProductCategory::all();
-        return view('frontends.login',compact('company','category'));
+        $productType = ProductType::all();
+        return view('frontends.login',compact('company','category','productType'));
     }
     public function productDetail(Request $request){
         $productDetail = Product::with(['productImage'])->where('id',$request->id)->first();
