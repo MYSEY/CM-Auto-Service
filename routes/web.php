@@ -13,7 +13,7 @@ use App\Http\Controllers\Frontend\AboutAsController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Backend\BackendShopController;
-use App\Http\Controllers\Backend\ProductStatusController;
+use App\Http\Controllers\Backend\ProductTypeController;
 use App\Http\Controllers\Backend\BackendContactController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Frontend\FrontendContactController;
@@ -44,10 +44,11 @@ Route::get('/logins', [HomePageController::class,'logins']);
 Route::post('/login', [LoginController::class,'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
+Route::get('frontend/product/filter/{id}', [ProductController::class, 'filter'])->name('product.filter');
+
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
 Route::resource('frontend-contact', FrontendContactController::class);
 Route::resource('about-as', AboutAsController::class);
-Route::resource('shop', ShopController::class);
 
 Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);
@@ -58,7 +59,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('backend-contact', BackendContactController::class);
     Route::resource('category', ProductCategoryController::class);
     Route::resource('sub-category', ProductSubcategoryController::class);
-    Route::resource('product-status', ProductStatusController::class);
+    Route::resource('product-type', ProductTypeController::class);
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
 

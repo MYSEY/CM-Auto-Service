@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Company;
 use App\Models\Product;
+use App\Models\ProductType;
 use Illuminate\Support\Str;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
-use App\Models\ProductStatus;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::with(['category','subCategory','proStatus'])->get();
+        $data = Product::with(['category','subCategory','productType'])->get();
         return view('backend.products.index',compact('data'));
     }
 
@@ -32,8 +33,8 @@ class ProductController extends Controller
     public function create()
     {
         $category = ProductCategory::all();
-        $productStatus = ProductStatus::all();
-        return view('backend.products.creat',compact('category','productStatus'));
+        $productType = ProductType::all();
+        return view('backend.products.creat',compact('category','productType'));
     }
 
     /**
@@ -96,9 +97,9 @@ class ProductController extends Controller
         try{
             $data = Product::with('productImage')->find($id);
             $category = ProductCategory::all();
-            $productStatus = ProductStatus::all();
+            $producttype = ProductType::all();
             $sub_category = ProductSubCategory::where('product_category_id', $data->category_id)->get();
-            return view('backend.products.edit',compact('data','category','sub_category','productStatus'));
+            return view('backend.products.edit',compact('data','category','sub_category','producttype'));
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Users fail','Error');
@@ -129,7 +130,7 @@ class ProductController extends Controller
 
             // Update product details
             $product->update([
-                'status_id'        => $request->status_id,
+                'product_type_id'  => $request->product_type_id,
                 'category_id'      => $request->category_id,
                 'sub_category_id'  => $request->sub_category_id,
                 'name'             => $request->name,
@@ -216,5 +217,13 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json(['msg' => 'error', 'error' => $e->getMessage()]);
         }
+    }
+
+    public function filter($id){
+        $product = Product::with(['productImage'])->where('product_type_id',$id)->get();
+        $company = Company::first();
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+       return view('frontends.home_page',compact('product','company','category','productType'));
     }
 }

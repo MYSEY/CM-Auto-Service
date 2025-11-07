@@ -58,7 +58,7 @@
             margin-bottom: 22px;
         }
     }
-  
+
 }
 
 
@@ -184,8 +184,14 @@
                         background: $secondary_color;
                     }
                 }
+                &.telegram {
+                    background: #0088cc; // Telegram brand color
+                    &:hover {
+                        background: lighten(#0088cc, 10%);
+                    }
+                }
             }
-            
+
         }
     }
 }
@@ -223,7 +229,7 @@
         color: $white;
         @media #{$large-mobile}{
             font-size: 13px;
-            
+
         }
         & a{
             color:  $secondary_color;

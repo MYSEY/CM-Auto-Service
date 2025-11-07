@@ -139,19 +139,13 @@
                                     <span class="nav-link-text">Users</span>
                                 </a>
                             </li>
-                            <li class="@if (in_array(Request::instance()->segment(2), ['shops'])) active @endif">
-                                <a href="{{ url('admins/shops') }}" title="Alerts" data-filter-tags="ui components alerts">
-                                    <i class="fal fa-user"></i>
-                                    <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Shop</span>
-                                </a>
-                            </li>
                             <li class="@if (in_array(Request::instance()->segment(2), ['backend-contact'])) active @endif">
                                 <a href="{{url('admins/backend-contact')}}" title="Contact" data-filter-tags="Contact">
                                     <i class="fal fa-user"></i>
                                     <span class="nav-link-text">Contact</span>
                                 </a>
                             </li>
-                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-status'])) active @endif">
+                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-type'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
                                     <i class="fal fa-cog"></i>
                                     <span class="nav-link-text" data-i18n="nav.product">Product</span>
@@ -160,6 +154,11 @@
                                     <li class="@if (in_array(Request::instance()->segment(2), ['product'])) active @endif">
                                         <a href="{{ url('admins/product') }}" title="Alerts" data-filter-tags="products alerts">
                                             <span class="nav-link-text" data-i18n="nav.products">Products</span>
+                                        </a>
+                                    </li>
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['product-type'])) active @endif">
+                                        <a href="{{ url('admins/product-type') }}" title="Alerts" data-filter-tags="Product alerts">
+                                            <span class="nav-link-text" data-i18n="nav.Product">Product Type</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['category'])) active @endif">
@@ -172,12 +171,6 @@
                                             <span class="nav-link-text" data-i18n="nav.Product Category">Sub Category</span>
                                         </a>
                                     </li>
-                                    <li class="@if (in_array(Request::instance()->segment(2), ['product-status'])) active @endif">
-                                        <a href="{{ url('admins/product-status') }}" title="Alerts" data-filter-tags="Product alerts">
-                                            <span class="nav-link-text" data-i18n="nav.Product">Product Status</span>
-                                        </a>
-                                    </li>
-
                                 </ul>
                             </li>
                             <li>

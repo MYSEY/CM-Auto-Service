@@ -37,7 +37,7 @@
                             <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                         </div>
                         <div class="call_support">
-                            <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us: <a href="tel:0123456789">0123456789</a></span></p>
+                            <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us: <a href="tel:0314866777">0314866777</a></span></p>
                         </div>
                         <div class="header_account">
                             <ul>
@@ -107,11 +107,11 @@
                         <div class="offcanvas_footer">
                             <span><a href="#"><i class="fa fa-envelope-o"></i> info@yourdomain.com</a></span>
                             <ul>
-                                <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li class="pinterest"><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                <li class="facebook"><a href="https://www.facebook.com/C.M.Auto.77/"><i class="fa fa-facebook"></i></a></li>
+                                <li class="twitter"><a href="https://t.me/CMAUTO"><i class="fa fa-twitter"></i></a></li>
+                                {{-- <li class="pinterest"><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
                                 <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -394,10 +394,17 @@
                                 <nav>
                                     <ul>
                                         <li>
-                                            <a class="active"  href="/">home<i class=""></i></a>
+                                            <a class="active" href="/">home<i class=""></i></a>
                                         </li>
                                         <li>
-                                            <a href="{{url('shop')}}">shop</a>
+                                            <a class="active" href="javascript:void(0)">Ecu Soft<i class="fa fa-angle-down"></i></a>
+                                            <ul class="sub_menu">
+                                                @foreach($productType as $value)
+                                                    <li>
+                                                        <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         </li>
                                         <li><a href="{{url('about-as')}}">About Us</a></li>
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
@@ -405,9 +412,10 @@
                                 </nav>
                             </div>
                         </div>
+
                         <div class="col-lg-3">
                             <div class="call_support text-right">
-                                <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us:  <a href="tel:0123456789">0123456789</a></span></p>
+                                <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us:  <a href="tel:0314866777">0314866777</a></span></p>
                             </div>
                         </div>
                     </div>
@@ -458,7 +466,7 @@
                                         <img src="{{asset('frontends/assets/img/icon/icon-phone.png')}}" alt="">
                                     </div>
                                     <div class="contact_text">
-                                        <p>Hotline Free 24/24: <br> <strong><a href="tel:0123456789">0123456789</a> </strong></p>
+                                        <p>Hotline Free 24/24: <br> <strong><a href="tel:0314866777">0314866777</a> </strong></p>
                                     </div>
                                 </div>
                                 <p>We are a team of designers and developers that create high quality HTML Template, Woocommerce, Shopify Theme.</p>

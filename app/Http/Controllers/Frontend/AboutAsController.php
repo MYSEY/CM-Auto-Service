@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Company;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,8 @@ class AboutAsController extends Controller
     {
         $company = Company::first();
         $category = ProductCategory::all();
-        return view('frontends.about_as',compact('company','category'));
+        $productType = ProductType::all();
+        return view('frontends.about_as',compact('company','category','productType'));
     }
 
     /**
