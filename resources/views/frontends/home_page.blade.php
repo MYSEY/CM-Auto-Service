@@ -206,9 +206,9 @@
                                                     <div class="product_thumb">
                                                         <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
                                                         {{-- <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a> --}}
-                                                        <div class="label_product">
+                                                        {{-- <div class="label_product">
                                                             <span class="label_sale">-47</span>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="quick_button">
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
                                                         </div>

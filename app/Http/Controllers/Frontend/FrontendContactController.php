@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Company;
 use App\Models\Contact;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,8 @@ class FrontendContactController extends Controller
     {
         $company = Company::first();
         $category = ProductCategory::all();
-        return view('frontends.contact',compact('company','category'));
+        $productType = ProductType::all();
+        return view('frontends.contact',compact('company','category','productType'));
     }
 
     /**

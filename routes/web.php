@@ -44,10 +44,11 @@ Route::get('/logins', [HomePageController::class,'logins']);
 Route::post('/login', [LoginController::class,'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
+Route::get('frontend/product/filter/{id}', [ProductController::class, 'filter'])->name('product.filter');
+
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
 Route::resource('frontend-contact', FrontendContactController::class);
 Route::resource('about-as', AboutAsController::class);
-Route::resource('shop', ShopController::class);
 
 Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);

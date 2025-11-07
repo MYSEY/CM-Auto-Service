@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Company;
 use App\Models\Product;
+use App\Models\ProductType;
 use Illuminate\Support\Str;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
-use App\Models\ProductType;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Support\Facades\DB;
@@ -216,5 +217,13 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json(['msg' => 'error', 'error' => $e->getMessage()]);
         }
+    }
+
+    public function filter($id){
+        $product = Product::with(['productImage'])->where('product_type_id',$id)->get();
+        $company = Company::first();
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+       return view('frontends.home_page',compact('product','company','category','productType'));
     }
 }
