@@ -18,7 +18,6 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         return view('frontends.home_page',compact('company','product','category','productType'));
     }
-
     public function logins(){
         $company = Company::first();
         $category = ProductCategory::all();
