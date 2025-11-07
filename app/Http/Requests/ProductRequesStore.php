@@ -22,13 +22,12 @@ class ProductRequesStore extends FormRequest
     public function rules(): array
     {
         return [
-            'shop_id' => 'required',
             'name' => 'required|string',
+            'product_type_id'=>'required|integer',
             'product_photo'=>'required',
             'price'=>'required',
             'discount_price'=>'required',
             'content'=>'required|string',
-            'status_id'=>'required|integer',
             'category_id'=>'required|integer',
             'sub_category_id'=>'required|integer',
         ];

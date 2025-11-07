@@ -100,15 +100,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="Category">Product Status</label>
+                            <label for="Category">Product T</label>
                             <span class="text-danger">*</span>
-                            <select class="form-control" name="status_id">
-                                <option value="">Please Choose Product Status</option>
-                                @foreach ($productStatus as $item)
-                                    <option value="{{ $item->id }}" {{ $data->status_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                            <select class="form-control" name="product_type_id">
+                                <option value="">Please choose product type</option>
+                                @foreach ($producttype as $item)
+                                    <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                            <p class="text-danger">{!! $errors->first('status_id') !!}</p>
+                            <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
                         </div>
                         <div class="form-group">
                             <label for="content">Content</label>

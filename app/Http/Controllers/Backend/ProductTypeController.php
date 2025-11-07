@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\ProductType;
 use Illuminate\Http\Request;
-use App\Models\ProductStatus;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ProductStatusRequest;
+use App\Http\Requests\ProductTypeRequest;
 
-class ProductStatusController extends Controller
+class ProductTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = ProductStatus::all();
-        return view('backend.product_status.index',compact('data'));
+        $data = ProductType::all();
+        return view('backend.product_types.index',compact('data'));
     }
 
     /**
@@ -26,25 +26,25 @@ class ProductStatusController extends Controller
      */
     public function create()
     {
-       return view('backend.product_status.creat');
+       return view('backend.product_types.creat');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductStatusRequest $request)
+    public function store(ProductTypeRequest $request)
     {
         try {
             $data = $request->all();
             $data['created_by'] = Auth::id();
             // Create product
-            ProductStatus::create($data);
+            ProductType::create($data);
             DB::commit();
-            Toastr::success('Product status created successfully!', 'Success');
-            return redirect('admins/product-status');
+            Toastr::success('Product type created successfully!', 'Success');
+            return redirect('admins/product-type');
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Product status creation failed: ' . $e->getMessage(), 'Error');
+            Toastr::error('Product type creation failed: ' . $e->getMessage(), 'Error');
             return redirect()->back()->withInput();
         }
     }
@@ -63,8 +63,8 @@ class ProductStatusController extends Controller
     public function edit(string $id)
     {
         try{
-            $data = ProductStatus::find($id);
-            return view('backend.product_status.edit',compact('data'));
+            $data = ProductType::find($id);
+            return view('backend.product_types.edit',compact('data'));
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Users fail','Error');
@@ -75,21 +75,30 @@ class ProductStatusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductStatus $productStatus)
+    public function update(Request $request, ProductType $productType)
     {
-       try {
-            // Update product details
-            $productStatus->update([
-                'name'             => $request->name,
-                'description'      => $request->description,
-                'updated_by'       => Auth::id(),
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $productType->update([
+                'name'        => $request->name,
+                'description' => $request->description,
+                'updated_by'  => Auth::id(),
             ]);
+
             DB::commit();
-            Toastr::success('Product status update successfully!', 'Success');
-            return redirect('admins/product-status');
+
+            Toastr::success('Product type updated successfully!', 'Success');
+            return redirect()->route('product-type.index');
+
         } catch (\Exception $e) {
             DB::rollBack();
-            Toastr::error('Product status update failed: ' . $e->getMessage(), 'Error');
+            Toastr::error('Product type update failed: ' . $e->getMessage(), 'Error');
             return redirect()->back()->withInput();
         }
     }
@@ -97,10 +106,10 @@ class ProductStatusController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductStatus $productStatus)
+    public function destroy(ProductType $productStType)
     {
         try{
-            $productStatus->delete();
+            $productStType->delete();
             return response()->json(['mg'=>'success'], 200);
         }catch(\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);

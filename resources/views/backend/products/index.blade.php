@@ -24,11 +24,11 @@
                                                 <th>#</th>
                                                 <th>Product photo</th>
                                                 <th>Name</th>
+                                                <th>Product Type</th>
                                                 <th>Category</th>
                                                 <th>Sub Category</th>
                                                 <th>Serial Number</th>
                                                 <th>Description</th>
-                                                <th>Status</th>
                                                 <th>Price</th>
                                                 <th>Discount price</th>
                                                 <th>Delivery note</th>
@@ -47,11 +47,11 @@
                                                         @endif
                                                     </td>
                                                     <td>{{$item->name}}</td>
+                                                    <td>{{$item->productType ? $item->productType->name : ''}}</td>
                                                     <td>{{ $item->category ? $item->category->name : '' }}</td>
                                                     <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
                                                     <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
                                                     <td>{{$item->description}}</td>
-                                                    <td>{{$item->proStatus ? $item->proStatus->name : ''}}</td>
                                                     <td>{{$item->PriceFormat}}</td>
                                                     <td>{{$item->DiscountPriceFormat}}</td>
                                                     <td>{{$item->delivery_note}}</td>

@@ -7,14 +7,16 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
+use App\Models\ProductType;
 
 class HomePageController extends Controller
 {
     public function index(){
         $company = Company::first();
-        $product = Product::with('proStatus')->get();
+        $product = Product::all();
         $category = ProductCategory::all();
-        return view('frontends.home_page',compact('company','product','category'));
+        $productType = ProductType::all();
+        return view('frontends.home_page',compact('company','product','category','productType'));
     }
 
     public function logins(){
@@ -26,7 +28,7 @@ class HomePageController extends Controller
         $productDetail = Product::with(['productImage','proStatus'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::all();
-        $product = Product::with('proStatus')->get();
+        $product = Product::all();
        return view('frontends.product_detail',compact('product','productDetail','company','category'));
     }
     public function categoryFilter(Request $request){

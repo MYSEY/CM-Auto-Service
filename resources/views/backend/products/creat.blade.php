@@ -82,15 +82,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="Category">Product Status</label>
+                            <label for="Category">Product Type</label>
                             <span class="text-danger">*</span>
-                            <select class="form-control" name="status_id">
-                                <option value="">Please Choose Product Status</option>
-                                @foreach ($productStatus as $item)
+                            <select class="form-control" name="product_type_id">
+                                <option value="">Please Choose product type</option>
+                                @foreach ($productType as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                            <p class="text-danger">{!! $errors->first('status_id') !!}</p>
+                            <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
                         </div>
                         <div class="form-group">
                             <label for="content">Content</label>

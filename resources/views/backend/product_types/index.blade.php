@@ -5,10 +5,10 @@
         <div id="panel-1" class="panel">
             <div class="panel-hdr">
                 <h2>
-                    Product Status
+                    Product Type
                 </h2>
                 <div class="panel-toolbar">
-                    <a href="{{url('admins/product-status/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> Add New</a>
+                    <a href="{{url('admins/product-type/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> Add New</a>
                 </div>
             </div>
             <div class="panel-container show">
@@ -48,7 +48,7 @@
                                                     <td>
                                                         <div class="d-flex demo">
                                                             <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                            <a href="{{url('admins/product-status',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
+                                                            <a href="{{url('admins/product-type',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -86,7 +86,7 @@
             {
                 $.ajax({
                     type: "DELETE",
-                    url: `{{url('/admins/product-status/${id}')}}`,
+                    url: `{{url('/admins/product-type/${id}')}}`,
                     success: function (data) {
                         if (data.mg == "success") {
                             toastr.success("Your file has been deleted.", "Deleted!");

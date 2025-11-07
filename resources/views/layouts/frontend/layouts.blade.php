@@ -397,7 +397,13 @@
                                             <a class="active"  href="/">home<i class=""></i></a>
                                         </li>
                                         <li>
-                                            <a href="{{url('shop')}}">shop</a>
+                                            <a class="active"  href="index.html">Ecu Soft<i class="fa fa-angle-down"></i></a>
+                                            <ul class="sub_menu">
+                                                <li><a href="index.html">ECU Sell</a></li>
+                                                <li><a href="index-2.html">Original File</a></li>
+                                                <li><a href="index-3.html">File Service</a></li>
+                                                <li><a href="index-4.html">Online Programming</a></li>
+                                            </ul>
                                         </li>
                                         <li><a href="{{url('about-as')}}">About Us</a></li>
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
@@ -405,6 +411,7 @@
                                 </nav>
                             </div>
                         </div>
+
                         <div class="col-lg-3">
                             <div class="call_support text-right">
                                 <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us:  <a href="tel:0314866777">0314866777</a></span></p>

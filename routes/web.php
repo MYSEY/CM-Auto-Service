@@ -13,7 +13,7 @@ use App\Http\Controllers\Frontend\AboutAsController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Backend\BackendShopController;
-use App\Http\Controllers\Backend\ProductStatusController;
+use App\Http\Controllers\Backend\ProductTypeController;
 use App\Http\Controllers\Backend\BackendContactController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Frontend\FrontendContactController;
@@ -58,7 +58,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('backend-contact', BackendContactController::class);
     Route::resource('category', ProductCategoryController::class);
     Route::resource('sub-category', ProductSubcategoryController::class);
-    Route::resource('product-status', ProductStatusController::class);
+    Route::resource('product-type', ProductTypeController::class);
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
 

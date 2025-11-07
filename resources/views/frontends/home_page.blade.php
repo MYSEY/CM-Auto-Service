@@ -207,7 +207,7 @@
                                                         <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
                                                         {{-- <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a> --}}
                                                         <div class="label_product">
-                                                            <span class="label_sale">{{$item->proStatus? $item->proStatus->name : ''}}</span>
+                                                            <span class="label_sale">-47</span>
                                                         </div>
                                                         <div class="quick_button">
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
@@ -948,7 +948,7 @@
                                                             <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
                                                             <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
                                                             <div class="label_product">
-                                                                <span class="label_sale">{{$item->proStatus? $item->proStatus->name : ''}}</span>
+                                                                <span class="label_sale">90%</span>
                                                             </div>
                                                             <div class="quick_button">
                                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>

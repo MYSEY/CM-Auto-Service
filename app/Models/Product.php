@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\ProductImage;
-use App\Models\ProductStatus;
+use App\Models\ProductType;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ class Product extends Model
     protected $table = 'products';
     protected $guarded = ['id','created_at','updated_at','deleted_at'];
     protected $fillable =[
-        'status_id',
+        'product_type_id',
         'category_id',
         'sub_category_id',
         'view_counter',
@@ -44,8 +44,8 @@ class Product extends Model
     public function productImage(){
         return $this->hasMany(ProductImage::class,'product_id','id');
     }
-    public function proStatus(){
-        return $this->belongsTo(ProductStatus::class,'status_id');
+    public function productType(){
+        return $this->belongsTo(ProductType::class,'product_type_id');
     }
     public function getPriceFormatAttribute(){
         return "$"." ".number_format($this->price,2);

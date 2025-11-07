@@ -7,17 +7,17 @@
             <div class="panel-container collapse show">
                 <div class="panel-hdr">
                     <h2>
-                        Product Status
+                        Product Type
                     </h2>
                 </div>
             </div>
             <div class="panel-container show">
                 <div class="panel-content">
-                    <form method="POST" action="{{ url('admins/product-status') }}" enctype="multipart/form-data" novalidate>
+                    <form method="POST" action="{{ url('admins/product-type') }}" enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="row mb-2">
                             <div class="col-md-12">
-                                <label class="form-label">@lang('lang.name') <span class="text-danger">*</span></label>
+                                <label class="form-label">Name <span class="text-danger">*</span></label>
                                 <div class="custom-file">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
                                 </div>
@@ -26,13 +26,13 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-12">
-                                <label class="form-label">@lang('lang.description')</label>
+                                <label class="form-label">Description</label>
                                 <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ old('description') }}</textarea>
                             </div>
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">
-                            <a href="{{url('admins/users')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
-                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
+                            <a href="{{url('admins/product-type')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
+                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
                         </div>
                     </form>
                 </div>
