@@ -25,7 +25,7 @@ class HomePageController extends Controller
         return view('frontends.login',compact('company','category','productType'));
     }
     public function productDetail(Request $request){
-        $productDetail = Product::with(['productImage'])->where('id',$request->id)->first();
+        $productDetail = Product::with(['productImage','productType'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::all();
         $product = Product::all();
@@ -54,7 +54,8 @@ class HomePageController extends Controller
         }
         $company = Company::first();
         $category = ProductCategory::all();
+        $productType = ProductType::all();
         $product = $query->get();
-        return view('frontends.home_page',compact('company','product','category'));
+        return view('frontends.home_page',compact('company','product','category','productType'));
     }
 }

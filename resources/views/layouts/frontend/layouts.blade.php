@@ -427,29 +427,6 @@
     </header>
     <!--header area end-->
 
-    <!--top tags area start-->
-    {{-- <div class="top_tags_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="tags_content">
-                        <ul>
-                            <li><span>Top Tags:</span></li>
-                            <li><a href="#">Wheels & Tires</a></li>
-                            <li><a href="#">Lighting & lamp</a></li>
-                            <li><a href="#">Body Parts</a></li>
-                            <li><a href="#">Smart Devices</a></li>
-                            <li><a href="#">Devices</a></li>
-                            <li><a href="#">Repair Parts</a></li>
-                            <li><a href="#">Car Engine</a></li>
-                            <li><a href="#">Accessories</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
     <!--top tags area end-->
     @yield('content')
 

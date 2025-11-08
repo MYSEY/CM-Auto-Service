@@ -47,7 +47,7 @@
         nav: false,
         autoplay: false,
         autoplayTimeout: 8000,
-        items: 7,
+        items: 5,
         margin: 20,
         dots:false,
         responsiveClass:true,
@@ -67,13 +67,7 @@
             992:{
 				items:5,
 			},
-            1200:{
-				items:6,
-			},
-            1300:{
-				items:7,
-			},
-		  }
+		}
     });
 
     /*---product column6 activation---*/

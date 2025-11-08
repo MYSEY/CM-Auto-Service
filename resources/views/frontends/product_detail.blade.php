@@ -45,23 +45,11 @@
                     <div class="col-lg-7 col-md-6">
                         <div class="product_d_right">
                             <form>
-                                <h3><a href="#">{{ $productDetail->name }}</a></h3>
-                                <div class="product_nav">
-                                    <ul>
-                                        <li class="prev"><a href="product-details.html"><i class="fa fa-angle-left"></i></a></li>
-                                        <li class="next"><a href="variable-product.html"><i class="fa fa-angle-right"></i></a></li>
-                                    </ul>
-                                </div>
                                 <div class="product_rating">
-                                    <ul>
-                                       <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                       <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                       <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                       <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                       <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                       <li class="review"><a href="#">(1 customer review )</a></li>
-                                   </ul>
+                                    {{ $productDetail->productType->name }}
                                 </div>
+                                <h3>{{ $productDetail->name }}</h3>
+
                                 <div class="price_box">
                                     <span class="old_price">${{ number_format($productDetail->price,2) }}</span>
                                     <span class="current_price">${{ number_format($productDetail->price - $productDetail->discount_price,2) }}</span>
@@ -69,38 +57,16 @@
                                 <div class="product_desc">
                                     <p>{{ $productDetail->description }}</p>
                                 </div>
-                                <div class="product_variant color">
-                                    <h3>Available Options</h3>
-                                    <label>color</label>
-                                    <ul>
-                                        <li class="color1"><a href="#"></a></li>
-                                        <li class="color2"><a href="#"></a></li>
-                                        <li class="color3"><a href="#"></a></li>
-                                        <li class="color4"><a href="#"></a></li>
-                                    </ul>
-                                </div>
                                 <div class="product_variant quantity">
                                     <label>quantity</label>
                                     <input min="1" max="100" value="1" type="number">
                                     <button class="button" type="submit">add to cart</button>
-                                </div>
-                                <div class=" product_d_action">
-                                   <ul>
-                                       <li><a href="#" title="Add to wishlist">+ Add to Wishlist</a></li>
-                                       <li><a href="#" title="Add to wishlist">+ Compare</a></li>
-                                   </ul>
-                                </div>
-                                <div class="product_meta">
-                                    <span>Category: <a href="#">Clothing</a></span>
                                 </div>
                             </form>
                             <div class="priduct_social">
                                 <ul>
                                     <li><a class="facebook" href="#" title="facebook"><i class="fa fa-facebook"></i> Like</a></li>
                                     <li><a class="twitter" href="#" title="twitter"><i class="fa fa-twitter"></i> tweet</a></li>
-                                    <li><a class="pinterest" href="#" title="pinterest"><i class="fa fa-pinterest"></i> save</a></li>
-                                    <li><a class="google-plus" href="#" title="google +"><i class="fa fa-google-plus"></i> share</a></li>
-                                    <li><a class="linkedin" href="#" title="linkedin"><i class="fa fa-linkedin"></i> linked</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -164,9 +130,6 @@
                                     <div class="reviews_wrapper">
                                         <h2>1 review for Donec eu furniture</h2>
                                         <div class="reviews_comment_box">
-                                            <div class="comment_thmb">
-                                                <img src="assets/img/blog/comment2.jpg" alt="">
-                                            </div>
                                             <div class="comment_text">
                                                 <div class="reviews_meta">
                                                     <div class="product_rating">
@@ -225,130 +188,6 @@
                 </div>
             </div>
             <!--product info end-->
-
-            <!--product area start-->
-            <section class="product_area related_products">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section_title title_style2">
-                           <div class="title_content">
-                               <h2><span>Related</span> Products</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="product_carousel product_details_column5 owl-carousel">
-                        @foreach($product as $key => $item)
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
-                                            <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
-                                            <div class="label_product">
-                                                <span class="label_sale">{{$item->proStatus? $item->proStatus->name : ''}}</span>
-                                            </div>
-                                            <div class="quick_button">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product_content">
-                                            <div class="product_content_inner">
-                                                <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->name }}</a></h4>
-                                                <div class="product_rating">
-                                                    <ul>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                        <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="price_box">
-                                                    <span class="old_price">${{ number_format($item->price,2) }}</span>
-                                                    <span class="current_price">${{ number_format($item->price - $item->discount_price,2) }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                    <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </figure>
-                                </article>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-            <!--product area end-->
-
-            <!--product area start-->
-            <section class="product_area upsell_products">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section_title title_style2">
-                           <div class="title_content">
-                               <h2><span>Upsell</span> Products</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="product_carousel product_details_column5 owl-carousel">
-                        @foreach($product as $key => $item)
-                            <div class="col-lg-3">
-                                <article class="single_product">
-                                    <figure>
-                                        <div class="product_thumb">
-                                            <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
-                                            <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
-                                            <div class="label_product">
-                                                <span class="label_sale">{{$item->proStatus? $item->proStatus->name : ''}}</span>
-                                            </div>
-                                            <div class="quick_button">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                            </div>
-                                        </div>
-                                        <div class="product_content">
-                                            <div class="product_content_inner">
-                                                <p class="manufacture_product"><a href="#">Parts</a></p>
-                                                <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{$item->name}}</a></h4>
-                                                <div class="product_rating">
-                                                <ul>
-                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                </ul>
-                                                </div>
-                                                <div class="price_box">
-                                                    <span class="old_price">${{ number_format($item->price,2) }}</span>
-                                                    <span class="current_price">${{ number_format($item->price - $item->discount_price,2) }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="action_links">
-                                                <ul>
-                                                    <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                    <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </figure>
-                                </article>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-            <!--product area end-->
         </div>
     </div>
 @endsection
