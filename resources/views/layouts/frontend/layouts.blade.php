@@ -18,6 +18,7 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css')}}">
 
+
 </head>
 <body>
     <!--header area start-->
