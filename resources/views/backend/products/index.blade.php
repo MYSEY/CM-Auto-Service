@@ -52,11 +52,10 @@
                                                     <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
                                                     <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
                                                     <td>{{ $item->year}}</td>
-                                                    <td>{{$item->description}}</td>
+                                                    <td>{!! $item->description !!}</td>
                                                     <td>{{$item->PriceFormat}}</td>
                                                     <td>{{$item->DiscountPriceFormat}}</td>
                                                     <td>{{$item->delivery_note}}</td>
-                                                    <td>{{$item->content}}</td>
                                                     <td>
                                                         <select class="form-control" id="btnStatus">
                                                             <option value="1" {{ $item->publish==1 ? 'selected' : '' }}>Publish</option>

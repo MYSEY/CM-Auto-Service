@@ -55,7 +55,7 @@
                                     <span class="current_price">${{ number_format($productDetail->price - $productDetail->discount_price,2) }}</span>
                                 </div>
                                 <div class="product_desc">
-                                    <p>{{ $productDetail->description }}</p>
+                                    <p>{!! $productDetail->description !!}</p>
                                 </div>
                                 <div class="product_variant quantity">
                                     <label>quantity</label>
