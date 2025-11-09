@@ -40,8 +40,8 @@ Route::get('/clear', function() {
 });
 
 Route::get('/', [HomePageController::class,'index']);
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
-Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::get('/logins', [HomePageController::class,'showLoginForm']);
+Route::post('/login/submit', [LoginController::class,'loginSubmit']);
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
 Route::get('frontend/product/filter/{id}', [ProductController::class, 'filter'])->name('product.filter');

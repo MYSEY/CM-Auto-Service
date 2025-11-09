@@ -42,7 +42,7 @@ class LoginController extends Controller
      * @return void
      */
 
-    public function login(Request $request){
+    public function loginSubmit(Request $request){
         try {
             // Retrieve the user by cs_id
             $user = User::where('user_name', $request->user_name)->first();
@@ -55,25 +55,25 @@ class LoginController extends Controller
                             Toastr::success('Login successfully.', 'Success');
                             return redirect('admins/dashboard');
                         }else{
-                            Toastr::error('Wrong UserID or Password.', 'Error');
-                            return redirect('login');
+                            Toastr::error('Wrong UserName or Password.', 'Error');
+                            return redirect('logins');
                         }
                     } else {
                         Auth::logout();
                         Toastr::error('Your account has been disabled.', 'Error');
-                        return redirect('login');
+                        return redirect('logins');
                     }
                 }else{
-                    Toastr::error('Wrong UserID or Password.', 'Error');
-                    return redirect('login');
+                    Toastr::error('Wrong UserName or Password.', 'Error');
+                    return redirect('logins');
                 }
             } else {
-                Toastr::error('Invalid User ID or Password.', 'Error');
-                return redirect('login');
+                Toastr::error('Invalid UserName or Password.', 'Error');
+                return redirect('logins');
             }
         } catch(\Exception $e) {
             DB::rollback();
-            Toastr::error('Wrong UserID or Password.', 'Error');
+            Toastr::error('Wrong UserName or Password.', 'Error');
             return redirect()->back();
         }
     }

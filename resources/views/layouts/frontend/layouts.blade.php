@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css')}}">
+    {{-- toastr --}}
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
 </head>
 <body>
     <!--header area start-->
@@ -544,5 +546,8 @@
     <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('frontends/assets/js/main.js')}}"></script>
+    {{-- toastr --}}
+    <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
+    {!! Toastr::message() !!}
 </body>
 </html>
