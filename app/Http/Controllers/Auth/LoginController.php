@@ -42,7 +42,7 @@ class LoginController extends Controller
      * @return void
      */
 
-    public function loginSubmit(Request $request){
+    public function login(Request $request){
         try {
             // Retrieve the user by cs_id
             $user = User::where('user_name', $request->user_name)->first();
@@ -50,7 +50,6 @@ class LoginController extends Controller
                 // Use Hash::check to verify the password
                 if (Hash::check($request->password, $user->password)) {
                     if ($user->is_active == 1) {
-                        $branchId = $user->branch_default;
                         if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
                             // Session::put('branch_id', $branchId);
                             Toastr::success('Login successfully.', 'Success');
