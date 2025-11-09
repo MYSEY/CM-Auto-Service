@@ -71,3 +71,4 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::post('commune', [AddressController::class, 'commune']);
     Route::post('village', [AddressController::class, 'village']);
 });
+/**dd */
