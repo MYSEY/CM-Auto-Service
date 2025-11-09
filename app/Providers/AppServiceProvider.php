@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema; // <--- បន្ថែមបន្ទាត់នេះ
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -22,5 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
        // កំណត់ឲ្យ Laravel ប្រើ Pagination Style របស់ Bootstrap 5
         Paginator::useBootstrapFive();
+
+        Schema::defaultStringLength(191);
     }
 }

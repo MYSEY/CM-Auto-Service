@@ -17,8 +17,8 @@ class CompanySeeder extends Seeder
     {
         $data = [
             [
-                'name_kh' => 'ចំការកៅស៊ូមេមត់ ខូអិលធីឌី',
-                'name_en'=> 'MRP,.Col.Ltd',
+                'name_kh' => 'សុី អេម អូតូ',
+                'name_en'=> 'cmautoservice',
                 'company_logo'=> 'logo.jpg',
                 'address_kh'=> 'ត្បូងឃ្មុំ',
                 'address_en'=> 'Tbong Khmun',
