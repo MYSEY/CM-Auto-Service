@@ -26,6 +26,7 @@
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
+        <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
     </head>
     @yield('style')
     <body class="mod-bg-1 ">
@@ -1008,6 +1009,7 @@
         <script src="{{ asset('backends/js/formplugins/summernote/summernote.js') }}"></script>
         {{-- toastr --}}
         <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
+        <script src="{{ asset('backends/js/datagrid/datatables/datatables.bundle.js') }}"></script>
         {!! Toastr::message() !!}
         @yield('script')
 
@@ -1099,12 +1101,32 @@
                         }
                     }
                 });
-
             });
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
+            });
+           $(document).ready(function()
+            {
+                $('#dt-basic-example').dataTable(
+                {
+                    responsive: true
+                });
+
+                $('.js-thead-colors a').on('click', function()
+                {
+                    var theadColor = $(this).attr("data-bg");
+                    console.log(theadColor);
+                    $('#dt-basic-example thead').removeClassPrefix('bg-').addClass(theadColor);
+                });
+
+                $('.js-tbody-colors a').on('click', function()
+                {
+                    var theadColor = $(this).attr("data-bg");
+                    console.log(theadColor);
+                    $('#dt-basic-example').removeClassPrefix('bg-').addClass(theadColor);
+                });
             });
         </script>
     </body>

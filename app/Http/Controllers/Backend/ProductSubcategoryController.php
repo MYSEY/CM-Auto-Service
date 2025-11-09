@@ -18,22 +18,15 @@ class ProductSubcategoryController extends Controller
      */
     public function index(Request $request)
     {
-        {
-            $perPageOptions = [10, 30, 50, 100];
-            $perPage = $request->input('per_page', 2);
-            $data = ProductSubCategory::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
-
-            return view('backend.sub_category.index', compact('data', 'perPage', 'perPageOptions'));
-        }
+        $data = ProductSubCategory::with('category')->get();
+        return view('backend.sub_category.index', compact('data'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        // Retrieve the necessary data (ID and Name) for the dropdown
-        $categories = ProductCategory::all(['id', 'name']);
-
+        $categories = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
         // Pass the data to the view using compact()
         return view('backend.sub_category.create', compact('categories'));
     }
@@ -43,13 +36,13 @@ class ProductSubcategoryController extends Controller
      */
     public function store(Request $request)
     {
-         // 1. Validation
+        // 1. Validation
         $validatedData = $request->validate([
             'product_category_id' => 'required|integer|exists:product_categories,id',
             'name' => 'required|string|max:255',
             'serial_number' => 'required|string|max:255|unique:product_sub_categories,serial_number',
             'description' => 'nullable|string|max:200',
-             'is_active' => 'nullable|in:0,1',
+            'is_active' => 'nullable|in:0,1',
         ]);
         // 💡 ចាប់ផ្ដើម Database Transaction
         DB::beginTransaction();
@@ -89,7 +82,7 @@ class ProductSubcategoryController extends Controller
     {
        try {
             $productSubCategory = ProductSubCategory::findOrFail($id);
-            $categories = ProductCategory::all(['id', 'name']);
+            $categories = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
             return view('backend.sub_category.edit', compact('categories', 'productSubCategory'));
         } catch (\Exception $e) {
             Toastr::error('Sub-Category not found or an error occurred.','Error');
