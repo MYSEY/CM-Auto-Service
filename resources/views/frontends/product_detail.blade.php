@@ -48,7 +48,7 @@
                                 <div class="product_rating">
                                     {{ $productDetail->productType->name }}
                                 </div>
-                                <h3>{{ $productDetail->name }}</h3>
+                                <h3>{{ $productDetail->category->name }} {{ $productDetail->subCategory->name }} {{ $productDetail->subCategory->serial_number }} {{ $productDetail->year }}</h3>
 
                                 <div class="price_box">
                                     <span class="old_price">${{ number_format($productDetail->price,2) }}</span>

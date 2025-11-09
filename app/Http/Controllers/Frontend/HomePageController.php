@@ -25,7 +25,7 @@ class HomePageController extends Controller
         return view('frontends.login',compact('company','category','productType'));
     }
     public function productDetail(Request $request){
-        $productDetail = Product::with(['productImage','productType'])->where('id',$request->id)->first();
+        $productDetail = Product::with(['productImage','productType','category','subCategory'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::all();
         $product = Product::paginate(9);
