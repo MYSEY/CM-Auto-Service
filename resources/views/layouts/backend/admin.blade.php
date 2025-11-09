@@ -293,6 +293,9 @@
                                     <a href="#" class="dropdown-item" data-toggle="modal" data-target=".js-modal-settings">
                                         <span data-i18n="drpdwn.settings">Settings</span>
                                     </a>
+                                    <a href="{{url('admins/company')}}" class="dropdown-item">
+                                        <span data-i18n="drpdwn.settings">Company</span>
+                                    </a>
                                     <div class="dropdown-divider m-0"></div>
                                     <div class="dropdown-multilevel dropdown-multilevel-left">
                                         <div class="dropdown-item">

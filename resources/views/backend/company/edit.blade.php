@@ -10,7 +10,7 @@
                         </h2>
                     </div>
                     <div class="panel-content">
-                        <form action="{{url('admins/company-info', $data->id)}}" method="POST" enctype="multipart/form-data" novalidate>
+                        <form action="{{url('admins/company', $data->id)}}" method="POST" enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PUT')
                             <div class="row">

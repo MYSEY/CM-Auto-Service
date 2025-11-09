@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
     {
         // Option 1: Create one user manually
         User::create([
-            'name' => 'Sey Admin',
-            'user_name' => 'Sey.Admin',
+            'name' => 'Admin',
+            'user_name' => 'Admin',
             'role_id' => '1',
             'email' => 'admin@example.com',
             'password' => Hash::make('Admin2023'),

@@ -70,14 +70,7 @@ class CompanyController extends Controller
      */
     public function show(string $id)
      {
-        {
-            try{
-                $data = Company::find($id);
-                return view('backend/company.edit',compact('data'));
-            }catch(\Exception $e){
-                return response()->json(['error'=>$e->getMessage()]);
-            }
-        }
+
     }
 
     /**
@@ -85,7 +78,12 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+          try{
+            $data = Company::find($id);
+            return view('backend/company.edit',compact('data'));
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 
     /**

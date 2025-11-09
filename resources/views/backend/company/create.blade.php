@@ -2,7 +2,7 @@
 @section('content')
     <ol class="breadcrumb page-breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('admins/dashboard')}}">@lang('lang.dashboard')</a></li>
-        <li class="breadcrumb-item"><a href="{{url('admins/backend/company-info')}}">@lang('lang.company_info')</a></li>
+        <li class="breadcrumb-item"><a href="{{url('admins/backend/company')}}">@lang('lang.company_info')</a></li>
         <li class="breadcrumb-item active">@lang('lang.create')</li>
     </ol>
     <div class="row">
@@ -15,7 +15,7 @@
                         </h2>
                     </div>
                     <div class="panel-content">
-                        <form action="{{url('admins/backend/company-info')}}" method="POST" enctype="multipart/form-data" novalidate>
+                        <form action="{{url('admins/backend/company')}}" method="POST" enctype="multipart/form-data" novalidate>
                             @csrf
                             <div class="row">
                                 <div class="col-md-4" style="display: flex;justify-content: center;">
@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="mb-2" style="text-align: right;">
-                                            <a href="{{url('admins/company-info')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
+                                            <a href="{{url('admins/company')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
                                             <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
                                         </div>
                                     </div>
