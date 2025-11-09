@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = ProductCategory::all();
+        $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
         $productType = ProductType::all();
         return view('backend.products.creat',compact('category','productType'));
     }
@@ -96,7 +96,7 @@ class ProductController extends Controller
     {
         try{
             $data = Product::with('productImage')->find($id);
-            $category = ProductCategory::all();
+            $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
             $producttype = ProductType::all();
             $sub_category = ProductSubCategory::where('product_category_id', $data->category_id)->get();
             return view('backend.products.edit',compact('data','category','sub_category','producttype'));
