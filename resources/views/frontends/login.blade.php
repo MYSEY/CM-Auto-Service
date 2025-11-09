@@ -27,7 +27,7 @@
                     <div class="col-lg-4 col-md-4">
                         <div class="account_form login">
                             <h2>login</h2>
-                            <form method="POST" action="{{ url('login') }}">
+                            <form method="POST" action="{{ url('login/submit') }}" enctype="multipart/form-data" novalidate>
                                 @csrf
                                 <p>
                                     <label>Username <span>*</span></label>

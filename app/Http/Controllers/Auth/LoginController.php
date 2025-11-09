@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
@@ -40,7 +42,7 @@ class LoginController extends Controller
      * @return void
      */
 
-    public function login(Request $request){
+    public function loginSubmit(Request $request){
         try {
             // Retrieve the user by cs_id
             $user = User::where('user_name', $request->user_name)->first();
@@ -76,9 +78,11 @@ class LoginController extends Controller
             return redirect()->back();
         }
     }
-    public function logout(Request $request) {
+    public function logoutForm(Request $request) {
         Auth::logout();
         $company = Company::first();
-        return view('frontends.login',compact('company'));
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+        return view('frontends.login',compact('company','category','productType'));
     }
 }
