@@ -41,7 +41,7 @@ Route::get('/clear', function() {
 });
 
 Route::get('/', [HomePageController::class,'index']);
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);

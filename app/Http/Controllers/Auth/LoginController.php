@@ -43,7 +43,7 @@ class LoginController extends Controller
      * @return void
      */
 
-    public function loginSubmit(Request $request){
+    public function login(Request $request){
         try {
             // Retrieve the user by cs_id
             $user = User::where('user_name', $request->user_name)->first();
