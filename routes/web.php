@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Backend\CartController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Backend\AddressController;
@@ -45,6 +46,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
 Route::get('frontend/product/filter/{id}', [ProductController::class, 'filter'])->name('product.filter');
+Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
+
 
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
 Route::resource('frontend-contact', FrontendContactController::class);

@@ -110,9 +110,6 @@
                             <ul>
                                 <li class="facebook"><a href="https://www.facebook.com/C.M.Auto.77/"><i class="fa fa-facebook"></i></a></li>
                                 <li class="twitter"><a href="https://t.me/CMAUTO"><i class="fa fa-twitter"></i></a></li>
-                                {{-- <li class="pinterest"><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li> --}}
                             </ul>
                         </div>
                     </div>
@@ -144,7 +141,6 @@
                         <div class="col-lg-8 col-md-7">
                             <div class="header_top_links text-right">
                                 <ul>
-                                    {{--  <li><a href="login.html">Register</a></li>  --}}
                                     <li><a href="{{ url('logins') }}">login</a></li>
                                     <li><a href="cart.html">Shopping Cart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
@@ -191,10 +187,10 @@
                                         </a>
                                     </div>
                                     <div class="mini_cart_wrapper">
-                                        <a href="javascript:void(0)">
+                                        <a href="javascript:void(0)" id="cartIcon">
                                             <i class="icon-shopping-bag2"></i>
-                                            <span class="cart_price">$152.00 <i class="ion-ios-arrow-down"></i></span>
-                                            <span class="cart_count">2</span>
+                                            <span class="cart_price">$0.00 <i class="ion-ios-arrow-down"></i></span>
+                                            <span class="cart_count">0</span>
                                         </a>
                                         <!--mini cart-->
                                         <div class="mini_cart">
@@ -273,14 +269,9 @@
                                 </div>
                                 <div class="categories_menu_toggle">
                                     <ul>
-                                        <ul class="categories_mega_menu">
-                                        <li class="menu_item_children">
-                                            <ul class="categorie_sub_menu">
-                                                    @foreach($category as $cat)
-                                                    <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                                @endforeach
-                                            </ul>
-                                        </li>
+                                        @foreach($category as $cat)
+                                            <li class="menu_item_children"><a href="javascript:void(0)">{{$cat->name}}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

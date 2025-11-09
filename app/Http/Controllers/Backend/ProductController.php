@@ -209,7 +209,6 @@ class ProductController extends Controller
     }
     public function changePublish(Request $request,$id){
         try {
-
             $product = Product::findOrFail($id);
             $product->publish = $request->publish;
             $product->save();
@@ -224,6 +223,6 @@ class ProductController extends Controller
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-       return view('frontends.home_page',compact('product','company','category','productType'));
+       return view('frontends.ecu_soft',compact('product','company','category','productType'));
     }
 }

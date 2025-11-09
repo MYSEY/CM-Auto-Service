@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -79,6 +80,7 @@ class LoginController extends Controller
     }
     public function logoutForm(Request $request) {
         Auth::logout();
+        Session::flush(); // ✅ Clears all session data completely
         return redirect('logins');
     }
 }
