@@ -13,7 +13,7 @@ class HomePageController extends Controller
 {
     public function index(){
         $company = Company::first();
-        $product = Product::all();
+        $product = Product::paginate(9);
         $category = ProductCategory::all();
         $productType = ProductType::all();
         return view('frontends.home_page',compact('company','product','category','productType'));
@@ -28,7 +28,7 @@ class HomePageController extends Controller
         $productDetail = Product::with(['productImage','productType'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::all();
-        $product = Product::all();
+        $product = Product::paginate(9);
         $productType = ProductType::all();
        return view('frontends.product_detail',compact('product','productDetail','company','category','productType'));
     }
@@ -55,7 +55,7 @@ class HomePageController extends Controller
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-        $product = $query->get();
+        $product = $query->paginate(9);
         return view('frontends.home_page',compact('company','product','category','productType'));
     }
 }

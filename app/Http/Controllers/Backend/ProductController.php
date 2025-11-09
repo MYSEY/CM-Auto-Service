@@ -220,7 +220,7 @@ class ProductController extends Controller
     }
 
     public function filter($id){
-        $product = Product::with(['productImage'])->where('product_type_id',$id)->get();
+        $product = Product::with(['productImage'])->where('product_type_id',$id)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontends/assets/img/favicon.ico') }}">
 
     <!-- CSS
     ========================= -->
@@ -17,8 +17,6 @@
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css')}}">
-
-
 </head>
 <body>
     <!--header area start-->

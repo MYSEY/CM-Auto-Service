@@ -72,7 +72,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <!--shop toolbar start-->
                     <div class="shop_toolbar_wrapper">
                         <div class="shop_toolbar_btn">
                             <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
@@ -92,7 +91,8 @@
                             </form>
                         </div>
                         <div class="page_amount">
-                            <p>Showing 1–9 of 21 results</p>
+                            {{-- <p>Showing 1-9 of 21 results</p> --}}
+                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
                         </div>
                     </div>
                     <div class="row">
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="shop_toolbar t_bottom">
+                    {{-- <div class="shop_toolbar t_bottom">
                         <div class="pagination">
                             <ul>
                                 <li class="current">1</li>
@@ -131,9 +131,42 @@
                                 <li><a href="#">>></a></li>
                             </ul>
                         </div>
+                    </div> --}}
+                    {{-- <div class="shop_toolbar t_bottom">
+                        <div class="pagination d-flex justify-content-center">
+                            {{ $product->links() }}
+                        </div>
+                    </div> --}}
+                    <div class="shop_toolbar t_bottom">
+                        <div class="pagination">
+                            <ul>
+                                {{-- Previous Page Link --}}
+                                @if ($product->onFirstPage())
+                                    <li class="disabled"><span><<</span></li>
+                                @else
+                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
+                                    @if ($page == $product->currentPage())
+                                        <li class="current">{{ $page }}</li>
+                                    @else
+                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($product->hasMorePages())
+                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
+                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                                @else
+                                    <li class="disabled"><span>next</span></li>
+                                    <li class="disabled"><span>>></span></li>
+                                @endif
+                            </ul>
+                        </div>
                     </div>
-                    <!--shop toolbar end-->
-                    <!--shop wrapper end-->
                 </div>
             </div>
         </div>
