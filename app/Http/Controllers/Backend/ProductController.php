@@ -136,7 +136,7 @@ class ProductController extends Controller
                 'name'             => $request->name,
                 'slug'             => Str::slug($request->name, '-'),
                 'description'      => $request->description,
-                'content'          => $request->content,
+                'year'          => $request->year,
                 'price'            => $request->price,
                 'discount_price'   => $request->discount_price,
                 'delivery_note'    => $request->delivery_note,

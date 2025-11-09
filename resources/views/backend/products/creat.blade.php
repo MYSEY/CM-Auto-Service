@@ -20,9 +20,9 @@
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ old('name') }}">
                             <p class="text-danger">{!! $errors->first('name') !!}</p>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ old('description') }}</textarea>
+                         <div class="form-group">
+                            <label for="content">description</label>
+                            <textarea class="js-summernote form-control" id="saveToLocal" name="description">{{ old('description') }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="title">Photo</label>
@@ -49,9 +49,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Discrount Price">Discount Price</label>
-                                    <span class="text-danger">*</span>
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discrount price" value="{{ old('discount_price') }}">
-                                    <p class="text-danger">{!! $errors->first('discount_price') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +67,7 @@
                                     <p class="text-danger">{!! $errors->first('category_id') !!}</p>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Category">Sub Category</label>
                                     <span class="text-danger">*</span>
@@ -77,6 +75,19 @@
                                         <option value="">Please choose sub ctegories</option>
                                     </select>
                                     <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="year">Year</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="year" name="year">
+                                        <option value="">Please choose year</option>
+                                        @for ($year = 2000; $year <= 2054; $year++)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endfor
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('year') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -91,12 +102,6 @@
                                 @endforeach
                             </select>
                             <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="content">Content</label>
-                            <span class="text-danger">*</span>
-                            <textarea class="js-summernote form-control" id="saveToLocal" name="content">{{ old('content') }}</textarea>
-                            <p class="text-danger">{!! $errors->first('content') !!}</p>
                         </div>
                         <div class="form-group">
                             <label for="delivery_note">Delivery Note</label>

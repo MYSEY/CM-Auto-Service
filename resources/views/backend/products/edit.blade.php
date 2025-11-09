@@ -21,10 +21,16 @@
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ $data->name }}">
                             <p class="text-danger">{!! $errors->first('name') !!}</p>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="description">Description</label>
                             <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ $data->description }}</textarea>
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <span class="text-danger">*</span>
+                            <textarea class="js-summernote form-control" id="saveToLocal" name="description">{{ old('description', $data->description) }}</textarea>
                         </div>
+
                         <div class="form-group">
                             <label for="title">Photo</label>
                             <span class="text-danger">*</span>
@@ -62,9 +68,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Discrount Price">Discount Price</label>
-                                    <span class="text-danger">*</span>
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discrount price" value="{{ $data->discount_price }}">
-                                    <p class="text-danger">{!! $errors->first('discount_price') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +86,7 @@
                                     <p class="text-danger">{!! $errors->first('category_id') !!}</p>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Category">Sub Category</label>
                                     <span class="text-danger">*</span>
@@ -97,10 +101,23 @@
                                     <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="year">Year</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="year" name="year">
+                                        <option value="">Please choose year</option>
+                                        @for ($year = 2000; $year <= 2054; $year++)
+                                            <option value="{{ $year }}" {{ $data->year == $year ? 'selected' : '' }}>{{ $year }}</option>
+                                        @endfor
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('year') !!}</p>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="Category">Product T</label>
+                            <label for="Category">Product Type</label>
                             <span class="text-danger">*</span>
                             <select class="form-control" name="product_type_id">
                                 <option value="">Please choose product type</option>
@@ -111,16 +128,9 @@
                             <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
                         </div>
                         <div class="form-group">
-                            <label for="content">Content</label>
-                            <span class="text-danger">*</span>
-                            <textarea class="js-summernote form-control" id="saveToLocal" name="content">{{ old('content', $data->content) }}</textarea>
-                            <p class="text-danger">{!! $errors->first('content') !!}</p>
-                        </div>
-                        <div class="form-group">
                             <label for="delivery_note">Delivery Note</label>
                             <textarea type="text" rows="10" class="form-control" name="delivery_note" id="delivery_note">{{ $data->delivery_note }}</textarea>
                         </div>
-
                         <div class="form-group mb-0" style="text-align: right;">
                             <input type="text" id="id" name="id" value="{{ $data->id }}" hidden>
                             <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
