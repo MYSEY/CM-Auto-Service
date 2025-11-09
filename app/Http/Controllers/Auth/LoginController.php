@@ -79,9 +79,6 @@ class LoginController extends Controller
     }
     public function logoutForm(Request $request) {
         Auth::logout();
-        $company = Company::first();
-        $category = ProductCategory::all();
-        $productType = ProductType::all();
-        return view('frontends.login',compact('company','category','productType'));
+        return redirect('logins');
     }
 }
