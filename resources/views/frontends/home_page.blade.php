@@ -110,7 +110,7 @@
                                         <tbody>
                                             @foreach($product as $key => $item)
                                                 <tr>
-                                                    <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->name }}</a></td>
+                                                    <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }}</a></td>
                                                     <td>${{ number_format($item->price - $item->discount_price,2) }}</td>
                                                     <td class="product_total"><a href="#">Add To Cart</a></td>
                                                 </tr>
