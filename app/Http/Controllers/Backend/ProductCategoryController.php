@@ -41,8 +41,8 @@ class ProductCategoryController extends Controller
         // 1. Validation
         $request->validate([
             'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:200',
-            'slug' => 'nullable|string|max:100|unique:product_categories,slug',
+            // 'description' => 'nullable|string|max:200',
+            // 'slug' => 'nullable|string|max:100|unique:product_categories,slug',
             'is_active' => 'nullable|in:0,1',
         ]);
         // 💡 ចាប់ផ្ដើម Database Transaction
