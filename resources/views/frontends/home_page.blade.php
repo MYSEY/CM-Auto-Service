@@ -1,4 +1,5 @@
 @extends('layouts.frontend.layouts')
+
 @section('content')
 
     <!--slider area start-->
@@ -103,15 +104,13 @@
                                         <thead>
                                             <tr>
                                                 <th>File name</th>
-                                                <th>Price / Discount</th>
                                                 <th class="product_total">Add To Cart</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($product as $key => $item)
                                                 <tr>
-                                                    <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }}</a></td>
-                                                    <td>${{ number_format($item->price - $item->discount_price,2) }}</td>
+                                                    <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
                                                     <td class="product_total"><a href="#">Add To Cart</a></td>
                                                 </tr>
                                             @endforeach

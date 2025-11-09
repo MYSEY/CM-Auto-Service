@@ -13,7 +13,7 @@ class HomePageController extends Controller
 {
     public function index(){
         $company = Company::first();
-        $product = Product::with(['category','subCategory'])->paginate(9);
+        $product = Product::with(['category','subCategory'])->paginate(10);
         $category = ProductCategory::all();
         $productType = ProductType::all();
         return view('frontends.home_page',compact('company','product','category','productType'));
