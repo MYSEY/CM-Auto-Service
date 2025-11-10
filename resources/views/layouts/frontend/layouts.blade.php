@@ -45,15 +45,7 @@
                                 <li class="language"><a href="#"><img src="{{asset('frontends/assets/img/logo/language.png')}}" alt=""> english <i class="ion-chevron-down"></i></a>
                                     <ul class="dropdown_language">
                                         <li><a href="#">English</a></li>
-                                        <li><a href="#">Germany</a></li>
-                                        <li><a href="#">Japanese</a></li>
-                                    </ul>
-                                </li>
-                                <li class="currency"><a href="#">USD <i class="ion-chevron-down"></i></a>
-                                    <ul class="dropdown_currency">
-                                        <li><a href="#">EUR – Euro</a></li>
-                                        <li><a href="#">GBP – British Pound</a></li>
-                                        <li><a href="#">INR – India Rupee</a></li>
+                                        <li><a href="#">Khmer</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -81,22 +73,7 @@
                         <div id="menu" class="text-left ">
                             <ul class="offcanvas_main_menu">
                                 class="menu-item-has-children active">
-                                    <a href="/">Home</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="index.html">Home 1</a></li>
-                                        <li><a href="index-2.html">Home 2</a></li>
-                                        <li><a href="index-3.html">Home 3</a></li>
-                                        <li><a href="index-4.html">Home 4</a></li>
-                                    </ul>
-
-                                <li class="menu-item-has-children">
-                                    <a href="#">Shop</a>
-                                    <ul class="sub-menu">
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children">
-                                    <a href="my-account.html">my account</a>
-                                </li>
+                                <a href="/">Home</a>
                                 <li class="menu-item-has-children">
                                     <a href="{{url('about-as')}}">About Us</a>
                                 </li>
@@ -131,8 +108,7 @@
                                     <li class="language"><a href="#"><img src="{{asset('frontends/assets/img/logo/language.png')}}" alt=""> english <i class="ion-chevron-down"></i></a>
                                         <ul class="dropdown_language">
                                             <li><a href="#">English</a></li>
-                                            <li><a href="#">Germany</a></li>
-                                            <li><a href="#">Japanese</a></li>
+                                            <li><a href="#">Khmer</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -333,8 +309,8 @@
                                         <p>Hotline Free 24/24: <br> <strong><a href="tel:0314866777">0314866777</a> </strong></p>
                                     </div>
                                 </div>
-                                <p>We are a team of designers and developers that create high quality HTML Template, Woocommerce, Shopify Theme.</p>
-                                <p>Your address goes here.. <br> demo@example.com</p>
+                                {{-- <p>We are a team of designers and developers that create high quality HTML Template, Woocommerce, Shopify Theme.</p> --}}
+                                <p>Your address goes here.. <br> the.c.m.auto@gmail.com</p>
                             </div>
                         </div>
                     </div>
@@ -344,10 +320,8 @@
                                 <h3>Information</h3>
                                 <div class="footer_menu">
                                     <ul>
+                                        <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
                                         <li><a href="{{url('about-as')}}">About Us</a></li>
-                                        <li><a href="#">New products</a></li>
-                                        <li><a href="#">Best sales</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -355,49 +329,12 @@
                                 <h3>Customer Service</h3>
                                 <div class="footer_menu">
                                     <ul>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                        <li><a href="cart.html">Shopping Cart</a></li>
-                                        <li><a href="wishlist.html">Wish List</a></li>
-                                        <li><a href="#">Prices drop</a></li>
-                                        <li><a href="#">Order History</a></li>
-                                        <li><a href="#">International Orders</a></li>
+                                        @foreach($productType as $proType)
+                                            <li><a href="javascript:void(0)">{{$proType->name}}</a></li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
-                            <div class="widgets_container widget_menu">
-                                <h3>My Account</h3>
-                                <div class="footer_menu">
-                                    <ul>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            {{-- <div class="widgets_container widget_menu">
-                                <h3>Extras</h3>
-                                <div class="footer_menu">
-                                    <ul>
-                                        <li><a href="#">Brands</a></li>
-                                        <li><a href="#">Gift Certificates</a></li>
-                                        <li><a href="#">Affiliate</a></li>
-                                        <li><a href="#">Specials</a></li>
-                                        <li><a href="wishlist.html">Wish List</a></li>
-                                        <li><a href="#">Newsletter</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="widgets_container widget_menu">
-                                <h3>Payment & Methods</h3>
-                                <div class="footer_menu">
-                                    <ul>
-                                        <li><a href="#">Payment Methods</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                        <li><a href="#">View All Amazing Deals</a></li>
-                                        <li><a href="#">Locations We Ship To</a></li>
-                                        <li><a href="#">FAQs</a></li>
-                                        <li><a href="#">Estimated Delivery Time</a></li>
-                                    </ul>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -411,11 +348,6 @@
                             <p>&copy; 2025 <a href="#" class="text-uppercase">CM Auto Service</a></p>
                         </div>
                     </div>
-                    {{-- <div class="col-lg-6 col-md-6">
-                       <div class="footer_payment text-right">
-                            <img src="{{asset('frontends/assets/img/icon/payment.png')}}" alt="">
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -423,7 +355,7 @@
     <!--footer area end-->
 
     <!-- modal area start-->
-    <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
+    {{-- <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -531,7 +463,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- modal area end-->
     <!-- Plugins JS -->
     <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>

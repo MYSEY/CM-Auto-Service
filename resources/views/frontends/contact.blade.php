@@ -45,7 +45,7 @@
                              <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum formas human. qui sequitur mutationem consuetudium lectorum. Mirum est notare quam</p>
                             <ul>
                                 <li><i class="fa fa-fax"></i>  Address : Your address goes here.</li>
-                                <li><i class="fa fa-phone"></i> <a href="#">demo@example.com</a></li>
+                                <li><i class="fa fa-phone"></i> <a href="#">the.c.m.auto@gmail.com</a></li>
                                 <li><i class="fa fa-envelope-o"></i> +855 31 486 6777</li>
                             </ul>
                         </div>
