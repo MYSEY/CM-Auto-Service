@@ -84,13 +84,6 @@
                                         All
                                     </a>
                                 </li>
-                                {{-- @foreach($productType as $key => $type)
-                                    <li>
-                                        <a data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ $type->name }}" aria-selected="false">
-                                            {{ $type->name }}
-                                        </a>
-                                    </li>
-                                @endforeach --}}
                                 @foreach($productType as $key => $type)
                                     <li>
                                         <a data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false">
@@ -98,16 +91,6 @@
                                         </a>
                                     </li>
                                 @endforeach
-                                {{-- <li>
-                                    <a data-bs-toggle="tab" href="#Featured" role="tab" aria-controls="Featured" aria-selected="false">
-                                        Featured Products
-                                    </a>
-                                </li>
-                                <li>
-                                    <a data-bs-toggle="tab" href="#Arrivals" role="tab" aria-controls="Arrivals" aria-selected="false">
-                                       New Arrivals
-                                    </a>
-                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -124,16 +107,11 @@
                                                     <div class="product_thumb">
                                                         <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
                                                         <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}"><img src="{{ asset('images/products/' . $item->product_photo) }}" alt=""></a>
-                                                        {{-- <div class="label_product">
-                                                            <span class="label_sale">-56%</span>
-                                                        </div> --}}
-                                                        {{-- <div class="quick_button">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modal_box"  title="quick view"><i class="icon-eye"></i></a>
-                                                        </div> --}}
                                                     </div>
                                                     <div class="product_content">
                                                         <div class="product_content_inner">
                                                             <p class="manufacture_product"><a href="#">Parts</a></p>
+                                                            <p class="manufacture_product"><a href="#">{{$item->productType->name}}</a></p>
                                                             <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
                                                             <div class="product_rating">
                                                             <ul>
@@ -181,6 +159,7 @@
                                                         <div class="product_content">
                                                             <div class="product_content_inner">
                                                                 <p class="manufacture_product"><a href="#">Parts</a></p>
+                                                                <p class="manufacture_product"><a href="#">{{$item->productType->name}}</a></p>
                                                                 <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
                                                                 <div class="product_rating">
                                                                 <ul>
