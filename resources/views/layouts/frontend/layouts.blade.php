@@ -271,11 +271,9 @@
                                         </li> --}}
                                         @foreach($productType as $value)
                                             <li>
-                                                {{-- <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a> --}}
-                                                <a class="active" href="javascript:void(0)">{{ $value->name }}</a>
+                                                <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a>
                                             </li>
                                         @endforeach
-                                        {{-- <li><a href="{{url('about-as')}}">About Us</a></li> --}}
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
                                     </ul>
                                 </nav>
@@ -315,7 +313,6 @@
                                         <p>Hotline Free 24/24: <br> <strong><a href="tel:0314866777">0314866777</a> </strong></p>
                                     </div>
                                 </div>
-                                {{-- <p>We are a team of designers and developers that create high quality HTML Template, Woocommerce, Shopify Theme.</p> --}}
                                 <p>Your address goes here.. <br> the.c.m.auto@gmail.com</p>
                             </div>
                         </div>
