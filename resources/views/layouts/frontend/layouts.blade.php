@@ -19,6 +19,33 @@
     <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css')}}">
     {{-- toastr --}}
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
+    <style>
+        /* first level dropdown */
+        .sub_menu {
+            display: none;
+            position: absolute;
+            background: white;
+            z-index: 999;
+        }
+        li:hover > .sub_menu {
+            display: block;
+        }
+
+        /* second level dropdown (subcategory) */
+        .has_sub {
+            position: relative;
+        }
+        .sub_sub_menu {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: white;
+        }
+        .has_sub:hover > .sub_sub_menu {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <!--header area start-->
@@ -278,11 +305,35 @@
                                                 @endforeach
                                             </ul>
                                         </li> --}}
-                                        @foreach($productType as $value)
+
+                                        <li>
+                                            <a class="active" href="javascript:void(0)">Ecu Soft <i class="fa fa-angle-down"></i></a>
+
+                                            <ul class="sub_menu">
+                                                @foreach($category as $cat)
+                                                    <li class="has_sub">
+                                                        <a href="javascript:void(0)">{{ $cat->name }} <i class="fa fa-angle-right"></i></a>
+
+                                                        @if($cat->subCategory->count() > 0)
+                                                            <ul class="sub_sub_menu">
+                                                                @foreach($cat->subCategory as $sub)
+                                                                    <li>
+                                                                        <a href="#">{{ $sub->name }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+
+
+                                        {{-- @foreach($productType as $value)
                                             <li>
                                                 <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a>
                                             </li>
-                                        @endforeach
+                                        @endforeach --}}
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
                                     </ul>
                                 </nav>

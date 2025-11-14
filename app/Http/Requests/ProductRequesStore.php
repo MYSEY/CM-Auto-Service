@@ -26,7 +26,6 @@ class ProductRequesStore extends FormRequest
             'product_type_id'=>'required|integer',
             'product_photo'=>'required',
             'price'=>'required',
-            'year'=>'required',
             'category_id'=>'required|integer',
             'sub_category_id'=>'required|integer',
         ];

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->integer('sub_category_id')->unsigned();
             $table->string('name');
             $table->text('description');
-            $table->string('product_photo');
+            $table->string('product_photo')->nullable();
             $table->float('price')->default(0);
-            $table->string('year');
+            $table->string('year')->nullable();
             $table->string('delivery_note')->nullable();
             $table->float('discount_price')->default(0);
             $table->text('slug');

@@ -104,14 +104,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="year">Year</label>
-                                    <span class="text-danger">*</span>
                                     <select class="form-control" id="year" name="year">
                                         <option value="">Please choose year</option>
                                         @for ($year = 2000; $year <= 2054; $year++)
                                             <option value="{{ $year }}" {{ $data->year == $year ? 'selected' : '' }}>{{ $year }}</option>
                                         @endfor
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('year') !!}</p>
                                 </div>
                             </div>
                         </div>
