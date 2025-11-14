@@ -38,7 +38,7 @@
                             <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                         </div>
                         <div class="call_support">
-                            <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us: <a href="tel:0314866777">0314866777</a></span></p>
+                            <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us: <a href="tel:+8550314866777">+8550314866777</a></span></p>
                         </div>
                         <div class="header_account">
                             <ul>
@@ -282,7 +282,7 @@
 
                         <div class="col-lg-3">
                             <div class="call_support text-right">
-                                <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us:  <a href="tel:0314866777">0314866777</a></span></p>
+                                <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us:  <a href="tel:+8550314866777">+8550314866777</a></span></p>
                             </div>
                         </div>
                     </div>
