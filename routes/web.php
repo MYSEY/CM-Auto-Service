@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('product-type', ProductTypeController::class);
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
-     Route::resource('slide', SliderController::class);
+    Route::resource('slide', SliderController::class);
 
     Route::post('admins/slide/change/status/{id}', [SliderController::class, 'changeStatus'])->name('admins.slide.change.status');
 

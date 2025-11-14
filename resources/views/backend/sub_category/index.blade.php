@@ -1,14 +1,10 @@
 @extends('layouts.backend.admin')
 
 @section('content')
-    {{-- 💡 BREADCRUMBS: កែសម្រួល URL និង Text --}}
     <ol class="breadcrumb page-breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url('admins/dashboard') }}">@lang('lang.dashboard')</a></li>
         <li class="breadcrumb-item active">Product Sub Categories</li>
-        <li class="breadcrumb-item active">@lang('lang.index')</li>
     </ol>
-
-    {{-- 💡 ពិនិត្យមើលសារជូនដំណឹង (Success/Error) --}}
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {!! session('success') !!}

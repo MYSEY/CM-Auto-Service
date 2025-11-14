@@ -77,25 +77,16 @@ class ProductTypeController extends Controller
      */
     public function update(Request $request, ProductType $productType)
     {
-        $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
         DB::beginTransaction();
-
         try {
             $productType->update([
                 'name'        => $request->name,
                 'description' => $request->description,
                 'updated_by'  => Auth::id(),
             ]);
-
             DB::commit();
-
             Toastr::success('Product type updated successfully!', 'Success');
             return redirect()->route('product-type.index');
-
         } catch (\Exception $e) {
             DB::rollBack();
             Toastr::error('Product type update failed: ' . $e->getMessage(), 'Error');

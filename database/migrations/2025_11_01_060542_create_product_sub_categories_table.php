@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->integer('product_category_id')->nullable();
             $table->string('name');
-            $table->string('serial_number');
+            $table->string('serial_number')->nullable();
             $table->string('description', 200)->nullable();
              $table->boolean('is_active')->default(true);
             $table->integer('created_by')->nullable();

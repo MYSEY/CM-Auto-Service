@@ -19,9 +19,7 @@ class ProductCategoryController extends Controller
     {
         $perPageOptions = [10, 30, 50, 100];
         $perPage = $request->input('per_page', 2);
-         $data = ProductCategory::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
-
-        // $data = ProductCategory::all();
+        $data = ProductCategory::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
         return view('backend.category.index',compact('data', 'perPage', 'perPageOptions'));
     }
 
@@ -30,7 +28,7 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-         return view('backend.category.create');
+        return view('backend.category.create');
     }
 
     /**
@@ -89,14 +87,12 @@ class ProductCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        {
-                try{
-                    $data = ProductCategory::find($id);
-                    return view('backend/category.edit',compact('data'));
-                }catch(\Exception $e){
-                    return response()->json(['error'=>$e->getMessage()]);
-                }
-            }
+        try{
+            $data = ProductCategory::find($id);
+            return view('backend/category.edit',compact('data'));
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 
     /**
@@ -105,9 +101,7 @@ class ProductCategoryController extends Controller
     public function update(Request $request, string $id)
     {
         try{
-
             $data = $request->all();
-
             $data['name']   = $request->name;
             $data['description']    = $request->description;
             $data['slug']    = $request->slug;
@@ -115,7 +109,6 @@ class ProductCategoryController extends Controller
             $data['updated_by'] = Auth::user()->id;
             $category = ProductCategory::find($request->id);
             $category->update($data);
-
             DB::commit();
             Toastr::success('Updated category successfully.','Success');
             return redirect('admins/category');
