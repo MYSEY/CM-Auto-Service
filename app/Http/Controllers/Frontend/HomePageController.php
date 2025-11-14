@@ -15,20 +15,20 @@ class HomePageController extends Controller
     public function index(){
         $company = Company::first();
         $product = Product::with(['category','subCategory'])->paginate(10);
-        $category = ProductCategory::all();
+        $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         return view('frontends.home_page',compact('company','product','category','productType'));
     }
     public function showLoginForm(){
         $company = Company::first();
-        $category = ProductCategory::all();
+        $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         return view('frontends.login',compact('company','category','productType'));
     }
     public function productDetail(Request $request){
         $productDetail = Product::with(['productImage','productType','category','subCategory'])->where('id',$request->id)->first();
         $company = Company::first();
-        $category = ProductCategory::all();
+        $category = ProductCategory::with('subCategory')->get();
         $product = Product::paginate(9);
         $productType = ProductType::all();
        return view('frontends.product_detail',compact('product','productDetail','company','category','productType'));
@@ -75,7 +75,7 @@ class HomePageController extends Controller
     // ... other methods
 
         $company = Company::first();
-        $category = ProductCategory::all();
+        $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         $product = $query->paginate(9);
         return view('frontends.home_page',compact('company','product','category','productType'));

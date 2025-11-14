@@ -238,17 +238,26 @@
             <div class="header_bottom sticky-header">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class=" col-lg-3">
+                        <div class="col-lg-3">
                             <div class="categories_menu">
-                                <div class="categories_title">
+                                <div class="categories_title active">
                                     <h2 class="categori_toggle">ALL CATEGORIES</h2>
                                 </div>
                                 <div class="categories_menu_toggle">
-                                    <ul>
-                                        @foreach($category as $cat)
-                                            <li class="menu_item_children"><a href="javascript:void(0)">{{$cat->name}}</a></li>
-                                        @endforeach
-                                    </ul>
+                                    @foreach($category as $cat)
+                                        <ul>
+                                            <li class="menu_item_children">
+                                                <a href="#">{{$cat->name}} <i class="fa fa-angle-right"></i><span class="expand"></span></a>
+                                                <ul class="categories_mega_menu column_2">
+                                                    @foreach($cat->subCategory as $sub)
+                                                        <li>
+                                                            <li class="menu_item_children"><a href="#">{{$sub->name}}<span class="expand"></span></a></li>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
