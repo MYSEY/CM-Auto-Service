@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\CartController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\AddressController;
 use App\Http\Controllers\Backend\CompanyController;
 use App\Http\Controllers\Backend\ProductController;
@@ -65,6 +66,9 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('product-type', ProductTypeController::class);
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
+     Route::resource('slide', SliderController::class);
+
+    Route::post('admins/slide/change/status/{id}', [SliderController::class, 'changeStatus'])->name('admins.slide.change.status');
 
     Route::get('province', [AddressController::class, 'province']);
     Route::post('district', [AddressController::class, 'district']);

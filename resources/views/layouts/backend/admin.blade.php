@@ -182,7 +182,8 @@
                                 <ul>
                                     </li>
                                     <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
+                                        <li class="@if (in_array(Request::instance()->segment(2), ['slide'])) active @endif">
+                                        <a href="{{ url('admins/slide') }}" title="Alerts" data-filter-tags="Slider">
                                             <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Slider</span>
                                         </a>
                                     </li>
