@@ -324,7 +324,10 @@
                                                                     <ul class="sub_sub_menu">
                                                                         @foreach($category->subCategory as $sub)
                                                                             <li>
-                                                                                <a href="#">{{ $sub->name }}</a>
+                                                                                {{-- <a href="#">{{ $sub->name }}</a> --}}
+                                                                                <a href="{{ route('product.suc-category.filter', ['sub_category_id' => $sub->id]) }}">
+                                                                                    {{ $sub->name }}
+                                                                                </a>
                                                                             </li>
                                                                         @endforeach
                                                                     </ul>

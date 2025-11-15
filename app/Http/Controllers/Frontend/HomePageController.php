@@ -61,4 +61,21 @@ class HomePageController extends Controller
         $product = $query->paginate(9);
         return view('frontends.home_page',compact('company','product','category','productType'));
     }
+    public function filter($id){
+        $product = Product::with(['productImage'])->where('product_type_id',$id)->paginate(9);
+        $company = Company::first();
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+       return view('frontends.ecu_soft',compact('product','company','category','productType'));
+    }
+    public function subCategoryFilter(Request $request)
+    {
+        $subCategoryId = $request->sub_category_id;
+        $product = Product::where('sub_category_id', $subCategoryId)->paginate(9);
+        $company = Company::first();
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+        return view('frontends.home_page',compact('product','company','category','productType'));
+
+    }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\ProductImage;
+use App\Models\Engine;
 use App\Models\ProductType;
+use App\Models\ProductImage;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,6 @@ class Product extends Model
         'price',
         'engine_id',
         'discount_price',
-        'delivery_note',
         'slug',
         'publish',
         'status',

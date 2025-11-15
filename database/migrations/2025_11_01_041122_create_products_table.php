@@ -22,7 +22,6 @@ return new class extends Migration
             $table->text('description');
             $table->string('product_photo')->nullable();
             $table->float('price')->default(0);
-            $table->string('delivery_note')->nullable();
             $table->float('discount_price')->default(0);
             $table->text('slug');
             $table->boolean('publish')->default(1);

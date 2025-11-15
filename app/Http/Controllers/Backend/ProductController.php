@@ -229,12 +229,4 @@ class ProductController extends Controller
             return response()->json(['msg' => 'error', 'error' => $e->getMessage()]);
         }
     }
-
-    public function filter($id){
-        $product = Product::with(['productImage'])->where('product_type_id',$id)->paginate(9);
-        $company = Company::first();
-        $category = ProductCategory::all();
-        $productType = ProductType::all();
-       return view('frontends.ecu_soft',compact('product','company','category','productType'));
-    }
 }
