@@ -146,7 +146,7 @@
                                     <span class="nav-link-text">Contact</span>
                                 </a>
                             </li>
-                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-type'])) active @endif">
+                            <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-type','engine'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
                                     <i class="fal fa-cog"></i>
                                     <span class="nav-link-text" data-i18n="nav.product">Product</span>
@@ -170,6 +170,11 @@
                                     <li class="@if (in_array(Request::instance()->segment(2), ['sub-category'])) active @endif">
                                         <a href="{{ url('admins/sub-category') }}" title="Alerts" data-filter-tags="Sub Category alerts">
                                             <span class="nav-link-text" data-i18n="nav.Product Category">Sub Category</span>
+                                        </a>
+                                    </li>
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['engine'])) active @endif">
+                                        <a href="{{ url('admins/engine') }}" title="Alerts" data-filter-tags="engine alerts">
+                                            <span class="nav-link-text" data-i18n="nav.engine">Engine</span>
                                         </a>
                                     </li>
                                 </ul>

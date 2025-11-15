@@ -8,17 +8,14 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-    * php artisan migrate:refresh --path=database/migrations/2025_11_01_060542_create_product_sub_categories_table.php
-  */
+     */
     public function up(): void
     {
-        Schema::create('product_sub_categories', function (Blueprint $table) {
+        Schema::create('engines', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_category_id')->nullable();
+            $table->integer('sub_category_id')->nullable();
             $table->string('name');
-            $table->string('serial_number')->nullable();
-            $table->string('description', 200)->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->string('slug');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->dateTime('deleted_at')->nullable();
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_sub_categories');
+        Schema::dropIfExists('engines');
     }
 };

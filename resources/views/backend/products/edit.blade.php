@@ -75,10 +75,10 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="Category">Category</label>
+                                    <label for="Category">Make</label>
                                     <span class="text-danger">*</span>
                                     <select class="form-control" id="category_id" name="category_id">
-                                        <option value="">Please choose ctegories</option>
+                                        <option value="">Please choose make</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -88,10 +88,10 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="Category">Sub Category</label>
+                                    <label for="Model">Model</label>
                                     <span class="text-danger">*</span>
                                     <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
-                                        <option value="">Please choose sub ctegories</option>
+                                        <option value="">Please choose model</option>
                                         @foreach($sub_category as $item)
                                             <option value="{{ $item->id }}" {{ $data->sub_category_id == $item->id ? 'selected' : '' }}>
                                                 {{ $item->name }}
@@ -103,12 +103,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="year">Year</label>
-                                    <select class="form-control" id="year" name="year">
-                                        <option value="">Please choose year</option>
-                                        @for ($year = 2000; $year <= 2054; $year++)
-                                            <option value="{{ $year }}" {{ $data->year == $year ? 'selected' : '' }}>{{ $year }}</option>
-                                        @endfor
+                                    <label for="Engine">Engine</label>
+                                    <select class="form-control engine_id" id="engine_id" name="engine_id">
+                                        <option value="">Please choose engine</option>
+                                        @foreach($engine as $item)
+                                            <option value="{{ $item->id }}" {{ $data->engine_id == $item->id ? 'selected' : '' }}>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

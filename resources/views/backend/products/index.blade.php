@@ -22,17 +22,16 @@
                                         <thead class="">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Product photo</th>
+                                                <th>ProductPhoto</th>
                                                 <th>Name</th>
-                                                <th>Product Type</th>
+                                                <th>ProductType</th>
                                                 <th>Category</th>
-                                                <th>Sub Category</th>
-                                                <th>Serial Number</th>
-                                                <th>Year</th>
+                                                <th>SubCategory</th>
+                                                <th>Engine</th>
+                                                <th>SerialNumber</th>
                                                 <th>Description</th>
                                                 <th>Price</th>
-                                                <th>Discount price</th>
-                                                <th>Delivery note</th>
+                                                <th>DiscountPrice</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -50,12 +49,11 @@
                                                     <td>{{$item->productType ? $item->productType->name : ''}}</td>
                                                     <td>{{ $item->category ? $item->category->name : '' }}</td>
                                                     <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
+                                                    <td>{{ $item->proEngine ? $item->proEngine->name:''}}</td>
                                                     <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
-                                                    <td>{{ $item->year}}</td>
                                                     <td>{!! $item->description !!}</td>
                                                     <td>{{$item->PriceFormat}}</td>
                                                     <td>{{$item->DiscountPriceFormat}}</td>
-                                                    <td>{{$item->delivery_note}}</td>
                                                     <td>
                                                         <select class="form-control" id="btnStatus">
                                                             <option value="1" {{ $item->publish==1 ? 'selected' : '' }}>Publish</option>

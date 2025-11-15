@@ -26,7 +26,7 @@ class Product extends Model
         'description',
         'product_photo',
         'price',
-        'year',
+        'engine_id',
         'discount_price',
         'delivery_note',
         'slug',
@@ -40,6 +40,9 @@ class Product extends Model
     }
     public function subCategory(){
         return $this->belongsTo(ProductSubCategory::class,'sub_category_id');
+    }
+    public function proEngine(){
+        return $this->belongsTo(Engine::class,'engine_id');
     }
     public function productImage(){
         return $this->hasMany(ProductImage::class,'product_id','id');

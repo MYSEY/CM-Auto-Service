@@ -56,10 +56,10 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="Category">Category</label>
+                                    <label for="Make">Make</label>
                                     <span class="text-danger">*</span>
                                     <select class="form-control" id="category_id" name="category_id">
-                                        <option value="">Please choose ctegories</option>
+                                        <option value="">Please choose make</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
@@ -69,22 +69,19 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="Category">Sub Category</label>
+                                    <label for="Model">Model</label>
                                     <span class="text-danger">*</span>
                                     <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
-                                        <option value="">Please choose sub ctegories</option>
+                                        <option value="">Please choose model</option>
                                     </select>
                                     <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="year">Year</label>
-                                    <select class="form-control" id="year" name="year">
-                                        <option value="">Please choose year</option>
-                                        @for ($year = 2000; $year <= 2054; $year++)
-                                            <option value="{{ $year }}">{{ $year }}</option>
-                                        @endfor
+                                    <label for="Engine">Engine</label>
+                                    <select class="form-control engine_id" id="engine_id" name="engine_id">
+                                        <option value="">Please choose engine</option>
                                     </select>
                                 </div>
                             </div>
@@ -145,6 +142,25 @@
                         $.each(response.data, function(index, item)
                         {
                             $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                });
+            });
+            $(document).on('change','#sub_category_id',function(){
+                var sub_category_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('admins/product/sub-category/onchange') }}",
+                    data: {
+                        sub_category_id:sub_category_id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        $(".engine_id").empty();
+                        $(".engine_id").empty().append('<option value="">Please Select</option>');
+                        $.each(response.data, function(index, item)
+                        {
+                            $(".engine_id").append('<option value="' + item.id + '">' + item.name + '</option>');
                         });
                     }
                 });

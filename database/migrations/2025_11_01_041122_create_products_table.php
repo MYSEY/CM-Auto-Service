@@ -17,11 +17,11 @@ return new class extends Migration
             $table->integer('product_type_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->integer('sub_category_id')->unsigned();
+            $table->integer('engine_id')->nullable();
             $table->string('name');
             $table->text('description');
             $table->string('product_photo')->nullable();
             $table->float('price')->default(0);
-            $table->string('year')->nullable();
             $table->string('delivery_note')->nullable();
             $table->float('discount_price')->default(0);
             $table->text('slug');

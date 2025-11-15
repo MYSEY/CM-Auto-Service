@@ -2,51 +2,51 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Engine;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\ProductCategory;
-use Illuminate\Validation\Rule;
 use App\Models\ProductSubCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ProductSubCategoryRequest;
 
-class ProductSubcategoryController extends Controller
+class EngineController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $data = ProductSubCategory::with('category')->get();
-        return view('backend.sub_category.index', compact('data'));
+        $data = Engine::with('subCategory')->get();
+        return view('backend.engines.index',compact('data'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $categories = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
-        // Pass the data to the view using compact()
-        return view('backend.sub_category.create', compact('categories'));
+        $subCategory = ProductSubCategory::all();
+        return view('backend.engines.create',compact('subCategory'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductSubCategoryRequest $request)
+    public function store(Request $request)
     {
         try {
             $data = $request->all();
             $data['created_by'] = Auth::id();
-            ProductSubCategory::create($data);
+            $data['slug']=Str::slug($request->name,'-');
+            Engine::create($data);
             DB::commit();
-            Toastr::success('Create Sub Category successfully.','Success');
-            return redirect('admins/sub-category');
+            Toastr::success('Create Engine successfully.','Success');
+            return redirect('admins/engine');
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('Create Sub Category fail','Error');
+            Toastr::error('Create Engine fail','Error');
             return redirect()->back();
         }
     }
@@ -64,43 +64,37 @@ class ProductSubcategoryController extends Controller
      */
     public function edit(string $id)
     {
-       try {
-            $data = ProductSubCategory::findOrFail($id);
-            $categories = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
-            return view('backend.sub_category.edit', compact('categories', 'data'));
+        try {
+            $data = Engine::findOrFail($id);
+            $subCategory = ProductSubCategory::all();
+            return view('backend.engines.edit', compact('subCategory', 'data'));
         } catch (\Exception $e) {
             Toastr::error('Sub-Category not found or an error occurred.','Error');
             return redirect()->back();
         }
     }
 
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        DB::beginTransaction();
         try {
             $data = $request->all();
-            $data['product_category_id']   = $request->product_category_id;
+            $data['sub_category_id']   = $request->sub_category_id;
             $data['name']    = $request->name;
-            $data['serial_number']    = $request->serial_number;
-            $data['description']    = $request->description;
-            $data['is_active']    = $request->is_active;
             $data['updated_by'] = Auth::user()->id;
-            $subCategory = ProductSubCategory::find($id);
-            $subCategory->update($data);
+            $engine = Engine::find($id);
+            $engine->update($data);
             DB::commit();
-            Toastr::success('Product Sub Category updated successfully!', 'Success');
-            return redirect('admins/sub-category');
+            Toastr::success('Product Engine updated successfully!', 'Success');
+            return redirect('admins/engine');
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Update Product Sub-Category fail.','Error');
+            Toastr::error('Update Product Engine fail.','Error');
             return redirect()->back()->withInput();
         }
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -108,7 +102,7 @@ class ProductSubcategoryController extends Controller
     public function destroy(string $id)
     {
         try{
-            $data = ProductSubCategory::find($id);
+            $data = Engine::find($id);
             $data->delete();
             return response()->json(['mg'=>'success'], 200);
         }catch(\Exception $e){

@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductRequesStore;
+use App\Models\Engine;
 
 class ProductController extends Controller
 {
@@ -23,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::with(['category','subCategory','productType'])->get();
+        $data = Product::with(['category','subCategory','productType','proEngine'])->get();
         return view('backend.products.index',compact('data'));
     }
 
@@ -99,7 +100,8 @@ class ProductController extends Controller
             $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
             $producttype = ProductType::all();
             $sub_category = ProductSubCategory::where('product_category_id', $data->category_id)->get();
-            return view('backend.products.edit',compact('data','category','sub_category','producttype'));
+            $engine = Engine::where('sub_category_id', $data->sub_category_id)->get();
+            return view('backend.products.edit',compact('data','category','sub_category','producttype','engine'));
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Users fail','Error');
@@ -136,7 +138,7 @@ class ProductController extends Controller
                 'name'             => $request->name,
                 'slug'             => Str::slug($request->name, '-'),
                 'description'      => $request->description,
-                'year'          => $request->year,
+                'engine_id'          => $request->engine_id,
                 'price'            => $request->price,
                 'discount_price'   => $request->discount_price,
                 'delivery_note'    => $request->delivery_note,
@@ -202,6 +204,16 @@ class ProductController extends Controller
             $dataCategory = ProductSubCategory::where('product_category_id',$request->category_id)->get();
             return response()->json([
                 'data'=>$dataCategory,
+            ]);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+    public function onchangeSubCagegory(Request $request){
+        try{
+            $datasubCategory = Engine::where('sub_category_id',$request->sub_category_id)->get();
+            return response()->json([
+                'data'=>$datasubCategory,
             ]);
         }catch(\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
