@@ -49,6 +49,7 @@ Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
 Route::get('frontend/product/filter/{id}', [HomePageController::class, 'filter'])->name('product.filter');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
+Route::get('product/category/filter', [HomePageController::class, 'productCategoryFilter'])->name('product.category.filter');
 Route::get('product/suc-category/filter', [HomePageController::class, 'subCategoryFilter'])->name('product.suc-category.filter');
 
 

@@ -317,14 +317,13 @@
                                                         @php $category = $product->category; @endphp
                                                         @if ($category)
                                                             <li class="has_sub">
-                                                                <a href="javascript:void(0)">
+                                                                <a href="{{ route('product.category.filter', ['category_id' => $category->id]) }}">
                                                                     {{ $category->name }} <i class="fa fa-angle-right"></i>
                                                                 </a>
                                                                 @if($category->subCategory->count() > 0)
                                                                     <ul class="sub_sub_menu">
                                                                         @foreach($category->subCategory as $sub)
                                                                             <li>
-                                                                                {{-- <a href="#">{{ $sub->name }}</a> --}}
                                                                                 <a href="{{ route('product.suc-category.filter', ['sub_category_id' => $sub->id]) }}">
                                                                                     {{ $sub->name }}
                                                                                 </a>
