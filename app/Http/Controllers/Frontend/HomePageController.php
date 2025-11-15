@@ -55,26 +55,6 @@ class HomePageController extends Controller
             });
         }
 
-        {
-        // 1. Fetch main sliders (type 'main' and status '1' for published)
-        $mainSliders = Slider::where('type', 'main')
-                             ->where('status', 1)
-                             ->orderBy('id', 'desc')
-                             ->get();
-
-        // 2. Fetch other types of sliders/data if needed (example)
-        $bannerSliders = Slider::where('type', 'banner')
-                               ->where('status', 2)
-                               ->orderBy('id', 'asc')
-                               ->get();
-
-        // 3. Return the view, compacting the data
-        return view('frontends.home_page', compact('mainSliders', 'bannerSliders'));
-        // ត្រូវប្តូរ 'frontend.home.index' ទៅជាឈ្មោះ View របស់អ្នក
-    }
-
-    // ... other methods
-
         $company = Company::first();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();

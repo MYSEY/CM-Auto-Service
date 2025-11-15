@@ -51,8 +51,8 @@
                                 <h3>{{ $productDetail->category->name }} {{ $productDetail->subCategory->name }} {{ $productDetail->subCategory->serial_number }} {{ $productDetail->year }}</h3>
 
                                 <div class="price_box">
-                                    <span class="old_price">${{ number_format($productDetail->price,2) }}</span>
-                                    <span class="current_price">${{ number_format($productDetail->price - $productDetail->discount_price,2) }}</span>
+                                    {{-- <span class="old_price">${{ number_format($productDetail->price,2) }}</span> --}}
+                                    <span class="current_price">${{ number_format($productDetail->price,2) }}</span>
                                 </div>
                                 <div class="product_desc">
                                     <p>{!! $productDetail->description !!}</p>

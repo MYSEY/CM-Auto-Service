@@ -23,8 +23,6 @@ class ProductRequesStore extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'product_type_id'=>'required|integer',
-            'product_photo'=>'required',
             'price'=>'required',
             'category_id'=>'required|integer',
             'sub_category_id'=>'required|integer',

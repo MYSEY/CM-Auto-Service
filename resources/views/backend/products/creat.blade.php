@@ -26,14 +26,11 @@
                         </div>
                         <div class="form-group">
                             <label for="title">Photo</label>
-                            <span class="text-danger">*</span>
                             <input type="file" name="product_photo" class="form-control" id="image-input">
-                            <p class="text-danger">{!! $errors->first('product_photo') !!}</p>
                         </div>
                         <div class="form-group">
-                            <label for="title">Gallery</label><span class="text-danger">*</span>
+                            <label for="title">Gallery</label>
                             <input type="file" name="gallery[]" class="form-control" required multiple accept="'gallery/*">
-                            <p class="text-danger">{!! $errors->first('gallery') !!}</p>
                         </div>
                         <!-- preview container -->
                         <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"></div>
@@ -98,11 +95,6 @@
                             </select>
                             <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
                         </div>
-                        <div class="form-group">
-                            <label for="delivery_note">Delivery Note</label>
-                            <textarea type="text" rows="10" class="form-control" name="delivery_note" id="delivery_note">{{ old('delivery_note') }}</textarea>
-                        </div>
-
                         <div class="form-group mb-0" style="text-align: right;">
                             <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
                             <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>

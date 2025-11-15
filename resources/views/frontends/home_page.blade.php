@@ -123,8 +123,8 @@
                                                             </ul>
                                                             </div>
                                                             <div class="price_box">
-                                                                <span class="old_price">$320.00</span>
-                                                                <span class="current_price">$120.00</span>
+                                                                {{-- <span class="old_price">${{ $item->price }}</span> --}}
+                                                                <span class="current_price">${{ number_format($item->price,2) }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="action_links">
@@ -171,8 +171,8 @@
                                                                 </ul>
                                                                 </div>
                                                                 <div class="price_box">
-                                                                    <span class="old_price">$320.00</span>
-                                                                    <span class="current_price">$120.00</span>
+                                                                    {{-- <span class="old_price">$320.00</span> --}}
+                                                                    <span class="current_price">${{ number_format($item->price,2) }}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="action_links">

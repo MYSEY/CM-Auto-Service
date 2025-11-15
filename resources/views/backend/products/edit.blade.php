@@ -21,13 +21,8 @@
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ $data->name }}">
                             <p class="text-danger">{!! $errors->first('name') !!}</p>
                         </div>
-                        {{-- <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ $data->description }}</textarea>
-                        </div> --}}
                         <div class="form-group">
                             <label for="Description">Description</label>
-                            <span class="text-danger">*</span>
                             <textarea class="js-summernote form-control" id="saveToLocal" name="description">{{ old('description', $data->description) }}</textarea>
                         </div>
 
@@ -41,9 +36,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="title">Gallery</label><span class="text-danger">*</span>
+                            <label for="title">Gallery</label>
                             <input type="file" name="gallery[]" class="form-control" required multiple accept="'gallery/*">
-                            <p class="text-danger">{!! $errors->first('gallery') !!}</p>
                             <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
                                 @foreach ($data->productImage as $item)
                                     <img
@@ -54,15 +48,12 @@
                                 @endforeach
                             </div>
                         </div>
-                        <!-- preview container -->
                         <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"></div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Price">Price</label>
-                                    <span class="text-danger">*</span>
                                     <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" value="{{ $data->price }}">
-                                    <p class="text-danger">{!! $errors->first('price') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -126,10 +117,6 @@
                                 @endforeach
                             </select>
                             <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="delivery_note">Delivery Note</label>
-                            <textarea type="text" rows="10" class="form-control" name="delivery_note" id="delivery_note">{{ $data->delivery_note }}</textarea>
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">
                             <input type="text" id="id" name="id" value="{{ $data->id }}" hidden>
