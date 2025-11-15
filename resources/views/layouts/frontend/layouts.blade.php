@@ -267,7 +267,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3">
-                            <div class="categories_menu">
+                            {{--  <div class="categories_menu">
                                 <div class="categories_title active">
                                     <h2 class="categori_toggle">ALL CATEGORIES</h2>
                                 </div>
@@ -287,7 +287,7 @@
                                         </ul>
                                     @endforeach
                                 </div>
-                            </div>
+                            </div>  --}}
                         </div>
                         <div class="col-lg-6">
                             <div class="main_menu menu_position text-left">
