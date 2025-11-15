@@ -41,6 +41,7 @@
             left: 100%;
             top: 0;
             background: white;
+            padding: 24px 30px;
         }
         .has_sub:hover > .sub_sub_menu {
             display: block;
@@ -306,28 +307,34 @@
                                             </ul>
                                         </li> --}}
 
-                                        <li>
-                                            <a class="active" href="javascript:void(0)">Ecu Soft <i class="fa fa-angle-down"></i></a>
-
-                                            <ul class="sub_menu">
-                                                @foreach($category as $cat)
-                                                    <li class="has_sub">
-                                                        <a href="javascript:void(0)">{{ $cat->name }} <i class="fa fa-angle-right"></i></a>
-
-                                                        @if($cat->subCategory->count() > 0)
-                                                            <ul class="sub_sub_menu">
-                                                                @foreach($cat->subCategory as $sub)
-                                                                    <li>
-                                                                        <a href="#">{{ $sub->name }}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
+                                        @foreach ($productType as $type)
+                                            <li>
+                                                <a class="active" href="javascript:void(0)">
+                                                    {{ $type->name }} <i class="fa fa-angle-down"></i>
+                                                </a>
+                                                @foreach ($type->products as $product)
+                                                    <ul class="sub_menu">
+                                                        @php $category = $product->category; @endphp
+                                                        @if ($category)
+                                                            <li class="has_sub">
+                                                                <a href="javascript:void(0)">
+                                                                    {{ $category->name }} <i class="fa fa-angle-right"></i>
+                                                                </a>
+                                                                @if($category->subCategory->count() > 0)
+                                                                    <ul class="sub_sub_menu">
+                                                                        @foreach($category->subCategory as $sub)
+                                                                            <li>
+                                                                                <a href="#">{{ $sub->name }}</a>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                @endif
+                                                            </li>
                                                         @endif
-                                                    </li>
+                                                    </ul>
                                                 @endforeach
-                                            </ul>
-                                        </li>
-
+                                            </li>
+                                        @endforeach
 
                                         {{-- @foreach($productType as $value)
                                             <li>

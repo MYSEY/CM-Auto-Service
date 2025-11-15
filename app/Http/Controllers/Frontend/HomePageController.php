@@ -15,9 +15,10 @@ class HomePageController extends Controller
     public function index(){
         $company = Company::first();
         $product = Product::with(['category','subCategory'])->paginate(10);
+        $dataProduct = Product::with(['category','subCategory'])->get();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
-        return view('frontends.home_page',compact('company','product','category','productType'));
+        return view('frontends.home_page',compact('company','product','category','productType','dataProduct'));
     }
     public function showLoginForm(){
         $company = Company::first();
