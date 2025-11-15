@@ -65,8 +65,16 @@
                             </form>
                             <div class="priduct_social">
                                 <ul>
-                                    <li><a class="facebook" href="#" title="facebook"><i class="fa fa-facebook"></i> Like</a></li>
-                                    <li><a class="twitter" href="#" title="twitter"><i class="fa fa-twitter"></i> tweet</a></li>
+                                    <li>
+                                     <a class="Facebook" href="https://www.facebook.com/C.M.Auto.77/">
+                                        <img src="/storage/companys/facebook.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                    </a>
+                                    </li>
+                                    <li>
+                                    <a class="telegram" href="https://t.me/CMAUTO">
+                                        <img src="/storage/companys/telegram.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                    </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

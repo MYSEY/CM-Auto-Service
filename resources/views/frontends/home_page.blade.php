@@ -112,7 +112,7 @@
                                                         <div class="product_content_inner">
                                                             <p class="manufacture_product"><a href="#">Parts</a></p>
                                                             <p class="manufacture_product"><a href="#">{{$item->productType->name}}</a></p>
-                                                            <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
+                                                            <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->price }}</a></h4>
                                                             <div class="product_rating">
                                                             <ul>
                                                                 <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
@@ -122,6 +122,7 @@
                                                                 <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
                                                             </ul>
                                                             </div>
+
                                                             <div class="price_box">
                                                                 {{-- <span class="old_price">${{ $item->price }}</span> --}}
                                                                 <span class="current_price">${{ number_format($item->price,2) }}</span>
@@ -278,7 +279,11 @@
                             <div class="footer_social">
                                 <ul>
                                    <li><a class="facebook" href="https://www.facebook.com/C.M.Auto.77/"><i class="icon-facebook"></i></a></li>
-                                   <li><a class="twitter" href="https://t.me/CMAUTO"><i class="icon-twitter2"></i></a></li>
+                                   <li>
+                                    <a class="telegram" href="https://t.me/CMAUTO">
+                                        <img src="/storage/companys/telegram.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                    </a>
+                                </li>
                                </ul>
                            </div>
                         </div>

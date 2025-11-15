@@ -16,6 +16,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductRequesStore;
 use App\Models\Engine;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -228,5 +229,41 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json(['msg' => 'error', 'error' => $e->getMessage()]);
         }
+    }
+    public function deletePhoto($id)
+    {
+        $product = Product::findOrFail($id);
+        $photoPath = public_path('images/products/' . $product->product_photo);
+
+        if (File::exists($photoPath) && $product->product_photo) {
+            File::delete($photoPath);
+        }
+
+        $product->product_photo = null;
+        $product->save();
+
+        // Return JSON response for AJAX
+        return response()->json([
+            'success' => true,
+            'message' => 'Main photo removed successfully.'
+        ]);
+    }
+
+    public function deleteGalleryImage($id)
+    {
+        $image = ProductImage::findOrFail($id);
+        $imagePath = public_path('images/products/gallery/' . $image->path_name);
+
+        if (File::exists($imagePath) && $image->path_name) {
+            File::delete($imagePath);
+        }
+
+        $image->delete();
+
+        // Return JSON response for AJAX
+        return response()->json([
+            'success' => true,
+            'message' => 'Gallery image deleted successfully.'
+        ]);
     }
 }

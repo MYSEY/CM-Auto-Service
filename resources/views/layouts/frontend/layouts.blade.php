@@ -290,7 +290,7 @@
                             </div>  --}}
                         </div>
                         <div class="col-lg-6">
-                            <div class="main_menu menu_position text-left">
+                            <div class="main_menu menu_position text-nowrap">
                                 <nav>
                                     <ul>
                                         <li>
