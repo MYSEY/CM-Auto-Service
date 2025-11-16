@@ -72,17 +72,19 @@ class CartController extends Controller
         ]);
     }
 
-    public function loadMiniCart()
+   public function loadMiniCart()
     {
-        $cart = session()->get('cart', []);
-        dd($cart);
-        return view('frontends.cart.mini_cart_items', compact('cart'))->render();
+        // ១. ទាញយកទិន្នន័យ Cart (ឧទាហរណ៍ ដោយប្រើ Session ឬ Database)
+        $cartItems = session('cart', []);
 
-        // $cart = session()->get('cart', []);
-        // $product = Product::paginate(9);
-        // $company = Company::first();
-        // $category = ProductCategory::all();
-        // $productType = ProductType::all();
-        // return view('layouts.frontend.layouts',compact('cart','product','company','category','productType'))->render();
+        // ២. បញ្ចូលទិន្នន័យទៅក្នុង View (ឧទាហរណ៍៖ mini_cart_view.blade.php)
+        $miniCartHtml = view('path.to.mini_cart_view', compact('cartItems'))->render();
+
+        // ៣. ត្រឡប់ទិន្នន័យជា JSON ទៅកាន់ AJAX
+        return response()->json([
+            'success' => true,
+            'html' => $miniCartHtml, // HTML ដែលត្រូវបាន render រួច
+            'count' => count($cartItems)
+        ]);
     }
 }

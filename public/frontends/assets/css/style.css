@@ -11309,3 +11309,147 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: #222222;
   color: #ffffff;
 }
+/* ====================================================================== */
+/* ១. IMAGE STYLES - រូបភាពធំ (បង្ខំទំហំ 1:1) - (រក្សាទុកដូចដើម) */
+/* ====================================================================== */
+
+/* Class Wrapper របស់រូបភាព */
+.product-card .product-image-wrapper {
+    width: 100% !important;
+    /* បង្ខំ Aspect Ratio 1:1 សម្រាប់រូបភាព */
+    padding-bottom: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
+    margin-bottom: 5px !important; /* កាត់បន្ថយគម្លាតក្រោមរូបភាព */
+    border: none !important;
+    box-shadow: none !important;
+    line-height: 0 !important;
+}
+
+/* រូបភាព (IMG Tag) នៅក្នុង Wrapper នេះ */
+.product-card .product-image-wrapper img {
+    /* រក្សាការកំណត់ដដែល */
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    object-fit: cover !important;
+    transform: none !important;
+    transition: none !important;
+    max-width: 100% !important;
+}
+
+
+/* ====================================================================== */
+/* ២. PRODUCT CARD & GRID - 6 ជួរថេរ និង Responsive */
+/* ====================================================================== */
+
+/* ធានាការតម្រឹម Grid ទាំងមូលនៅចំកណ្តាលនៃទំព័រ */
+.tab-pane .row {
+    display: flex;
+    justify-content: center;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Grid Container - សម្រាប់ Tab All និង Tab ប្រភេទ */
+.product-grid-container {
+    display: grid !important;
+
+    /* ---------------------------------------------------- */
+    /* **ការផ្លាស់ប្តូរសំខាន់៖ កំណត់ ៦ ជួរថេរ (សម្រាប់ Desktop)** */
+    /* ---------------------------------------------------- */
+    grid-template-columns: repeat(6, 1fr) !important;
+
+    /* **កែសម្រួល៖ កាត់បន្ថយគម្លាតរវាង Card ឱ្យនៅជិតគ្នា** */
+    gap: 8px !important;
+
+    /* លុប Padding លើ Container ធំ */
+    padding: 5px !important;
+    /* អាចកំណត់ Max-width សម្រាប់ Grid ទាំងមូលបើចង់ */
+    max-width: 1200px;
+}
+
+/* ---------------------------------------------------- */
+/* **Media Queries សម្រាប់ Tablet និង Mobile** */
+/* ---------------------------------------------------- */
+
+/* សម្រាប់ Tablets (768px ដល់ 992px) - ប្តូរទៅ 3 ជួរ */
+@media (max-width: 992px) {
+    .product-grid-container {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 columns */
+    }
+}
+
+/* សម្រាប់ Mobile (តិចជាង 768px) - ប្តូរទៅ 2 ជួរ */
+@media (max-width: 767px) {
+    .product-grid-container {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 columns */
+        gap: 5px !important; /* អាចកាត់បន្ថយគម្លាតបន្ថែមលើ Mobile */
+    }
+}
+
+
+/* Product Card Base Style (Card នីមួយៗ) */
+.product-card {
+    background-color: #ffffff;
+    padding: 8px !important;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    /* លុប max-width ចេញ ព្រោះ Grid 6 ជួរថេរនឹងគ្រប់គ្រងទទឹង Card នីមួយៗ */
+    max-width: none;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+/* សម្រាប់ Mouse Hover (បើចង់បាន) */
+.product-card:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    /* transform: translateY(-2px); */
+}
+
+
+/* ====================================================================== */
+/* ៣. ព័ត៌មានលម្អិត (តម្រឹមចំកណ្តាល) - (រក្សាទុកដូចដើម) */
+/* ====================================================================== */
+
+/* Category/Description */
+.category, .description {
+    font-size: 0.75em !important;
+    line-height: 1.1 !important;
+    margin: 3px 0 2px 0 !important;
+    text-align: center;
+}
+
+/* Product Name */
+.product-name a {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    margin: 4px 0 6px 0 !important;
+    display: block;
+    text-align: center;
+}
+
+/* Price */
+.price-original {
+    font-size: 1em !important;
+    font-weight: bold !important;
+    margin-top: 5px !important;
+    display: block;
+    text-align: center;
+}
+
+/* តម្រឹម Action Links ឲ្យនៅចំកណ្តាល */
+.action_links ul {
+    justify-content: center !important;
+    padding: 0 !important;
+    margin-top: 8px;
+}
+
+

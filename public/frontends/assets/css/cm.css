@@ -1,0 +1,125 @@
+/* ------------------------------------ */
+/* ១. CONTAINER - ផ្ទៃដាក់ Grid ផលិតផល */
+/* ------------------------------------ */
+.product-grid-container {
+    /* ប្រើ Grid ដើម្បីរៀបចំ Card ជាជួរៗ */
+    display: grid;
+    /* ជួរឈរ (Columns)៖ កំណត់ឱ្យមាន Column ច្រើនតាមដែលអាចធ្វើបាន (auto-fit) ដោយទទឹងនីមួយៗមិនតិចជាង 200px */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* គម្លាតរវាង Card */
+    gap: 20px;
+    padding: 10px 0;
+}
+
+/* ------------------------------------ */
+/* ២. PRODUCT CARD - កាតផលិតផលនីមួយៗ */
+/* ------------------------------------ */
+.product-card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* ស្រមោលស្តើង */
+    text-align: left;
+    height: 100%; /* ធានាថាកាតមានកម្ពស់ស្មើគ្នា */
+    transition: transform 0.2s; /* បន្ថែម Effect ពេល Hover */
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ------------------------------------ */
+/* ៣. IMAGE STYLES - រូបភាព */
+/* ------------------------------------ */
+.product-image-wrapper {
+    width: 100%;
+    /* ធ្វើឱ្យ Aspect Ratio 1:1 (ការ៉េ) ដូចរូបភាព ECU */
+    padding-bottom: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.product-image-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ធានាថារូបភាពពេញប្រអប់ */
+    top: 0;
+    left: 0;
+}
+
+/* ------------------------------------ */
+/* ៤. DETAILS STYLES - ព័ត៌មានលម្អិត */
+/* ------------------------------------ */
+.product-details {
+    padding: 5px 0 0;
+}
+
+.product-details > p, .product-details > h4 {
+    margin: 3px 0; /* កំណត់ Margin ឡើងវិញឱ្យតូច */
+}
+
+.category {
+    font-size: 0.8em;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.description {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.product-name a {
+    font-size: 0.95em;
+    color: #000;
+    text-decoration: none;
+    line-height: 1.3;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Rating Stars */
+.rating-stars ul {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    display: flex;
+}
+
+.rating-stars ul li {
+    margin-right: 2px;
+}
+
+.rating-stars ul li i {
+    color: #ccc; /* ពណ៌ប្រផេះសម្រាប់ផ្កាយ outline ទាំងអស់ */
+    font-size: 0.8em;
+}
+
+/* Price */
+.price-original, .price-sale {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.price-original {
+    color: #333; /* ពណ៌ខ្មៅ/ប្រផេះធម្មតា */
+}
+
+.price-sale {
+    color: #dc3545; /* ពណ៌ក្រហមដូចក្នុងរូបភាព (សម្រាប់តម្លៃ Sale) */
+}
+
+/* Action Links (បើចង់លាក់វា) */
+.action_links {
+    margin-top: 10px;
+    text-align: center;
+    /* បើអ្នកចង់លាក់ប៊ូតុងនេះ គ្រាន់តែប្រើ display: none; */
+    /* display: none; */
+}
