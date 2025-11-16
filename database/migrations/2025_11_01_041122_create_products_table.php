@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('product_photo')->nullable();
             $table->float('price')->default(0);
             $table->float('discount_price')->default(0);
+            $table->string('number');
             $table->text('slug');
             $table->boolean('publish')->default(1);
             $table->boolean('status')->default(0);

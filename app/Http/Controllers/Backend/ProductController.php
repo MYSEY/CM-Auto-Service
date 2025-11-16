@@ -142,6 +142,7 @@ class ProductController extends Controller
                 'engine_id'          => $request->engine_id,
                 'price'            => $request->price,
                 'discount_price'   => $request->discount_price,
+                'number'           => $request->number,
                 'delivery_note'    => $request->delivery_note,
                 'updated_by'       => Auth::id(),
             ]);

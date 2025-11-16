@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+    /**​ php artisan migrate:refresh --path=database/migrations/2025_11_15_065316_create_engines_table.php
      * Run the migrations.
      */
     public function up(): void

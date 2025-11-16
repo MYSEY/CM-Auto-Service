@@ -92,10 +92,16 @@
                                     <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" value="{{ $data->price }}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Discount Price">Discount Price</label>
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discount price" value="{{ $data->discount_price }}">
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Number">Number</label>
+                                    <input type="text" class="form-control" name="number" id="number" placeholder="Enter Number" value="{{ $data->number }}">
                                 </div>
                             </div>
                         </div>

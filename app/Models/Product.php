@@ -29,6 +29,7 @@ class Product extends Model
         'price',
         'engine_id',
         'discount_price',
+        'number',
         'slug',
         'publish',
         'status',

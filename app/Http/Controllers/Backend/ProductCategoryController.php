@@ -18,7 +18,7 @@ class ProductCategoryController extends Controller
     public function index(Request $request)
     {
         $perPageOptions = [10, 30, 50, 100];
-        $perPage = $request->input('per_page', 2);
+        $perPage = $request->input('per_page', 10);
         $data = ProductCategory::orderBy('id', 'desc')->paginate($perPage)->withQueryString();
         return view('backend.category.index',compact('data', 'perPage', 'perPageOptions'));
     }

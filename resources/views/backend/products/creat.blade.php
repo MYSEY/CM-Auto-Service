@@ -43,10 +43,16 @@
                                     <p class="text-danger">{!! $errors->first('price') !!}</p>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Discrount Price">Discount Price</label>
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discrount price" value="{{ old('discount_price') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Number">Number</label>
+                                    <input type="text" class="form-control" name="number" id="number" placeholder="Enter Number" value="{{ old('number') }}">
                                 </div>
                             </div>
                         </div>
