@@ -202,6 +202,11 @@
                                         </a>
                                     </div>
                                     <div class="mini_cart_wrapper">
+                                        {{-- <a href="javascript:void(0)" id="cartIcon">
+                                            <i class="icon-shopping-bag2"></i>
+                                            <span class="cart_price">$0.00 <i class="ion-ios-arrow-down"></i></span>
+                                            <span class="cart_count">0</span>
+                                        </a> --}}
                                         <a href="javascript:void(0)" id="cartIcon">
                                             <i class="icon-shopping-bag2"></i>
                                             <span class="cart_price">$0.00 <i class="ion-ios-arrow-down"></i></span>
@@ -218,7 +223,28 @@
                                                         <a href="javascript:void(0)"><i class="icon-x"></i></a>
                                                     </div>
                                                 </div>
-                                                <div class="cart_item">
+                                                @if(!empty($cart) && count($cart) > 0)
+                                                    @foreach ($cart as $item)
+                                                    <div class="cart_item">
+                                                        <div class="cart_img">
+                                                            <a href="#"><img src="{{ asset($item['image']) }}" alt=""></a>
+                                                        </div>
+                                                        <div class="cart_info">
+                                                            <a href="#">{{ $item['name'] }}</a>
+                                                            <p>Qty: {{ $item['quantity'] }} X <span>${{ number_format($item['price'],2) }}</span></p>
+                                                        </div>
+                                                        <div class="cart_remove">
+                                                            <a href="javascript:void(0)" class="removeCart" data-id="{{ $item['id'] }}">
+                                                                <i class="ion-android-close"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                @else
+                                                    <p class="text-center mt-3">Cart is empty</p>
+                                                @endif
+
+                                                {{-- <div class="cart_item">
                                                    <div class="cart_img">
                                                        <a href="#"><img src="{{asset('frontends/assets/img/s-product/product.jpg')}}" alt=""></a>
                                                    </div>
@@ -229,19 +255,7 @@
                                                     <div class="cart_remove">
                                                         <a href="#"><i class="ion-android-close"></i></a>
                                                     </div>
-                                                </div>
-                                                <div class="cart_item">
-                                                   <div class="cart_img">
-                                                       <a href="#"><img src="{{asset('frontends/assets/img/s-product/product2.jpg')}}" alt=""></a>
-                                                   </div>
-                                                    <div class="cart_info">
-                                                        <a href="#">Ras Neque Metus</a>
-                                                         <p>Qty: 1 X <span> $60.00 </span></p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a href="#"><i class="ion-android-close"></i></a>
-                                                    </div>
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="mini_cart_table">
                                                     <div class="cart_total">

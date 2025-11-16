@@ -353,5 +353,18 @@
                 }
             });
         });
+        $(document).on('click', '#cartIcon', function () {
+            $('.mini_cart').toggleClass('open');
+            loadMiniCart(); // Load items each time user opens mini cart
+        });
     });
+    function loadMiniCart() {
+        $.ajax({
+            url: "{{ route('loadMiniCart') }}",
+            type: "GET",
+            success: function (res) {
+                $('.mini_cart_inner').html(res);
+            }
+        });
+    }
 </script>

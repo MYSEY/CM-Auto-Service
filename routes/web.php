@@ -4,9 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Backend\CartController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Frontend\ShopController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Backend\EngineController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\AddressController;
@@ -50,6 +49,7 @@ Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDe
 Route::get('frontend/product/filter/{id}', [HomePageController::class, 'filter'])->name('product.filter');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 Route::post('/add-to-cart-detail', [CartController::class, 'addToCartDetail'])->name('addToCart.Detail');
+Route::get('/load-miniCart', [CartController::class, 'loadMiniCart'])->name('loadMiniCart');
 Route::get('product/category/filter', [HomePageController::class, 'productCategoryFilter'])->name('product.category.filter');
 Route::get('product/suc-category/filter', [HomePageController::class, 'subCategoryFilter'])->name('product.suc-category.filter');
 Route::get('product/engine/filter', [HomePageController::class, 'engineFilter'])->name('product.engine.filter');

@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend;
 
+use App\Models\Company;
 use App\Models\Product;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
@@ -67,5 +70,19 @@ class CartController extends Controller
             'count'  => $totalQty,
             'total'  => $totalPrice,
         ]);
+    }
+
+    public function loadMiniCart()
+    {
+        $cart = session()->get('cart', []);
+        dd($cart);
+        return view('frontends.cart.mini_cart_items', compact('cart'))->render();
+
+        // $cart = session()->get('cart', []);
+        // $product = Product::paginate(9);
+        // $company = Company::first();
+        // $category = ProductCategory::all();
+        // $productType = ProductType::all();
+        // return view('layouts.frontend.layouts',compact('cart','product','company','category','productType'))->render();
     }
 }
