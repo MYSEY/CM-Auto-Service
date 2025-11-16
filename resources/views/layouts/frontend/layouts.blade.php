@@ -35,7 +35,7 @@
         .has_sub {
             position: relative;
         }
-        .sub_sub_menu {
+        .sub_sub_menu1 {
             display: none;
             position: absolute;
             left: 100%;
@@ -43,7 +43,18 @@
             background: white;
             padding: 24px 30px;
         }
-        .has_sub:hover > .sub_sub_menu {
+        .has_sub:hover > .sub_sub_menu1 {
+            display: block;
+        }
+        .sub_sub_menu2 {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: white;
+            padding: 30px 30px;
+        }
+        .has_sub:hover > .sub_sub_menu2 {
             display: block;
         }
     </style>
@@ -312,32 +323,44 @@
                                                 <a class="active" href="javascript:void(0)">
                                                     {{ $type->name }} <i class="fa fa-angle-down"></i>
                                                 </a>
-                                                @foreach ($type->products as $product)
-                                                    <ul class="sub_menu">
-                                                        @php $category = $product->category; @endphp
-                                                        @if ($category)
+                                                @php
+                                                    $categories = $type->products->pluck('category')->unique('id');
+                                                @endphp
+                                                @foreach ($categories as $category)
+                                                    @if ($category)
+                                                        <ul class="sub_menu">
                                                             <li class="has_sub">
                                                                 <a href="{{ route('product.category.filter', ['category_id' => $category->id]) }}">
                                                                     {{ $category->name }} <i class="fa fa-angle-right"></i>
                                                                 </a>
                                                                 @if($category->subCategory->count() > 0)
-                                                                    <ul class="sub_sub_menu">
+                                                                    <ul class="sub_sub_menu1">
                                                                         @foreach($category->subCategory as $sub)
-                                                                            <li>
+                                                                            <li class="has_sub">
                                                                                 <a href="{{ route('product.suc-category.filter', ['sub_category_id' => $sub->id]) }}">
-                                                                                    {{ $sub->name }}
+                                                                                    {{ $sub->name }} <i class="fa fa-angle-right"></i>
                                                                                 </a>
+                                                                                @if($sub->engine->count() > 0)
+                                                                                    <ul class="sub_sub_menu2">
+                                                                                        @foreach($sub->engine as $eng)
+                                                                                            <li>
+                                                                                                <a href="{{ route('product.engine.filter', ['engine_id' => $eng->id]) }}">
+                                                                                                    {{ $eng->name }}
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        @endforeach
+                                                                                    </ul>
+                                                                                @endif
                                                                             </li>
                                                                         @endforeach
                                                                     </ul>
                                                                 @endif
                                                             </li>
-                                                        @endif
-                                                    </ul>
+                                                        </ul>
+                                                    @endif
                                                 @endforeach
                                             </li>
                                         @endforeach
-
                                         {{-- @foreach($productType as $value)
                                             <li>
                                                 <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a>

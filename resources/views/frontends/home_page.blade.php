@@ -114,15 +114,14 @@
                                                             <p class="manufacture_product"><a href="#">{{$item->productType->name}}</a></p>
                                                             <h4 class="product_name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->price }}</a></h4>
                                                             <div class="product_rating">
-                                                            <ul>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                                <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
-                                                            </ul>
+                                                                <ul>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                    <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
+                                                                </ul>
                                                             </div>
-
                                                             <div class="price_box">
                                                                 {{-- <span class="old_price">${{ $item->price }}</span> --}}
                                                                 <span class="current_price">${{ number_format($item->price,2) }}</span>
@@ -130,9 +129,12 @@
                                                         </div>
                                                         <div class="action_links">
                                                             <ul>
-                                                                <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
+                                                                <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
+                                                                    <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
+                                                                </li>
+                                                                {{-- <li class="add_to_cart addToCart"><a href="javascript:void(0)" data-id="{{ $item->id }}" title="Add to cart">Add to cart</a></li> --}}
+                                                                {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
+                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li> --}}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -178,9 +180,11 @@
                                                             </div>
                                                             <div class="action_links">
                                                                 <ul>
-                                                                    <li class="add_to_cart"><a href="cart.html" title="Add to cart">Add to cart</a></li>
-                                                                    <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                    <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li>
+                                                                    <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
+                                                                        <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
+                                                                    </li>
+                                                                    {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
+                                                                    <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li> --}}
                                                                 </ul>
                                                             </div>
                                                         </div>

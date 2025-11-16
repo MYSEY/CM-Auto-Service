@@ -60,7 +60,7 @@
                                 <div class="product_variant quantity">
                                     <label>quantity</label>
                                     <input min="1" max="100" value="1" type="number">
-                                    <button class="button" type="submit">add to cart</button>
+                                    <button class="button addToCart" type="button" data-id="{{ $productDetail->id }}">add to cart</button>
                                 </div>
                             </form>
                             <div class="priduct_social">
@@ -199,3 +199,34 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function(){
+        $(document).on('click', '.addToCart', function (e) {
+            e.preventDefault(); // ⛔ stop form submit
+            let id = $(this).data('id');  // now this will work
+            let qty = $('input[type="number"]').val(); // optional quantity
+
+            $.ajax({
+                url: "{{ route('addToCart.Detail') }}",
+                type: "POST",
+                data: {
+                    id: id,
+                    qty: qty, // send quantity too
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (res) {
+                    if (res.status === 'success') {
+                        $('.cart_count').text(res.count);
+                        $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
+                    } else {
+                        alert(res.message);
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong!');
+                }
+            });
+        });
+    });
+</script>

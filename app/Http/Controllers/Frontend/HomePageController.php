@@ -85,4 +85,12 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         return view('frontends.home_page',compact('product','company','category','productType'));
     }
+    public function engineFilter(Request $request)
+    {
+        $product = Product::where('engine_id', $request->engine_id)->paginate(9);
+        $company = Company::first();
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+        return view('frontends.home_page',compact('product','company','category','productType'));
+    }
 }
