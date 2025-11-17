@@ -1,125 +1,153 @@
-/* ------------------------------------ */
-/* ១. CONTAINER - ផ្ទៃដាក់ Grid ផលិតផល */
-/* ------------------------------------ */
-.product-grid-container {
-    /* ប្រើ Grid ដើម្បីរៀបចំ Card ជាជួរៗ */
-    display: grid;
-    /* ជួរឈរ (Columns)៖ កំណត់ឱ្យមាន Column ច្រើនតាមដែលអាចធ្វើបាន (auto-fit) ដោយទទឹងនីមួយៗមិនតិចជាង 200px */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    /* គម្លាតរវាង Card */
-    gap: 20px;
-    padding: 10px 0;
+
+/* ====================================================================== */
+/* ១. IMAGE STYLES - រូបភាពធំ (បង្ខំទំហំ 1:1) */
+/* ====================================================================== */
+
+/* Class Wrapper របស់រូបភាព */
+.product-card .product-image-wrapper {
+    width: 100% !important;
+    /* បង្ខំ Aspect Ratio 1:1 សម្រាប់រូបភាព */
+    padding-bottom: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
+    margin-bottom: 5px !important;
+    border: none !important;
+    box-shadow: none !important;
+    line-height: 0 !important;
 }
 
-/* ------------------------------------ */
-/* ២. PRODUCT CARD - កាតផលិតផលនីមួយៗ */
-/* ------------------------------------ */
+/* រូបភាព (IMG Tag) នៅក្នុង Wrapper នេះ */
+.product-card .product-image-wrapper img {
+    /* រក្សាការកំណត់ដដែល */
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    object-fit: cover !important;
+    transform: none !important;
+    transition: none !important;
+    max-width: 100% !important;
+}
+
+
+/* ====================================================================== */
+/* ២. PRODUCT CARD & GRID - 6 ជួរថេរ និង Responsive */
+/* ====================================================================== */
+
+/* ធានាការតម្រឹម Grid ទាំងមូលនៅចំកណ្តាលនៃទំព័រ */
+.tab-pane .row {
+    display: flex;
+    justify-content: center;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Grid Container - សម្រាប់ Tab All និង Tab ប្រភេទ */
+.product-grid-container {
+    display: grid !important;
+
+    /* ---------------------------------------------------- */
+    /* **Desktop Default: កំណត់ ៦ ជួរថេរ** */
+    /* ---------------------------------------------------- */
+    grid-template-columns: repeat(6, 1fr) !important;
+
+    /* **កែសម្រួល៖ កាត់បន្ថយគម្លាតរវាង Card ឱ្យនៅជិតគ្នា** */
+    gap: 8px !important;
+
+    /* លុប Padding លើ Container ធំ */
+    padding: 5px !important;
+    /* កំណត់ Max-width សម្រាប់ Grid ទាំងមូល (បើចង់) */
+    max-width: 1200px;
+}
+
+/* ---------------------------------------------------- */
+/* **Media Queries សម្រាប់ Tablet និង Mobile** */
+/* ---------------------------------------------------- */
+
+/* សម្រាប់ Tablets (993px ដល់ 1200px) - ប្តូរទៅ 4 ជួរ (បន្ថែម) */
+@media (max-width: 1200px) {
+    .product-grid-container {
+        grid-template-columns: repeat(4, 1fr) !important; /* 4 columns on medium desktop/large tablet */
+    }
+}
+
+/* សម្រាប់ Tablets (768px ដល់ 992px) - ប្តូរទៅ 3 ជួរ */
+@media (max-width: 992px) {
+    .product-grid-container {
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 columns on tablet */
+    }
+}
+
+/* សម្រាប់ Mobile (តិចជាង 768px) - ប្តូរទៅ 2 ជួរ */
+@media (max-width: 767px) {
+    .product-grid-container {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on mobile */
+        gap: 5px !important; /* កាត់បន្ថយគម្លាតបន្ថែមលើ Mobile */
+        padding: 0 5px !important; /* បន្ថែម padding ឆ្វេងស្តាំបន្តិច */
+    }
+}
+
+/* Product Card Base Style (Card នីមួយៗ) */
 .product-card {
     background-color: #ffffff;
-    padding: 15px;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* ស្រមោលស្តើង */
-    text-align: left;
-    height: 100%; /* ធានាថាកាតមានកម្ពស់ស្មើគ្នា */
-    transition: transform 0.2s; /* បន្ថែម Effect ពេល Hover */
+    padding: 8px !important;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    /* បន្ថយ shadow បន្តិច */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    /* លុប max-width ចេញ */
+    max-width: none;
+    text-align: center;
+    transition: box-shadow 0.2s;
 }
 
+/* សម្រាប់ Mouse Hover (បើចង់បាន) */
 .product-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ------------------------------------ */
-/* ៣. IMAGE STYLES - រូបភាព */
-/* ------------------------------------ */
-.product-image-wrapper {
-    width: 100%;
-    /* ធ្វើឱ្យ Aspect Ratio 1:1 (ការ៉េ) ដូចរូបភាព ECU */
-    padding-bottom: 100%;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 10px;
-}
 
-.product-image-wrapper img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* ធានាថារូបភាពពេញប្រអប់ */
-    top: 0;
-    left: 0;
-}
+/* ====================================================================== */
+/* ៣. ព័ត៌មានលម្អិត (តម្រឹមចំកណ្តាល) */
+/* ====================================================================== */
 
-/* ------------------------------------ */
-/* ៤. DETAILS STYLES - ព័ត៌មានលម្អិត */
-/* ------------------------------------ */
-.product-details {
-    padding: 5px 0 0;
-}
-
-.product-details > p, .product-details > h4 {
-    margin: 3px 0; /* កំណត់ Margin ឡើងវិញឱ្យតូច */
-}
-
-.category {
-    font-size: 0.8em;
-    color: #888;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-}
-
-.description {
-    font-size: 0.9em;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 2px;
-}
-
-.product-name a {
-    font-size: 0.95em;
-    color: #000;
-    text-decoration: none;
-    line-height: 1.3;
+/* Category/Description */
+.product_content .category a {
+    font-size: 0.75em !important;
+    line-height: 1.1 !important;
+    margin: 3px 0 2px 0 !important;
+    text-align: center;
     display: block;
-    margin-bottom: 5px;
 }
-
-/* Rating Stars */
-.rating-stars ul {
-    list-style: none;
-    padding: 0;
-    margin: 5px 0;
-    display: flex;
-}
-
-.rating-stars ul li {
-    margin-right: 2px;
-}
-
-.rating-stars ul li i {
-    color: #ccc; /* ពណ៌ប្រផេះសម្រាប់ផ្កាយ outline ទាំងអស់ */
-    font-size: 0.8em;
+/* Product Name */
+.product-name a {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    margin: 4px 0 6px 0 !important;
+    display: block;
+    text-align: center;
+    /* កំណត់កម្ពស់ថេរ ឬកំណត់បន្ទាត់អតិបរមា */
+    min-height: 34px;
 }
 
 /* Price */
-.price-original, .price-sale {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
 .price-original {
-    color: #333; /* ពណ៌ខ្មៅ/ប្រផេះធម្មតា */
-}
-
-.price-sale {
-    color: #dc3545; /* ពណ៌ក្រហមដូចក្នុងរូបភាព (សម្រាប់តម្លៃ Sale) */
-}
-
-/* Action Links (បើចង់លាក់វា) */
-.action_links {
-    margin-top: 10px;
+    font-size: 1em !important;
+    font-weight: bold !important;
+    margin-top: 5px !important;
+    display: block;
     text-align: center;
-    /* បើអ្នកចង់លាក់ប៊ូតុងនេះ គ្រាន់តែប្រើ display: none; */
-    /* display: none; */
+}
+
+/* តម្រឹម Action Links ឲ្យនៅចំកណ្តាល */
+.action_links ul {
+    display: flex; /* ធានាថាវាជា flex container */
+    justify-content: center !important;
+    padding: 0 !important;
+    margin-top: 8px;
 }
