@@ -5,42 +5,42 @@
         <div class="slider_area slider_carousel owl-carousel">
             {{-- Slider 1: The JS below will read the data-bgimg attribute and set the background-image CSS. --}}
             <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-1.jpg')}}">
-               <div class="container">
-                   <div class="row">
-                       <div class="col-12">
-                           <div class="slider_content">
-                               <h1>Big sale off <span>Accessories Fidanza</span></h1>
-                               <p>Exclusive Offer -30% Off This Week</p>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-            </div>
-            {{-- Slider 2 --}}
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-2.jpg')}}">
-                 <div class="container">
+                <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="slider_content center">
-                                <h1>Accessories  <span>all kinds of tractor trailer</span></h1>
+                            <div class="slider_content">
+                                <h1>Big sale off <span>Accessories Fidanza</span></h1>
                                 <p>Exclusive Offer -30% Off This Week</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- Slider 3 --}}
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-3.jpg')}}">
-                 <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="slider_content">
-                                <h1>High-end <span>New car interior</span> </h1>
-                                <p>Exclusive Offer -20% Off This Week</p>
+            {{-- Slider 2 --}}
+            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-2.jpg')}}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="slider_content center">
+                                    <h1>Accessories  <span>all kinds of tractor trailer</span></h1>
+                                    <p>Exclusive Offer -30% Off This Week</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
+            {{-- Slider 3 --}}
+            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-3.jpg')}}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="slider_content">
+                                    <h1>High-end <span>New car interior</span> </h1>
+                                    <p>Exclusive Offer -20% Off This Week</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </section>
@@ -76,21 +76,80 @@
                             <h2><span>our</span> Products</h2>
                             <p>Consectetuer sociis mauris eu augue velit pulvinar ullamcorper in ac mauris ac vel, interdum sed malesuada curae sit amet non nec quis arcu massa. </p>
                         </div>
-                        <div class="product_tab_btn">
+                        {{-- ✨ [NEW BLOCK] Product Lookup Area --}}
+                        <div class="vehicle_lookup_area " style="padding: 10px 0; background: #f8f8f8; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+                            <div class="container">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-lg-10 col-md-12">
+                                        <form class="vehicle_lookup_form d-flex justify-content-between align-items-center" method="GET" action="{{url('frontend/product/search')}}">
+                                            @csrf
+                                            {{-- 1. Select Category (Make មុន) --}}
+                                            <div class="single_select_box" style="flex: 1; margin-right: 15px;">
+                                                <label for="selectCategory" style="font-weight: 600;">
+                                                    <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Category
+                                                </label>
+                                                {{-- ប្រើ name="category_id" --}}
+                                                <select name="category_id" id="selectCategory" class="form-control custom-select" style="border: 1px solid red; box-shadow: 0 0 0 1px red;">
+                                                    <option value="">-- Select Category --</option>
+                                                    @foreach ($category as $item) {{-- ប្រើ $category ដែលមកពី Controller --}}
+                                                        <option value="{{ $item->id }}" {{ isset($selectedFilters['category_id']) && $selectedFilters['category_id'] == $item->id ? 'selected' : '' }}>
+                                                            {{ $item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            {{-- 2. Select Sub Category (Model មុន) --}}
+                                            <div class="single_select_box" style="flex: 1; margin-right: 15px;">
+                                                <label for="selectSubCategory" style="font-weight: 600;">
+                                                    <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Sub Category
+                                                </label>
+                                                {{-- ប្រើ name="sub_category_id" --}}
+                                                <select name="sub_category" id="selectSubCategory" class="form-control custom-select sub_category" style="border: 1px solid #ccc; background-color: #ebebeb;">
+                                                    <option value="">-- Select Sub Category --</option>
+                                                    {{-- នឹងផ្ទុកដោយ JavaScript --}}
+                                                </select>
+                                            </div>
+
+                                            {{-- 3. Select Engine --}}
+                                            <div class="single_select_box" style="flex: 1; margin-right: 15px;">
+                                                <label for="selectEngine" style="font-weight: 600;">
+                                                    <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Engine
+                                                </label>
+                                                {{-- ប្រើ name="engine_id" --}}
+                                                <select name="engine_id" id="selectEngine" class="form-control custom-select engine" style="border: 1px solid #ccc; background-color: #ebebeb;">
+                                                    <option value="">-- Select Engine --</option>
+                                                    {{-- នឹងផ្ទុកដោយ JavaScript --}}
+                                                </select>
+                                            </div>
+
+                                            {{-- Search Button --}}
+                                            <button type="submit" class="btn btn-primary" style="margin-top: 25px; height: 40px; white-space: nowrap; padding: 0 20px;">
+                                                Search
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- [END NEW BLOCK] Product Lookup Area --}}
+                        <div class="product_tab_btn" id="productTabContainer">
                             <ul class="nav" role="tablist" id="nav-tab">
                                 <li>
-                                    <a class="active" data-bs-toggle="tab" href="#Sellers" role="tab" aria-controls="Sellers" aria-selected="true">
+                                    <a class="active tab-link" data-bs-toggle="tab" href="#Sellers" role="tab" aria-controls="Sellers" aria-selected="true" data-tab-name="ALL">
                                         All
                                     </a>
                                 </li>
                                 @foreach($productType as $key => $type)
                                     <li>
-                                        <a data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false">
+                                        <a class="tab-link" data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false" data-tab-name="{{ $type->name }}">
                                             {{ $type->name }}
                                         </a>
                                     </li>
                                 @endforeach
                             </ul>
+                            {{-- Element to create the sliding effect (Matching image_54f1e7.png) --}}
+                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
                         </div>
                     </div>
                 </div>
@@ -137,7 +196,7 @@
                                                                 <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
                                                                     <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
                                                                 </li>
-                                                                {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
+                                                                {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                 <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li> --}}
                                                             </ul>
                                                         </div>
@@ -193,7 +252,7 @@
                                                                     <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
                                                                         <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
                                                                     </li>
-                                                                    {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
+                                                                    {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
                                                                     <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li> --}}
                                                                 </ul>
                                                             </div>
@@ -348,6 +407,44 @@
             $('.mini_cart').toggleClass('open');
             loadMiniCart(); // Load items each time user opens mini cart
         });
+        $("#selectCategory").on('change',function(){
+            var category_id = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('frontend-categorys') }}",
+                data: {
+                    category_id:category_id
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    $(".sub_category").empty();
+                    $(".sub_category").empty().append('<option value="">Please Select</option>');
+                    $.each(response.data, function(index, item)
+                    {
+                        $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                    });
+                }
+            });
+        });
+        $("#selectSubCategory").on('change',function(){
+            var sub_category_id  = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('frontend-sub-categorys') }}",
+                data: {
+                    sub_category_id:sub_category_id
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    $(".engine").empty();
+                    $(".engine").empty().append('<option value="">Please Select</option>');
+                    $.each(response.data, function(index, item)
+                    {
+                        $(".engine").append('<option value="' + item.id + '">' + item.name + '</option>');
+                    });
+                }
+            });
+        });
     });
     function loadMiniCart() {
         $.ajax({
@@ -359,4 +456,3 @@
         });
     }
 </script>
-

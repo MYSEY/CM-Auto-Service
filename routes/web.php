@@ -59,6 +59,11 @@ Route::get('category/filter', [HomePageController::class,'categoryFilter']);
 Route::resource('frontend-contact', FrontendContactController::class);
 Route::resource('about-as', AboutAsController::class);
 
+// Route សម្រាប់ AJAX
+Route::get('/frontend-categorys', [HomePageController::class, 'frontendCategory']);
+Route::get('/frontend-sub-categorys', [HomePageController::class, 'frontendSubCategory']);
+Route::get('frontend/product/search', [HomePageController::class, 'frontendSearchProduct']);
+
 Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);
     Route::resource('users', UserController::class);
@@ -74,7 +79,6 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
     Route::resource('slide', SliderController::class);
-
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/gallery-image/{id}/delete', [ProductController::class, 'deleteGalleryImage'])->name('product.delete_gallery_image');

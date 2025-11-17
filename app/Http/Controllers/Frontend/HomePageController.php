@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Engine;
 use App\Models\Slider;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 use App\Http\Controllers\Controller;
 
 class HomePageController extends Controller
@@ -88,6 +90,32 @@ class HomePageController extends Controller
     public function engineFilter(Request $request)
     {
         $product = Product::where('engine_id', $request->engine_id)->paginate(9);
+        $company = Company::first();
+        $category = ProductCategory::all();
+        $productType = ProductType::all();
+        return view('frontends.home_page',compact('product','company','category','productType'));
+    }
+    public function frontendCategory(Request $request){
+        try{
+            $dataCategory = ProductSubCategory::where('product_category_id',$request->category_id)->get();
+            return response()->json([
+                'data'=>$dataCategory,
+            ]);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+    public function frontendSubCategory(Request $request){
+        try{
+            return response()->json([
+                'data'=> Engine::where('sub_category_id',$request->sub_category_id)->get(),
+            ]);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+    public function frontendSearchProduct(Request $request){
+        $product = Product::where('category_id',$request->category_id)->Orwhere('engine_id', $request->engine_id)->Orwhere('sub_category_id',$request->sub_category_id)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
