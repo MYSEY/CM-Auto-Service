@@ -11309,8 +11309,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: #222222;
   color: #ffffff;
 }
+
 /* ====================================================================== */
-/* ១. IMAGE STYLES - រូបភាពធំ (បង្ខំទំហំ 1:1) - (រក្សាទុកដូចដើម) */
+/* ១. IMAGE STYLES - រូបភាពធំ (បង្ខំទំហំ 1:1) */
 /* ====================================================================== */
 
 /* Class Wrapper របស់រូបភាព */
@@ -11320,7 +11321,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     padding-bottom: 100% !important;
     position: relative !important;
     overflow: hidden !important;
-    margin-bottom: 5px !important; /* កាត់បន្ថយគម្លាតក្រោមរូបភាព */
+    margin-bottom: 5px !important;
     border: none !important;
     box-shadow: none !important;
     line-height: 0 !important;
@@ -11358,7 +11359,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     display: grid !important;
 
     /* ---------------------------------------------------- */
-    /* **ការផ្លាស់ប្តូរសំខាន់៖ កំណត់ ៦ ជួរថេរ (សម្រាប់ Desktop)** */
+    /* **Desktop Default: កំណត់ ៦ ជួរថេរ** */
     /* ---------------------------------------------------- */
     grid-template-columns: repeat(6, 1fr) !important;
 
@@ -11367,7 +11368,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
     /* លុប Padding លើ Container ធំ */
     padding: 5px !important;
-    /* អាចកំណត់ Max-width សម្រាប់ Grid ទាំងមូលបើចង់ */
+    /* កំណត់ Max-width សម្រាប់ Grid ទាំងមូល (បើចង់) */
     max-width: 1200px;
 }
 
@@ -11375,21 +11376,28 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 /* **Media Queries សម្រាប់ Tablet និង Mobile** */
 /* ---------------------------------------------------- */
 
+/* សម្រាប់ Tablets (993px ដល់ 1200px) - ប្តូរទៅ 4 ជួរ (បន្ថែម) */
+@media (max-width: 1200px) {
+    .product-grid-container {
+        grid-template-columns: repeat(4, 1fr) !important; /* 4 columns on medium desktop/large tablet */
+    }
+}
+
 /* សម្រាប់ Tablets (768px ដល់ 992px) - ប្តូរទៅ 3 ជួរ */
 @media (max-width: 992px) {
     .product-grid-container {
-        grid-template-columns: repeat(3, 1fr) !important; /* 3 columns */
+        grid-template-columns: repeat(3, 1fr) !important; /* 3 columns on tablet */
     }
 }
 
 /* សម្រាប់ Mobile (តិចជាង 768px) - ប្តូរទៅ 2 ជួរ */
 @media (max-width: 767px) {
     .product-grid-container {
-        grid-template-columns: repeat(2, 1fr) !important; /* 2 columns */
-        gap: 5px !important; /* អាចកាត់បន្ថយគម្លាតបន្ថែមលើ Mobile */
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 columns on mobile */
+        gap: 5px !important; /* កាត់បន្ថយគម្លាតបន្ថែមលើ Mobile */
+        padding: 0 5px !important; /* បន្ថែម padding ឆ្វេងស្តាំបន្តិច */
     }
 }
-
 
 /* Product Card Base Style (Card នីមួយៗ) */
 .product-card {
@@ -11397,35 +11405,35 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     padding: 8px !important;
     border-radius: 6px;
     border: 1px solid #e0e0e0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* បន្ថយ shadow បន្តិច */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
     height: 100% !important;
     width: 100% !important;
     margin: 0 !important;
-    /* លុប max-width ចេញ ព្រោះ Grid 6 ជួរថេរនឹងគ្រប់គ្រងទទឹង Card នីមួយៗ */
+    /* លុប max-width ចេញ */
     max-width: none;
     text-align: center;
-    transition: transform 0.2s;
+    transition: box-shadow 0.2s;
 }
 
 /* សម្រាប់ Mouse Hover (បើចង់បាន) */
 .product-card:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-    /* transform: translateY(-2px); */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 
 /* ====================================================================== */
-/* ៣. ព័ត៌មានលម្អិត (តម្រឹមចំកណ្តាល) - (រក្សាទុកដូចដើម) */
+/* ៣. ព័ត៌មានលម្អិត (តម្រឹមចំកណ្តាល) */
 /* ====================================================================== */
 
 /* Category/Description */
-.category, .description {
+.product_content .category a {
     font-size: 0.75em !important;
     line-height: 1.1 !important;
     margin: 3px 0 2px 0 !important;
     text-align: center;
+    display: block;
 }
-
 /* Product Name */
 .product-name a {
     font-size: 14px !important;
@@ -11434,6 +11442,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     margin: 4px 0 6px 0 !important;
     display: block;
     text-align: center;
+    /* កំណត់កម្ពស់ថេរ ឬកំណត់បន្ទាត់អតិបរមា */
+    min-height: 34px;
 }
 
 /* Price */
@@ -11447,9 +11457,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 /* តម្រឹម Action Links ឲ្យនៅចំកណ្តាល */
 .action_links ul {
+    display: flex; /* ធានាថាវាជា flex container */
     justify-content: center !important;
     padding: 0 !important;
     margin-top: 8px;
 }
-
-
