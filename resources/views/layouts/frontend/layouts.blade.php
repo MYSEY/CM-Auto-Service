@@ -7,6 +7,7 @@
     <title>CM Auto Service</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontends/assets/img/favicon.ico') }}">
 
@@ -16,7 +17,8 @@
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css?v=20250101')}}">
+    {{--  <link rel="stylesheet" href="style.css?v=20250101">  --}}
      <link rel="stylesheet" href="{{asset('frontends/assets/css/cm.css')}}">
     {{-- toastr --}}
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">

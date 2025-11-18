@@ -126,7 +126,7 @@ class HomePageController extends Controller
         // $category = ProductCategory::all();
         // $productType = ProductType::all();
         // return view('frontends.home_page',compact('product','company','category','productType'));
-      
+
         $query = Product::query();
         if ($request->category_id) {
             $query->where('category_id', $request->category_id);
