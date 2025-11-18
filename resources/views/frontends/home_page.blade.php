@@ -306,7 +306,13 @@
                                     <li>
                                         <a class="telegram" href="https://t.me/CMAUTO">
                                             {{-- Assuming this Telegram icon is linked via storage --}}
-                                            <img src="{{ asset('storage/companys/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                            <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                        </a>
+                                    </li>
+                                     <li>
+                                        <a class="telegram" href="https://t.me/CMAUTO">
+                                            {{-- Assuming this Telegram icon is linked via storage --}}
+                                            <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
                                         </a>
                                     </li>
                                 </ul>

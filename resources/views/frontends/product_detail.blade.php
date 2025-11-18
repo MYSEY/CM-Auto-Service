@@ -67,12 +67,17 @@
                                 <ul>
                                     <li>
                                      <a class="Facebook" href="https://www.facebook.com/C.M.Auto.77/">
-                                        <img src="/storage/companys/facebook.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                        <img src="/images/products/facebook.png" alt="Facebook" width="50" height="40" style="display: block; margin: 0 auto;">
                                     </a>
                                     </li>
                                     <li>
                                     <a class="telegram" href="https://t.me/CMAUTO">
-                                        <img src="/storage/companys/telegram.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                        <img src="/images/products/telegram.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                    </a>
+                                    </li>
+                                     <li>
+                                    <a class="WhatsApp" href="https://wa.me/qr/PLBWAXBSGCKPG1">
+                                        <img src="/images/products/whatapp.png" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
                                     </a>
                                     </li>
                                 </ul>
