@@ -38,7 +38,8 @@ Route::get('/clear', function() {
     Artisan::call('config:clear');
     Artisan::call('config:cache');
     Artisan::call('view:clear');
-    return "Cleared!";
+    // return "Cleared!";
+    return "<script>alert('Cache cleared!'); window.location.href='/';</script>";
 });
 
 Route::get('/', [HomePageController::class,'index']);
