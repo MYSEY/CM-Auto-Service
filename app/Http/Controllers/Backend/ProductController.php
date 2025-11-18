@@ -146,7 +146,7 @@ class ProductController extends Controller
                 'delivery_note'    => $request->delivery_note,
                 'updated_by'       => Auth::id(),
             ]);
-
+            ProductImage::where('product_id', $product->id)->delete();
             // Handle gallery update (optional)
             if ($request->hasFile('gallery')) {
                 foreach ($request->file('gallery') as $file) {

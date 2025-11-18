@@ -115,10 +115,32 @@ class HomePageController extends Controller
         }
     }
     public function frontendSearchProduct(Request $request){
-        $product = Product::where('category_id',$request->category_id)->Orwhere('engine_id', $request->engine_id)->Orwhere('sub_category_id',$request->sub_category_id)->paginate(9);
+        $selectedFilters = [
+            'category_id' => $request->category_id,
+            'sub_category_id' => $request->sub_category,
+            'engine_id' => $request->engine_id,
+        ];
+
+        // $product = Product::where('category_id',$request->category_id)->Orwhere('engine_id', $request->engine_id)->Orwhere('sub_category_id',$request->sub_category_id)->paginate(9);
+        // $company = Company::first();
+        // $category = ProductCategory::all();
+        // $productType = ProductType::all();
+        // return view('frontends.home_page',compact('product','company','category','productType'));
+      
+        $query = Product::query();
+        if ($request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+        if ($request->sub_category) {
+            $query->where('sub_category_id', $request->sub_category);
+        }
+        if ($request->engine_id) {
+            $query->where('engine_id', $request->engine_id);
+        }
+        $product = $query->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-        return view('frontends.home_page',compact('product','company','category','productType'));
+        return view('frontends.home_page', compact('product', 'company', 'category', 'productType', 'selectedFilters'));
     }
 }

@@ -66,7 +66,6 @@
             </div>
         </div>
     </div>
-
     <div class="home_section_bg">
         <div class="product_area">
             <div class="container">
