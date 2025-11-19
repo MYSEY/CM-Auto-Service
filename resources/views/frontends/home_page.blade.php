@@ -189,299 +189,45 @@
                     @foreach($productType as $key => $type)
                         <div class="tab-pane fade" id="{{ Str::slug($type->name) }}" role="tabpanel">
                             <div class="row">
-                                @if ($type->name == 'ECU Sell')
-                                    <div class="product-grid-container">
-                                        @foreach($product->where('product_type_id', $type->id) as $item)
-                                            <div>
-                                                <div class="product-card product_items">
-                                                    <article class="single_product">
-                                                        <figure>
-                                                            <div class="product-image-wrapper product_thumb">
-                                                                <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                                    <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
-                                                                </a>
-                                                                <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                                    <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
-                                                                </a>
-                                                            </div>
-                                                            <div class="product_content">
-                                                                <div class="product_content_inner">
-                                                                    <p class="category"><a href="#">Parts</a></p>
-                                                                    <p class="category"><a href="#">{{$item->productType->name}}</a></p>
-                                                                    <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
-                                                                    <div class="product_rating">
-                                                                    </div>
-                                                                    <div class="price_box">
-                                                                        <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
-                                                                    </div>
+                               <div class="product-grid-container">
+                                    @foreach($product->where('product_type_id', $type->id) as $item)
+                                        <div>
+                                            <div class="product-card product_items">
+                                                <article class="single_product">
+                                                    <figure>
+                                                        <div class="product-image-wrapper product_thumb">
+                                                            <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                                                                <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
+                                                            </a>
+                                                            <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                                                                <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="product_content">
+                                                            <div class="product_content_inner">
+                                                                <p class="category"><a href="#">Parts</a></p>
+                                                                <p class="category"><a href="#">{{$item->productType->name}}</a></p>
+                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
+                                                                <div class="product_rating">
                                                                 </div>
-                                                                <div class="action_links">
-                                                                    <ul>
-                                                                        <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
-                                                                            <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
-                                                                        </li>
-                                                                    </ul>
+                                                                <div class="price_box">
+                                                                    <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
                                                                 </div>
                                                             </div>
-                                                        </figure>
-                                                    </article>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @elseif($type->name == 'Original File')
-                                    <div class="shop_fullwidth">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="shop_toolbar_wrapper">
-                                                        <div class="shop_toolbar_btn">
-                                                            <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
-                                                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-bs-toggle="tooltip" title="3"></button>
-                                                            <button data-role="grid_list" type="button"  class="btn-list" data-bs-toggle="tooltip" title="List"></button>
-                                                        </div>
-                                                        <div class=" niceselect_option">
-                                                            <form class="select_option" action="#">
-                                                                <select name="orderby" id="short">
-                                                                    <option selected value="1">Sort by average rating</option>
-                                                                    <option  value="2">Sort by popularity</option>
-                                                                    <option value="3">Sort by newness</option>
-                                                                    <option value="4">Sort by price: low to high</option>
-                                                                    <option value="5">Sort by price: high to low</option>
-                                                                    <option value="6">Product Name: Z</option>
-                                                                </select>
-                                                            </form>
-                                                        </div>
-                                                        <div class="page_amount">
-                                                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="table_desc wishlist">
-                                                            <div class="cart_page">
-                                                                <table>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>File name</th>
-                                                                            <th class="product_total">Add To Cart</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach($product->where('product_type_id', $type->id) as $key => $item)
-                                                                            <tr>
-                                                                                <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
-                                                                                <td class="product_total">
-                                                                                    <button class="btn btn-sm btn-primary addToCart" data-id="{{ $item->id }}">
-                                                                                        <i class="icon-shopping-bag2"></i> Add To Cart
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
+                                                            <div class="action_links">
+                                                                <ul>
+                                                                    <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
+                                                                        <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="shop_toolbar t_bottom">
-                                                        <div class="pagination">
-                                                            <ul>
-                                                                @if ($product->onFirstPage())
-                                                                    <li class="disabled"><span><<</span></li>
-                                                                @else
-                                                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
-                                                                @endif
-
-                                                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
-                                                                    @if ($page == $product->currentPage())
-                                                                        <li class="current">{{ $page }}</li>
-                                                                    @else
-                                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                                                    @endif
-                                                                @endforeach
-
-                                                                @if ($product->hasMorePages())
-                                                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
-                                                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
-                                                                @else
-                                                                    <li class="disabled"><span>next</span></li>
-                                                                    <li class="disabled"><span>>></span></li>
-                                                                @endif
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    </figure>
+                                                </article>
                                             </div>
                                         </div>
-                                    </div>
-                                @elseif($type->name == 'File Service')
-                                    <div class="shop_fullwidth">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="shop_toolbar_wrapper">
-                                                        <div class="shop_toolbar_btn">
-                                                            <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
-                                                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-bs-toggle="tooltip" title="3"></button>
-                                                            <button data-role="grid_list" type="button"  class="btn-list" data-bs-toggle="tooltip" title="List"></button>
-                                                        </div>
-                                                        <div class=" niceselect_option">
-                                                            <form class="select_option" action="#">
-                                                                <select name="orderby" id="short">
-                                                                    <option selected value="1">Sort by average rating</option>
-                                                                    <option  value="2">Sort by popularity</option>
-                                                                    <option value="3">Sort by newness</option>
-                                                                    <option value="4">Sort by price: low to high</option>
-                                                                    <option value="5">Sort by price: high to low</option>
-                                                                    <option value="6">Product Name: Z</option>
-                                                                </select>
-                                                            </form>
-                                                        </div>
-                                                        <div class="page_amount">
-                                                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="table_desc wishlist">
-                                                            <div class="cart_page">
-                                                                <table>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>File name</th>
-                                                                            <th class="product_total">Add To Cart</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach($product->where('product_type_id', $type->id) as $key => $item)
-                                                                            <tr>
-                                                                                <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
-                                                                                <td class="product_total">
-                                                                                    <button class="btn btn-sm btn-primary addToCart" data-id="{{ $item->id }}">
-                                                                                        <i class="icon-shopping-bag2"></i> Add To Cart
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="shop_toolbar t_bottom">
-                                                        <div class="pagination">
-                                                            <ul>
-                                                                @if ($product->onFirstPage())
-                                                                    <li class="disabled"><span><<</span></li>
-                                                                @else
-                                                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
-                                                                @endif
-
-                                                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
-                                                                    @if ($page == $product->currentPage())
-                                                                        <li class="current">{{ $page }}</li>
-                                                                    @else
-                                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                                                    @endif
-                                                                @endforeach
-
-                                                                @if ($product->hasMorePages())
-                                                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
-                                                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
-                                                                @else
-                                                                    <li class="disabled"><span>next</span></li>
-                                                                    <li class="disabled"><span>>></span></li>
-                                                                @endif
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @elseif($type->name == 'Online Programming')
-                                    <div class="shop_fullwidth">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="shop_toolbar_wrapper">
-                                                        <div class="shop_toolbar_btn">
-                                                            <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
-                                                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-bs-toggle="tooltip" title="3"></button>
-                                                            <button data-role="grid_list" type="button"  class="btn-list" data-bs-toggle="tooltip" title="List"></button>
-                                                        </div>
-                                                        <div class=" niceselect_option">
-                                                            <form class="select_option" action="#">
-                                                                <select name="orderby" id="short">
-                                                                    <option selected value="1">Sort by average rating</option>
-                                                                    <option  value="2">Sort by popularity</option>
-                                                                    <option value="3">Sort by newness</option>
-                                                                    <option value="4">Sort by price: low to high</option>
-                                                                    <option value="5">Sort by price: high to low</option>
-                                                                    <option value="6">Product Name: Z</option>
-                                                                </select>
-                                                            </form>
-                                                        </div>
-                                                        <div class="page_amount">
-                                                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="table_desc wishlist">
-                                                            <div class="cart_page">
-                                                                <table>
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>File name</th>
-                                                                            <th class="product_total">Add To Cart</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach($product->where('product_type_id', $type->id) as $key => $item)
-                                                                            <tr>
-                                                                                <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
-                                                                                <td class="product_total">
-                                                                                    <button class="btn btn-sm btn-primary addToCart" data-id="{{ $item->id }}">
-                                                                                        <i class="icon-shopping-bag2"></i> Add To Cart
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="shop_toolbar t_bottom">
-                                                        <div class="pagination">
-                                                            <ul>
-                                                                @if ($product->onFirstPage())
-                                                                    <li class="disabled"><span><<</span></li>
-                                                                @else
-                                                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
-                                                                @endif
-
-                                                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
-                                                                    @if ($page == $product->currentPage())
-                                                                        <li class="current">{{ $page }}</li>
-                                                                    @else
-                                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                                                    @endif
-                                                                @endforeach
-
-                                                                @if ($product->hasMorePages())
-                                                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
-                                                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
-                                                                @else
-                                                                    <li class="disabled"><span>next</span></li>
-                                                                    <li class="disabled"><span>>></span></li>
-                                                                @endif
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @endforeach
