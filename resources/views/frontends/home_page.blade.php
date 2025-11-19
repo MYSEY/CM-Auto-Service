@@ -145,7 +145,7 @@
                     <div class="tab-pane fade show active" id="Sellers" role="tabpanel">
                         <div class="row">
                             <div class="product-grid-container">
-                                @foreach($product->where('product_type_id', 1) as $key => $item)
+                                @foreach($product as $key => $item)
                                     <div>
                                         <div class="product-card product_items">
                                             <article class="single_product">
