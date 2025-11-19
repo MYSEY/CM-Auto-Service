@@ -75,22 +75,19 @@
                             <h2><span>our</span> Products</h2>
                             <p>Consectetuer sociis mauris eu augue velit pulvinar ullamcorper in ac mauris ac vel, interdum sed malesuada curae sit amet non nec quis arcu massa. </p>
                         </div>
-                        {{-- ✨ [NEW BLOCK] Product Lookup Area --}}
-                        <div class="vehicle_lookup_area " style="padding: 10px 0; background: #f8f8f8; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.05);">
+                        <div class="vehicle_lookup_area">
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-lg-10 col-md-12">
                                         <form class="vehicle_lookup_form d-flex justify-content-between align-items-center" method="GET" action="{{url('frontend/product/search')}}">
                                             @csrf
-                                            {{-- 1. Select Category (Make មុន) --}}
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectCategory" style="font-weight: 600;">
                                                     <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Category
                                                 </label>
-                                                {{-- ប្រើ name="category_id" --}}
                                                 <select name="category_id" id="selectCategory" class="form-control custom-select" style="border: 1px solid red; box-shadow: 0 0 0 1px red;">
                                                     <option value="">-- Select Category --</option>
-                                                    @foreach ($category as $item) {{-- ប្រើ $category ដែលមកពី Controller --}}
+                                                    @foreach ($category as $item)
                                                         <option value="{{ $item->id }}" {{ isset($selectedFilters['category_id']) && $selectedFilters['category_id'] == $item->id ? 'selected' : '' }}>
                                                             {{ $item->name }}
                                                         </option>
@@ -98,31 +95,24 @@
                                                 </select>
                                             </div>
 
-                                            {{-- 2. Select Sub Category (Model មុន) --}}
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectSubCategory" style="font-weight: 600;">
                                                     <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Sub Category
                                                 </label>
-                                                {{-- ប្រើ name="sub_category_id" --}}
                                                 <select name="sub_category" id="selectSubCategory" class="form-control custom-select sub_category" style="border: 1px solid #ccc; background-color: #ebebeb;">
                                                     <option value="">-- Select Sub Category --</option>
-                                                    {{-- នឹងផ្ទុកដោយ JavaScript --}}
                                                 </select>
                                             </div>
 
-                                            {{-- 3. Select Engine --}}
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectEngine" style="font-weight: 600;">
                                                     <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Engine
                                                 </label>
-                                                {{-- ប្រើ name="engine_id" --}}
                                                 <select name="engine_id" id="selectEngine" class="form-control custom-select engine" style="border: 1px solid #ccc; background-color: #ebebeb;">
                                                     <option value="">-- Select Engine --</option>
-                                                    {{-- នឹងផ្ទុកដោយ JavaScript --}}
                                                 </select>
                                             </div>
 
-                                            {{-- Search Button --}}
                                             <button type="submit" class="btn btn-primary" style="margin-top: 25px; height: 40px; white-space: nowrap; padding: 0 20px;">
                                                 Search
                                             </button>
@@ -131,7 +121,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- [END NEW BLOCK] Product Lookup Area --}}
                         <div class="product_tab_btn" id="productTabContainer">
                             <ul class="nav" role="tablist" id="nav-tab">
                                 <li>
@@ -147,17 +136,14 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            {{-- Element to create the sliding effect (Matching image_54f1e7.png) --}}
                             <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="tab-content">
-                    {{-- Tab សម្រាប់ All Products (ប្រើ Grid - លុប Carousel ចោល) --}}
                     <div class="tab-pane fade show active" id="Sellers" role="tabpanel">
                         <div class="row">
-                            {{-- **កែសម្រួល៖ ប្តូរ Class ពី product_carousel ទៅ product-grid-container** --}}
                             <div class="product-grid-container">
                                 @foreach($product as $key => $item)
                                     <div>
@@ -178,13 +164,6 @@
                                                             <p class="category"><a href="#">{{$item->productType->name}}</a></p>
                                                             <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} </a></h4>
                                                             <div class="product_rating">
-                                                                {{--  <ul>
-                                                                    <li><i class="ion-android-star-outline"></i></li>
-                                                                    <li><i class="ion-android-star-outline"></i></li>
-                                                                    <li><i class="ion-android-star-outline"></i></li>
-                                                                    <li><i class="ion-android-star-outline"></i></li>
-                                                                    <li><i class="ion-android-star-outline"></i></li>
-                                                                </ul>  --}}
                                                             </div>
                                                             <div class="price_box">
                                                                 <span class="current_price price-original"> ${{ number_format($item->price,2) }} {{$item->number}}</span>
@@ -195,8 +174,6 @@
                                                                 <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
                                                                     <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
                                                                 </li>
-                                                                {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li> --}}
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -209,59 +186,302 @@
                         </div>
                     </div>
 
-                    {{-- Tab សម្រាប់តាម Product Type (ប្រើ Grid) --}}
                     @foreach($productType as $key => $type)
                         <div class="tab-pane fade" id="{{ Str::slug($type->name) }}" role="tabpanel">
                             <div class="row">
-                                <div class="product-grid-container">
-                                    {{-- Use $product->where() method to filter by product_type_id --}}
-                                    @foreach($product->where('product_type_id', $type->id) as $item)
-                                        <div>
-                                            <div class="product-card product_items">
-                                                <article class="single_product">
-                                                    <figure>
-                                                        <div class="product-image-wrapper product_thumb">
-                                                            <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                                <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
-                                                            </a>
-                                                            <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                                <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product_content">
-                                                            <div class="product_content_inner">
-                                                                <p class="category"><a href="#">Parts</a></p>
-                                                                <p class="category"><a href="#">{{$item->productType->name}}</a></p>
-                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
-                                                                <div class="product_rating">
-                                                                    {{--  <ul>
-                                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                                        <li><i class="ion-android-star-outline"></i></li>
-                                                                    </ul>  --}}
+                                @if ($type->name == 'ECU Sell')
+                                    <div class="product-grid-container">
+                                        @foreach($product->where('product_type_id', $type->id) as $item)
+                                            <div>
+                                                <div class="product-card product_items">
+                                                    <article class="single_product">
+                                                        <figure>
+                                                            <div class="product-image-wrapper product_thumb">
+                                                                <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                                                                    <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
+                                                                </a>
+                                                                <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                                                                    <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
+                                                                </a>
+                                                            </div>
+                                                            <div class="product_content">
+                                                                <div class="product_content_inner">
+                                                                    <p class="category"><a href="#">Parts</a></p>
+                                                                    <p class="category"><a href="#">{{$item->productType->name}}</a></p>
+                                                                    <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
+                                                                    <div class="product_rating">
+                                                                    </div>
+                                                                    <div class="price_box">
+                                                                        <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="price_box">
-                                                                    <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
+                                                                <div class="action_links">
+                                                                    <ul>
+                                                                        <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
+                                                                            <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
+                                                                        </li>
+                                                                    </ul>
                                                                 </div>
                                                             </div>
-                                                            <div class="action_links">
-                                                                <ul>
-                                                                    <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
-                                                                        <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
-                                                                    </li>
-                                                                    {{-- <li class="wishlist"><a href="wishlist.html"  title="Add to Wishlist"><i class="icon-heart"></i></a></li>
-                                                                    <li class="compare"><a href="compare.html" title="Add to Compare"><i class="icon-rotate-cw"></i></a></li> --}}
-                                                                </ul>
+                                                        </figure>
+                                                    </article>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @elseif($type->name == 'Original File')
+                                    <div class="shop_fullwidth">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="shop_toolbar_wrapper">
+                                                        <div class="shop_toolbar_btn">
+                                                            <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
+                                                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-bs-toggle="tooltip" title="3"></button>
+                                                            <button data-role="grid_list" type="button"  class="btn-list" data-bs-toggle="tooltip" title="List"></button>
+                                                        </div>
+                                                        <div class=" niceselect_option">
+                                                            <form class="select_option" action="#">
+                                                                <select name="orderby" id="short">
+                                                                    <option selected value="1">Sort by average rating</option>
+                                                                    <option  value="2">Sort by popularity</option>
+                                                                    <option value="3">Sort by newness</option>
+                                                                    <option value="4">Sort by price: low to high</option>
+                                                                    <option value="5">Sort by price: high to low</option>
+                                                                    <option value="6">Product Name: Z</option>
+                                                                </select>
+                                                            </form>
+                                                        </div>
+                                                        <div class="page_amount">
+                                                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="table_desc wishlist">
+                                                            <div class="cart_page">
+                                                                <table>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>File name</th>
+                                                                            <th class="product_total">Add To Cart</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($product->where('product_type_id', $type->id) as $key => $item)
+                                                                            <tr>
+                                                                                <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
+                                                                                <td class="product_total">
+                                                                                    <button class="btn btn-sm btn-primary addToCart" data-id="{{ $item->id }}">
+                                                                                        <i class="icon-shopping-bag2"></i> Add To Cart
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
-                                                    </figure>
-                                                </article>
+                                                    </div>
+                                                    <div class="shop_toolbar t_bottom">
+                                                        <div class="pagination">
+                                                            <ul>
+                                                                @if ($product->onFirstPage())
+                                                                    <li class="disabled"><span><<</span></li>
+                                                                @else
+                                                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
+                                                                @endif
+
+                                                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
+                                                                    @if ($page == $product->currentPage())
+                                                                        <li class="current">{{ $page }}</li>
+                                                                    @else
+                                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @if ($product->hasMorePages())
+                                                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
+                                                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                                                                @else
+                                                                    <li class="disabled"><span>next</span></li>
+                                                                    <li class="disabled"><span>>></span></li>
+                                                                @endif
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @elseif($type->name == 'File Service')
+                                    <div class="shop_fullwidth">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="shop_toolbar_wrapper">
+                                                        <div class="shop_toolbar_btn">
+                                                            <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
+                                                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-bs-toggle="tooltip" title="3"></button>
+                                                            <button data-role="grid_list" type="button"  class="btn-list" data-bs-toggle="tooltip" title="List"></button>
+                                                        </div>
+                                                        <div class=" niceselect_option">
+                                                            <form class="select_option" action="#">
+                                                                <select name="orderby" id="short">
+                                                                    <option selected value="1">Sort by average rating</option>
+                                                                    <option  value="2">Sort by popularity</option>
+                                                                    <option value="3">Sort by newness</option>
+                                                                    <option value="4">Sort by price: low to high</option>
+                                                                    <option value="5">Sort by price: high to low</option>
+                                                                    <option value="6">Product Name: Z</option>
+                                                                </select>
+                                                            </form>
+                                                        </div>
+                                                        <div class="page_amount">
+                                                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="table_desc wishlist">
+                                                            <div class="cart_page">
+                                                                <table>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>File name</th>
+                                                                            <th class="product_total">Add To Cart</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($product->where('product_type_id', $type->id) as $key => $item)
+                                                                            <tr>
+                                                                                <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
+                                                                                <td class="product_total">
+                                                                                    <button class="btn btn-sm btn-primary addToCart" data-id="{{ $item->id }}">
+                                                                                        <i class="icon-shopping-bag2"></i> Add To Cart
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shop_toolbar t_bottom">
+                                                        <div class="pagination">
+                                                            <ul>
+                                                                @if ($product->onFirstPage())
+                                                                    <li class="disabled"><span><<</span></li>
+                                                                @else
+                                                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
+                                                                @endif
+
+                                                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
+                                                                    @if ($page == $product->currentPage())
+                                                                        <li class="current">{{ $page }}</li>
+                                                                    @else
+                                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @if ($product->hasMorePages())
+                                                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
+                                                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                                                                @else
+                                                                    <li class="disabled"><span>next</span></li>
+                                                                    <li class="disabled"><span>>></span></li>
+                                                                @endif
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @elseif($type->name == 'Online Programming')
+                                    <div class="shop_fullwidth">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="shop_toolbar_wrapper">
+                                                        <div class="shop_toolbar_btn">
+                                                            <button data-role="grid_4" type="button"  class="active btn-grid-4" data-bs-toggle="tooltip" title="4"></button>
+                                                            <button data-role="grid_3" type="button" class=" btn-grid-3" data-bs-toggle="tooltip" title="3"></button>
+                                                            <button data-role="grid_list" type="button"  class="btn-list" data-bs-toggle="tooltip" title="List"></button>
+                                                        </div>
+                                                        <div class=" niceselect_option">
+                                                            <form class="select_option" action="#">
+                                                                <select name="orderby" id="short">
+                                                                    <option selected value="1">Sort by average rating</option>
+                                                                    <option  value="2">Sort by popularity</option>
+                                                                    <option value="3">Sort by newness</option>
+                                                                    <option value="4">Sort by price: low to high</option>
+                                                                    <option value="5">Sort by price: high to low</option>
+                                                                    <option value="6">Product Name: Z</option>
+                                                                </select>
+                                                            </form>
+                                                        </div>
+                                                        <div class="page_amount">
+                                                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="table_desc wishlist">
+                                                            <div class="cart_page">
+                                                                <table>
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>File name</th>
+                                                                            <th class="product_total">Add To Cart</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($product->where('product_type_id', $type->id) as $key => $item)
+                                                                            <tr>
+                                                                                <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
+                                                                                <td class="product_total">
+                                                                                    <button class="btn btn-sm btn-primary addToCart" data-id="{{ $item->id }}">
+                                                                                        <i class="icon-shopping-bag2"></i> Add To Cart
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shop_toolbar t_bottom">
+                                                        <div class="pagination">
+                                                            <ul>
+                                                                @if ($product->onFirstPage())
+                                                                    <li class="disabled"><span><<</span></li>
+                                                                @else
+                                                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
+                                                                @endif
+
+                                                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
+                                                                    @if ($page == $product->currentPage())
+                                                                        <li class="current">{{ $page }}</li>
+                                                                    @else
+                                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                                                    @endif
+                                                                @endforeach
+
+                                                                @if ($product->hasMorePages())
+                                                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
+                                                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                                                                @else
+                                                                    <li class="disabled"><span>next</span></li>
+                                                                    <li class="disabled"><span>>></span></li>
+                                                                @endif
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -274,7 +494,6 @@
         <div class="container">
             <div class="col-12">
                 <div class="brand_container owl-carousel ">
-                    {{-- Loop simplified to show 8 brands using the naming convention brand1.jpg to brand8.jpg --}}
                     @for ($i = 1; $i <= 8; $i += 2)
                         <div class="brand_list">
                             <div class="single_brand">
@@ -305,13 +524,11 @@
                                     <li><a class="facebook" href="https://www.facebook.com/C.M.Auto.77/"><i class="icon-facebook"></i></a></li>
                                     <li>
                                         <a class="telegram" href="https://t.me/CMAUTO">
-                                            {{-- Assuming this Telegram icon is linked via storage --}}
                                             <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
                                         </a>
                                     </li>
                                      <li>
                                         <a class="telegram" href="https://t.me/CMAUTO">
-                                            {{-- Assuming this Telegram icon is linked via storage --}}
                                             <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
                                         </a>
                                     </li>
@@ -329,7 +546,11 @@
                                     <button id="mc-submit">Subscribe</button>
                                 </form>
                                 <div class="mailchimp-alerts text-centre">
-                                    <div class="mailchimp-submitting"></div><div class="mailchimp-success"></div><div class="mailchimp-error"></div></div></div>
+                                    <div class="mailchimp-submitting"></div>
+                                    <div class="mailchimp-success"></div>
+                                    <div class="mailchimp-error"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-7">
@@ -349,19 +570,8 @@
         </div>
     </div>
 @endsection
-
-{{--
-    IMPORTANT: The script below must be placed after the content section
-    (either here or in your master layout's @push('scripts') section)
-    for jQuery to be available.
---}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    /*
-        FUNCTION 1: FIXES THE SLIDER BACKGROUND IMAGE ISSUE
-        This function finds all elements with 'data-bgimg' and applies the image path
-        as a CSS background-image property.
-    */
     function dataBackgroundImage() {
         $('[data-bgimg]').each(function () {
             var bgImgUrl = $(this).data('bgimg');
@@ -371,18 +581,12 @@
         });
     }
 
-    // Run the background image function when the window finishes loading
     $(window).on('load', function () {
         dataBackgroundImage();
     });
-
-    /* FUNCTION 2: ORIGINAL ADD TO CART LOGIC
-        Uses AJAX to handle adding products to the cart based on the data-id attribute.
-    */
     $(function(){
         $(document).on('click', '.addToCart', function () {
             let id = $(this).data('id');
-            // Prevent default action (like navigating to cart.html)
             event.preventDefault();
 
             $.ajax({
@@ -394,7 +598,6 @@
                 },
                 success: function (res) {
                     if (res.status === 'success') {
-                        // Update cart count and price in the header (assuming these elements exist)
                         $('.cart_count').text(res.count);
                         $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
                         alert('Product added to cart successfully!');
@@ -410,7 +613,7 @@
         });
         $(document).on('click', '#cartIcon', function () {
             $('.mini_cart').toggleClass('open');
-            loadMiniCart(); // Load items each time user opens mini cart
+            loadMiniCart();
         });
         $("#selectCategory").on('change',function(){
             var category_id = $(this).val();

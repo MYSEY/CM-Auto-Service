@@ -294,7 +294,7 @@
             <div class="header_bottom sticky-header">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             {{--  <div class="categories_menu">
                                 <div class="categories_title active">
                                     <h2 class="categori_toggle">ALL CATEGORIES</h2>
@@ -389,8 +389,8 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3">
-                            <div class="call_support text-right">
+                        <div class="col-lg-4" style="text-align: center;">
+                            <div class="call_support">
                                 <p><i class="icon-phone-call" aria-hidden="true"></i> <span>Call us:  <a href="tel:+8550314866777">+8550314866777</a></span></p>
                             </div>
                         </div>
