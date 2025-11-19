@@ -45,7 +45,7 @@
         </div>
     </section>
 
-    <div class="categories_product_area mb-80">
+    {{--  <div class="categories_product_area mb-80">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -53,7 +53,7 @@
                         @foreach($category as $key => $value)
                             <div class="single_categories_product">
                                 <div class="categories_product_thumb">
-                                    {{-- Assuming you have a category_photo attribute on your category object --}}
+                                    Assuming you have a category_photo attribute on your category object
                                     <a href="#"><img src="{{asset('images/categories/' . $value->category_photo)}}" alt="{{ $value->name }}"></a>
                                 </div>
                                 <div class="categories_product_content">
@@ -65,8 +65,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div>  --}}
     <div class="home_section_bg">
         <div class="product_area">
             <div class="container">
