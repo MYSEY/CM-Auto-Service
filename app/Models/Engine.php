@@ -16,6 +16,7 @@ class Engine extends Model
     protected $fillable =[
         'sub_category_id',
         'name',
+        'part_number',
         'slug',
         'created_by',
         'updated_by'

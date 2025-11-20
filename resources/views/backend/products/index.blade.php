@@ -41,7 +41,7 @@
             </div>
             <div class='col-md-1'>
                 <label for=""></label>
-                <button type="submit" id="btnFilter" class="btn btn-info">Search</button>
+                <button type="submit" id="btnSearch" class="btn btn-info">Search</button>
             </div>
         </div>
     </div>
@@ -161,6 +161,21 @@
                     console.error(xhr.responseText);
                 }
             });
+        });
+        $('#btnSearch').on('click', function() {
+            // Get values from the input fields
+            start_date = $('#start_date').val();
+            end_date = $('#end_date').val();
+            let user = $('select[name="user"]').val();
+            let block = $('select[name="block"]').val();
+            let sector = $('select[name="sector"]').val();
+            let street = $('select[name="street"]').val();
+            let side_of_street = $('select[name="side_of_street"]').val();
+            let business_type_id = $('select[name="business_type_id"]').val();
+            let category_id = $('select[name="category_id"]').val();
+            let sub_category_id = $('select[name="sub_category_id"]').val();
+            // Reload DataTable with the filter values
+            $('#tbl_customer').DataTable().ajax.reload();
         });
         dataTables();
     });

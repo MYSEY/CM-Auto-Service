@@ -39,6 +39,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="name">Part Number</label>
+                                        <input type="text" id="part_number" name="part_number" class="form-control" value="{{ old('part_number') }}" required placeholder="Enter part number">
+                                    </div>
+                                </div>
+                            </div>
                             <hr class="mt-4">
                             {{-- Action Buttons --}}
                             <div class="row">

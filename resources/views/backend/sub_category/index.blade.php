@@ -1,27 +1,5 @@
 @extends('layouts.backend.admin')
-
 @section('content')
-    <ol class="breadcrumb page-breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('admins/dashboard') }}">@lang('lang.dashboard')</a></li>
-        <li class="breadcrumb-item active">Product Sub Categories</li>
-    </ol>
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {!! session('success') !!}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {!! session('error') !!}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     <div class="row">
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
@@ -30,7 +8,7 @@
                         Product Categories List
                     </h2>
                     <div class="panel-toolbar">
-                        <a href="{{url('admins/sub-category/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> @lang('lang.add_new')</a>
+                        <a href="{{url('admins/sub-category/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> Add New</a>
                     </div>
                 </div>
                 <div class="panel-container show">
@@ -46,7 +24,6 @@
                                                     <th>Categroy Name</th>
                                                     <th>Sub Category Name</th>
                                                     <th>Description</th>
-                                                    <th>Serial Number</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -58,7 +35,6 @@
                                                         <td>{{ $item->category->name }}</td>
                                                         <td>{{ $item->name }}</td>
                                                         <td>{{ Str::limit($item->description, 50) }}</td>
-                                                        <td>{{ $item->serial_number }}</td>
                                                         <td>
                                                             @if ($item->is_active == 1)
                                                                 <a href="javascript:void(0);">

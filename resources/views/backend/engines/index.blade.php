@@ -23,6 +23,7 @@
                                                     <th>#</th>
                                                     <th>Sub Category Name</th>
                                                     <th>Engines Name</th>
+                                                    <th>Part Number</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -32,6 +33,7 @@
                                                         <td>{{ $item->id }}</td>
                                                         <td>{{ $item->subCategory->name }}</td>
                                                         <td>{{ $item->name }}</td>
+                                                        <td>{{ $item->part_number }}</td>
                                                         <td>
                                                             <div class="d-flex demo">
                                                                 <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>

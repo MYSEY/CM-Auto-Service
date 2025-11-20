@@ -83,6 +83,7 @@ class EngineController extends Controller
             $data = $request->all();
             $data['sub_category_id']   = $request->sub_category_id;
             $data['name']    = $request->name;
+            $data['part_number']    = $request->part_number;
             $data['updated_by'] = Auth::user()->id;
             $engine = Engine::find($id);
             $engine->update($data);

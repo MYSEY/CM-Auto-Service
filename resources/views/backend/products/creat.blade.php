@@ -52,7 +52,16 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Product Year">Year</label>
-                                    <input type="text" class="form-control" name="year" id="year" placeholder="Enter Product Year" value="{{ old('year') }}">
+                                    <select class="form-control" name="year" id="year">
+                                        <option value="">-- Select --</option>
+                                        @php
+                                            $startYear = 2000;
+                                            $endYear = date('Y') + 10;
+                                        @endphp
+                                        @for ($y = $startYear; $y <= $endYear; $y++)
+                                            <option value="{{ $y }}">{{ $y }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3">

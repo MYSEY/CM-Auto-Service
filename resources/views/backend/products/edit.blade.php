@@ -28,11 +28,6 @@
 
                         <div id="alert-message" class="alert" style="display:none; margin-bottom: 15px;"></div>
 
-                        {{-- CSRF Token for AJAX --}}
-                        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-                        ---
-
                         <div class="form-group">
                             <label for="title">Photo</label>
                             <span class="text-danger">*</span>
@@ -55,9 +50,6 @@
                                 @endif
                             </div>
                         </div>
-
-                        ---
-
                         <div class="form-group">
                             <label for="title">Gallery</label>
                             <input type="file" name="gallery[]" class="form-control" required multiple accept="image/*">
@@ -85,7 +77,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Price">Price</label>
@@ -98,20 +90,30 @@
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discount price" value="{{ $data->discount_price }}">
                                 </div>
                             </div>
-                             <div class="col-md-3">
+                           <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Product Year">Year</label>
-                                    <input type="text" class="form-control" name="year" id="year" placeholder="Enter Discount price" value="{{ $data->year }}">
+                                    <select class="form-control" name="year" id="year">
+                                        <option value="">-- Select --</option>
+                                        @php
+                                            $startYear = 2000;
+                                            $endYear = date('Y') + 10;
+                                        @endphp
+                                        @for ($y = $startYear; $y <= $endYear; $y++)
+                                            <option value="{{ $y }}" {{ $data->year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
                             </div>
-                             <div class="col-md-3">
+
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Number">Number</label>
                                     <input type="text" class="form-control" name="number" id="number" placeholder="Enter Number" value="{{ $data->number }}">
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Category">Make</label>
