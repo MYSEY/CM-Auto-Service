@@ -233,6 +233,33 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="shop_toolbar t_bottom">
+                    <div class="pagination">
+                        <ul>
+                            @if ($product->onFirstPage())
+                                <li class="disabled"><span><<</span></li>
+                            @else
+                                <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
+                            @endif
+
+                            @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
+                                @if ($page == $product->currentPage())
+                                    <li class="current">{{ $page }}</li>
+                                @else
+                                    <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                @endif
+                            @endforeach
+
+                            @if ($product->hasMorePages())
+                                <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
+                                <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                            @else
+                                <li class="disabled"><span>next</span></li>
+                                <li class="disabled"><span>>></span></li>
+                            @endif
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
