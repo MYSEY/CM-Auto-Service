@@ -86,46 +86,32 @@
                             <ul>
                                 <li class="language"><a href="#"><img src="{{asset('frontends/assets/img/logo/language.png')}}" alt=""> english <i class="ion-chevron-down"></i></a>
                                     <ul class="dropdown_language">
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">Khmer</a></li>
+                                        <li><a href="javascript:void(0)">English</a></li>
+                                        <li><a href="javascript:void(0)">Khmer</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                         <div class="header_top_links">
                             <ul>
-                                <li><a href="cart.html">Shopping Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
+                                <li><a href="{{ url('logins') }}">login</a></li>
+                                <li><a href="javascript:void(0)">Shopping Cart</a></li>
+                                <li><a href="javascript:void(0)">Checkout</a></li>
                             </ul>
                         </div>
-                        <div class="search_container">
-                            <form action="#">
-                               <div class="hover_category">
-                                    <select class="select_option" name="select" id="categori1">
-                                        <option selected value="1">All Categories</option>
-                                        <option value="2">file service</option>
-                                    </select>
-                               </div>
-                                <div class="search_box">
-                                    <input placeholder="Search product..." type="text">
-                                    <button type="submit">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="menu" class="text-left ">
+                        <div id="menu" class="text-left">
                             <ul class="offcanvas_main_menu">
-                                class="menu-item-has-children active">
-                                <a href="/">Home</a>
-                                <li class="menu-item-has-children">
-                                    <a href="{{url('about-as')}}">About Us</a>
+                                <li class="menu-item-has-children active">
+                                    <a href="#">Home</a>
                                 </li>
                                 <li class="menu-item-has-children">
                                     <a href="{{url('contact')}}"> Contact Us</a>
                                 </li>
                             </ul>
                         </div>
+                        
                         <div class="offcanvas_footer">
-                            <span><a href="#"><i class="fa fa-envelope-o"></i> info@yourdomain.com</a></span>
+                            <span><a href="javascript:void(0)"><i class="fa fa-envelope-o"></i> the.c.m.auto@gmail.com</a></span>
                             <ul>
                                 <li class="facebook"><a href="https://www.facebook.com/C.M.Auto.77/"><i class="fa fa-facebook"></i></a></li>
                                 <li class="twitter"><a href="https://t.me/CMAUTO"><i class="fa fa-twitter"></i></a></li>
@@ -147,10 +133,10 @@
                         <div class="col-lg-4 col-md-5">
                             <div class="header_account">
                                 <ul>
-                                    <li class="language"><a href="#"><img src="{{asset('frontends/assets/img/logo/language.png')}}" alt=""> english <i class="ion-chevron-down"></i></a>
+                                    <li class="language"><a href="javascript:void(0)"><img src="{{asset('frontends/assets/img/logo/language.png')}}" alt=""> english <i class="ion-chevron-down"></i></a>
                                         <ul class="dropdown_language">
-                                            <li><a href="#">English</a></li>
-                                            <li><a href="#">Khmer</a></li>
+                                            <li><a href="javascript:void(0)">English</a></li>
+                                            <li><a href="javascript:void(0)">Khmer</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -160,8 +146,8 @@
                             <div class="header_top_links text-right">
                                 <ul>
                                     <li><a href="{{ url('logins') }}">login</a></li>
-                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
+                                    <li><a href="javascript:void(0)">Shopping Cart</a></li>
+                                    <li><a href="javascript:void(0)">Checkout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -176,7 +162,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-md-4 col-sm-4 col-4">
                             <div class="logo">
-                                <a href="index.html"><img src="{{$company->company_logo}}" alt=""></a>
+                                <a href="/"><img src="{{$company->company_logo}}" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
@@ -205,11 +191,6 @@
                                         </a>
                                     </div>
                                     <div class="mini_cart_wrapper">
-                                        {{-- <a href="javascript:void(0)" id="cartIcon">
-                                            <i class="icon-shopping-bag2"></i>
-                                            <span class="cart_price">$0.00 <i class="ion-ios-arrow-down"></i></span>
-                                            <span class="cart_count">0</span>
-                                        </a> --}}
                                         <a href="javascript:void(0)" id="cartIcon">
                                             <i class="icon-shopping-bag2"></i>
                                             <span class="cart_price">$0.00 <i class="ion-ios-arrow-down"></i></span>
@@ -247,19 +228,6 @@
                                                     <p class="text-center mt-3">Cart is empty</p>
                                                 @endif
 
-                                                {{-- <div class="cart_item">
-                                                   <div class="cart_img">
-                                                       <a href="#"><img src="{{asset('frontends/assets/img/s-product/product.jpg')}}" alt=""></a>
-                                                   </div>
-                                                    <div class="cart_info">
-                                                        <a href="#">Fusce Aliquam</a>
-                                                        <p>Qty: 1 X <span> $60.00 </span></p>
-                                                    </div>
-                                                    <div class="cart_remove">
-                                                        <a href="#"><i class="ion-android-close"></i></a>
-                                                    </div>
-                                                </div> --}}
-
                                                 <div class="mini_cart_table">
                                                     <div class="cart_total">
                                                         <span>Sub total:</span>
@@ -273,10 +241,10 @@
                                             </div>
                                             <div class="mini_cart_footer">
                                                <div class="cart_button">
-                                                    <a href="cart.html">View cart</a>
+                                                    <a href="javascript:void(0)">View cart</a>
                                                 </div>
                                                 <div class="cart_button">
-                                                    <a class="active" href="checkout.html">Checkout</a>
+                                                    <a class="active" href="javascript:void(0)">Checkout</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -433,7 +401,6 @@
                                 <div class="footer_menu">
                                     <ul>
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
-                                        <li><a href="{{url('about-as')}}">About Us</a></li>
                                     </ul>
                                 </div>
                             </div>
