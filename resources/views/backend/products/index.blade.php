@@ -2,6 +2,52 @@
 @section('content')
 <div class="row">
     <div class="col-xl-12">
+        <div class='row mb-2 align-items-center'>
+            <div class='col-md-4'>
+                <label for="">Name</label>
+                <input type="text" name="name" value="" id="name" class='form-control'>
+            </div>
+            <div class='col-md-4'>
+                <label for="">Product Type</label>
+                <select class="select2 form-control w-100 select2-hidden-accessible" name="product_type_id" id="product_type_id">
+                    <option value="">-- Select --</option>
+                    @foreach ($productTypes as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class='col-md-4'>
+                <label for="">Category</label>
+                <select class="select2 form-control w-100 select2-hidden-accessible" name="category_id" id="category_id">
+                    <option value="">-- Select --</option>
+                    @foreach ($dataCategory as $item)
+                        <option value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <div class='col-md-4'>
+                <label for="">Sub Category</label>
+                <select class="select2 form-control w-100 select2-hidden-accessible" name="category_id" id="category_id">
+                    <option value="">-- Select --</option>
+                </select>
+            </div>
+            <div class='col-md-4'>
+                <label for="">Engine</label>
+                <select class="select2 form-control w-100 select2-hidden-accessible" name="engin_id" id="engin_id">
+                    <option value="">-- Select --</option>
+                </select>
+            </div>
+            <div class='col-md-1'>
+                <label for=""></label>
+                <button type="submit" id="btnFilter" class="btn btn-info">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
         <div id="panel-1" class="panel">
             <div class="panel-hdr">
                 <h2>
@@ -29,17 +75,16 @@
                                                 <th>SubCategory</th>
                                                 <th>Engine</th>
                                                 <th>SerialNumber</th>
-                                                <th>Description</th>
                                                 <th>Price</th>
-                                                <th>Year</th>
-                                                 <th>Number</th>
                                                 <th>DiscountPrice</th>
+                                                <th>Year</th>
+                                                <th>Number</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data as $key=>$item)
+                                            {{-- @foreach ($data as $key=>$item)
                                                 <tr>
                                                     <td>{{$key + 1}}</td>
                                                     <td>
@@ -53,7 +98,6 @@
                                                     <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
                                                     <td>{{ $item->proEngine ? $item->proEngine->name:''}}</td>
                                                     <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
-                                                    <td>{!! $item->description !!}</td>
                                                     <td>{{$item->PriceFormat}}</td>
                                                     <td>{{$item->year}}</td>
                                                     <td>{{$item->number}}</td>
@@ -73,7 +117,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -118,6 +162,7 @@
                 }
             });
         });
+        dataTables();
     });
     const deleteData = (id)=>{
         Swal.fire({
@@ -147,6 +192,137 @@
                     }
                 });
             }
+        });
+    }
+    function dataTables() {
+        $('#dt-basic-example').DataTable({
+            // dom: 'Blfrtip',
+            pageLength: 10,
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            order: [[0, 'desc']],
+            lengthMenu: [ [10, 25, 50,100,-1], [10, 25, 50,100, "All"] ],
+            ajax: {
+                url: '{{ URL("admins/product") }}',
+                type: 'GET',
+                // data: function(d) {
+                //     d.invoice_no = invoice_no;
+                //     d.customer_no = customer_no;
+                //     d.customer_name = customer_name;
+                //     d.collector_id = collector_id;
+                //     d.status = status;
+                //     d.block = block;
+                //     d.sector = sector;
+                //     d.street_no = street_no;
+                //     d.side_of_street = side_of_street;
+                //     d.filter_month = filter_month;
+                // }
+            },
+            columns: [
+                {
+                    data: 'id',
+                    name: 'id',
+                },
+                {
+                    data: 'product_photo',
+                    name: 'product_photo',
+                    searchable: false,
+                    orderable: false,
+                    render: function(data, type, row) {
+                        return `<img src="/images/products/${data}" width="60" height="45" style="object-fit:cover;border-radius:4px;">`;
+                    }
+                },
+                {
+                    data: 'name',
+                    name: 'name',
+                    visible: false,
+                    searchable: true
+                },
+                {
+                    data: 'product_type_name',
+                    name: 'product_type_name',
+                },
+                {
+                    data: 'category_name',
+                    name: 'category_name',
+                },
+                {
+                    data: 'sub_category_name',
+                    name: 'sub_category_name',
+                },
+                {
+                    data: 'engine_name',
+                    name: 'engine_name',
+                },
+                {
+                    data: 'serial_number',
+                    name: 'serial_number',
+                    searchable: true
+                },
+                {
+                    data: 'price',
+                    name: 'price',
+                    render: function(data, type, row) {
+                        return new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }).format(data || 0);
+                    }
+                },
+                {
+                    data: 'discount_price',
+                    name: 'discount_price',
+                    render: function(data, type, row) {
+                        return new Intl.NumberFormat('en-US', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }).format(data || 0);
+                    }
+                },
+                {
+                    data: 'year',
+                    name: 'year'
+                },
+                {
+                    data: 'number',
+                    name: 'number',
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data, type, row) {
+                        return `
+                            <select class="form-control changeStatus" data-id="${row.id}">
+                                <option value="1" ${row.status == 1 ? 'selected' : ''}>Publish</option>
+                                <option value="0" ${row.status == 0 ? 'selected' : ''}>Pending</option>
+                                <option value="2" ${row.status == 2 ? 'selected' : ''}>Un-Publish</option>
+                            </select>
+                        `;
+                    }
+                },
+                {
+                    data: 'id',
+                    name: 'action',
+                    render: function(data, type, row) {
+                        return `
+                            <div class="d-flex demo">
+                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1"
+                                onclick="deleteData(${row.id})" title="Delete Record">
+                                <i class="fal fa-times"></i>
+                                </a>
+                                <a href="/admins/product/${row.id}/edit"
+                                class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit">
+                                <i class="fal fa-edit"></i>
+                                </a>
+                            </div>
+                        `;
+                    },
+                    orderable: false,
+                    searchable: false
+                },
+            ],
+            order: [[0, 'desc']]
         });
     }
 </script>
