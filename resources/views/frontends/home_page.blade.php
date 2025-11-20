@@ -160,11 +160,12 @@
                                                     </div>
                                                     <div class="product_content">
                                                         <div class="product_content_inner">
-                                                            <p class="category"><a href="#">Parts</a></p>
-                                                            <p class="category"><a href="#">{{$item->productType->name}}</a></p>
-                                                            <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} </a></h4>
+                                                            <div class="category"><a href="#">Parts</a></div>
+                                                            <div class="category"><a href="#">{{$item->productType->name}}</a></div>
+                                                            <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }}​{{$item->year}} {{ $item->subCategory->serial_number }} </a></h4>
                                                             <div class="product_rating">
                                                             </div>
+
                                                             <div class="price_box">
                                                                 <span class="current_price price-original"> ${{ number_format($item->price,2) }} {{$item->number}}</span>
                                                             </div>

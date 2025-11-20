@@ -35,7 +35,7 @@
                         <!-- preview container -->
                         <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"></div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Price">Price</label>
                                     <span class="text-danger">*</span>
@@ -47,6 +47,12 @@
                                 <div class="form-group">
                                     <label for="Discrount Price">Discount Price</label>
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discrount price" value="{{ old('discount_price') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Product Year">Year</label>
+                                    <input type="text" class="form-control" name="year" id="year" placeholder="Enter Product Year" value="{{ old('year') }}">
                                 </div>
                             </div>
                             <div class="col-md-3">

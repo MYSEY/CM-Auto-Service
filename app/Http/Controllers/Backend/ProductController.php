@@ -141,6 +141,7 @@ class ProductController extends Controller
                 'description'      => $request->description,
                 'engine_id'          => $request->engine_id,
                 'price'            => $request->price,
+                'year'            => $request->year,
                 'discount_price'   => $request->discount_price,
                 'number'           => $request->number,
                 'delivery_note'    => $request->delivery_note,

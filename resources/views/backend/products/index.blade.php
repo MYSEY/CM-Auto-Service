@@ -31,6 +31,7 @@
                                                 <th>SerialNumber</th>
                                                 <th>Description</th>
                                                 <th>Price</th>
+                                                <th>Year</th>
                                                  <th>Number</th>
                                                 <th>DiscountPrice</th>
                                                 <th>Status</th>
@@ -54,7 +55,8 @@
                                                     <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
                                                     <td>{!! $item->description !!}</td>
                                                     <td>{{$item->PriceFormat}}</td>
-                                                     <td>{!! $item->number !!}</td>
+                                                    <td>{{$item->year}}</td>
+                                                     td>{!! $item->number !!}</td>
                                                     <td>{{$item->DiscountPriceFormat}}</td>
                                                     <td>
                                                         <select class="form-control" id="btnStatus">

@@ -27,6 +27,7 @@ class Product extends Model
         'description',
         'product_photo',
         'price',
+        'year',
         'engine_id',
         'discount_price',
         'number',

@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Price">Price</label>
                                     <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" value="{{ $data->price }}">
@@ -96,6 +96,12 @@
                                 <div class="form-group">
                                     <label for="Discount Price">Discount Price</label>
                                     <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discount price" value="{{ $data->discount_price }}">
+                                </div>
+                            </div>
+                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="Product Year">Year</label>
+                                    <input type="text" class="form-control" name="year" id="year" placeholder="Enter Discount price" value="{{ $data->year }}">
                                 </div>
                             </div>
                              <div class="col-md-3">
