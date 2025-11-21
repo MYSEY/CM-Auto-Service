@@ -46,6 +46,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-xl-12">
         <div id="panel-1" class="panel">
@@ -175,7 +176,7 @@
             let category_id = $('select[name="category_id"]').val();
             let sub_category_id = $('select[name="sub_category_id"]').val();
             // Reload DataTable with the filter values
-            $('#tbl_customer').DataTable().ajax.reload();
+            $('#dt-basic-example').DataTable().ajax.reload();
         });
         dataTables();
     });
