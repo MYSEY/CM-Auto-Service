@@ -48,7 +48,7 @@
                                 <div class="product_rating">
                                     {{ $productDetail->productType->name }}
                                 </div>
-                                <h3>{{ $productDetail->category->name }} {{ $productDetail->subCategory->name }} ​{{$productDetail->year}} <p>​ ​{{$productDetail->proEngine->name}} </p> ​{{ $productDetail->subCategory->serial_number }}</h3>
+                                <h3>{{ $productDetail->category->name }} {{ $productDetail->subCategory->name }} {{$productDetail->year}} <p> {{optional($productDetail->proEngine)->name }} </p> {{ optional($productDetail->proEngine)->part_number }}</h3>
 
                                 <div class="price_box">
                                     <span class="current_price">${{ number_format($productDetail->price,2) }} {{$productDetail->number}}</span>
