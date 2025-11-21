@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('description', 200)->nullable();
+            $table->string('category_photo')->nullable();
             $table->string('slug', 100);
             $table->boolean('is_active')->default(true);
             $table->integer('created_by')->nullable();

@@ -65,7 +65,10 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                 <div class="form-group">
+                                    <label for="title">Photo</label>
+                                    <input type="file" name="category_photo" class="form-control" id="image-input">
+                                </div>
                                 {{-- 4. Status (is_active) --}}
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
@@ -110,6 +113,18 @@
 @section('script')
     <script>
 
+          $(function(){
+            $(document).on('change','#profile', function() {
+                if (this.files && this.files[0]) {
+                    let img = document.querySelector('.image_preview');
+                    img.onload = () =>{
+                        URL.revokeObjectURL(img.src);
+                    }
+                    img.src = URL.createObjectURL(this.files[0]);
+                    document.querySelector(".image_preview").files = this.files;
+                }
+            });
+        });
         // Option 1: Live Slug Generation
         // 🚨 កែប្រែ: លុបការត្រួតពិនិត្យ (if) ដើម្បីឲ្យវាបំពេញទៅក្នុង slug field គ្រប់ពេល
         document.getElementById('name').addEventListener('input', function() {

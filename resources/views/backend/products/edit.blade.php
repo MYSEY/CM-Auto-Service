@@ -208,12 +208,12 @@
                 }
             });
             $(document).ready(function() {
-    // Function to display a temporary alert message
-    function showAlert(message, type = 'success') {
-        const alertBox = $('#alert-message');
-        alertBox.removeClass('alert-success alert-danger').addClass(`alert-${type}`).text(message).fadeIn();
-        setTimeout(() => alertBox.fadeOut(), 3000);
-    }
+            // Function to display a temporary alert message
+            function showAlert(message, type = 'success') {
+                const alertBox = $('#alert-message');
+                alertBox.removeClass('alert-success alert-danger').addClass(`alert-${type}`).text(message).fadeIn();
+                setTimeout(() => alertBox.fadeOut(), 3000);
+            }
 
             // --- Main Product Photo Deletion ---
             $('.delete-photo').on('click', function(e) {

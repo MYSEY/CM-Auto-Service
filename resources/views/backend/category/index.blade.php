@@ -48,6 +48,7 @@
                                             <thead class="">
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Catagory Photo</th>
                                                     <th>@lang('lang.name')</th>
                                                     <th>@lang('lang.description')</th>
                                                     <th>@lang('lang.slug')</th>
@@ -56,11 +57,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {{-- ត្រូវប្រាកដថា $data ត្រូវបាន pass ពី Controller --}}
                                                 @foreach ($data as $key=>$item)
-                                                    <tr>
+                                                <tr>
+                                                    <td>{{$key + 1}}</td>
+                                                    <td>
+                                                        @if ($item->category_photo)
+                                                            <img src="{{ asset('images/category/' . $item->category_photo) }}" style="object-fit: cover;width: 100px;height: 50px;" alt="category">
+                                                        @endif
                                                          {{-- ✅ KHMER: គណនា Index ឲ្យត្រឹមត្រូវតាមទំព័រ (សម្រាប់ paginate) --}}
-                                                        <td>{{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}</td>
                                                         <td>{{$item->name}}</td>
                                                         <td>{{ Str::limit($item->description, 50) }}</td> {{-- កំណត់ត្រឹម 50 តួអក្សរ --}}
                                                         <td>{{$item->slug}}</td>

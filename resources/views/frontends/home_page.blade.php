@@ -45,7 +45,7 @@
         </div>
     </section>
 
-    {{--  <div class="categories_product_area mb-80">
+    <div class="categories_product_area mb-80">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -53,8 +53,9 @@
                         @foreach($category as $key => $value)
                             <div class="single_categories_product">
                                 <div class="categories_product_thumb">
-                                    Assuming you have a category_photo attribute on your category object
-                                    <a href="#"><img src="{{asset('images/categories/' . $value->category_photo)}}" alt="{{ $value->name }}"></a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
+                                    </a>
                                 </div>
                                 <div class="categories_product_content">
                                     <h4><a href="#"> {{ $value->name }}</a></h4>
@@ -65,7 +66,7 @@
                 </div>
             </div>
         </div>
-    </div>  --}}
+    </div>
     <div class="home_section_bg">
         <div class="product_area">
             <div class="container">
@@ -162,7 +163,7 @@
                                                         <div class="product_content_inner">
                                                             <div class="category"><a href="#">Parts</a></div>
                                                             <div class="category"><a href="#">{{$item->productType->name}}</a></div>
-                                                            <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }}​{{$item->year}} {{ $item->subCategory->serial_number }} </a></h4>
+                                                            <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} ​{{$item->year}}  ​{{$item->proEngine->name}}  {{ $item->subCategory->serial_number }} </a></h4>
                                                             <div class="product_rating">
                                                             </div>
 
@@ -208,7 +209,7 @@
                                                             <div class="product_content_inner">
                                                                 <p class="category"><a href="#">Parts</a></p>
                                                                 <p class="category"><a href="#">{{$item->productType->name}}</a></p>
-                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></h4>
+                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} ​{{$item->year}} ​{{$item->proEngine->name}}  {{ $item->subCategory->serial_number }} </a></h4>
                                                                 <div class="product_rating">
                                                                 </div>
                                                                 <div class="price_box">
@@ -385,6 +386,7 @@
                 }
             });
         });
+
         $(document).on('click', '#cartIcon', function () {
             $('.mini_cart').toggleClass('open');
             loadMiniCart();

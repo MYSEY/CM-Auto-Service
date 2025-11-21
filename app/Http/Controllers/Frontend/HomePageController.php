@@ -20,7 +20,8 @@ class HomePageController extends Controller
         $dataProduct = Product::with(['category','subCategory'])->get();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
-        return view('frontends.home_page',compact('company','product','category','productType','dataProduct'));
+        $proEngine = Engine::all();
+        return view('frontends.home_page',compact('company','product','category','productType','dataProduct','proEngine'));
     }
     public function showLoginForm(){
         $company = Company::first();

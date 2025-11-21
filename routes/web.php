@@ -82,6 +82,8 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('slide', SliderController::class);
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
+    Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');
+    Route::delete('/category/{category}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');
     Route::delete('/gallery-image/{id}/delete', [ProductController::class, 'deleteGalleryImage'])->name('product.delete_gallery_image');
     Route::post('admins/slide/change/status/{id}', [SliderController::class, 'changeStatus'])->name('admins.slide.change.status');
 
