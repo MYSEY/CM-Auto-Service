@@ -209,7 +209,7 @@
                                                             <div class="product_content_inner">
                                                                 <p class="category"><a href="#">Parts</a></p>
                                                                 <p class="category"><a href="#">{{$item->productType->name}}</a></p>
-                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} ​{{$item->year}} ​{{$item->proEngine->name}}  {{ $item->subCategory->serial_number }} </a></h4>
+                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} ​{{$item->year}} {{ $item->proEngine?->name ?? '' }}  {{ $item->subCategory->serial_number }} </a></h4>
                                                                 <div class="product_rating">
                                                                 </div>
                                                                 <div class="price_box">
