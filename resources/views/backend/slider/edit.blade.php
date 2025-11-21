@@ -1,139 +1,45 @@
 @extends('layouts.backend.admin')
+
 @section('content')
 <div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-8 mx-auto">
         <div id="panel-2" class="panel">
             <div class="panel-container collapse show">
                 <div class="panel-hdr">
                     <h2>
-                        Product
+                        Create New Slider
                     </h2>
                 </div>
             </div>
             <div class="panel-container show">
                 <div class="panel-content">
-                    <form method="POST" action="{{ url('admins/product',$data->id) }}" enctype="multipart/form-data" novalidate>
+                    <form method="POST" action="{{ url('admins/slide',$data->id) }}" enctype="multipart/form-data" novalidate>
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <span class="text-danger">*</span>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ $data->name }}">
-                            <p class="text-danger">{!! $errors->first('name') !!}</p>
-                        </div>
-                        {{-- <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea type="text" rows="10" class="form-control" name="description" id="description">{{ $data->description }}</textarea>
-                        </div> --}}
-                        <div class="form-group">
-                            <label for="Description">Description</label>
-                            <span class="text-danger">*</span>
-                            <textarea class="js-summernote form-control" id="saveToLocal" name="description">{{ old('description', $data->description) }}</textarea>
+                            <label for="title">Title (Optional)</label>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Enter slider title" value="{{ $data->title }}">
+                            <p class="text-danger">{!! $errors->first('title') !!}</p>
                         </div>
 
                         <div class="form-group">
-                            <label for="title">Photo</label>
+                            <label for="image_slider">Slider Image</label>
                             <span class="text-danger">*</span>
-                            <input type="file" name="product_photo" class="form-control" id="image-input">
-                            <p class="text-danger">{!! $errors->first('product_photo') !!}</p>
-                            <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
-                                <img src="{{ asset('images/products/' . $data->product_photo) }}" style="object-fit: cover;width: 100px;height: 50px;" alt="product">
-                            </div>
+                            <input type="file" name="image_slider" class="form-control" id="image_slider" required accept="image/*">
+                            <p class="text-danger">{!! $errors->first('image_slider') !!}</p>
+                            <div id="image-preview-container" style="margin-top: 10px;"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="title">Gallery</label><span class="text-danger">*</span>
-                            <input type="file" name="gallery[]" class="form-control" required multiple accept="'gallery/*">
-                            <p class="text-danger">{!! $errors->first('gallery') !!}</p>
-                            <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
-                                @foreach ($data->productImage as $item)
-                                    <img
-                                        src="{{ asset('images/products/gallery/' . $item->path_name) }}"
-                                        style="object-fit: cover; width: 100px; height: 50px; border-radius: 5px;"
-                                        alt="product image"
-                                    >
-                                @endforeach
-                            </div>
-                        </div>
-                        <!-- preview container -->
-                        <div id="gallery-preview" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"></div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Price">Price</label>
-                                    <span class="text-danger">*</span>
-                                    <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" value="{{ $data->price }}">
-                                    <p class="text-danger">{!! $errors->first('price') !!}</p>
+                        <div id="photo-preview" style="margin-top:10px;">
+                            @if ($data->image_slider)
+                                <div id="main-photo-container" style="display:flex; align-items:center; gap: 8px;">
+                                    <img id="main-product-photo" src="{{ asset('images/sliders/' . $data->image_slider) }}" style="object-fit: cover; width: 100px; height: 50px;" alt="product photo">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Discrount Price">Discount Price</label>
-                                    <input type="number" class="form-control" name="discount_price" id="discount_price" placeholder="Enter Discrount price" value="{{ $data->discount_price }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Category">Category</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control" id="category_id" name="category_id">
-                                        <option value="">Please choose ctegories</option>
-                                        @foreach($category as $item)
-                                            <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Category">Sub Category</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
-                                        <option value="">Please choose sub ctegories</option>
-                                        @foreach($sub_category as $item)
-                                            <option value="{{ $item->id }}" {{ $data->sub_category_id == $item->id ? 'selected' : '' }}>
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="year">Year</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control" id="year" name="year">
-                                        <option value="">Please choose year</option>
-                                        @for ($year = 2000; $year <= 2054; $year++)
-                                            <option value="{{ $year }}" {{ $data->year == $year ? 'selected' : '' }}>{{ $year }}</option>
-                                        @endfor
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('year') !!}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Category">Product Type</label>
-                            <span class="text-danger">*</span>
-                            <select class="form-control" name="product_type_id">
-                                <option value="">Please choose product type</option>
-                                @foreach ($producttype as $item)
-                                    <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="delivery_note">Delivery Note</label>
-                            <textarea type="text" rows="10" class="form-control" name="delivery_note" id="delivery_note">{{ $data->delivery_note }}</textarea>
+                            @else
+                                <p id="main-photo-placeholder">No main photo currently set.</p>
+                            @endif
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">
-                            <input type="text" id="id" name="id" value="{{ $data->id }}" hidden>
-                            <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
+                            <a href="{{url('admins/slide')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
                             <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
                         </div>
                     </form>
@@ -143,52 +49,25 @@
     </div>
 </div>
 @endsection
+
 @section('script')
     <script>
         $(function(){
-            $('.js-summernote').summernote({
-                height: 200,               // editor height
-                placeholder: 'Write your content here...',
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
-            });
-            $(document).on('change','#profile', function() {
+            // Simplified script to show image preview for the main slider image
+            $(document).on('change','#image_slider', function() {
+                const previewContainer = $('#image-preview-container');
+                previewContainer.empty();
+
                 if (this.files && this.files[0]) {
-                    let img = document.querySelector('.image_preview');
-                    img.onload = () =>{
-                        URL.revokeObjectURL(img.src);
-                    }
-                    img.src = URL.createObjectURL(this.files[0]);
-                    document.querySelector(".image_preview").files = this.files;
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewContainer.append(`<img src="${e.target.result}" alt="Slider Image Preview" style="max-width: 200px; height: auto; border: 1px solid #ccc; padding: 5px;">`);
+                    };
+                    reader.readAsDataURL(this.files[0]);
                 }
             });
-            $(document).on('change','#category_id',function(){
-                var category_id = $(this).val();
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('admins/product/category/onchange') }}",
-                    data: {
-                        category_id:category_id
-                    },
-                    dataType: "JSON",
-                    success: function (response) {
-                        $(".sub_category").empty();
-                        $(".sub_category").empty().append('<option value="">Please Select</option>');
-                        $.each(response.data, function(index, item)
-                        {
-                            $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
-                        });
-                    }
-                });
-            });
+
+            // The AJAX logic for category/sub-category is removed as it's not needed for the simple Slider model
         });
     </script>
 @endsection

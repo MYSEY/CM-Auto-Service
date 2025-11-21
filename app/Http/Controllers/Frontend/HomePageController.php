@@ -21,13 +21,15 @@ class HomePageController extends Controller
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         $proEngine = Engine::all();
-        return view('frontends.home_page',compact('company','product','category','productType','dataProduct','proEngine'));
+        $slider = Slider::all();
+        return view('frontends.home_page',compact('company','product','category','productType','dataProduct','proEngine','slider'));
     }
     public function showLoginForm(){
         $company = Company::first();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
-        return view('frontends.login',compact('company','category','productType'));
+        $slider = Slider::all();
+        return view('frontends.login',compact('company','category','productType','slider'));
     }
     public function productDetail(Request $request){
         $productDetail = Product::with(['productImage','productType','category','subCategory'])->where('id',$request->id)->first();
@@ -35,7 +37,8 @@ class HomePageController extends Controller
         $category = ProductCategory::with('subCategory')->get();
         $product = Product::paginate(9);
         $productType = ProductType::all();
-       return view('frontends.product_detail',compact('product','productDetail','company','category','productType'));
+        $slider = Slider::all();
+       return view('frontends.product_detail',compact('product','productDetail','company','category','productType','slider'));
     }
     public function categoryFilter(Request $request){
         // Build query
@@ -62,14 +65,16 @@ class HomePageController extends Controller
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         $product = $query->paginate(9);
-        return view('frontends.home_page',compact('company','product','category','productType'));
+        $slider = Slider::all();
+        return view('frontends.home_page',compact('company','product','category','productType','slider'));
     }
     public function filter($id){
         $product = Product::with(['productImage'])->where('product_type_id',$id)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-       return view('frontends.ecu_soft',compact('product','company','category','productType'));
+        $slider = Slider::all();
+       return view('frontends.ecu_soft',compact('product','company','category','productType','slider'));
     }
     public function productCategoryFilter(Request $request)
     {
@@ -77,7 +82,8 @@ class HomePageController extends Controller
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-        return view('frontends.home_page',compact('product','company','category','productType'));
+        $slider = Slider::all();
+        return view('frontends.home_page',compact('product','company','category','productType','slider'));
     }
     public function subCategoryFilter(Request $request)
     {
@@ -86,7 +92,8 @@ class HomePageController extends Controller
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-        return view('frontends.home_page',compact('product','company','category','productType'));
+        $slider = Slider::all();
+        return view('frontends.home_page',compact('product','company','category','productType','slider'));
     }
     public function engineFilter(Request $request)
     {
@@ -94,7 +101,8 @@ class HomePageController extends Controller
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-        return view('frontends.home_page',compact('product','company','category','productType'));
+        $slider = Slider::all();
+        return view('frontends.home_page',compact('product','company','category','productType','slider'));
     }
     public function frontendCategory(Request $request){
         try{
@@ -135,6 +143,7 @@ class HomePageController extends Controller
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
-        return view('frontends.home_page', compact('product', 'company', 'category', 'productType', 'selectedFilters'));
+        $slider = Slider::all();
+        return view('frontends.home_page', compact('product', 'company', 'category', 'productType', 'selectedFilters', 'slider'));
     }
 }

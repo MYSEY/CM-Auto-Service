@@ -16,21 +16,14 @@ class Slider extends Model
     protected $fillable =[
         'title',
         'image_slider',
-        'type',
-        'link',
         'created_by',
         'updated_by',
     ];
-protected static function boot()
+    protected static function boot()
     {
         parent::boot();
-
-        // នៅពេលដែល Model ត្រូវបានលុបជាអចិន្ត្រៃយ៍ (forceDelete)
         static::forceDeleted(function ($slider) {
-            // ពិនិត្យមើលថាតើមានឈ្មោះរូបភាពក្នុង database ដែរឬទេ
             if ($slider->image_slider) {
-                // លុបឯកសារចេញពី public disk
-                // ផ្លូវនឹងត្រូវមើលទៅដូចជា៖ 'images/sliders/filename.jpg'
                 Storage::disk('public')->delete($slider->image_slider);
             }
         });

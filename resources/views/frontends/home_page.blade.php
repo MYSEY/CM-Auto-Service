@@ -3,45 +3,19 @@
 @section('content')
     <section class="slider_section mb-80">
         <div class="slider_area slider_carousel owl-carousel">
-            {{-- Slider 1: The JS below will read the data-bgimg attribute and set the background-image CSS. --}}
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-1.jpg')}}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="slider_content">
-                                <h1>Big sale off <span>Accessories Fidanza</span></h1>
-                                <p>Exclusive Offer -30% Off This Week</p>
+            @foreach($slider as $slide)
+                <div class="single_slider d-flex align-items-center" data-bgimg="{{ asset('images/sliders/' . $slide->image_slider) }}">
+                    <div class="container">                   
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="slider_content">
+                                    <h1>{{ $slide->title }}</h1>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {{-- Slider 2 --}}
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-2.jpg')}}">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="slider_content center">
-                                    <h1>Accessories  <span>all kinds of tractor trailer</span></h1>
-                                    <p>Exclusive Offer -30% Off This Week</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            {{-- Slider 3 --}}
-            <div class="single_slider d-flex align-items-center" data-bgimg="{{asset('frontends/assets/img/slider/slide-3.jpg')}}">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="slider_content">
-                                    <h1>High-end <span>New car interior</span> </h1>
-                                    <p>Exclusive Offer -20% Off This Week</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
+            @endforeach
         </div>
     </section>
 
@@ -264,7 +238,6 @@
             </div>
         </div>
     </div>
-
     <div class="brand_area">
         <div class="container">
             <div class="col-12">
@@ -285,7 +258,6 @@
             </div>
         </div>
     </div>
-
     <div class="newsletter_area">
         <div class="container">
             <div class="newsletter_inner">
