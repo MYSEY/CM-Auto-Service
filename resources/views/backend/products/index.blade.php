@@ -29,13 +29,13 @@
         <div class="row mb-3 align-items-center">
             <div class='col-md-4'>
                 <label for="">Sub Category</label>
-                <select class="select2 form-control w-100 select2-hidden-accessible" name="category_id" id="category_id">
+                <select class="select2 form-control w-100 select2-hidden-accessible sub_category" name="sub_category_id" id="sub_category_id">
                     <option value="">-- Select --</option>
                 </select>
             </div>
             <div class='col-md-4'>
                 <label for="">Engine</label>
-                <select class="select2 form-control w-100 select2-hidden-accessible" name="engin_id" id="engin_id">
+                <select class="select2 form-control w-100 select2-hidden-accessible engine_id" name="engine_id" id="engine_id">
                     <option value="">-- Select --</option>
                 </select>
             </div>
@@ -75,7 +75,7 @@
                                                 <th>Category</th>
                                                 <th>SubCategory</th>
                                                 <th>Engine</th>
-                                                <th>SerialNumber</th>
+                                                <th>Patr Nnumber</th>
                                                 <th>Price</th>
                                                 <th>DiscountPrice</th>
                                                 <th>Year</th>
@@ -85,40 +85,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($data as $key=>$item)
-                                                <tr>
-                                                    <td>{{$key + 1}}</td>
-                                                    <td>
-                                                        @if ($item->product_photo)
-                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" style="object-fit: cover;width: 100px;height: 50px;" alt="product">
-                                                        @endif
-                                                    </td>
-                                                    <td>{{$item->name}}</td>
-                                                    <td>{{$item->productType ? $item->productType->name : ''}}</td>
-                                                    <td>{{ $item->category ? $item->category->name : '' }}</td>
-                                                    <td>{{ $item->subCategory ? $item->subCategory->name : '' }}</td>
-                                                    <td>{{ $item->proEngine ? $item->proEngine->name:''}}</td>
-                                                    <td>{{ $item->subCategory ? $item->subCategory->serial_number : '' }}</td>
-                                                    <td>{{$item->PriceFormat}}</td>
-                                                    <td>{{$item->year}}</td>
-                                                    <td>{{$item->number}}</td>
-                                                    <td>{{$item->DiscountPriceFormat}}</td>
-                                                    <td>
-                                                        <select class="form-control" id="btnStatus">
-                                                            <option value="1" {{ $item->publish==1 ? 'selected' : '' }}>Publish</option>
-                                                            <option value="0" {{ $item->publish==0 ? 'selected' : '' }}>Pending</option>
-                                                            <option value="2" {{ $item->publish==2 ? 'selected' : '' }}>Un-Publish</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex demo">
-                                                            <input type="text" value="{{ $item->id }}" id="id" hidden>
-                                                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                            <a href="{{url('admins/product',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach --}}
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -163,19 +130,45 @@
                 }
             });
         });
+        $(document).on('change','#category_id',function(){
+            var category_id = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('admins/product/category/onchange') }}",
+                data: {
+                    category_id:category_id
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    $(".sub_category").empty();
+                    $(".sub_category").empty().append('<option value="">Please Select</option>');
+                    $.each(response.data, function(index, item)
+                    {
+                        $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                    });
+                }
+            });
+        });
+        $(document).on('change','#sub_category_id',function(){
+            var sub_category_id = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ url('admins/product/sub-category/onchange') }}",
+                data: {
+                    sub_category_id:sub_category_id
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    $(".engine_id").empty();
+                    $(".engine_id").empty().append('<option value="">Please Select</option>');
+                    $.each(response.data, function(index, item)
+                    {
+                        $(".engine_id").append('<option value="' + item.id + '">' + item.name + '</option>');
+                    });
+                }
+            });
+        });
         $('#btnSearch').on('click', function() {
-            // Get values from the input fields
-            start_date = $('#start_date').val();
-            end_date = $('#end_date').val();
-            let user = $('select[name="user"]').val();
-            let block = $('select[name="block"]').val();
-            let sector = $('select[name="sector"]').val();
-            let street = $('select[name="street"]').val();
-            let side_of_street = $('select[name="side_of_street"]').val();
-            let business_type_id = $('select[name="business_type_id"]').val();
-            let category_id = $('select[name="category_id"]').val();
-            let sub_category_id = $('select[name="sub_category_id"]').val();
-            // Reload DataTable with the filter values
             $('#dt-basic-example').DataTable().ajax.reload();
         });
         dataTables();
@@ -212,28 +205,22 @@
     }
     function dataTables() {
         $('#dt-basic-example').DataTable({
-            // dom: 'Blfrtip',
             pageLength: 10,
-            destroy: true,
             processing: true,
             serverSide: true,
+            destroy: true,
             order: [[0, 'desc']],
             lengthMenu: [ [10, 25, 50,100,-1], [10, 25, 50,100, "All"] ],
             ajax: {
                 url: '{{ URL("admins/product") }}',
                 type: 'GET',
-                // data: function(d) {
-                //     d.invoice_no = invoice_no;
-                //     d.customer_no = customer_no;
-                //     d.customer_name = customer_name;
-                //     d.collector_id = collector_id;
-                //     d.status = status;
-                //     d.block = block;
-                //     d.sector = sector;
-                //     d.street_no = street_no;
-                //     d.side_of_street = side_of_street;
-                //     d.filter_month = filter_month;
-                // }
+                data: function(d) {
+                    d.name = $('input[name="name"]').val();
+                    d.product_type_id = $('select[name="product_type_id"]').val();
+                    d.category_id = $('select[name="category_id"]').val();
+                    d.sub_category_id = $('select[name="sub_category_id"]').val();
+                    d.engine_id = $('select[name="engine_id"]').val();
+                }
             },
             columns: [
                 {
@@ -245,15 +232,17 @@
                     name: 'product_photo',
                     searchable: false,
                     orderable: false,
-                    render: function(data, type, row) {
-                        return `<img src="/images/products/${data}" width="60" height="45" style="object-fit:cover;border-radius:4px;">`;
+                    render: function (data, type, row) {
+                        if (data) {
+                            return `<img src="/images/products/${data}" width="60" height="45" style="object-fit:cover;border-radius:4px;">`;
+                        } else {
+                            return `No Image`;
+                        }
                     }
                 },
                 {
                     data: 'name',
                     name: 'name',
-                    visible: false,
-                    searchable: true
                 },
                 {
                     data: 'product_type_name',
@@ -272,8 +261,8 @@
                     name: 'engine_name',
                 },
                 {
-                    data: 'serial_number',
-                    name: 'serial_number',
+                    data: 'part_number',
+                    name: 'part_number',
                     searchable: true
                 },
                 {
