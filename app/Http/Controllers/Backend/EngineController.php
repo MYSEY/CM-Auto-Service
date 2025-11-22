@@ -38,11 +38,15 @@ class EngineController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'sub_category_id' => 'required|integer',
+            'category_id' => 'required|integer',
+        ]);
         try {
             $data = $request->all();
             $data['created_by'] = Auth::id();
             $data['slug']=Str::slug($request->name,'-');
-            // dd($data = $request->all());
             Engine::create($data);
             DB::commit();
             Toastr::success('Create Engine successfully.','Success');
@@ -70,7 +74,7 @@ class EngineController extends Controller
         try {
             $data = Engine::findOrFail($id);
             $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
-            $subCategory = ProductSubCategory::where('product_category_id', $data->sub_category_id)->get();
+            $subCategory = ProductSubCategory::where('product_category_id', $data->category_id)->get();
             return view('backend.engines.edit', compact('category','subCategory', 'data'));
         } catch (\Exception $e) {
             Toastr::error('Sub-Category not found or an error occurred.','Error');
@@ -83,6 +87,11 @@ class EngineController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'sub_category_id' => 'required|integer',
+            'category_id' => 'required|integer',
+        ]);
         try {
             $data = $request->all();
             $data['category_id']   = $request->category_id;
