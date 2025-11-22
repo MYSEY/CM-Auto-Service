@@ -38,7 +38,7 @@ class EngineController extends Controller
      */
     public function store(Request $request)
     {
-        // try {
+        try {
             $data = $request->all();
             $data['created_by'] = Auth::id();
             $data['slug']=Str::slug($request->name,'-');
@@ -47,11 +47,11 @@ class EngineController extends Controller
             DB::commit();
             Toastr::success('Create Engine successfully.','Success');
             return redirect('admins/engine');
-        // }catch(\Exception $e){
-        //     DB::rollback();
-        //     Toastr::error('Create Engine fail','Error');
-        //     return redirect()->back();
-        // }
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Create Engine fail','Error');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -67,15 +67,15 @@ class EngineController extends Controller
      */
     public function edit(string $id)
     {
-        // try {
+        try {
             $data = Engine::findOrFail($id);
             $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
-            $subCategory = ProductSubCategory::where('product_category_id', $data->category_id)->get();
+            $subCategory = ProductSubCategory::where('product_category_id', $data->sub_category_id)->get();
             return view('backend.engines.edit', compact('category','subCategory', 'data'));
-        // } catch (\Exception $e) {
-        //     Toastr::error('Sub-Category not found or an error occurred.','Error');
-        //     return redirect()->back();
-        // }
+        } catch (\Exception $e) {
+            Toastr::error('Sub-Category not found or an error occurred.','Error');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -85,6 +85,7 @@ class EngineController extends Controller
     {
         try {
             $data = $request->all();
+            $data['category_id']   = $request->category_id;
             $data['sub_category_id']   = $request->sub_category_id;
             $data['name']    = $request->name;
             $data['part_number']    = $request->part_number;
