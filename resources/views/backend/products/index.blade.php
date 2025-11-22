@@ -65,7 +65,7 @@
                         <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info" style="width: 1163px;">
+                                    <table id="tbl_product" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info" style="width: 1163px;">
                                         <thead class="">
                                             <tr>
                                                 <th>#</th>
@@ -75,7 +75,7 @@
                                                 <th>Category</th>
                                                 <th>SubCategory</th>
                                                 <th>Engine</th>
-                                                <th>Patr Nnumber</th>
+                                                <th>PatrNnumber</th>
                                                 <th>Price</th>
                                                 <th>DiscountPrice</th>
                                                 <th>Year</th>
@@ -85,7 +85,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -103,6 +103,10 @@
 @section('script')
 <script>
     $(function(){
+        $('#btnSearch').on('click', function() {
+            $('#tbl_product').DataTable().ajax.reload();
+        });
+        dataTables();
         $("#btnStatus").on('change',function(){
             var publish = $(this).val();
             var id = $("#id").val();
@@ -168,10 +172,6 @@
                 }
             });
         });
-        $('#btnSearch').on('click', function() {
-            $('#dt-basic-example').DataTable().ajax.reload();
-        });
-        dataTables();
     });
     const deleteData = (id)=>{
         Swal.fire({
@@ -204,7 +204,7 @@
         });
     }
     function dataTables() {
-        $('#dt-basic-example').DataTable({
+        $('#tbl_product').DataTable({
             pageLength: 10,
             processing: true,
             serverSide: true,
@@ -230,8 +230,6 @@
                 {
                     data: 'product_photo',
                     name: 'product_photo',
-                    searchable: false,
-                    orderable: false,
                     render: function (data, type, row) {
                         if (data) {
                             return `<img src="/images/products/${data}" width="60" height="45" style="object-fit:cover;border-radius:4px;">`;
@@ -263,7 +261,6 @@
                 {
                     data: 'part_number',
                     name: 'part_number',
-                    searchable: true
                 },
                 {
                     data: 'price',
@@ -323,8 +320,6 @@
                             </div>
                         `;
                     },
-                    orderable: false,
-                    searchable: false
                 },
             ],
             order: [[0, 'desc']]
