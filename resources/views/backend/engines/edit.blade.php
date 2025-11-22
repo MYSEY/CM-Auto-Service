@@ -29,8 +29,8 @@
                             </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="sub_category_id">Sub Category <span class="text-danger">*</span></label>
-                                        <select class="form-control @error('sub_category_id') is-invalid @enderror" id="sub_category_id" name="sub_category_id" required>
+                                        <label class="form-label " for="sub_category_id">Sub Category <span class="text-danger">*</span></label>
+                                        <select class="form-control  sub_category @error('sub_category_id') is-invalid @enderror" id="sub_category_id" name="sub_category_id" required>
                                             <option value="">Select a Sub Category</option>
                                             @foreach ($subCategory as $item)
                                                 <option value="{{ $item->id }}" {{ $data->sub_category_id == $item->id ? 'selected' : '' }}>
@@ -77,47 +77,27 @@
         </div>
     </div>
 @endsection
-
-@section('script')
-<script>
-    $(document).on('change','#category_id',function(){
+    @section('script')
+    <script>
+        $(document).on('change','#category_id',function(){
                 var category_id = $(this).val();
-        $.ajax({
-            type: "GET",
-            url: "{{ url('admins/product/category/onchange') }}",
-            data: {
-                category_id:category_id
-            },
-            dataType: "JSON",
-            success: function (response) {
-                $(".sub_category").empty();
-                $(".sub_category").empty().append('<option value="">Please Select</option>');
-                $.each(response.data, function(index, item)
-                {
-                    $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('admins/product/category/onchange') }}",
+                    data: {
+                        category_id:category_id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        $(".sub_category").empty();
+                        $(".sub_category").empty().append('<option value="">Please Select</option>');
+                        $.each(response.data, function(index, item)
+                        {
+                            $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
                 });
-            }
-        });
-    });
-    $(document).on('change','#sub_category_id',function(){
-        var sub_category_id = $(this).val();
-        $.ajax({
-            type: "GET",
-            url: "{{ url('admins/product/sub-category/onchange') }}",
-            data: {
-                sub_category_id:sub_category_id
-            },
-            dataType: "JSON",
-            success: function (response) {
-                $(".engine_id").empty();
-                $(".engine_id").empty().append('<option value="">Please Select</option>');
-                $.each(response.data, function(index, item)
-                {
-                    $(".engine_id").append('<option value="' + item.id + '">' + item.name + '</option>');
-                });
-            }
-        });
-    });
-</script>
-@endsection
+            });
+    </script>
+    @endsection
 
