@@ -16,13 +16,18 @@ class Engine extends Model
     protected $fillable =[
         'sub_category_id',
         'name',
+        'category_id',
         'part_number',
         'slug',
         'created_by',
         'updated_by'
     ];
 
+  public function category(){
+        return $this->belongsTo(ProductCategory::class,'category_id');
+    }
     public function subCategory(){
         return $this->belongsTo(ProductSubCategory::class,'sub_category_id');
     }
+
 }

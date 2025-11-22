@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Models\Engine;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -18,7 +19,7 @@ class EngineController extends Controller
      */
     public function index()
     {
-        $data = Engine::with('subCategory')->get();
+        $data = Engine::with('category','subCategory')->get();
         return view('backend.engines.index',compact('data'));
     }
 
@@ -28,7 +29,8 @@ class EngineController extends Controller
     public function create()
     {
         $subCategory = ProductSubCategory::all();
-        return view('backend.engines.create',compact('subCategory'));
+        $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
+        return view('backend.engines.create',compact('subCategory','category'));
     }
 
     /**
@@ -36,19 +38,20 @@ class EngineController extends Controller
      */
     public function store(Request $request)
     {
-        try {
+        // try {
             $data = $request->all();
             $data['created_by'] = Auth::id();
             $data['slug']=Str::slug($request->name,'-');
+            // dd($data = $request->all());
             Engine::create($data);
             DB::commit();
             Toastr::success('Create Engine successfully.','Success');
             return redirect('admins/engine');
-        }catch(\Exception $e){
-            DB::rollback();
-            Toastr::error('Create Engine fail','Error');
-            return redirect()->back();
-        }
+        // }catch(\Exception $e){
+        //     DB::rollback();
+        //     Toastr::error('Create Engine fail','Error');
+        //     return redirect()->back();
+        // }
     }
 
     /**

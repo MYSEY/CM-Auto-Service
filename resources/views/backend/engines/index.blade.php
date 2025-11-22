@@ -21,6 +21,7 @@
                                             <thead class="">
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Category</th>
                                                     <th>Sub Category Name</th>
                                                     <th>Engines Name</th>
                                                     <th>Part Number</th>
@@ -31,6 +32,7 @@
                                                 @foreach ($data as $key=>$item)
                                                     <tr>
                                                         <td>{{ $item->id }}</td>
+                                                        <td>{{ $item->Category->name }}</td>
                                                         <td>{{ $item->subCategory->name }}</td>
                                                         <td>{{ $item->name }}</td>
                                                         <td>{{ $item->part_number }}</td>

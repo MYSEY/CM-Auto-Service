@@ -5,7 +5,7 @@
         <div class="slider_area slider_carousel owl-carousel">
             @foreach($slider as $slide)
                 <div class="single_slider d-flex align-items-center" data-bgimg="{{ asset('images/sliders/' . $slide->image_slider) }}">
-                    <div class="container">                   
+                    <div class="container">
                         <div class="row">
                             <div class="col-12">
                                 <div class="slider_content">
@@ -26,9 +26,9 @@
                     <div class="categories_product_inner categories_column7 owl-carousel">
                         @foreach($category as $key => $value)
                             <div class="single_categories_product">
-                                <div class="categories_product_thumb">
+                                <div class="categories_product_thumb carousel-item active">
                                     <a href="#">
-                                        <img src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
+                                       <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
                                     </a>
                                 </div>
                                 <div class="categories_product_content">

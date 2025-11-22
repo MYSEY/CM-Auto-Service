@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('engines', function (Blueprint $table) {
             $table->id();
+            $table->integer('category_id')->unsigned();
             $table->integer('sub_category_id')->nullable();
             $table->string('name');
             $table->string('part_number')->nullable();
