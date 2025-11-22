@@ -26,32 +26,37 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $search = $request->input('search.value');
-            // $query = Product::with(['category', 'subCategory', 'productType', 'proEngine']);
             $query = Product::select(
                 'products.*',
                 'product_categories.name as category_name',
                 'product_sub_categories.name as sub_category_name',
                 'product_sub_categories.serial_number',
                 'product_types.name as product_type_name',
-                'engines.name as engine_name'
+                'engines.name as engine_name',
+                'engines.part_number',
             )
             ->leftJoin('product_categories', 'products.category_id', '=', 'product_categories.id')
             ->leftJoin('product_sub_categories', 'products.sub_category_id', '=', 'product_sub_categories.id')
             ->leftJoin('product_types', 'products.product_type_id', '=', 'product_types.id')
             ->leftJoin('engines', 'products.engine_id', '=', 'engines.id');
             // 🔍 global search filter
-            if (!empty($search)) {
-                $query->where(function($q) use ($search) {
-                    $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('price', 'LIKE', "%{$search}%")
-                    ->orWhere('discount_price', 'LIKE', "%{$search}%")
-                    ->orWhere('year', 'LIKE', "%{$search}%")
-                    ->orWhereHas('productType', fn($t) => $t->where('name', 'LIKE', "%{$search}%"))
-                    ->orWhereHas('category', fn($t) => $t->where('name', 'LIKE', "%{$search}%"))
-                    ->orWhereHas('subCategory', fn($t) => $t->where('name', 'LIKE', "%{$search}%"));
-                });
+            if ($request->name) {
+                $query->where('name', 'like', "%{$request->name}%");
             }
+
+            if ($request->product_type_id) {
+                $query->where('products.product_type_id', $request->product_type_id);
+            }
+            if ($request->category_id) {
+                $query->where('products.category_id', $request->category_id);
+            }
+            if ($request->sub_category_id) {
+                $query->where('products.sub_category_id', $request->sub_category_id);
+            }
+            if ($request->engine_id) {
+                $query->where('products.engine_id', $request->engine_id);
+            }
+
             $recordsTotal = Product::count();
             $recordsFiltered = $query->count();
             $start = intval($request->input('start', 0));
