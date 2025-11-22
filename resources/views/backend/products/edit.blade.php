@@ -277,7 +277,7 @@
                 });
             });
         });
-            $(document).on('change','#category_id',function(){
+             $(document).on('change','#category_id',function(){
                 var category_id = $(this).val();
                 $.ajax({
                     type: "GET",
@@ -292,6 +292,25 @@
                         $.each(response.data, function(index, item)
                         {
                             $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                });
+            });
+            $(document).on('change','#sub_category_id',function(){
+                var sub_category_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('admins/product/sub-category/onchange') }}",
+                    data: {
+                        sub_category_id:sub_category_id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        $(".engine_id").empty();
+                        $(".engine_id").empty().append('<option value="">Please Select</option>');
+                        $.each(response.data, function(index, item)
+                        {
+                            $(".engine_id").append('<option value="' + item.id + '">' + item.name + '</option>');
                         });
                     }
                 });
