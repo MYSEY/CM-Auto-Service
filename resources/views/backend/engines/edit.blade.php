@@ -14,6 +14,19 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
+                                <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Category">Make</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" id="category_id" name="category_id">
+                                        <option value="">Please choose make</option>
+                                        @foreach($category as $item)
+                                            <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
+                                </div>
+                            </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label class="form-label" for="sub_category_id">Sub Category <span class="text-danger">*</span></label>
@@ -52,7 +65,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-2" style="text-align: right;">
-                                        <a href="{{url('admins/.main_menu nav > ul > li > a')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
+                                        <a href="{{url('admins/engine')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
                                         <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
                                     </div>
                                 </div>
@@ -64,3 +77,48 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+<script>
+    $(document).on('change','#category_id',function(){
+                var category_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('admins/product/category/onchange') }}",
+                    data: {
+                        category_id:category_id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        $(".sub_category").empty();
+                        $(".sub_category").empty().append('<option value="">Please Select</option>');
+                        $.each(response.data, function(index, item)
+                        {
+                            $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                });
+            });
+            $(document).on('change','#sub_category_id',function(){
+                var sub_category_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('admins/product/sub-category/onchange') }}",
+                    data: {
+                        sub_category_id:sub_category_id
+                    },
+                    dataType: "JSON",
+                    success: function (response) {
+                        $(".engine_id").empty();
+                        $(".engine_id").empty().append('<option value="">Please Select</option>');
+                        $.each(response.data, function(index, item)
+                        {
+                            $(".engine_id").append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                });
+            });
+
+</script>
+@endsection
+

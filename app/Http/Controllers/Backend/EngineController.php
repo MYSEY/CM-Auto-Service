@@ -67,14 +67,15 @@ class EngineController extends Controller
      */
     public function edit(string $id)
     {
-        try {
+        // try {
             $data = Engine::findOrFail($id);
-            $subCategory = ProductSubCategory::all();
-            return view('backend.engines.edit', compact('subCategory', 'data'));
-        } catch (\Exception $e) {
-            Toastr::error('Sub-Category not found or an error occurred.','Error');
-            return redirect()->back();
-        }
+            $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
+            $subCategory = ProductSubCategory::where('product_category_id', $data->category_id)->get();
+            return view('backend.engines.edit', compact('category','subCategory', 'data'));
+        // } catch (\Exception $e) {
+        //     Toastr::error('Sub-Category not found or an error occurred.','Error');
+        //     return redirect()->back();
+        // }
     }
 
     /**
