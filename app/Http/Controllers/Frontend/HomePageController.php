@@ -16,7 +16,7 @@ class HomePageController extends Controller
 {
     public function index(){
         $company = Company::first();
-        $product = Product::with(['category','subCategory'])->paginate(20);
+        $product = Product::with(['category','subCategory'])->paginate(24);
         $dataProduct = Product::with(['category','subCategory'])->get();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
