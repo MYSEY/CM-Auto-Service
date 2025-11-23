@@ -120,7 +120,7 @@ class ProductController extends Controller
             }
             DB::commit();
             Toastr::success('Product created successfully!', 'Success');
-            return redirect('admins/product');
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Product creation failed: ' . $e->getMessage(), 'Error');
