@@ -9,73 +9,55 @@
             </div>
             <div class="panel-container show">
                 <div class="panel-content">
-                    <form action="{{ url('admins/engine') }}" method="POST" enctype="multipart/form-data" novalidate>
-                        @csrf
-
-                        <!-- Make → Model → Engine Row -->
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Make">Make</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control" id="category_id" name="category_id">
-                                        <option value="">Please choose make</option>
-                                        @foreach($category as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Model">Model</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
-                                        <option value="">Please choose model</option>
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                               <div class="form-group">
-                                    <label class="form-label" for="engine">Engine Name</label>
-                                    <input type="text" id="name" name="name" class="form-control"
-                                           value="{{ old('name') }}" placeholder="Enter part name">
-                                    @error('name')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Make">Make</label>
+                                <span class="text-danger">*</span>
+                                <select class="form-control req" id="category_id" name="category_id">
+                                    <option value="">Please choose make</option>
+                                    @foreach($category as $item)
+                                        <option value="{{ $item->id }}" {{ old('category_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                <small class="text-danger error-category_id"></small>
                             </div>
                         </div>
-                        <!-- Part Number -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="part_number">Part Number</label>
-                                    <input type="text" id="part_number" name="part_number" class="form-control"
-                                           value="{{ old('part_number') }}" placeholder="Enter part number">
-                                    @error('part_number')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Model">Model</label>
+                                <span class="text-danger">*</span>
+                                <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
+                                    <option value="">Please choose model</option>
+                                </select>
+                                <small class="text-danger error-sub_category_id"></small>
                             </div>
                         </div>
-
-                        <hr class="mt-4">
-
-                        <!-- Action Buttons -->
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                <a href="{{ url('admins/engine') }}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">
-                                    Cancel
-                                </a>
-                                <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">
-                                    Submit
-                                </button>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="engine">Engine Name</label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter part name">
+                                <small class="text-danger error-name"></small>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="part_number">Part Number</label>
+                                <input type="text" id="part_number" name="part_number" class="form-control" value="{{ old('part_number') }}" placeholder="Enter part number">
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mt-4">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <a href="{{ url('admins/engine') }}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">
+                                Cancel
+                            </a>
+                            <a href="javascript:void(0);" id="btnSubmit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,7 +67,8 @@
 
 @section('script')
 <script>
-$(document).on('change','#category_id',function(){
+    $(function(){
+        $(document).on('change','#category_id',function(){
             var category_id = $(this).val();
             $.ajax({
                 type: "GET",
@@ -104,5 +87,34 @@ $(document).on('change','#category_id',function(){
                 }
             });
         });
+        $(document).on('click','#btnSubmit',function(){
+            $.ajax({
+                type: "POST",
+                url: "{{ url('admins/engine') }}",
+                data: {
+                    category_id : $("#category_id").val(),
+                    sub_category_id : $("#sub_category_id").val(),
+                    name : $("#name").val(),
+                    part_number : $("#part_number").val(),
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    if (response.status === true) {
+                        toastr.success(response.message, 'Success');
+                    } else {
+                        toastr.error('Error', 'Fail');
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, value) {
+                            $('.error-' + key).text(value[0]); // show error under each input
+                        });
+                    }
+                }
+            });
+        });
+    });
 </script>
 @endsection

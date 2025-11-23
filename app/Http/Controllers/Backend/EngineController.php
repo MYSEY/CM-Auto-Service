@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EngineController extends Controller
 {
@@ -38,18 +39,29 @@ class EngineController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'        => 'required|string|max:255',
             'sub_category_id' => 'required|integer',
             'category_id' => 'required|integer',
         ]);
+        // If validation fails return JSON errors
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         try {
             $data = $request->all();
             $data['created_by'] = Auth::id();
             $data['slug']=Str::slug($request->name,'-');
             Engine::create($data);
             DB::commit();
-            Toastr::success('Create Engine successfully.','Success');
+            return response()->json([
+                'status' => true,
+                'message' => 'Engine created successfully.'
+            ], 200);
             return redirect()->back();
         }catch(\Exception $e){
             DB::rollback();
