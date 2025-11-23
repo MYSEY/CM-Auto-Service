@@ -101,6 +101,7 @@
                 success: function (response) {
                     if (response.status === true) {
                         toastr.success(response.message, 'Success');
+                        $("#name").val('');
                     } else {
                         toastr.error('Error', 'Fail');
                     }
