@@ -50,7 +50,7 @@ class EngineController extends Controller
             Engine::create($data);
             DB::commit();
             Toastr::success('Create Engine successfully.','Success');
-            return redirect('admins/engine');
+            return redirect()->back();
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Engine fail','Error');
