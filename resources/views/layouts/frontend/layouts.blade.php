@@ -12,19 +12,27 @@
     <meta property="og:site_name" content="CM Auto Service">
     <meta name="application-name" content="CM Auto Service">
     <meta name="apple-mobile-web-app-title" content="CM Auto Service">
+    <meta name="description" content="ECU Sell, Original File, Tuning File, Online Programming & Auto Diagnostic — CM Auto Service Cambodia">
+
+
     <link rel="icon" href="{{asset('frontends/assets/img/logo/language.png')}}" type="image/png">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontends/assets/img/icon.ico') }}">
-
-    <!-- CSS
-    ========================= -->
-
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "CM Auto Service",
+            "url": "https://cmautoservic.com",
+            "logo": "https://cmautoservic.com/frontends/assets/img/logo/language.png"
+        }
+    </script>
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css?v=20250101')}}">
     {{--  <link rel="stylesheet" href="style.css?v=20250101">  --}}
-     <link rel="stylesheet" href="{{asset('frontends/assets/css/cm.css')}}">
+    <link rel="stylesheet" href="{{asset('frontends/assets/css/cm.css')}}">
     {{-- toastr --}}
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
     <style>
@@ -67,6 +75,7 @@
         }
     </style>
 </head>
+
 <body>
     <!--header area start-->
     <!--offcanvas menu area start-->
