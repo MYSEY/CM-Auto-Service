@@ -8,6 +8,11 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta property="og:title" content="CM Auto Service">
+    <meta property="og:site_name" content="CM Auto Service">
+    <meta name="application-name" content="CM Auto Service">
+    <meta name="apple-mobile-web-app-title" content="CM Auto Service">
+    <link rel="icon" href="{{asset('frontends/assets/img/logo/language.png')}}" type="image/png">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontends/assets/img/icon.ico') }}">
 
