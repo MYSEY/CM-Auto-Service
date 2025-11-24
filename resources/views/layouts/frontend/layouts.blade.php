@@ -14,15 +14,7 @@
 
     <!-- Favicon -->
     <link rel="icon" href="https://cmautoservic.com/storage/companys/logo.png" type="image/png">
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "CM Auto Service",
-            "url": "https://cmautoservic.com",
-            "logo": "https://cmautoservic.com/storage/companys/logo.png"
-        }
-    </script>
+
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
