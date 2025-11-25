@@ -6,7 +6,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CM Auto Service</title>
+
     <meta property="og:title" content="CM Auto Service">
+    <meta property="og:type" content="website">
     <meta property="og:site_name" content="CM Auto Service">
     <meta name="application-name" content="CM Auto Service">
     <meta name="apple-mobile-web-app-title" content="CM Auto Service">
@@ -14,6 +16,7 @@
 
     <!-- Favicon -->
     <link rel="icon" href="https://cmautoservic.com/storage/companys/logo.png" type="image/png">
+
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
