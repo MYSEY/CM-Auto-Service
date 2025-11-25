@@ -14,8 +14,19 @@
     <meta name="apple-mobile-web-app-title" content="CM Auto Service">
     <meta name="description" content="ECU Sell, Original File, Tuning File, Online Programming & Auto Diagnostic — CM Auto Service Cambodia">
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "CM Auto Service",
+            "url": "https://cmautoservic.com",
+            "logo": "https://cmautoservic.com/frontends/assets/img/logo.png"
+        }
+    </script>
+
+    <link rel="icon" href="https://cmautoservic.com/frontends/assets/img/logo.png">
     <!-- Favicon -->
-    <link rel="icon" href="{{asset('frontends/assets/img/icon.ico')}}">
+    <link rel="icon" href="{{asset('frontends/assets/img/logo.png')}}">
 
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
