@@ -10,8 +10,6 @@
     <meta property="og:title" content="CM Auto Service">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="CM Auto Service">
-    <meta name="application-name" content="CM Auto Service">
-    <meta name="apple-mobile-web-app-title" content="CM Auto Service">
     <meta name="description" content="ECU Sell, Original File, Tuning File, Online Programming & Auto Diagnostic — CM Auto Service Cambodia">
 
     <script type="application/ld+json">
