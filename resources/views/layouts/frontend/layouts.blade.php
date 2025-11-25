@@ -15,17 +15,8 @@
     <meta name="description" content="ECU Sell, Original File, Tuning File, Online Programming & Auto Diagnostic — CM Auto Service Cambodia">
 
     <!-- Favicon -->
-    <link rel="icon" href="https://cmautoservic.com/storage/companys/logo.png" type="image/png">
+    <link rel="icon" href="{{asset('frontends/assets/img/icon.ico')}}">
 
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "CM Auto Service",
-            "url": "https://cmautoservic.com",
-            "logo": "https://cmautoservic.com/storage/companys/logo.png"
-        }
-    </script>
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
