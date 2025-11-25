@@ -127,10 +127,10 @@
                                                 <figure>
                                                     <div class="product-image-wrapper product_thumb">
                                                         <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
+                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
                                                         </a>
                                                         <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name }}">
+                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
                                                         </a>
                                                     </div>
                                                     <div class="product_content">
