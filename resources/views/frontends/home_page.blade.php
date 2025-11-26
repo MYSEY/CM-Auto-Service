@@ -96,66 +96,63 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product_tab_btn" id="productTabContainer">
-                            <ul class="nav" role="tablist" id="nav-tab">
-                                <li>
-                                    <a class="active tab-link" data-bs-toggle="tab" href="#Sellers" role="tab" aria-controls="Sellers" aria-selected="true" data-tab-name="ALL">
-                                        All
-                                    </a>
-                                </li>
-                                @foreach($productType as $key => $type)
-                                    <li>
-                                        <a class="tab-link" data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false" data-tab-name="{{ $type->name }}">
-                                            {{ $type->name }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
-                        </div>
                     </div>
                 </div>
-
+                <div class="product_tab_btn" id="productTabContainer">
+                    <ul class="nav" role="tablist" id="nav-tab">
+                        <li>
+                            <a class="active tab-link" data-bs-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true" data-tab-name="ALL">
+                                All
+                            </a>
+                        </li>
+                        @foreach($productType as $key => $type)
+                            <li>
+                                <a class="tab-link" data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false" data-tab-name="{{ $type->name }}">
+                                    {{ $type->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
+                </div>
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="Sellers" role="tabpanel">
+                    <div class="tab-pane fade show active" id="all" role="tabpanel">
                         <div class="row">
                             <div class="product-grid-container">
                                 @foreach($product as $key => $item)
-                                    <div>
-                                        <div class="product-card product_items">
-                                            <article class="single_product">
-                                                <figure>
-                                                    <div class="product-image-wrapper product_thumb">
-                                                        <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                                                        </a>
-                                                        <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                            <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                                                        </a>
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_content_inner">
-                                                            <div class="category"><a href="#">Parts</a></div>
-                                                            <div class="category"><a href="#">{{$item->productType->name ?? ''}}</a></div>
-                                                            <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} ​{{$item->year}}  {{ $item->proEngine?->name ?? '' }}  {{ $item->proEngine?->part_number ?? ''}} </a></h4>
-                                                            <div class="product_rating">
-                                                            </div>
+                                    <div class="product-card product_items">
+                                        <article class="single_product">
+                                            <figure>
+                                                <div class="product-image-wrapper product_thumb">
+                                                    <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                                                        <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
+                                                    </a>
+                                                    <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                                                        <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
+                                                    </a>
+                                                </div>
+                                                <div class="product_content">
+                                                    <div class="product_content_inner">
+                                                        <div class="category"><a href="#">Parts</a></div>
+                                                        <div class="category"><a href="#">{{$item->productType->name ?? ''}}</a></div>
+                                                        <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} ​{{$item->year}}  {{ $item->proEngine?->name ?? '' }}  {{ $item->proEngine?->part_number ?? ''}} </a></h4>
+                                                        <div class="product_rating">
+                                                        </div>
 
-                                                            <div class="price_box">
-                                                                <span class="current_price price-original"> ${{ number_format($item->price,2) }} {{$item->number}}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="action_links">
-                                                            <ul>
-                                                                <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
-                                                                    <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
-                                                                </li>
-                                                            </ul>
+                                                        <div class="price_box">
+                                                            <span class="current_price price-original"> ${{ number_format($item->price,2) }} {{$item->number}}</span>
                                                         </div>
                                                     </div>
-                                                </figure>
-                                            </article>
-                                        </div>
+                                                    <div class="action_links">
+                                                        <ul>
+                                                            <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
+                                                                <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </figure>
+                                        </article>
                                     </div>
                                 @endforeach
                             </div>
@@ -207,32 +204,32 @@
                             </div>
                         </div>
                     @endforeach
-                </div>
-                <div class="shop_toolbar t_bottom">
-                    <div class="pagination">
-                        <ul>
-                            @if ($product->onFirstPage())
-                                <li class="disabled"><span><<</span></li>
-                            @else
-                                <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
-                            @endif
-
-                            @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
-                                @if ($page == $product->currentPage())
-                                    <li class="current">{{ $page }}</li>
+                    <div class="shop_toolbar t_bottom">
+                        <div class="pagination">
+                            <ul>
+                                @if ($product->onFirstPage())
+                                    <li class="disabled"><span><<</span></li>
                                 @else
-                                    <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
                                 @endif
-                            @endforeach
 
-                            @if ($product->hasMorePages())
-                                <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
-                                <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
-                            @else
-                                <li class="disabled"><span>next</span></li>
-                                <li class="disabled"><span>>></span></li>
-                            @endif
-                        </ul>
+                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
+                                    @if ($page == $product->currentPage())
+                                        <li class="current">{{ $page }}</li>
+                                    @else
+                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                    @endif
+                                @endforeach
+
+                                @if ($product->hasMorePages())
+                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
+                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                                @else
+                                    <li class="disabled"><span>next</span></li>
+                                    <li class="disabled"><span>>></span></li>
+                                @endif
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
