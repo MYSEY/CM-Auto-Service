@@ -28,8 +28,7 @@
                             <div class="single_categories_product">
                                 <div class="categories_product_thumb carousel-item active">
                                     <a href="#">
-                                       <div class="d-block w-100" alt="{{ $value->name }}"></div>
-                                        {{--  <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">  --}}
+                                       <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
                                     </a>
                                 </div>
                                 <div class="categories_product_content">
@@ -116,122 +115,84 @@
                     </ul>
                     <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
                 </div>
+
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="all" role="tabpanel">
+                    <div class="tab-pane fade show {{ $activeTab === 'all' ? 'active' : '' }}" id="all" role="tabpanel">
                         <div class="row">
                             <div class="product-grid-container">
-                                @foreach($product as $key => $item)
-                                    <div class="product-card product_items">
-                                        <article class="single_product">
-                                            <figure>
-                                                <div class="product-image-wrapper product_thumb">
-                                                    <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                        <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                                                    </a>
-                                                    <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                        <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                                                    </a>
-                                                </div>
-                                                <div class="product_content">
-                                                    <div class="product_content_inner">
-                                                        <div class="category"><a href="#">Parts</a></div>
-                                                        <div class="category"><a href="#">{{$item->productType->name ?? ''}}</a></div>
-                                                        <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} ​{{$item->year}}  {{ $item->proEngine?->name ?? '' }}  {{ $item->proEngine?->part_number ?? ''}} </a></h4>
-                                                        <div class="product_rating">
-                                                        </div>
-
-                                                        <div class="price_box">
-                                                            <span class="current_price price-original"> ${{ number_format($item->price,2) }} {{$item->number}}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="action_links">
-                                                        <ul>
-                                                            <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
-                                                                <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </figure>
-                                        </article>
-                                    </div>
+                                @foreach($productAll as $item)
+                                    @include('frontends.product', ['item' => $item])
                                 @endforeach
+                            </div>
+                            <div class="shop_toolbar t_bottom">
+                                <div class="pagination">
+                                    <ul>
+                                        @if ($productAll->onFirstPage())
+                                            <li class="disabled"><span><<</span></li>
+                                        @else
+                                            <li><a href="{{ $productAll->previousPageUrl() }}"><</a></li>
+                                        @endif
+
+                                        @foreach ($productAll->getUrlRange(1, $productAll->lastPage()) as $page => $url)
+                                            @if ($page == $productAll->currentPage())
+                                                <li class="current">{{ $page }}</li>
+                                            @else
+                                                <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                            @endif
+                                        @endforeach
+
+                                        @if ($productAll->hasMorePages())
+                                            <li class="next"><a href="{{ $productAll->nextPageUrl() }}">next</a></li>
+                                            <li><a href="{{ $productAll->url($productAll->lastPage()) }}">>></a></li>
+                                        @else
+                                            <li class="disabled"><span>next</span></li>
+                                            <li class="disabled"><span>>></span></li>
+                                        @endif
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    @foreach($productType as $key => $type)
-                        <div class="tab-pane fade" id="{{ Str::slug($type->name) }}" role="tabpanel">
+                    @foreach($productType as $type)
+                        @php $list = $productsByType[$type->id]; $slug = Str::slug($type->name); @endphp
+                        <div class="tab-pane fade {{ $activeTab === $slug ? 'active' : '' }}" id="{{ $slug }}">
                             <div class="row">
-                               <div class="product-grid-container">
-                                    @foreach($product->where('product_type_id', $type->id) as $item)
-                                        <div>
-                                            <div class="product-card product_items">
-                                                <article class="single_product">
-                                                    <figure>
-                                                        <div class="product-image-wrapper product_thumb">
-                                                            <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                                <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                                                            </a>
-                                                            <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                                                                <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product_content">
-                                                            <div class="product_content_inner">
-                                                                <p class="category"><a href="#">Parts</a></p>
-                                                                <p class="category"><a href="#">{{$item->productType->name}}</a></p>
-                                                                <h4 class="product-name"><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} {{$item->year}} {{ $item->proEngine?->name ?? '' }}  {{ $item->proEngine?->part_number ?? '' }} </a></h4>
-                                                                <div class="product_rating">
-                                                                </div>
-                                                                <div class="price_box">
-                                                                    <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="action_links">
-                                                                <ul>
-                                                                    <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
-                                                                        <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </figure>
-                                                </article>
-                                            </div>
-                                        </div>
+                                <div class="product-grid-container">
+                                    @foreach($list as $item)
+                                        @include('frontends.product', ['item' => $item])
                                     @endforeach
+                                </div>
+                                <div class="shop_toolbar t_bottom">
+                                    <div class="pagination">
+                                        <ul>
+                                            @if ($productsByType[$type->id]->onFirstPage())
+                                                <li class="disabled"><span><<</span></li>
+                                            @else
+                                                <li><a href="{{ $productsByType[$type->id]->previousPageUrl() }}"><</a></li>
+                                            @endif
+
+                                            @foreach ($productsByType[$type->id]->getUrlRange(1, $productsByType[$type->id]->lastPage()) as $page => $url)
+                                                @if ($page == $productsByType[$type->id]->currentPage())
+                                                    <li class="current">{{ $page }}</li>
+                                                @else
+                                                    <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                                @endif
+                                            @endforeach
+
+                                            @if ($productsByType[$type->id]->hasMorePages())
+                                                <li class="next"><a href="{{ $productsByType[$type->id]->nextPageUrl() }}">next</a></li>
+                                                <li><a href="{{ $productsByType[$type->id]->url($productsByType[$type->id]->lastPage()) }}">>></a></li>
+                                            @else
+                                                <li class="disabled"><span>next</span></li>
+                                                <li class="disabled"><span>>></span></li>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                    <div class="shop_toolbar t_bottom">
-                        <div class="pagination">
-                            <ul>
-                                @if ($product->onFirstPage())
-                                    <li class="disabled"><span><<</span></li>
-                                @else
-                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
-                                @endif
-
-                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
-                                    @if ($page == $product->currentPage())
-                                        <li class="current">{{ $page }}</li>
-                                    @else
-                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                    @endif
-                                @endforeach
-
-                                @if ($product->hasMorePages())
-                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
-                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
-                                @else
-                                    <li class="disabled"><span>next</span></li>
-                                    <li class="disabled"><span>>></span></li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -330,6 +291,27 @@
         dataBackgroundImage();
     });
     $(function(){
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const tab = params.get('tab') || '{{ $activeTab ?? "all" }}';
+
+            // Activate the tab (Bootstrap 5)
+            const tabLink = document.querySelector(`#nav-tab a[href="#${tab}"]`);
+            if (tabLink) {
+                const bsTab = new bootstrap.Tab(tabLink);
+                bsTab.show();
+            }
+
+            // When user switches tabs, update URL (so future pagination links include tab)
+            document.querySelectorAll('#nav-tab a[data-tab]').forEach(a => {
+                a.addEventListener('shown.bs.tab', function (e) {
+                    const slug = e.target.getAttribute('data-tab');
+                    const url = new URL(window.location);
+                    url.searchParams.set('tab', slug);
+                    history.replaceState(null, '', url.toString());
+                });
+            });
+        });
         $(document).on('click', '.addToCart', function () {
             let id = $(this).data('id');
             event.preventDefault();

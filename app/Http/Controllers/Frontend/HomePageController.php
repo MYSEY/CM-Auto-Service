@@ -7,6 +7,7 @@ use App\Models\Slider;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\ProductType;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
@@ -14,15 +15,23 @@ use App\Http\Controllers\Controller;
 
 class HomePageController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $company = Company::first();
-        $product = Product::with(['category','subCategory'])->paginate(24);
         $dataProduct = Product::with(['category','subCategory'])->get();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         $proEngine = Engine::all();
         $slider = Slider::all();
-        return view('frontends.home_page',compact('company','product','category','productType','dataProduct','proEngine','slider'));
+
+        $productAll = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']); // ensure tab is kept in links
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+        $activeTab = $request->get('tab', 'all');
+        return view('frontends.home_page',compact('company','productAll','category','productType','dataProduct','proEngine','slider','productsByType','activeTab'));
     }
     public function showLoginForm(){
         $company = Company::first();
@@ -35,10 +44,16 @@ class HomePageController extends Controller
         $productDetail = Product::with(['productImage','productType','category','subCategory'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::with('subCategory')->get();
-        $product = Product::paginate(9);
+        $productAll = Product::paginate(9);
         $productType = ProductType::all();
         $slider = Slider::all();
-       return view('frontends.product_detail',compact('product','productDetail','company','category','productType','slider'));
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(2, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+       return view('frontends.product_detail',compact('productAll','productDetail','company','category','productType','slider','productsByType'));
     }
     public function categoryFilter(Request $request){
         // Build query
@@ -64,45 +79,73 @@ class HomePageController extends Controller
         $company = Company::first();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
-        $product = $query->paginate(9);
+        $productAll = $query->paginate(9);
         $slider = Slider::all();
-        return view('frontends.home_page',compact('company','product','category','productType','slider'));
+        $activeTab ='';
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(2, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+        return view('frontends.home_page',compact('company','productAll','category','productType','slider','activeTab','productsByType'));
     }
     public function filter($id){
-        $product = Product::with(['productImage'])->where('product_type_id',$id)->paginate(9);
+        $productAll = Product::with(['productImage'])->where('product_type_id',$id)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
         $slider = Slider::all();
-       return view('frontends.ecu_soft',compact('product','company','category','productType','slider'));
+        $activeTab = '';
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(2, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+       return view('frontends.ecu_soft',compact('productAll','company','category','productType','slider','activeTab','productsByType'));
     }
     public function productCategoryFilter(Request $request)
     {
-        $product = Product::where('category_id', $request->category_id)->paginate(9);
+        $productAll = Product::where('category_id', $request->category_id)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
         $slider = Slider::all();
-        return view('frontends.home_page',compact('product','company','category','productType','slider'));
+        $activeTab ='';
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(2, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+        return view('frontends.home_page',compact('productAll','company','category','productType','slider','activeTab','productsByType'));
     }
     public function subCategoryFilter(Request $request)
     {
         $subCategoryId = $request->sub_category_id;
-        $product = Product::where('sub_category_id', $subCategoryId)->paginate(9);
+        $productAll = Product::where('sub_category_id', $subCategoryId)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
         $slider = Slider::all();
-        return view('frontends.home_page',compact('product','company','category','productType','slider'));
+        $activeTab ='';
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(2, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+        return view('frontends.home_page',compact('productAll','company','category','productType','slider','activeTab','productsByType'));
     }
     public function engineFilter(Request $request)
     {
-        $product = Product::where('engine_id', $request->engine_id)->paginate(9);
+        $productAll = Product::where('engine_id', $request->engine_id)->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
         $slider = Slider::all();
-        return view('frontends.home_page',compact('product','company','category','productType','slider'));
+        return view('frontends.home_page',compact('productAll','company','category','productType','slider'));
     }
     public function frontendCategory(Request $request){
         try{
@@ -139,11 +182,18 @@ class HomePageController extends Controller
         if ($request->engine_id) {
             $query->where('engine_id', $request->engine_id);
         }
-        $product = $query->paginate(9);
+        $productAll = $query->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
         $slider = Slider::all();
-        return view('frontends.home_page', compact('product', 'company', 'category', 'productType', 'selectedFilters', 'slider'));
+        $activeTab ='';
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(2, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+        }
+        return view('frontends.home_page', compact('productAll', 'company', 'category', 'productType', 'selectedFilters', 'slider','productsByType','activeTab'));
     }
 }
