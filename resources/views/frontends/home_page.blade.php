@@ -28,7 +28,8 @@
                             <div class="single_categories_product">
                                 <div class="categories_product_thumb carousel-item active">
                                     <a href="#">
-                                       <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
+                                       <div class="d-block w-100" alt="{{ $value->name }}"></div>
+                                        {{--  <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">  --}}
                                     </a>
                                 </div>
                                 <div class="categories_product_content">
