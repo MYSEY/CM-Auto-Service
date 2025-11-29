@@ -11458,14 +11458,13 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     display: inline-block;
 }
 
-/* 3. Hover Effects សម្រាប់រូបភាពទាំងអស់ */
-/* កំណត់ Transition សម្រាប់រូបភាពទាំង ៣ ដើម្បីឲ្យ effect រលូន */
+
 .facebook img, .telegram img, .whatsapp img {
     transition: transform 0.3s ease-in-out, opacity 0.3s;
     cursor: pointer; /* ប្តូរ Cursor ទៅជា Pointer នៅពេលដាក់ Mouse ពីលើ */
 }
 
-/* កូដ Hover: ពេលដាក់ mouse លើ link ឲ្យរូបភាពពង្រីកបន្តិច */
+
 .facebook:hover img, .telegram:hover img, .whatsapp:hover img {
     transform: scale(1.1); /* ពង្រីករូបភាព 10% */
     opacity: 0.85; /* ធ្វើឲ្យមានតម្លាភាពបន្តិច */
