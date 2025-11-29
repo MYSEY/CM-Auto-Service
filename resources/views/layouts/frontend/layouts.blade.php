@@ -37,9 +37,9 @@
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="{{asset('frontends/assets/css/style.css?v=20250101')}}">
-    {{--  <link rel="stylesheet" href="style.css?v=20250101">  --}}
-    <link rel="stylesheet" href="{{asset('frontends/assets/css/cm.css')}}">
+    <link rel="stylesheet" href="{{ asset('frontends/assets/css/style.css') }}?v={{ filemtime(public_path('frontends/assets/css/style.css')) }}">
+
+    <link rel="stylesheet" href="{{ asset('frontends/assets/css/cm.css') }}?v={{ filemtime(public_path('frontends/assets/css/cm.css')) }}">
     {{-- toastr --}}
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
     <style>
