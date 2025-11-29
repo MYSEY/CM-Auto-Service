@@ -226,18 +226,19 @@
                             <h3>Follow Us</h3>
                             <p>We make consolidating, marketing and tracking your social media website easy.</p>
                             <div class="footer_social">
-                                <ul>
-                                    <li><a class="facebook" href="https://www.facebook.com/C.M.Auto.77/"><i class="icon-facebook"></i></a></li>
-                                    <li>
-                                        <a class="telegram" href="https://t.me/CMAUTO">
-                                            <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="whatsapp" href="https://t.me/CMAUTO">
-                                            <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="WhatsApp" width="50" height="50" style="display: block; margin: 0 auto;">
-                                        </a>
-                                    </li>
+                                <ul class="social-links-row no-li-flex">
+                                    <a class="facebook" href="https://www.facebook.com/C.M.Auto.77/">
+                                        <img src="{{ asset('frontends/assets/img/facebook.png') }}" alt="Facebook" width="50" height="50">
+                                        {{--  <i class="icon-facebook" style="font-size: 50px;"></i>  --}}
+                                    </a>
+
+                                    <a class="telegram" href="https://t.me/CMAUTO">
+                                        <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50">
+                                    </a>
+
+                                    <a class="whatsapp" href="https://t.me/CMAUTO">
+                                        <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="WhatsApp" width="50" height="50">
+                                    </a>
                                 </ul>
                             </div>
                         </div>
@@ -304,18 +305,19 @@
             <p>👋 Welcome</p>
             {{-- Social links inside the Chat Pop-up --}}
             <div class="footer_social">
-                <ul>
-                    <li><a class="facebook" href="https://www.facebook.com/C.M.Auto.77/"><i class="icon-facebook"></i></a></li>
-                    <li>
-                        <a class="telegram" href="https://t.me/CMAUTO">
-                            <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
-                        </a>
-                    </li>
-                    <li>
-                        <a class="whatsapp" href="https://t.me/CMAUTO">
-                            <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="WhatsApp" width="50" height="50" style="display: block; margin: 0 auto;">
-                        </a>
-                    </li>
+               <ul class="social-links-row no-li-flex">
+                    <a class="facebook" href="https://www.facebook.com/C.M.Auto.77/">
+                         <img src="{{ asset('frontends/assets/img/facebook.png') }}" alt="Facebook" width="50" height="50">
+                        {{--  <i class="icon-facebook" style="font-size: 50px;"></i>  --}}
+                    </a>
+
+                    <a class="telegram" href="https://t.me/CMAUTO">
+                        <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50">
+                    </a>
+
+                    <a class="whatsapp" href="https://t.me/CMAUTO">
+                        <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="WhatsApp" width="50" height="50">
+                    </a>
                 </ul>
             </div>
         </div>

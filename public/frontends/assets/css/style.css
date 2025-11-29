@@ -11436,4 +11436,39 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     resize: none;
 }
 
+.no-li-flex {
+    list-style: none; /* លុបចំនុច ul ចេញ */
+    padding: 0;
+    margin: 0;
+
+    /* ** កូដសំខាន់សម្រាប់រៀបជាជួរដេក ** */
+    display: flex;
+
+    /* តម្រៀបធាតុទាំងអស់នៅចំកណ្តាលតាមអ័ក្សមេ (ផ្ដេក) */
+    justify-content: center;
+
+    /* តម្រៀបធាតុទាំងអស់ឲ្យស្មើគ្នាតាមកម្ពស់ (បញ្ឈរ) */
+    align-items: center;
+}
+
+/* 2. បន្ថែមគម្លាតនៅចន្លោះរូបតំណាងនីមួយៗ */
+/* កំណត់គម្លាតលើ Anchor Tags (<a>) ទាំងអស់ដែលជាកូនផ្ទាល់ */
+.no-li-flex > a {
+    margin: 0 15px; /* ដាក់គម្លាត 15px នៅខាងឆ្វេង និងស្តាំរវាង links */
+    display: inline-block;
+}
+
+/* 3. Hover Effects សម្រាប់រូបភាពទាំងអស់ */
+/* កំណត់ Transition សម្រាប់រូបភាពទាំង ៣ ដើម្បីឲ្យ effect រលូន */
+.facebook img, .telegram img, .whatsapp img {
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+    cursor: pointer; /* ប្តូរ Cursor ទៅជា Pointer នៅពេលដាក់ Mouse ពីលើ */
+}
+
+/* កូដ Hover: ពេលដាក់ mouse លើ link ឲ្យរូបភាពពង្រីកបន្តិច */
+.facebook:hover img, .telegram:hover img, .whatsapp:hover img {
+    transform: scale(1.1); /* ពង្រីករូបភាព 10% */
+    opacity: 0.85; /* ធ្វើឲ្យមានតម្លាភាពបន្តិច */
+}
+
 
