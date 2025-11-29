@@ -11461,7 +11461,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .facebook img, .telegram img, .whatsapp img {
     transition: transform 0.3s ease-in-out, opacity 0.3s;
-    cursor: pointer; /* ប្តូរ Cursor ទៅជា Pointer នៅពេលដាក់ Mouse ពីលើ */
+    cursor: pointer;
 }
 
 
