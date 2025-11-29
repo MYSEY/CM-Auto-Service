@@ -1,0 +1,35 @@
+[09-Nov-2025 05:15:54 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:15:54 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:15:58 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:15:58 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:16:22 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:16:22 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:16:38 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:16:38 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:16:40 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:16:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:17:08 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:17:08 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:17:11 UTC] PHP Warning:  require(/home/cmausipv/public_html/public/vendor/autoload.php): Failed to open stream: No such file or directory in /home/cmausipv/public_html/public/index.php on line 34
+[09-Nov-2025 05:17:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/cmausipv/public_html/public/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/cmausipv/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/cmausipv/public_html/public/index.php on line 34

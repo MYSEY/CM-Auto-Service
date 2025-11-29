@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Center (Local Gacha & ប្រពៃណី)</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* General Body Styling */
+        body {
+            background-color: #1a202c; /* Dark background */
+            color: #e2e8f0; /* Light text */
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Utility Classes for Button/Input Focus */
+        .btn-action:focus, .input-focus:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* blue-500 shadow */
+        }
+
+        /* Rarity Colors for Gacha */
+        .rarity-legendary {
+            color: gold;
+            border-color: gold !important;
+            animation: pulse-legendary 1.5s infinite;
+        }
+        .rarity-epic {
+            color: #a855f7; /* Violet */
+            border-color: #a855f7 !important;
+        }
+        .rarity-rare {
+            color: #3b82f6; /* Blue */
+            border-color: #3b82f6 !important;
+        }
+        .rarity-common {
+            color: #6b7280; /* Gray */
+            border-color: #6b7280 !important;
+        }
+
+        /* Dice Display Styles (Kla Klok & Boung) */
+        .dice-display {
+            font-size: 3rem; /* 48px */
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            text-align: center;
+            background-color: #2d3748; /* Gray-800 */
+            border: 3px solid #f6e05e; /* Yellow-300 */
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+        
+        /* Dice Roll Animation */
+        .dice-roll {
+            animation: dice-shake 0.3s infinite alternate;
+        }
+        @keyframes dice-shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            100% { transform: translate(-1px, -1px) rotate(-1deg); }
+        }
+
+        /* Card Game Display */
+        .card-slot {
+            font-size: 4rem;
+            width: 120px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0; /* White/Light */
+            color: #e53e3e; /* Red-600 */
+            border: 5px solid #2d3748;
+            border-radius: 10px;
+            font-weight: bold;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-out;
+        }
+
+        /* RPS Display */
+        .rps-choice-display {
+            font-size: 3.5rem;
+            width: 100px;
+            height: 100px;
+            background-color: #4a5568;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+        .rps-choice-display.winner {
+            border: 5px solid #48bb78; /* Green */
+            box-shadow: 0 0 10px #48bb78;
+        }
+        .rps-choice-display.loser {
+            border: 5px solid #e53e3e; /* Red */
+        }
+        
+        /* Message Box Consistency */
+        .message-box {
+            min-height: 2.5em; /* Ensure stable height for messages */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+        }
+        
+        /* Loading Animation */
+        #loadingBlock {
+            text-align: center;
+            padding: 50px;
+            font-size: 2rem;
+            color: #63b3ed; /* Blue-400 */
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container mx-auto p-4 max-w-4xl">
+        
+        <div id="authStatus" class="text-sm text-right text-gray-500 mb-4">
+            កំពុងផ្ទុក...
+        </div>
+
+        <div id="loadingBlock" style="display: block;">
+            កំពុងផ្ទុកហ្គេម... 🎮
+        </div>
+        
+        <div id="mainMenuView" style="display: none;">
+            <h1 class="text-4xl font-bold text-center mb-6 text-indigo-400">🕹️ មជ្ឈមណ្ឌលហ្គេម</h1>
+            
+            <div class="bg-gray-800 p-4 rounded-xl shadow-2xl mb-8">
+                <p class="text-xl font-semibold mb-2">👋 ជំរាបសួរ, <span id="userIdDisplay" class="text-yellow-400"></span></p>
+                <p class="text-lg">💰 កាក់សរុប៖ <span id="menuCoinCount" class="text-green-400 font-extrabold">0</span></p>
+            </div>
+            
+            <div id="menuButtons" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <button onclick="switchView('gacha')" class="btn-action bg-purple-600 hover:bg-purple-700 p-6 rounded-lg shadow-xl text-white font-bold text-2xl transition duration-150">
+                    🎰 Gacha / ចាប់រង្វាន់
+                </button>
+                
+                <button onclick="switchView('traditionalGames')" class="btn-action bg-teal-600 hover:bg-teal-700 p-6 rounded-lg shadow-xl text-white font-bold text-2xl transition duration-150">
+                    🎲 ហ្គេមប្រពៃណី
+                </button>
+            </div>
+        </div>
+        
+        <div id="gachaView" style="display: none;" class="bg-gray-900 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 text-purple-400">🎰 ប្រព័ន្ធ Gacha & Draw</h2>
+            
+            <button onclick="switchView('mainMenu')" class="btn-action bg-gray-700 hover:bg-gray-600 text-sm py-1 px-3 rounded mb-4">
+                ← ត្រឡប់ទៅ Menu
+            </button>
+            
+            <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow-inner mb-6">
+                <p class="text-lg font-semibold">🎫 សំបុត្រ: <span id="ticketCount" class="text-yellow-400 font-extrabold">5</span></p>
+                <p class="text-lg font-semibold">💰 កាក់: <span id="coinCount" class="text-green-400 font-extrabold">2000</span></p>
+                <p class="text-lg font-semibold">💎 ត្បូង: <span id="gemCount" class="text-purple-400 font-extrabold">100</span></p>
+                <p class="text-lg font-semibold">✨ Pity: <span id="pityCountDisplay" class="text-cyan-400 font-extrabold">0 / 10</span></p>
+            </div>
+
+            <div class="bg-gray-800 p-5 rounded-xl mb-6 border border-gray-700">
+                <h3 class="text-2xl font-semibold mb-3 text-center text-white">ចាប់រង្វាន់ (Standard Gacha)</h3>
+                
+                <div id="latestPrizeResult" class="text-center mb-4 min-h-[50px]">
+                    <p id="gachaResultMessage" class="message-box text-lg font-bold text-cyan-300">សូមបង្វិលដើម្បីចាប់រង្វាន់ដំបូង!</p>
+                </div>
+                
+                <div class="flex justify-center space-x-4">
+                    <button id="drawButton" onclick="handleDraw(1)" class="btn-action bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 disabled:bg-gray-600">
+                        បង្វិល ១ ដង
+                    </button>
+                    <button id="drawTenButton" onclick="handleDraw(10)" class="btn-action bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 disabled:bg-gray-600">
+                        បង្វិល ១០ ដង
+                    </button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                
+                <div class="bg-gray-800 p-4 rounded-xl shadow-inner border border-gray-700">
+                    <h3 class="text-xl font-semibold mb-3 text-yellow-300">🛒 ហាងទិញ</h3>
+                    <div class="space-y-3">
+                        <button id="buyTicketButton" onclick="buyTicketWithCoins()" class="btn-action w-full bg-green-600 hover:bg-green-700 py-2 rounded disabled:bg-gray-600">
+                            ទិញ ១ សំបុត្រ (ចំណាយ 500 កាក់)
+                        </button>
+                        <button onclick="buyItemWithGems(10, 10, 'Tickets')" class="btn-action w-full bg-purple-600 hover:bg-purple-700 py-2 rounded">
+                            ទិញ 10 សំបុត្រ (ចំណាយ 10 ត្បូង)
+                        </button>
+                        <button onclick="simulatedTopUp()" class="btn-action w-full bg-cyan-600 hover:bg-cyan-700 py-2 rounded">
+                            បញ្ចូលត្បូង (Test) +100 💎
+                        </button>
+                        <button id="adButton" onclick="getTicketFromAd()" class="btn-action w-full bg-orange-600 hover:bg-orange-700 py-2 rounded">
+                            មើល Ads ដើម្បីទទួលបាន ១ សំបុត្រ
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 p-4 rounded-xl shadow-inner border border-cyan-500">
+                    <h3 class="text-xl font-semibold mb-3 text-cyan-400">🤖 AI Gacha (Premium)</h3>
+                    <p class="text-sm text-gray-400 mb-3">AI បង្កើតវត្ថុពិសេសមួយដែលមានតម្លៃខ្ពស់!</p>
+                    <button id="aiGachaButton" onclick="generateAiPrize()" class="btn-action w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 rounded-lg transition duration-150 disabled:bg-gray-600">
+                        បង្កើត ១ រង្វាន់ (ចំណាយ 100 ត្បូង)
+                    </button>
+                    <h4 class="text-lg font-semibold mt-4 text-cyan-300">រង្វាន់ AI</h4>
+                    <div id="aiInventoryList" class="space-y-2 mt-2 max-h-40 overflow-y-auto">
+                        </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-gray-800 p-4 rounded-xl shadow-xl border border-gray-700">
+                <h3 class="text-2xl font-bold mb-4 text-white">📦 ទំនិញនៅក្នុងខ្លួន (Inventory)</h3>
+                <div id="inventoryList" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-72 overflow-y-auto pr-2">
+                    <p id="emptyInventory" class="col-span-2 text-gray-500">អ្នកមិនទាន់មានរង្វាន់នៅឡើយទេ។</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="traditionalGamesView" style="display: none;" class="bg-gray-900 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 text-teal-400">🎲 ហ្គេមប្រពៃណីខ្មែរ & បៀរ</h2>
+            
+            <button onclick="switchView('mainMenu')" class="btn-action bg-gray-700 hover:bg-gray-600 text-sm py-1 px-3 rounded mb-4">
+                ← ត្រឡប់ទៅ Menu
+            </button>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <button onclick="switchView('klaKlok')" class="btn-action bg-teal-600 hover:bg-teal-700 p-6 rounded-lg shadow-xl text-white font-bold text-xl transition duration-150">
+                    🐅 ខ្លាឃ្លោក (Dice Symbols)
+                </button>
+                <button onclick="switchView('boung')" class="btn-action bg-emerald-600 hover:bg-emerald-700 p-6 rounded-lg shadow-xl text-white font-bold text-xl transition duration-150">
+                    🔢 ប៉ោង/ធំតូច (Dice Numbers)
+                </button>
+                <button onclick="switchView('cardGame')" class="btn-action bg-red-600 hover:bg-red-700 p-6 rounded-lg shadow-xl text-white font-bold text-xl transition duration-150">
+                    ♥ Hi-Lo (Higher or Lower)
+                </button>
+                <button onclick="switchView('rps')" class="btn-action bg-yellow-600 hover:bg-yellow-700 p-6 rounded-lg shadow-xl text-white font-bold text-xl transition duration-150">
+                    🔨 ថ្ម ក្រដាស កន្ត្រៃ
+                </button>
+            </div>
+        </div>
+
+        <div id="klaKlokView" style="display: none;" class="bg-gray-900 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400">🐅 ខ្លាឃ្លោក (Kla Klok)</h2>
+            
+            <button onclick="switchView('traditionalGames')" class="btn-action bg-gray-700 hover:bg-gray-600 text-sm py-1 px-3 rounded mb-4">
+                ← ត្រឡប់ទៅ ហ្គេមប្រពៃណី
+            </button>
+            
+            <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow-inner mb-6">
+                <p class="text-lg font-semibold">💰 កាក់: <span id="klaKlokCoinCount" class="text-green-400 font-extrabold">0</span></p>
+                <p class="text-lg font-semibold text-yellow-300">សរុបភ្នាល់: <span id="klaKlokTotalBet" class="font-extrabold">0</span> កាក់</p>
+                <button onclick="clearAllBets('klaKlok')" class="btn-action bg-red-500 hover:bg-red-600 text-sm py-1 px-2 rounded">
+                    លុបភ្នាល់ទាំងអស់
+                </button>
+            </div>
+            
+            <div class="text-center mb-4">
+                <p id="klaKlokCurrentBetAmount" class="font-bold text-xl mb-2">ចំនួនភ្នាល់: 100 កាក់</p>
+                <div class="space-x-2">
+                    <button onclick="setBetAmount('klaKlok', 100)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">100</button>
+                    <button onclick="setBetAmount('klaKlok', 500)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">500</button>
+                    <button onclick="setBetAmount('klaKlok', 1000)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">1,000</button>
+                    <button onclick="setBetAmount('klaKlok', 5000)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">5,000</button>
+                </div>
+            </div>
+
+            <div id="klaKlokDiceDisplay" class="flex justify-center space-x-4 mb-6">
+                <div id="klaKlokDice1" class="dice-display">❓</div>
+                <div id="klaKlokDice2" class="dice-display">❓</div>
+                <div id="klaKlokDice3" class="dice-display">❓</div>
+            </div>
+            
+            <div id="klaKlokResultMessage" class="message-box text-lg text-center font-bold mb-4 min-h-[1.5em] text-cyan-300">
+                សូមដាក់ភ្នាល់របស់អ្នក...
+            </div>
+            
+            <div id="klaKlokBettingGrid" class="grid grid-cols-3 gap-3 mb-6">
+                </div>
+
+            <div class="flex justify-center space-x-4">
+                <button id="klaKlokRollDiceButton" onclick="rollKlaKlokDice()" class="btn-action bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    🎲 ក្រឡុកគ្រាប់ឡុកឡាក់
+                </button>
+                <button id="klaKlokAiSuggestButton" onclick="getAiKlaKlokSuggestion()" class="btn-action bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    🤖 AI ណែនាំ
+                </button>
+            </div>
+        </div>
+
+        <div id="boungView" style="display: none;" class="bg-gray-900 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 text-emerald-400">🔢 ប៉ោង / ធំតូច (Sic Bo Style)</h2>
+            
+            <button onclick="switchView('traditionalGames')" class="btn-action bg-gray-700 hover:bg-gray-600 text-sm py-1 px-3 rounded mb-4">
+                ← ត្រឡប់ទៅ ហ្គេមប្រពៃណី
+            </button>
+            
+            <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow-inner mb-6">
+                <p class="text-lg font-semibold">💰 កាក់: <span id="boungCoinCount" class="text-green-400 font-extrabold">0</span></p>
+                <p class="text-lg font-semibold text-emerald-300">សរុបភ្នាល់: <span id="boungTotalBet" class="font-extrabold">0</span> កាក់</p>
+                <button onclick="clearAllBets('boung')" class="btn-action bg-red-500 hover:bg-red-600 text-sm py-1 px-2 rounded">
+                    លុបភ្នាល់ទាំងអស់
+                </button>
+            </div>
+            
+            <div class="text-center mb-4">
+                <p id="boungCurrentBetAmount" class="font-bold text-xl mb-2">ចំនួនភ្នាល់: 100 កាក់</p>
+                <div class="space-x-2">
+                    <button onclick="setBetAmount('boung', 100)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">100</button>
+                    <button onclick="setBetAmount('boung', 500)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">500</button>
+                    <button onclick="setBetAmount('boung', 1000)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">1,000</button>
+                    <button onclick="setBetAmount('boung', 5000)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">5,000</button>
+                </div>
+            </div>
+
+            <div class="flex justify-center space-x-4 mb-6">
+                <div id="boungDice1" class="dice-display">❓</div>
+                <div id="boungDice2" class="dice-display">❓</div>
+                <div id="boungDice3" class="dice-display">❓</div>
+            </div>
+            
+            <div id="boungResultMessage" class="message-box text-lg text-center font-bold mb-4 min-h-[1.5em] text-cyan-300">
+                សូមដាក់ភ្នាល់របស់អ្នក...
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <button id="boungBetBtn-small" onclick="placeBoungBet('small')" class="btn-action bg-gray-700 p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all">
+                    <div class="text-3xl">តូច (4-10)</div>
+                    <div class="text-xs font-bold text-yellow-300 mt-1" id="boungBetAmount-small">0 កាក់</div>
+                </button>
+                <button id="boungBetBtn-big" onclick="placeBoungBet('big')" class="btn-action bg-gray-700 p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all">
+                    <div class="text-3xl">ធំ (11-17)</div>
+                    <div class="text-xs font-bold text-yellow-300 mt-1" id="boungBetAmount-big">0 កាក់</div>
+                </button>
+                <button id="boungBetBtn-odd" onclick="placeBoungBet('odd')" class="btn-action bg-gray-700 p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all">
+                    <div class="text-3xl">សេស (Odd)</div>
+                    <div class="text-xs font-bold text-yellow-300 mt-1" id="boungBetAmount-odd">0 កាក់</div>
+                </button>
+                <button id="boungBetBtn-even" onclick="placeBoungBet('even')" class="btn-action bg-gray-700 p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all">
+                    <div class="text-3xl">គូ (Even)</div>
+                    <div class="text-xs font-bold text-yellow-300 mt-1" id="boungBetAmount-even">0 កាក់</div>
+                </button>
+            </div>
+
+            <div class="flex justify-center space-x-4">
+                <button id="boungRollDiceButton" onclick="rollBoungDice()" class="btn-action bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    🎲 ក្រឡុកគ្រាប់ឡុកឡាក់
+                </button>
+                <button id="boungAiSuggestButton" onclick="getAiBoungSuggestion()" class="btn-action bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    🤖 AI ណែនាំ
+                </button>
+            </div>
+        </div>
+        
+        <div id="cardGameView" style="display: none;" class="bg-gray-900 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 text-red-400">♥ Hi-Lo (ខ្ពស់ ឬ ទាប)</h2>
+            
+            <button onclick="switchView('traditionalGames')" class="btn-action bg-gray-700 hover:bg-gray-600 text-sm py-1 px-3 rounded mb-4">
+                ← ត្រឡប់ទៅ ហ្គេមប្រពៃណី
+            </button>
+            
+            <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow-inner mb-6">
+                <p class="text-lg font-semibold">💰 កាក់: <span id="cardGameCoinCount" class="text-green-400 font-extrabold">0</span></p>
+                <p class="text-lg font-semibold text-red-300">ចំនួនភ្នាល់: <span id="cardGameCurrentBetDisplay" class="font-extrabold">500</span> កាក់</p>
+            </div>
+            
+            <div class="flex justify-center items-center my-8">
+                <div id="currentCardSlot" class="card-slot">
+                    A
+                </div>
+            </div>
+            
+            <div id="cardGameResultMessage" class="message-box text-lg text-center font-bold mb-6 min-h-[1.5em] text-cyan-300">
+                សូមចាប់បៀរថ្មីដើម្បីចាប់ផ្តើម!
+            </div>
+            
+            <div class="flex justify-center space-x-4">
+                <button id="betHigherButton" onclick="placeCardBet('higher')" class="btn-action bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150 disabled:bg-gray-600" disabled>
+                    ↑ Higher
+                </button>
+                <button id="betLowerButton" onclick="placeCardBet('lower')" class="btn-action bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150 disabled:bg-gray-600" disabled>
+                    ↓ Lower
+                </button>
+            </div>
+            
+            <div class="text-center mt-6">
+                <button id="newCardButton" onclick="dealNewCard()" class="btn-action bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    ចាប់បៀរថ្មី (Start Game)
+                </button>
+            </div>
+        </div>
+
+        <div id="rpsView" style="display: none;" class="bg-gray-900 p-6 rounded-2xl shadow-2xl">
+            <h2 class="text-3xl font-bold text-center mb-6 text-yellow-400">🔨 ថ្ម ក្រដាស កន្ត្រៃ</h2>
+            
+            <button onclick="switchView('traditionalGames')" class="btn-action bg-gray-700 hover:bg-gray-600 text-sm py-1 px-3 rounded mb-4">
+                ← ត្រឡប់ទៅ ហ្គេមប្រពៃណី
+            </button>
+            
+            <div class="flex justify-between items-center bg-gray-800 p-3 rounded-lg shadow-inner mb-6">
+                <p class="text-lg font-semibold">💰 កាក់: <span id="rpsCoinCount" class="text-green-400 font-extrabold">0</span></p>
+                <p class="text-lg font-semibold text-yellow-300">អត្រាឈ្នះ: 1:1</p>
+            </div>
+
+            <div class="text-center mb-4">
+                <p id="rpsCurrentBetAmount" class="font-bold text-xl mb-2">ចំនួនភ្នាល់: 100 កាក់</p>
+                <div class="space-x-2">
+                    <button onclick="setBetAmount('rps', 100)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">100</button>
+                    <button onclick="setBetAmount('rps', 500)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">500</button>
+                    <button onclick="setBetAmount('rps', 1000)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">1,000</button>
+                    <button onclick="setBetAmount('rps', 5000)" class="btn-action bg-gray-700 hover:bg-gray-600 py-1 px-3 rounded text-sm">5,000</button>
+                </div>
+            </div>
+
+            <div class="flex justify-around items-center my-8">
+                <div class="text-center">
+                    <p class="text-xl font-bold mb-2">អ្នកលេង</p>
+                    <div id="rpsPlayerChoice" class="rps-choice-display">❓</div>
+                </div>
+                <div class="text-4xl font-extrabold text-red-500">VS</div>
+                <div class="text-center">
+                    <p class="text-xl font-bold mb-2">កុំព្យូទ័រ</p>
+                    <div id="rpsComputerChoice" class="rps-choice-display">❓</div>
+                </div>
+            </div>
+            
+            <div id="rpsResultMessage" class="message-box text-lg text-center font-bold mb-6 min-h-[1.5em] text-cyan-300">
+                ជ្រើសរើសចំនួនភ្នាល់...
+            </div>
+            
+            <div class="flex justify-center space-x-4">
+                <button id="rpsPlay-rock" onclick="playRPS('rock')" class="btn-action bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    🔨 ថ្ម
+                </button>
+                <button id="rpsPlay-paper" onclick="playRPS('paper')" class="btn-action bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    📃 ក្រដាស
+                </button>
+                <button id="rpsPlay-scissors" onclick="playRPS('scissors')" class="btn-action bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-150">
+                    ✂️ កន្ត្រៃ
+                </button>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button id="rpsAiSuggestButton" onclick="getAiRpsSuggestion()" class="btn-action bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-6 rounded-lg transition duration-150">
+                    🤖 AI ណែនាំ
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        /**
+         * ==============================================================================
+         * JAVASCRIPT LOGIC FOR GACHA & TRADITIONAL GAMES APPLICATION
+         * ==============================================================================
+         */
+
+        // --- GLOBAL STATE ---
+        const gameState = {
+            // Shared State
+            userId: 'USER_1337',
+            currentView: 'mainMenu',
+            
+            // Gacha State
+            ticket: 5,
+            coin: 2000,
+            gem: 100,
+            pity: 0,
+            inventory: [],
+            aiInventory: [],
+            
+            // Kla Klok State
+            klaKlokCurrentBetAmount: 100,
+            klaKlokBets: {
+                'kla': 0, 'klok': 0, 'trey': 0, // 'Tiger', 'Stag', 'Fish'
+                'ku': 0, 'moas': 0, 'ched': 0    // 'Gourd', 'Chicken', 'Crab'
+            },
+            klaKlokSymbols: {
+                'kla': '🐅', 'klok': '🦌', 'trey': '🐟',
+                'ku': '葫', 'moas': '🐓', 'ched': '🦀'
+            },
+            klaKlokDice: ['❓', '❓', '❓'],
+            
+            // Boung State (Sic Bo style - Big/Small, Odd/Even)
+            boungCurrentBetAmount: 100,
+            boungBets: {
+                'small': 0, 'big': 0, 'odd': 0, 'even': 0
+            },
+            boungDice: [0, 0, 0], // Stores numerical values (1-6)
+            
+            // Card Game State (Hi-Lo)
+            cardGameCurrentBetAmount: 500,
+            currentCardValue: null,
+            
+            // RPS State
+            rpsCurrentBetAmount: 100,
+        };
+
+        const RARE_PRIZES = [
+            { name: 'Rare Weapon Skin', rarity: 'Rare', value: 150 },
+            { name: 'Epic Loot Box', rarity: 'Rare', value: 200 },
+            { name: 'Common Pet Food', rarity: 'Common', value: 5 },
+            { name: 'Legendary XP Boost', rarity: 'Legendary', value: 1000 },
+            { name: 'Epic Armor Piece', rarity: 'Epic', value: 500 },
+            { name: 'Common Material', rarity: 'Common', value: 10 },
+            { name: 'Rare Blueprint', rarity: 'Rare', value: 300 },
+            { name: 'Epic Character Card', rarity: 'Epic', value: 800 },
+            { name: 'Legendary Artifact', rarity: 'Legendary', value: 5000 },
+        ];
+
+        const GACHA_PULL_COST = 1;
+        const GACHA_PULL_TEN_COST = 10;
+        const GACHA_PULL_COIN_COST = 500; // For buying 1 ticket
+
+        // Rarity chances for 1-pull (Total must be 100)
+        const RARITY_CHANCES = {
+            'Legendary': 0.05, // 5%
+            'Epic': 0.15,      // 15%
+            'Rare': 0.30,      // 30%
+            'Common': 0.50     // 50%
+        };
+
+
+        // --- UTILITY FUNCTIONS ---
+
+        /**
+         * Updates all coin/ticket/gem displays across different game views.
+         */
+        function updateCurrencyDisplays() {
+            const format = (num) => num.toLocaleString('en-US'); 
+            
+            // Gacha View
+            document.getElementById('ticketCount').textContent = format(gameState.ticket);
+            document.getElementById('coinCount').textContent = format(gameState.coin);
+            document.getElementById('gemCount').textContent = format(gameState.gem);
+            document.getElementById('pityCountDisplay').textContent = `${gameState.pity} / 10`;
+            
+            // Menu View
+            document.getElementById('menuCoinCount').textContent = format(gameState.coin);
+            document.getElementById('userIdDisplay').textContent = gameState.userId;
+            
+            // Traditional Games View
+            if (document.getElementById('klaKlokCoinCount')) document.getElementById('klaKlokCoinCount').textContent = format(gameState.coin);
+            if (document.getElementById('boungCoinCount')) document.getElementById('boungCoinCount').textContent = format(gameState.coin);
+            if (document.getElementById('cardGameCoinCount')) document.getElementById('cardGameCoinCount').textContent = format(gameState.coin);
+            if (document.getElementById('rpsCoinCount')) document.getElementById('rpsCoinCount').textContent = format(gameState.coin);
+            
+            // Kla Klok Total Bet
+            const klaKlokTotalBet = Object.values(gameState.klaKlokBets).reduce((sum, bet) => sum + bet, 0);
+            if (document.getElementById('klaKlokTotalBet')) document.getElementById('klaKlokTotalBet').textContent = format(klaKlokTotalBet);
+
+            // Boung Total Bet
+            const boungTotalBet = Object.values(gameState.boungBets).reduce((sum, bet) => sum + bet, 0);
+            if (document.getElementById('boungTotalBet')) document.getElementById('boungTotalBet').textContent = format(boungTotalBet);
+            
+            // Card Game Bet
+            if (document.getElementById('cardGameCurrentBetDisplay')) document.getElementById('cardGameCurrentBetDisplay').textContent = format(gameState.cardGameCurrentBetAmount);
+
+            // Update Gacha Buttons (check for tickets/gems)
+            const drawBtn = document.getElementById('drawButton');
+            const drawTenBtn = document.getElementById('drawTenButton');
+            const aiGachaBtn = document.getElementById('aiGachaButton');
+            const buyTicketBtn = document.getElementById('buyTicketButton');
+
+            if (drawBtn) {
+                drawBtn.textContent = `បង្វិល ១ ដង (ចំណាយ ${GACHA_PULL_COST} សំបុត្រ)`;
+                drawBtn.disabled = gameState.ticket < GACHA_PULL_COST;
+            }
+            if (drawTenBtn) {
+                drawTenBtn.textContent = `បង្វិល ១០ ដង (ចំណាយ ${GACHA_PULL_TEN_COST} សំបុត្រ)`;
+                drawTenBtn.disabled = gameState.ticket < GACHA_PULL_TEN_COST;
+            }
+            if (aiGachaBtn) aiGachaBtn.disabled = gameState.gem < 100;
+            if (buyTicketBtn) buyTicketBtn.disabled = gameState.coin < GACHA_PULL_COIN_COST;
+        }
+
+        /**
+         * Shows a message in a specified result box.
+         * @param {string} viewPrefix - The prefix (e.g., 'gacha', 'klaKlok', 'rps')
+         * @param {string} message - The message content.
+         * @param {string} color - Tailwind color class (e.g., 'text-red-500').
+         */
+        function showResultMessage(viewPrefix, message, color = 'text-cyan-300') {
+            let resultElement;
+            if (viewPrefix === 'gacha' || viewPrefix === 'latestPrize') {
+                resultElement = document.getElementById('latestPrizeResult');
+                // If we use latestPrizeResult, use a nested element for the message to avoid overwriting prize display
+                resultElement.innerHTML = `<p id="gachaResultMessage" class="text-center font-bold text-lg ${color} message-box">${message}</p>`;
+                return;
+            }
+            
+            resultElement = document.getElementById(`${viewPrefix}ResultMessage`);
+            if (resultElement) {
+                resultElement.textContent = message;
+                resultElement.className = `text-lg text-center font-bold mb-4 min-h-[1.5em] ${color} message-box`;
+            }
+        }
+
+        /**
+         * Utility to get a random integer.
+         * @param {number} min 
+         * @param {number} max 
+         * @returns {number}
+         */
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // --- VIEW MANAGEMENT ---
+
+        function switchView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.container > div:not(#authStatus)').forEach(view => {
+                view.style.display = 'none';
+            });
+
+            // Show the target view
+            const targetView = document.getElementById(`${viewName}View`);
+            if (targetView) {
+                targetView.style.display = 'block';
+                gameState.currentView = viewName;
+                updateCurrencyDisplays(); // Update currencies whenever switching views
+                
+                // Specific initialization for each game on switch
+                if (viewName === 'gacha') {
+                    renderInventory();
+                    renderAiInventory();
+                } else if (viewName === 'klaKlok') {
+                    initializeKlaKlokBettingGrid();
+                    renderKlaKlokBets();
+                    showResultMessage('klaKlok', 'សូមដាក់ភ្នាល់របស់អ្នក...');
+                } else if (viewName === 'boung') {
+                    renderBoungBets();
+                    showResultMessage('boung', 'សូមដាក់ភ្នាល់របស់អ្នក...');
+                    if (document.getElementById('boungDice1')) document.getElementById('boungDice1').textContent = '❓';
+                    if (document.getElementById('boungDice2')) document.getElementById('boungDice2').textContent = '❓';
+                    if (document.getElementById('boungDice3')) document.getElementById('boungDice3').textContent = '❓';
+                } else if (viewName === 'cardGame') {
+                    if (gameState.currentCardValue === null) {
+                        dealNewCard(); // Start a new game if none is running
+                    } else {
+                        renderCurrentCard();
+                    }
+                    showResultMessage('cardGame', 'សូមជ្រើសរើស Higher ឬ Lower');
+                } else if (viewName === 'rps') {
+                    // Reset RPS display on view switch
+                    if (document.getElementById('rpsPlayerChoice')) {
+                        document.getElementById('rpsPlayerChoice').textContent = '❓';
+                        document.getElementById('rpsPlayerChoice').className = 'rps-choice-display';
+                    }
+                    if (document.getElementById('rpsComputerChoice')) {
+                        document.getElementById('rpsComputerChoice').textContent = '❓';
+                        document.getElementById('rpsComputerChoice').className = 'rps-choice-display';
+                    }
+                    showResultMessage('rps', `ចំនួនភ្នាល់: ${gameState.rpsCurrentBetAmount.toLocaleString()} កាក់។ សូមជ្រើសរើសរបស់អ្នក!`);
+                }
+            }
+        }
+
+        // --- GACHA GAME LOGIC ---
+
+        /**
+         * Gets a prize based on rarity chances and pity system.
+         */
+        function getGachaPrize() {
+            let chosenRarity = '';
+            let isPity = false;
+
+            // 1. Check Pity system (Legendary guaranteed at 10 pulls)
+            if (gameState.pity >= 9) {
+                chosenRarity = 'Legendary';
+                isPity = true;
+            } else {
+                // 2. Roll for rarity
+                const rand = Math.random();
+                let cumulativeChance = 0;
+                
+                // Sort keys to ensure 'Legendary' is checked first, then 'Epic', etc.
+                const sortedRarities = Object.keys(RARITY_CHANCES).sort((a, b) => {
+                    const order = ['Legendary', 'Epic', 'Rare', 'Common'];
+                    return order.indexOf(a) - order.indexOf(b);
+                });
+
+                for (const rarity of sortedRarities) {
+                    cumulativeChance += RARITY_CHANCES[rarity];
+                    if (rand < cumulativeChance) {
+                        chosenRarity = rarity;
+                        break;
+                    }
+                }
+                // Fallback for floating point errors (should not happen with 100% total)
+                if (!chosenRarity) chosenRarity = 'Common'; 
+            }
+            
+            // 3. Reset Pity if Legendary is obtained
+            if (chosenRarity === 'Legendary') {
+                gameState.pity = 0;
+            } else {
+                gameState.pity++;
+            }
+            
+            // 4. Generate Prize details
+            const availablePrizes = RARE_PRIZES.filter(p => p.rarity === chosenRarity);
+            // Ensure we always have a prize, even if the filter returns empty (shouldn't happen with the default list)
+            const prizeList = availablePrizes.length > 0 ? availablePrizes : RARE_PRIZES.filter(p => p.rarity === 'Common'); 
+            
+            const prizeIndex = getRandomInt(0, prizeList.length - 1);
+            const prize = { ...prizeList[prizeIndex] }; // Clone the object
+            
+            if (isPity) {
+                prize.name = `[PITY] ${prize.name}`;
+            }
+            
+            return prize;
+        }
+
+        /**
+         * Handles the single or ten pull action.
+         * @param {number} count - 1 for single pull, 10 for ten pull.
+         */
+        function handleDraw(count) {
+            const cost = count === 1 ? GACHA_PULL_COST : GACHA_PULL_TEN_COST;
+
+            if (gameState.ticket < cost) {
+                showResultMessage('latestPrize', 'សំបុត្រមិនគ្រប់គ្រាន់ទេ!', 'text-red-500');
+                return;
+            }
+
+            // Deduct cost
+            gameState.ticket -= cost;
+            updateCurrencyDisplays();
+
+            // Disable buttons during animation/draw
+            const drawBtn = document.getElementById('drawButton');
+            const drawTenBtn = document.getElementById('drawTenButton');
+            if (drawBtn) drawBtn.disabled = true;
+            if (drawTenBtn) drawTenBtn.disabled = true;
+
+            const results = [];
+            let totalCoinGain = 0;
+            
+            // Perform draws
+            for (let i = 0; i < count; i++) {
+                const prize = getGachaPrize();
+                results.push(prize);
+                gameState.inventory.push(prize);
+                totalCoinGain += prize.value;
+            }
+            gameState.coin += totalCoinGain;
+            
+            // Display results after a short delay (for animation effect)
+            setTimeout(() => {
+                let message = '';
+                if (count === 1) {
+                    const prize = results[0];
+                    message = `អ្នកទទួលបាន៖ ${prize.name} (${prize.rarity})! +${prize.value} កាក់`;
+                    renderLatestPrize(prize);
+                } else {
+                    const legendaryCount = results.filter(p => p.rarity === 'Legendary').length;
+                    message = `អ្នកចាប់បាន ${count} ដង! រួមទាំង Legendary ${legendaryCount} រង្វាន់! +${totalCoinGain.toLocaleString()} កាក់`;
+                    renderLatestTenDraw(results);
+                }
+                
+                showResultMessage('latestPrize', message, 'text-green-400');
+                renderInventory();
+                updateCurrencyDisplays();
+                if (drawBtn) drawBtn.disabled = gameState.ticket < GACHA_PULL_COST;
+                if (drawTenBtn) drawTenBtn.disabled = gameState.ticket < GACHA_PULL_TEN_COST;
+            }, 500);
+        }
+
+        /**
+         * Renders the single latest prize result.
+         */
+        function renderLatestPrize(prize) {
+            const resultElement = document.getElementById('latestPrizeResult');
+            const rarityClass = `rarity-${prize.rarity.toLowerCase()}`;
+            
+            resultElement.innerHTML = `
+                <div class="prize-card border-2 p-3 rounded-lg inline-block ${rarityClass} bg-gray-900 mx-auto">
+                    <p class="text-xl font-extrabold">${prize.name}</p>
+                    <p class="text-sm font-semibold mt-1">${prize.rarity}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the results for a 10-pull draw.
+         */
+        function renderLatestTenDraw(prizes) {
+            const resultElement = document.getElementById('latestPrizeResult');
+            
+            // Sort by rarity for better display (Legendary first)
+            prizes.sort((a, b) => {
+                const order = ['Legendary', 'Epic', 'Rare', 'Common'];
+                return order.indexOf(a.rarity) - order.indexOf(b.rarity);
+            });
+            
+            const prizeHTML = prizes.map(prize => {
+                const rarityClass = `rarity-${prize.rarity.toLowerCase()}`;
+                // Limit name length for grid display
+                const shortName = prize.name.replace('[PITY] ', '').substring(0, 15) + (prize.name.length > 15 ? '...' : '');
+                return `
+                    <div class="prize-card border p-2 rounded-md ${rarityClass} bg-gray-900 text-xs">
+                        <p class="font-bold">${shortName}</p>
+                    </div>
+                `;
+            }).join('');
+            
+            resultElement.innerHTML = `
+                <div class="grid grid-cols-5 gap-2">
+                    ${prizeHTML}
+                </div>
+            `;
+        }
+
+
+        /**
+         * Renders the main inventory list.
+         */
+        function renderInventory() {
+            const inventoryList = document.getElementById('inventoryList');
+            if (!inventoryList) return;
+
+            inventoryList.innerHTML = '';
+            
+            if (gameState.inventory.length === 0) {
+                inventoryList.innerHTML = '<p id="emptyInventory" class="col-span-2 text-gray-500">អ្នកមិនទាន់មានរង្វាន់នៅឡើយទេ។</p>';
+                return;
+            }
+
+            // Group items by name and count
+            const groupedInventory = gameState.inventory.reduce((acc, item) => {
+                const key = `${item.name}-${item.rarity}`;
+                if (!acc[key]) {
+                    acc[key] = { ...item, count: 0 };
+                }
+                acc[key].count++;
+                return acc;
+            }, {});
+            
+            // Sort by rarity
+            const sortedInventory = Object.values(groupedInventory).sort((a, b) => {
+                const order = ['Legendary', 'Epic', 'Rare', 'Common'];
+                return order.indexOf(a.rarity) - order.indexOf(b.rarity);
+            });
+
+            sortedInventory.forEach(item => {
+                const rarityClass = `rarity-${item.rarity.toLowerCase()}`;
+                const itemHtml = `
+                    <div class="flex justify-between items-center p-2 rounded-lg bg-gray-700 shadow-md border ${rarityClass}">
+                        <p class="font-semibold text-left">${item.name}</p>
+                        <span class="font-extrabold text-xl ml-4">x${item.count}</span>
+                    </div>
+                `;
+                inventoryList.innerHTML += itemHtml;
+            });
+        }
+
+        /**
+         * Renders the AI generated inventory list.
+         */
+        function renderAiInventory() {
+            const aiInventoryList = document.getElementById('aiInventoryList');
+            if (!aiInventoryList) return;
+
+            aiInventoryList.innerHTML = '';
+            
+            if (gameState.aiInventory.length === 0) {
+                aiInventoryList.innerHTML = '<p id="emptyAiInventory" class="col-span-1 text-gray-500">អ្នកមិនទាន់មានរង្វាន់ AI នៅឡើយទេ។</p>';
+                return;
+            }
+
+            gameState.aiInventory.forEach(item => {
+                const itemHtml = `
+                    <div class="flex justify-between items-center p-2 rounded-lg bg-gray-800 shadow-md border border-cyan-500">
+                        <p class="font-semibold text-left text-cyan-400">${item.name}</p>
+                        <span class="font-extrabold text-lg ml-4 text-white">Value: ${item.value.toLocaleString()}</span>
+                    </div>
+                `;
+                aiInventoryList.innerHTML += itemHtml;
+            });
+        }
+
+        /**
+         * Simulates acquiring gems via a top-up.
+         */
+        function simulatedTopUp() {
+            gameState.gem += 100;
+            updateCurrencyDisplays();
+            showResultMessage('latestPrize', 'ទទួលបាន 100 ត្បូងឥតគិតថ្លៃ!', 'text-purple-400');
+        }
+
+        /**
+         * Acquires 1 ticket using 500 coins.
+         */
+        function buyTicketWithCoins() {
+            if (gameState.coin >= GACHA_PULL_COIN_COST) {
+                gameState.coin -= GACHA_PULL_COIN_COST;
+                gameState.ticket += 1;
+                updateCurrencyDisplays();
+                showResultMessage('latestPrize', 'អ្នកបានទិញ ១ សំបុត្រដោយជោគជ័យ!', 'text-yellow-400');
+            } else {
+                showResultMessage('latestPrize', 'កាក់មិនគ្រប់គ្រាន់ទេ!', 'text-red-500');
+            }
+        }
+
+        /**
+         * Buys an item using gems.
+         * @param {number} gemCost - The cost in gems.
+         * @param {number} amount - The amount of the item to receive.
+         * @param {('Tickets'|'Coins')} itemType - The type of item to receive.
+         */
+        function buyItemWithGems(gemCost, amount, itemType) {
+            if (gameState.gem >= gemCost) {
+                gameState.gem -= gemCost;
+                if (itemType === 'Tickets') {
+                    gameState.ticket += amount;
+                } else if (itemType === 'Coins') {
+                    gameState.coin += amount;
+                }
+                updateCurrencyDisplays();
+                showResultMessage('latestPrize', `អ្នកបានទិញ ${amount} ${itemType} ដោយជោគជ័យ!`, 'text-purple-400');
+            } else {
+                showResultMessage('latestPrize', 'ត្បូងមិនគ្រប់គ្រាន់ទេ!', 'text-red-500');
+            }
+        }
+
+        /**
+         * Simulates watching an ad to get a free ticket.
+         */
+        function getTicketFromAd() {
+            const adBtn = document.getElementById('adButton');
+            if (!adBtn) return;
+            
+            adBtn.disabled = true;
+            adBtn.textContent = 'កំពុងមើល Ads... (3 វិ) ';
+
+            setTimeout(() => {
+                gameState.ticket += 1;
+                updateCurrencyDisplays();
+                showResultMessage('latestPrize', 'ទទួលបាន ១ សំបុត្រឥតគិតថ្លៃ!', 'text-green-400');
+                adBtn.textContent = 'មើល Ads ដើម្បីទទួលបាន ១ សំបុត្រ';
+                adBtn.disabled = false;
+            }, 3000);
+        }
+
+        /**
+         * Simulates AI generating a unique prize.
+         */
+        function generateAiPrize() {
+            const cost = 100;
+            if (gameState.gem < cost) {
+                showResultMessage('latestPrize', 'ត្បូងមិនគ្រប់គ្រាន់សម្រាប់ AI Gacha ទេ!', 'text-red-500');
+                return;
+            }
+            
+            // Deduct cost
+            gameState.gem -= cost;
+            updateCurrencyDisplays();
+
+            // Disable button for generation delay
+            const aiGachaBtn = document.getElementById('aiGachaButton');
+            if (aiGachaBtn) {
+                aiGachaBtn.disabled = true;
+                aiGachaBtn.textContent = '✨ កំពុងបង្កើតរង្វាន់...';
+            }
+
+            // Simulate AI generation process
+            setTimeout(() => {
+                const adjective = ['Mystic', 'Cosmic', 'Temporal', 'Quantum', 'Glitchy', 'Ethereal', 'Neo'];
+                const noun = ['Amulet', 'Core', 'Scepter', 'Fragment', 'Relic', 'Key', 'Token'];
+                
+                const aiPrize = {
+                    name: `${adjective[getRandomInt(0, adjective.length - 1)]} ${noun[getRandomInt(0, noun.length - 1)]} of AI`,
+                    rarity: 'AI-Generated',
+                    value: getRandomInt(2000, 5000)
+                };
+                
+                gameState.aiInventory.push(aiPrize);
+                gameState.coin += aiPrize.value;
+                
+                showResultMessage('latestPrize', `✨ AI បង្កើត៖ ${aiPrize.name}! +${aiPrize.value.toLocaleString()} កាក់`, 'text-cyan-400');
+                renderAiInventory();
+                updateCurrencyDisplays();
+                
+                if (aiGachaBtn) {
+                    aiGachaBtn.textContent = 'បង្កើត ១ រង្វាន់ (ចំណាយ 100 ត្បូង)';
+                    aiGachaBtn.disabled = gameState.gem < cost;
+                }
+            }, 2000);
+        }
+
+
+        // --- KLA KLOK GAME LOGIC ---
+
+        /**
+         * Initializes the Kla Klok betting grid (symbols).
+         */
+        function initializeKlaKlokBettingGrid() {
+            const grid = document.getElementById('klaKlokBettingGrid');
+            if (!grid) return;
+            if (grid.hasChildNodes() && grid.children.length === 6) return; // Already initialized
+
+            grid.innerHTML = '';
+            
+            Object.keys(gameState.klaKlokSymbols).forEach(key => {
+                const symbol = gameState.klaKlokSymbols[key];
+                const btn = document.createElement('button');
+                
+                btn.id = `klaKlokBetBtn-${key}`;
+                btn.setAttribute('onclick', `placeKlaKlokBet('${key}')`);
+                btn.className = 'btn-action bg-gray-700 p-4 rounded-xl shadow-lg border-2 border-transparent hover:border-yellow-400 transition-all disabled:opacity-60';
+                btn.innerHTML = `
+                    <div class="text-3xl">${symbol}</div>
+                    <div class="text-xs font-bold text-yellow-300 mt-1" id="klaKlokBetAmount-${key}">0 កាក់</div>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        /**
+         * Renders the current bet amounts on the Kla Klok grid.
+         */
+        function renderKlaKlokBets() {
+            Object.keys(gameState.klaKlokBets).forEach(key => {
+                const amountDisplay = document.getElementById(`klaKlokBetAmount-${key}`);
+                if (amountDisplay) {
+                    amountDisplay.textContent = `${gameState.klaKlokBets[key].toLocaleString()} កាក់`;
+                    const btn = document.getElementById(`klaKlokBetBtn-${key}`);
+                    if (btn) {
+                        if (gameState.klaKlokBets[key] > 0) {
+                            btn.classList.add('border-green-400');
+                            btn.classList.remove('border-transparent');
+                        } else {
+                            btn.classList.remove('border-green-400');
+                            btn.classList.add('border-transparent');
+                        }
+                    }
+                }
+            });
+            updateCurrencyDisplays();
+        }
+
+        /**
+         * Places a bet on a Kla Klok symbol.
+         * @param {string} symbolKey - The symbol key (e.g., 'kla', 'moas').
+         */
+        function placeKlaKlokBet(symbolKey) {
+            const betAmount = gameState.klaKlokCurrentBetAmount;
+
+            if (gameState.coin >= betAmount) {
+                gameState.coin -= betAmount;
+                gameState.klaKlokBets[symbolKey] += betAmount;
+                renderKlaKlokBets();
+                showResultMessage('klaKlok', `បានដាក់ភ្នាល់ ${betAmount.toLocaleString()} កាក់ លើ ${gameState.klaKlokSymbols[symbolKey]}`);
+            } else {
+                showResultMessage('klaKlok', 'កាក់មិនគ្រប់គ្រាន់ដើម្បីភ្នាល់ទេ!', 'text-red-500');
+            }
+        }
+
+        /**
+         * Rolls the three Kla Klok dice.
+         */
+        function rollKlaKlokDice() {
+            const totalBet = Object.values(gameState.klaKlokBets).reduce((sum, bet) => sum + bet, 0);
+
+            if (totalBet === 0) {
+                showResultMessage('klaKlok', 'សូមដាក់ភ្នាល់ជាមុនសិន!', 'text-red-500');
+                return;
+            }
+            
+            // Disable buttons
+            const rollBtn = document.getElementById('klaKlokRollDiceButton');
+            const aiBtn = document.getElementById('klaKlokAiSuggestButton');
+            if (rollBtn) rollBtn.disabled = true;
+            if (aiBtn) aiBtn.disabled = true;
+            
+            // Animation/Roll
+            const diceElements = [
+                document.getElementById('klaKlokDice1'),
+                document.getElementById('klaKlokDice2'),
+                document.getElementById('klaKlokDice3')
+            ];
+            
+            diceElements.forEach(el => {
+                if (el) el.classList.add('dice-roll');
+            });
+
+            // Simulate roll result
+            const klaKlokKeys = Object.keys(gameState.klaKlokSymbols);
+            const results = [
+                klaKlokKeys[getRandomInt(0, 5)],
+                klaKlokKeys[getRandomInt(0, 5)],
+                klaKlokKeys[getRandomInt(0, 5)]
+            ];
+
+            setTimeout(() => {
+                let totalWinnings = 0;
+                let resultMessage = 'លទ្ធផល៖ ';
+                
+                // Update dice display with final symbols
+                results.forEach((key, index) => {
+                    if (diceElements[index]) {
+                        diceElements[index].textContent = gameState.klaKlokSymbols[key];
+                        diceElements[index].classList.remove('dice-roll');
+                    }
+                    resultMessage += `${gameState.klaKlokSymbols[key]} `;
+                });
+                
+                const rollCounts = results.reduce((acc, key) => {
+                    acc[key] = (acc[key] || 0) + 1;
+                    return acc;
+                }, {});
+                
+                // Calculate winnings
+                let totalReturn = 0; // The total amount returned including the original bet on wins
+                
+                Object.keys(gameState.klaKlokBets).forEach(betKey => {
+                    const betAmount = gameState.klaKlokBets[betKey];
+                    const timesRolled = rollCounts[betKey] || 0;
+                    
+                    if (betAmount > 0 && timesRolled > 0) {
+                        // Payout = Original Bet + (Bet Amount * Times Rolled)
+                        const winnings = betAmount * timesRolled; 
+                        totalReturn += betAmount + winnings; // Return original bet + Payout
+                        totalWinnings += winnings; // Only profit
+                    }
+                });
+
+                // Pay out and display result
+                gameState.coin += totalReturn;
+                
+                let finalMessage = resultMessage.trim() + '។ ';
+                if (totalReturn > 0) {
+                    finalMessage += `ឈ្នះ! +${totalWinnings.toLocaleString()} កាក់ (ប្រាក់ចំណេញ)!`;
+                    showResultMessage('klaKlok', finalMessage, 'text-green-400');
+                } else {
+                    finalMessage += `ចាញ់ ${totalBet.toLocaleString()} កាក់!`;
+                    showResultMessage('klaKlok', finalMessage, 'text-red-400');
+                }
+
+                // Reset bets
+                Object.keys(gameState.klaKlokBets).forEach(key => gameState.klaKlokBets[key] = 0);
+                renderKlaKlokBets();
+                updateCurrencyDisplays();
+                
+                // Re-enable buttons
+                if (rollBtn) rollBtn.disabled = false;
+                if (aiBtn) aiBtn.disabled = false;
+                
+            }, 1000); // Animation time
+        }
+
+        /**
+         * Placeholder for AI Kla Klok suggestion logic.
+         */
+        function getAiKlaKlokSuggestion() {
+            showResultMessage('klaKlok', 'AI ណែនាំ៖ ភ្នាល់លើ ខ្លា (🐅) និង មាន់ (🐓)!', 'text-cyan-300');
+        }
+
+
+        // --- BOUNG (DICE ROLL) GAME LOGIC ---
+
+        /**
+         * Renders the current bet amounts on the Boung grid.
+         */
+        function renderBoungBets() {
+            Object.keys(gameState.boungBets).forEach(key => {
+                const amountDisplay = document.getElementById(`boungBetAmount-${key}`);
+                if (amountDisplay) {
+                    amountDisplay.textContent = `${gameState.boungBets[key].toLocaleString()} កាក់`;
+                    const btn = document.getElementById(`boungBetBtn-${key}`);
+                    if (btn) {
+                        if (gameState.boungBets[key] > 0) {
+                            btn.classList.add('border-green-400');
+                            btn.classList.remove('border-transparent');
+                        } else {
+                            btn.classList.remove('border-green-400');
+                            btn.classList.add('border-transparent');
+                        }
+                    }
+                }
+            });
+            updateCurrencyDisplays();
+        }
+
+        /**
+         * Places a bet on a Boung option (Small/Big/Odd/Even).
+         * Note: Only one bet per category (e.g., cannot bet both Small and Big).
+         * @param {string} betKey - The bet key ('small', 'big', 'odd', 'even').
+         */
+        function placeBoungBet(betKey) {
+            const betAmount = gameState.boungCurrentBetAmount;
+
+            // Determine category to enforce single bet per category
+            const oppositeKey = (betKey === 'small' ? 'big' : 
+                                betKey === 'big' ? 'small' :
+                                betKey === 'odd' ? 'even' : 'odd');
+            
+            if (gameState.coin >= betAmount) {
+                // Clear opposite bet in the same category (if any)
+                if (betKey === 'small' || betKey === 'big') {
+                    if (gameState.boungBets[oppositeKey] > 0) {
+                        gameState.coin += gameState.boungBets[oppositeKey];
+                        gameState.boungBets[oppositeKey] = 0;
+                    }
+                } else { // 'odd' or 'even'
+                    if (gameState.boungBets[oppositeKey] > 0) {
+                        gameState.coin += gameState.boungBets[oppositeKey];
+                        gameState.boungBets[oppositeKey] = 0;
+                    }
+                }
+
+                gameState.coin -= betAmount;
+                gameState.boungBets[betKey] += betAmount;
+                renderBoungBets();
+                showResultMessage('boung', `បានដាក់ភ្នាល់ ${betAmount.toLocaleString()} កាក់ លើ ${betKey === 'small' ? 'តូច' : betKey === 'big' ? 'ធំ' : betKey === 'odd' ? 'សេស' : 'គូ'}`);
+            } else {
+                showResultMessage('boung', 'កាក់មិនគ្រប់គ្រាន់ដើម្បីភ្នាល់ទេ!', 'text-red-500');
+            }
+        }
+
+        /**
+         * Rolls the three Boung dice (numbered 1-6).
+         */
+        function rollBoungDice() {
+            const totalBet = Object.values(gameState.boungBets).reduce((sum, bet) => sum + bet, 0);
+
+            if (totalBet === 0) {
+                showResultMessage('boung', 'សូមដាក់ភ្នាល់ជាមុនសិន!', 'text-red-500');
+                return;
+            }
+            
+            // Disable buttons
+            const rollBtn = document.getElementById('boungRollDiceButton');
+            const aiBtn = document.getElementById('boungAiSuggestButton');
+            if (rollBtn) rollBtn.disabled = true;
+            if (aiBtn) aiBtn.disabled = true;
+            
+            // Animation/Roll
+            const diceElements = [
+                document.getElementById('boungDice1'),
+                document.getElementById('boungDice2'),
+                document.getElementById('boungDice3')
+            ];
+            
+            diceElements.forEach(el => {
+                if (el) {
+                    el.classList.add('dice-roll');
+                    el.textContent = '❓';
+                }
+            });
+
+            // Simulate roll result (1 to 6)
+            const results = [
+                getRandomInt(1, 6),
+                getRandomInt(1, 6),
+                getRandomInt(1, 6)
+            ];
+            gameState.boungDice = results;
+            const totalSum = results.reduce((sum, val) => sum + val, 0);
+
+            setTimeout(() => {
+                let totalWinnings = 0;
+                
+                // Update dice display with final numbers
+                results.forEach((val, index) => {
+                    if (diceElements[index]) {
+                        diceElements[index].textContent = val;
+                        diceElements[index].classList.remove('dice-roll');
+                    }
+                });
+
+                // Determine result categories
+                const isSmall = totalSum >= 4 && totalSum <= 10;
+                const isBig = totalSum >= 11 && totalSum <= 17;
+                const isOdd = totalSum % 2 !== 0;
+                const isEven = totalSum % 2 === 0;
+
+                // Check for Triple (loses on Small/Big, Odd/Even bets)
+                const isTriple = results[0] === results[1] && results[1] === results[2];
+
+                // Pay out and calculate loss
+                Object.keys(gameState.boungBets).forEach(betKey => {
+                    const betAmount = gameState.boungBets[betKey];
+                    if (betAmount > 0) {
+                        let isWinner = false;
+                        if (!isTriple) { // Triple loses all standard bets
+                            if (betKey === 'small' && isSmall) isWinner = true;
+                            if (betKey === 'big' && isBig) isWinner = true;
+                            if (betKey === 'odd' && isOdd) isWinner = true;
+                            if (betKey === 'even' && isEven) isWinner = true;
+                        }
+                        
+                        if (isWinner) {
+                            // Payout is 1:1, return original bet + profit
+                            totalWinnings += (betAmount * 2); 
+                        }
+                    }
+                });
+                
+                // Pay out and display result
+                gameState.coin += totalWinnings;
+                
+                let finalMessage = `ពិន្ទុសរុប: ${totalSum} (${isSmall ? 'តូច' : isBig ? 'ធំ' : '---'}) / (${isOdd ? 'សេស' : isEven ? 'គូ' : '---'})។ `;
+                
+                if (isTriple) {
+                    finalMessage = `💥 Triple ${results[0]}! ការភ្នាល់ Small/Big/Odd/Even ទាំងអស់ចាញ់។ ចាញ់ ${totalBet.toLocaleString()} កាក់!`;
+                    showResultMessage('boung', finalMessage, 'text-red-600');
+                } else if (totalWinnings > 0) {
+                    // Net profit calculation
+                    const netProfit = totalWinnings - totalBet;
+                    finalMessage += `ឈ្នះ! +${netProfit.toLocaleString()} កាក់!`;
+                    showResultMessage('boung', finalMessage, 'text-green-400');
+                } else {
+                    finalMessage += `ចាញ់ ${totalBet.toLocaleString()} កាក់!`;
+                    showResultMessage('boung', finalMessage, 'text-red-400');
+                }
+
+                // Reset bets
+                Object.keys(gameState.boungBets).forEach(key => gameState.boungBets[key] = 0);
+                renderBoungBets();
+                updateCurrencyDisplays();
+                
+                // Re-enable buttons
+                if (rollBtn) rollBtn.disabled = false;
+                if (aiBtn) aiBtn.disabled = false;
+                
+            }, 1000); // Animation time
+        }
+
+        /**
+         * Placeholder for AI Boung suggestion logic.
+         */
+        function getAiBoungSuggestion() {
+            showResultMessage('boung', 'AI ណែនាំ៖ ភ្នាល់លើ ធំ (Big) និង គូ (Even)!', 'text-cyan-300');
+        }
+
+
+        // --- SHARED BETTING CONTROLS ---
+
+        /**
+         * Sets the current bet amount for a game.
+         * @param {string} gameKey - 'klaKlok', 'boung', or 'rps'.
+         * @param {number} amount - The new bet amount.
+         */
+        function setBetAmount(gameKey, amount) {
+            if (gameKey === 'klaKlok') {
+                gameState.klaKlokCurrentBetAmount = amount;
+                if (document.getElementById('klaKlokCurrentBetAmount')) document.getElementById('klaKlokCurrentBetAmount').textContent = `ចំនួនភ្នាល់: ${amount.toLocaleString()} កាក់`;
+            } else if (gameKey === 'boung') {
+                gameState.boungCurrentBetAmount = amount;
+                if (document.getElementById('boungCurrentBetAmount')) document.getElementById('boungCurrentBetAmount').textContent = `ចំនួនភ្នាល់: ${amount.toLocaleString()} កាក់`;
+            } else if (gameKey === 'rps') {
+                gameState.rpsCurrentBetAmount = amount;
+                if (document.getElementById('rpsCurrentBetAmount')) {
+                    document.getElementById('rpsCurrentBetAmount').textContent = `ចំនួនភ្នាល់: ${amount.toLocaleString()} កាក់`;
+                    showResultMessage('rps', `ចំនួនភ្នាល់: ${amount.toLocaleString()} កាក់។ សូមជ្រើសរើសរបស់អ្នក!`);
+                }
+            }
+        }
+
+        /**
+         * Clears all current bets for a game and refunds the coin.
+         * @param {string} gameKey - 'klaKlok' or 'boung'.
+         */
+        function clearAllBets(gameKey) {
+            if (gameKey === 'klaKlok') {
+                const totalBet = Object.values(gameState.klaKlokBets).reduce((sum, bet) => sum + bet, 0);
+                gameState.coin += totalBet;
+                Object.keys(gameState.klaKlokBets).forEach(key => gameState.klaKlokBets[key] = 0);
+                renderKlaKlokBets();
+                showResultMessage('klaKlok', `បានលុបភ្នាល់ ${totalBet.toLocaleString()} កាក់វិញហើយ។`);
+            } else if (gameKey === 'boung') {
+                const totalBet = Object.values(gameState.boungBets).reduce((sum, bet) => sum + bet, 0);
+                gameState.coin += totalBet;
+                Object.keys(gameState.boungBets).forEach(key => gameState.boungBets[key] = 0);
+                renderBoungBets();
+                showResultMessage('boung', `បានលុបភ្នាល់ ${totalBet.toLocaleString()} កាក់វិញហើយ។`);
+            }
+            updateCurrencyDisplays();
+        }
+
+        // --- CARD GAME (HI-LO) LOGIC ---
+
+        /**
+         * Returns a random card value (A=1, 2-10, J=11, Q=12, K=13).
+         * @returns {number}
+         */
+        function getNewCardValue() {
+            return getRandomInt(1, 13);
+        }
+
+        /**
+         * Converts a numerical card value to its display symbol.
+         * @param {number} value - Card value (1-13).
+         * @returns {string}
+         */
+        function getCardSymbol(value) {
+            switch (value) {
+                case 1: return 'A';
+                case 11: return 'J';
+                case 12: return 'Q';
+                case 13: return 'K';
+                default: return value.toString();
+            }
+        }
+
+        /**
+         * Renders the current card on the screen.
+         */
+        function renderCurrentCard() {
+            const cardSlot = document.getElementById('currentCardSlot');
+            if (!cardSlot) return;
+
+            cardSlot.textContent = getCardSymbol(gameState.currentCardValue);
+            
+            // Animate the card flip/change
+            cardSlot.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                cardSlot.style.transform = 'scale(1)';
+            }, 50);
+
+            // Re-enable buttons if a card is dealt
+            if (document.getElementById('betHigherButton')) document.getElementById('betHigherButton').disabled = false;
+            if (document.getElementById('betLowerButton')) document.getElementById('betLowerButton').disabled = false;
+            if (document.getElementById('newCardButton')) document.getElementById('newCardButton').disabled = true; // Can't redeal until choice is made
+        }
+
+        /**
+         * Starts a new game by dealing the first card.
+         */
+        function dealNewCard() {
+            gameState.currentCardValue = getNewCardValue();
+            renderCurrentCard();
+            showResultMessage('cardGame', 'សូមជ្រើសរើស Higher ឬ Lower');
+            if (document.getElementById('newCardButton')) document.getElementById('newCardButton').textContent = '🔄 ចាប់បៀរថ្មី (Redeal)';
+        }
+
+        /**
+         * Handles the player's bet (Higher or Lower).
+         * @param {('higher'|'lower')} choice - The player's choice.
+         */
+        function placeCardBet(choice) {
+            const betAmount = gameState.cardGameCurrentBetAmount;
+
+            if (gameState.currentCardValue === null) {
+                showResultMessage('cardGame', 'សូមចាប់បៀរថ្មីជាមុនសិន!', 'text-red-500');
+                return;
+            }
+            if (gameState.coin < betAmount) {
+                showResultMessage('cardGame', 'កាក់មិនគ្រប់គ្រាន់ទេ!', 'text-red-500');
+                return;
+            }
+
+            // Disable choice buttons during play
+            const higherBtn = document.getElementById('betHigherButton');
+            const lowerBtn = document.getElementById('betLowerButton');
+            if (higherBtn) higherBtn.disabled = true;
+            if (lowerBtn) lowerBtn.disabled = true;
+
+            // Deduct bet immediately
+            gameState.coin -= betAmount;
+            updateCurrencyDisplays();
+            
+            // Draw the next card
+            const nextCardValue = getNewCardValue();
+            
+            // Simulate drawing animation
+            const cardSlot = document.getElementById('currentCardSlot');
+            if (cardSlot) cardSlot.textContent = '...';
+            
+            setTimeout(() => {
+                if (cardSlot) {
+                    cardSlot.textContent = getCardSymbol(nextCardValue);
+                    cardSlot.style.transform = 'scale(1.2)';
+                }
+                
+                let resultMessage = '';
+                let resultColor = 'text-red-500';
+                let winnings = 0;
+
+                const currentVal = gameState.currentCardValue;
+                let isWin = false;
+
+                if (nextCardValue === currentVal) {
+                    // Draw (Push) - Bet is returned
+                    resultColor = 'text-yellow-400';
+                    resultMessage = `ស្មើ! ${getCardSymbol(currentVal)} = ${getCardSymbol(nextCardValue)} ។ កាក់ត្រូវបានត្រឡប់។`;
+                    winnings = betAmount; // Only return original bet
+                    isWin = true; 
+                } else if (choice === 'higher' && nextCardValue > currentVal) {
+                    // Win on Higher (2:1 payout = original bet + 1x profit)
+                    resultColor = 'text-green-400';
+                    winnings = betAmount * 2; 
+                    resultMessage = `ឈ្នះ! ${getCardSymbol(currentVal)} < ${getCardSymbol(nextCardValue)} ។ បាន +${betAmount.toLocaleString()} កាក់ (ប្រាក់ចំណេញ)!`;
+                    isWin = true;
+                } else if (choice === 'lower' && nextCardValue < currentVal) {
+                    // Win on Lower (2:1 payout)
+                    resultColor = 'text-green-400';
+                    winnings = betAmount * 2; 
+                    resultMessage = `ឈ្នះ! ${getCardSymbol(currentVal)} > ${getCardSymbol(nextCardValue)} ។ បាន +${betAmount.toLocaleString()} កាក់ (ប្រាក់ចំណេញ)!`;
+                    isWin = true;
+                } else {
+                    // Loss
+                    resultColor = 'text-red-500';
+                    resultMessage = `ចាញ់! ${getCardSymbol(currentVal)} vs ${getCardSymbol(nextCardValue)} ។ បាត់បង់ ${betAmount.toLocaleString()} កាក់។`;
+                }
+                
+                // Update state and display
+                gameState.coin += winnings;
+                gameState.currentCardValue = nextCardValue; // Next card becomes current card for potential chain play
+
+                showResultMessage('cardGame', resultMessage, resultColor);
+                updateCurrencyDisplays();
+                
+                // Re-enable/update buttons
+                if (cardSlot) cardSlot.style.transform = 'scale(1)';
+                const newCardBtn = document.getElementById('newCardButton');
+                if (newCardBtn) newCardBtn.disabled = false;
+                
+                // Allow chain play if player won or drew
+                if (isWin) {
+                    if (higherBtn) higherBtn.disabled = false;
+                    if (lowerBtn) lowerBtn.disabled = false;
+                    if (newCardBtn) newCardBtn.textContent = 'បន្តលេង (Continue Chain)';
+                } else {
+                    if (newCardBtn) newCardBtn.textContent = '🔄 ចាប់បៀរថ្មី (Redeal)';
+                }
+            }, 500);
+        }
+
+        // --- ROCK, PAPER, SCISSORS (RPS) LOGIC ---
+
+        const RPS_CHOICES = {
+            'rock': '🔨',
+            'paper': '📃',
+            'scissors': '✂️'
+        };
+
+        /**
+         * Handles the RPS play action.
+         * @param {('rock'|'paper'|'scissors')} playerChoiceKey - The player's choice.
+         */
+        function playRPS(playerChoiceKey) {
+            const betAmount = gameState.rpsCurrentBetAmount;
+
+            if (gameState.coin < betAmount) {
+                showResultMessage('rps', 'កាក់មិនគ្រប់គ្រាន់ដើម្បីភ្នាល់ទេ!', 'text-red-500');
+                return;
+            }
+            
+            // Deduct bet immediately
+            gameState.coin -= betAmount;
+            updateCurrencyDisplays();
+
+            // Disable play buttons during animation
+            document.querySelectorAll('#rpsView button[id^="rpsPlay"]').forEach(btn => btn.disabled = true);
+            const aiBtn = document.getElementById('rpsAiSuggestButton');
+            if (aiBtn) aiBtn.disabled = true;
+
+            // Reset result displays
+            const playerDisplay = document.getElementById('rpsPlayerChoice');
+            const computerDisplay = document.getElementById('rpsComputerChoice');
+            
+            if (playerDisplay) {
+                playerDisplay.className = 'rps-choice-display';
+                playerDisplay.textContent = '...';
+            }
+            if (computerDisplay) {
+                computerDisplay.className = 'rps-choice-display';
+                computerDisplay.textContent = '...';
+            }
+
+            // CPU decides
+            const cpuKeys = Object.keys(RPS_CHOICES);
+            const computerChoiceKey = cpuKeys[getRandomInt(0, 2)];
+            
+            setTimeout(() => {
+                // Display choices
+                if (playerDisplay) playerDisplay.textContent = RPS_CHOICES[playerChoiceKey];
+                if (computerDisplay) computerDisplay.textContent = RPS_CHOICES[computerChoiceKey];
+
+                let result = '';
+                let color = 'text-yellow-400';
+                let winnings = 0;
+                
+                // Determine winner
+                if (playerChoiceKey === computerChoiceKey) {
+                    result = 'ស្មើ! កាក់ត្រឡប់មកវិញ។';
+                    winnings = betAmount; // Return original bet
+                } else if (
+                    (playerChoiceKey === 'rock' && computerChoiceKey === 'scissors') ||
+                    (playerChoiceKey === 'paper' && computerChoiceKey === 'rock') ||
+                    (playerChoiceKey === 'scissors' && computerChoiceKey === 'paper')
+                ) {
+                    result = 'អ្នកឈ្នះ! +1x ប្រាក់ភ្នាល់!';
+                    color = 'text-green-400';
+                    winnings = betAmount * 2; // Original bet + 1x profit
+                    if (playerDisplay) playerDisplay.classList.add('winner');
+                    if (computerDisplay) computerDisplay.classList.add('loser');
+                } else {
+                    result = `អ្នកចាញ់! បាត់បង់ ${betAmount.toLocaleString()} កាក់។`;
+                    color = 'text-red-500';
+                    if (computerDisplay) computerDisplay.classList.add('winner');
+                    if (playerDisplay) playerDisplay.classList.add('loser');
+                    winnings = 0;
+                }
+
+                // Update state and display
+                gameState.coin += winnings;
+                showResultMessage('rps', result, color);
+                updateCurrencyDisplays();
+                
+                // Re-enable buttons
+                document.querySelectorAll('#rpsView button[id^="rpsPlay"]').forEach(btn => btn.disabled = false);
+                if (aiBtn) aiBtn.disabled = false;
+                
+            }, 800);
+        }
+
+        /**
+         * Placeholder for AI RPS suggestion logic.
+         */
+        function getAiRpsSuggestion() {
+            showResultMessage('rps', 'AI ណែនាំ៖ ភ្នាល់លើ ក្រដាស (📃) លើកនេះ!', 'text-cyan-300');
+        }
+
+        // --- INITIALIZATION ---
+
+        function initializeApp() {
+            // 1. Set Auth Status
+            const authStatus = document.getElementById('authStatus');
+            if (authStatus) authStatus.textContent = 'តភ្ជាប់ដោយជោគជ័យ! Local Game Database';
+            
+            // 2. Initial render/setup
+            updateCurrencyDisplays();
+            initializeKlaKlokBettingGrid();
+
+            // 3. Show Main Menu
+            const loadingBlock = document.getElementById('loadingBlock');
+            const menuButtons = document.getElementById('menuButtons');
+
+            if (loadingBlock) loadingBlock.style.display = 'none';
+            if (menuButtons) menuButtons.style.display = 'block';
+            
+            switchView('mainMenu'); 
+        }
+
+        // Expose functions globally for HTML onclick to work
+        window.switchView = switchView;
+        window.handleDraw = handleDraw;
+        window.simulatedTopUp = simulatedTopUp;
+        window.buyTicketWithCoins = buyTicketWithCoins;
+        window.buyItemWithGems = buyItemWithGems;
+        window.getTicketFromAd = getTicketFromAd;
+        window.generateAiPrize = generateAiPrize;
+        window.placeKlaKlokBet = placeKlaKlokBet;
+        window.rollKlaKlokDice = rollKlaKlokDice;
+        window.getAiKlaKlokSuggestion = getAiKlaKlokSuggestion;
+        window.placeBoungBet = placeBoungBet;
+        window.rollBoungDice = rollBoungDice;
+        window.getAiBoungSuggestion = getAiBoungSuggestion;
+        window.setBetAmount = setBetAmount;
+        window.clearAllBets = clearAllBets;
+        window.dealNewCard = dealNewCard;
+        window.placeCardBet = placeCardBet;
+        window.playRPS = playRPS;
+        window.getAiRpsSuggestion = getAiRpsSuggestion;
+
+
+        // Run Initialization when the window loads
+        window.onload = initializeApp;
+
+    </script>
+</body>
+</html>

@@ -367,11 +367,6 @@
                                                 @endforeach
                                             </li>
                                         @endforeach
-                                        {{-- @foreach($productType as $value)
-                                            <li>
-                                                <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a>
-                                            </li>
-                                        @endforeach --}}
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
                                     </ul>
                                 </nav>
