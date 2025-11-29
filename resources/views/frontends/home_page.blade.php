@@ -28,7 +28,7 @@
                             <div class="single_categories_product">
                                 <div class="categories_product_thumb carousel-item active">
                                     <a href="#">
-                                       <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
+                                        <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
                                     </a>
                                 </div>
                                 <div class="categories_product_content">
@@ -97,92 +97,52 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="product_tab_btn" id="productTabContainer">
-                    <ul class="nav" role="tablist" id="nav-tab">
-                        <li>
-                            <a class="active tab-link" data-bs-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true" data-tab-name="ALL">
-                                All
-                            </a>
-                        </li>
-                        @foreach($productType as $key => $type)
+                    <div class="product_tab_btn" id="productTabContainer">
+                        <ul class="nav" role="tablist" id="nav-tab">
                             <li>
-                                <a class="tab-link" data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false" data-tab-name="{{ $type->name }}">
-                                    {{ $type->name }}
+                                <a class="active tab-link" data-bs-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true" data-tab-name="ALL">
+                                    All
                                 </a>
                             </li>
-                        @endforeach
-                    </ul>
-                    <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
-                </div>
-
-                <div class="tab-content">
-                    <div class="tab-pane fade show {{ $activeTab === 'all' ? 'active' : '' }}" id="all" role="tabpanel">
-                        <div class="row">
-                            <div class="product-grid-container">
-                                @foreach($productAll as $item)
-                                    @include('frontends.product', ['item' => $item])
-                                @endforeach
-                            </div>
-                            <div class="shop_toolbar t_bottom">
-                                <div class="pagination">
-                                    <ul>
-                                        @if ($productAll->onFirstPage())
-                                            <li class="disabled"><span><<</span></li>
-                                        @else
-                                            <li><a href="{{ $productAll->previousPageUrl() }}"><</a></li>
-                                        @endif
-
-                                        @foreach ($productAll->getUrlRange(1, $productAll->lastPage()) as $page => $url)
-                                            @if ($page == $productAll->currentPage())
-                                                <li class="current">{{ $page }}</li>
-                                            @else
-                                                <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                            @endif
-                                        @endforeach
-
-                                        @if ($productAll->hasMorePages())
-                                            <li class="next"><a href="{{ $productAll->nextPageUrl() }}">next</a></li>
-                                            <li><a href="{{ $productAll->url($productAll->lastPage()) }}">>></a></li>
-                                        @else
-                                            <li class="disabled"><span>next</span></li>
-                                            <li class="disabled"><span>>></span></li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                            @foreach($productType as $key => $type)
+                                <li>
+                                    <a class="tab-link" data-bs-toggle="tab" href="#{{ Str::slug($type->name) }}" role="tab" aria-controls="{{ Str::slug($type->name) }}" aria-selected="false" data-tab-name="{{ $type->name }}">
+                                        {{ $type->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
+                        </ul>
                     </div>
 
-                    @foreach($productType as $type)
-                        @php $list = $productsByType[$type->id]; $slug = Str::slug($type->name); @endphp
-                        <div class="tab-pane fade {{ $activeTab === $slug ? 'active' : '' }}" id="{{ $slug }}">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show {{ $activeTab === 'all' ? 'active' : '' }}" id="all" role="tabpanel">
                             <div class="row">
                                 <div class="product-grid-container">
-                                    @foreach($list as $item)
+                                    @foreach($productAll as $item)
                                         @include('frontends.product', ['item' => $item])
                                     @endforeach
                                 </div>
                                 <div class="shop_toolbar t_bottom">
                                     <div class="pagination">
                                         <ul>
-                                            @if ($productsByType[$type->id]->onFirstPage())
+                                            @if ($productAll->onFirstPage())
                                                 <li class="disabled"><span><<</span></li>
                                             @else
-                                                <li><a href="{{ $productsByType[$type->id]->previousPageUrl() }}"><</a></li>
+                                                <li><a href="{{ $productAll->previousPageUrl() }}"><</a></li>
                                             @endif
 
-                                            @foreach ($productsByType[$type->id]->getUrlRange(1, $productsByType[$type->id]->lastPage()) as $page => $url)
-                                                @if ($page == $productsByType[$type->id]->currentPage())
+                                            @foreach ($productAll->getUrlRange(1, $productAll->lastPage()) as $page => $url)
+                                                @if ($page == $productAll->currentPage())
                                                     <li class="current">{{ $page }}</li>
                                                 @else
                                                     <li><a href="{{ $url }}">{{ $page }}</a></li>
                                                 @endif
                                             @endforeach
 
-                                            @if ($productsByType[$type->id]->hasMorePages())
-                                                <li class="next"><a href="{{ $productsByType[$type->id]->nextPageUrl() }}">next</a></li>
-                                                <li><a href="{{ $productsByType[$type->id]->url($productsByType[$type->id]->lastPage()) }}">>></a></li>
+                                            @if ($productAll->hasMorePages())
+                                                <li class="next"><a href="{{ $productAll->nextPageUrl() }}">next</a></li>
+                                                <li><a href="{{ $productAll->url($productAll->lastPage()) }}">>></a></li>
                                             @else
                                                 <li class="disabled"><span>next</span></li>
                                                 <li class="disabled"><span>>></span></li>
@@ -192,7 +152,47 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+
+                        @foreach($productType as $type)
+                            @php $list = $productsByType[$type->id]; $slug = Str::slug($type->name); @endphp
+                            <div class="tab-pane fade {{ $activeTab === $slug ? 'active' : '' }}" id="{{ $slug }}">
+                                <div class="row">
+                                    <div class="product-grid-container">
+                                        @foreach($list as $item)
+                                            @include('frontends.product', ['item' => $item])
+                                        @endforeach
+                                    </div>
+                                    <div class="shop_toolbar t_bottom">
+                                        <div class="pagination">
+                                            <ul>
+                                                @if ($productsByType[$type->id]->onFirstPage())
+                                                    <li class="disabled"><span><<</span></li>
+                                                @else
+                                                    <li><a href="{{ $productsByType[$type->id]->previousPageUrl() }}"><</a></li>
+                                                @endif
+
+                                                @foreach ($productsByType[$type->id]->getUrlRange(1, $productsByType[$type->id]->lastPage()) as $page => $url)
+                                                    @if ($page == $productsByType[$type->id]->currentPage())
+                                                        <li class="current">{{ $page }}</li>
+                                                    @else
+                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                                    @endif
+                                                @endforeach
+
+                                                @if ($productsByType[$type->id]->hasMorePages())
+                                                    <li class="next"><a href="{{ $productsByType[$type->id]->nextPageUrl() }}">next</a></li>
+                                                    <li><a href="{{ $productsByType[$type->id]->url($productsByType[$type->id]->lastPage()) }}">>></a></li>
+                                                @else
+                                                    <li class="disabled"><span>next</span></li>
+                                                    <li class="disabled"><span>>></span></li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -233,15 +233,16 @@
                                             <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
                                         </a>
                                     </li>
-                                     <li>
-                                        <a class="telegram" href="https://t.me/CMAUTO">
-                                            <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                                    <li>
+                                        <a class="whatsapp" href="https://t.me/CMAUTO">
+                                            <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="WhatsApp" width="50" height="50" style="display: block; margin: 0 auto;">
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-4 col-md-6">
                         <div class="newsletter_container">
                             <h3>Newsletter Now</h3>
@@ -275,9 +276,68 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
+
+{{-- ****************************************************** --}}
+{{-- START: CHAT MESSENGER POP-UP (HTML & JS) --}}
+{{-- ****************************************************** --}}
+
+{{-- 1. CHAT BUTTON TRIGGER --}}
+<button class="open-chat-button" onclick="toggleChatForm()">
+    <i class="ion-chatbubbles" style="font-size: 24px;"></i>
+    <span class="chat-badge">Online</span>
+</button>
+
+{{-- 2. CHAT POP-UP WINDOW --}}
+<div class="chat-popup" id="myForm">
+    <form action="/submit-chat-message" class="chat-form-container" method="POST">
+        @csrf
+        <div class="chat-header-style">
+            <h3>Online Programming</h3>
+            <button type="button" class="btn-close-chat" onclick="toggleChatForm()">
+                &times;
+            </button>
+        </div>
+
+        <div class="chat-body-style">
+            <p>👋 Welcome</p>
+            {{-- Social links inside the Chat Pop-up --}}
+            <div class="footer_social">
+                <ul>
+                    <li><a class="facebook" href="https://www.facebook.com/C.M.Auto.77/"><i class="icon-facebook"></i></a></li>
+                    <li>
+                        <a class="telegram" href="https://t.me/CMAUTO">
+                            <img src="{{ asset('frontends/assets/img/telegram.png') }}" alt="Telegram" width="50" height="50" style="display: block; margin: 0 auto;">
+                        </a>
+                    </li>
+                    <li>
+                        <a class="whatsapp" href="https://t.me/CMAUTO">
+                            <img src="{{ asset('frontends/assets/img/whatapp.png') }}" alt="WhatsApp" width="50" height="50" style="display: block; margin: 0 auto;">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{-- 3. JAVASCRIPT --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // ----------------------------------------------------------------------
+    // CHAT MESSENGER TOGGLE FUNCTION (Newly added)
+    // ----------------------------------------------------------------------
+    function toggleChatForm() {
+        var chatForm = document.getElementById("myForm");
+        if (chatForm.style.display === "block") {
+            chatForm.style.display = "none";
+        } else {
+            chatForm.style.display = "block";
+        }
+    }
+    // ----------------------------------------------------------------------
+
     function dataBackgroundImage() {
         $('[data-bgimg]').each(function () {
             var bgImgUrl = $(this).data('bgimg');
@@ -298,6 +358,7 @@
             // Activate the tab (Bootstrap 5)
             const tabLink = document.querySelector(`#nav-tab a[href="#${tab}"]`);
             if (tabLink) {
+                // Note: You must ensure 'bootstrap.Tab' is defined (Bootstrap JS is loaded)
                 const bsTab = new bootstrap.Tab(tabLink);
                 bsTab.show();
             }
@@ -312,6 +373,8 @@
                 });
             });
         });
+
+        // ... rest of your existing AJAX and jQuery functions ...
         $(document).on('click', '.addToCart', function () {
             let id = $(this).data('id');
             event.preventDefault();
@@ -363,7 +426,7 @@
             });
         });
         $("#selectSubCategory").on('change',function(){
-            var sub_category_id  = $(this).val();
+            var sub_category_id = $(this).val();
             $.ajax({
                 type: "GET",
                 url: "{{ url('frontend-sub-categorys') }}",
@@ -382,6 +445,7 @@
             });
         });
     });
+
     function loadMiniCart() {
         $.ajax({
             url: "{{ route('loadMiniCart') }}",

@@ -97,10 +97,11 @@ class ProductTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductType $productStType)
+     public function destroy(string $id)
     {
         try{
-            $productStType->delete();
+            $data = ProductType::find($id);
+            $data->delete();
             return response()->json(['mg'=>'success'], 200);
         }catch(\Exception $e){
             return response()->json(['error'=>$e->getMessage()]);

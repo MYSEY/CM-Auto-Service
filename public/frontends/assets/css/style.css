@@ -11310,3 +11310,130 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #ffffff;
 }
 
+
+
+/* Button to open the chat form - positioned fixed at bottom right */
+.open-chat-button {
+  background-color: #0084ff; /* Messenger blue */
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 50%; /* Circular button */
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.3s;
+}
+
+.open-chat-button:hover {
+  opacity: 1;
+}
+
+.chat-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    padding: 3px 7px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 10px;
+}
+
+/* The actual chat form pop-up */
+.chat-popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 90px; /* Position above the chat button */
+  right: 20px;
+  border: 1px solid #ccc;
+  z-index: 999;
+  width: 320px; /* Typical messenger width */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* Styling for the form container */
+.chat-form-container {
+  padding: 0;
+  max-width: 100%;
+}
+
+/* Chat Header (like a title bar) */
+.chat-header-style {
+    background-color: #0084ff; /* Messenger blue */
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.chat-header-style h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.btn-close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Chat Body (where the form fields are) */
+.chat-body-style {
+    padding: 15px;
+}
+
+.chat-body-style p {
+    color: #606770;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Submit button */
+.btn-chat-submit {
+    background-color: #0084ff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin: 0;
+    opacity: 0.9;
+    font-size: 16px;
+}
+
+.btn-chat-submit:hover {
+    opacity: 1;
+}
+
+/* Reusing Bootstrap form-control class */
+.chat-body-style .form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.chat-body-style textarea.form-control {
+    resize: none;
+}
+
+
