@@ -26,11 +26,11 @@
                     <div class="categories_product_inner categories_column7 owl-carousel">
                         @foreach($category as $key => $value)
                             <div class="single_categories_product">
-                                <div class="categories_product_thumb carousel-item active">
+                                {{--  <div class="categories_product_thumb carousel-item active">
                                     <a href="#">
                                         <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
                                     </a>
-                                </div>
+                                </div>  --}}
                                 <div class="categories_product_content">
                                     <h4><a href="#"> {{ $value->name }}</a></h4>
                                 </div>

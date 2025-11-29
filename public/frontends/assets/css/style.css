@@ -11369,7 +11369,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 /* Chat Header (like a title bar) */
 .chat-header-style {
-    background-color: #0084ff; /* Messenger blue */
+    background-color: rgb(199, 9, 9) !important; /* Messenger blue */
     color: white;
     padding: 10px 15px;
     display: flex;
