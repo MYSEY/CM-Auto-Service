@@ -19,14 +19,16 @@
         </div>
     </section>
 
-    <div class="categories_product_area mb-80">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="categories_product_inner categories_column7 owl-carousel">
+   <div class="categories_product_area mb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="slider-wrapper-css">
+                    <div class="categories_product_inner slider-track-css">
+
                         @foreach($category as $key => $value)
-                            <div class="single_categories_product">
-                                {{--  <div class="categories_product_thumb carousel-item active">
+                            <div class="single_categories_product slide-item-css">
+                                {{--  <div class="categories_product_thumb">
                                     <a href="#">
                                         <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
                                     </a>
@@ -36,11 +38,13 @@
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
     <div class="home_section_bg">
         <div class="product_area">
             <div class="container">
@@ -53,13 +57,8 @@
                         <div class="vehicle_lookup_area">
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
-<<<<<<< Updated upstream
                                     <div class="col-lg-6 col-md-9">
                                         <form class="vehicle_lookup_form d-flex justify-content-between align-items-center" method="GET" action="{{url('frontend/product/search')}}">
-=======
-                                    <div class="col-lg-10 col-md-12">
-                                        <form class="vehicle_lookup_form d-flex justify-content-between align-items-center">
->>>>>>> Stashed changes
                                             @csrf
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectCategory" style="font-weight: 600;">

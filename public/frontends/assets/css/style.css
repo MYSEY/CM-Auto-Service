@@ -11470,4 +11470,72 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     opacity: 0.85; /* ធ្វើឲ្យមានតម្លាភាពបន្តិច */
 }
 
+/*
+    ការគណនា៖
+    - បង្ហាញ 7 Items: ទទឹង Item នីមួយៗ = 14.2857%
+    - ផ្លាស់ទី 1 Item ក្នុងមួយជំហាន: calc(-14.2857% - 10px)
+    - ទទឹង Track សរុប (10 Slides): 142.857%
+    - គម្លាតរវាង Items: 10px
+    /* 📌 កែប្រែ៖ រយៈពេល Animation សរុប: 25s (សម្រាប់ 5 ជំហានរលូន - 5s ក្នុងមួយជំហាន) */
+*/
 
+/* 1. Wrapper (Container) */
+.slider-wrapper-css {
+    width: 100%;
+    overflow: hidden; /* **សំខាន់៖ លាក់ Slides ដែលនៅក្រៅជួរ** */
+}
+
+/* 2. Slide Item Styling */
+.single_categories_product.slide-item-css {
+    /* 📌 កែប្រែ៖ បន្ថែម box-sizing ដើម្បីគ្រប់គ្រង padding/margin */
+    box-sizing: border-box;
+    /* ត្រូវតែដាក់ flex-shrink: 0 ដើម្បីរក្សាទំហំ */
+    flex-shrink: 0;
+
+    /* 📌 កែប្រែ៖ បន្ថែមគម្លាត (Margin-right 10px) */
+    margin-right: 10px;
+
+    /* ទទឹងថ្មី៖ ប្រើ calc() ដើម្បីដក Margin ចេញ (គម្លាតសរុប 60px / 7 Items) */
+    width: calc(14.2857% - (60px / 7));
+}
+
+/* 3. Track សម្រាប់ផ្ទុក Slides និងធ្វើចលនា Autoplay */
+.slider-track-css {
+    display: flex;
+    /* ទទឹងសរុប (10 Slides): ត្រូវបន្ថែមទទឹង Margin សរុប (10 * 10px = 100px) */
+    width: calc(142.857% + 100px);
+
+    /* 📌 កែប្រែ៖ រយៈពេល Autoplay 25s, សម្រាប់ 5 ជំហានរលូន, ប្រើ linear */
+    animation: css_autoplay_loop 25s linear infinite;
+}
+
+/* 4. កំណត់ Animation ដោយប្រើ @keyframes សម្រាប់ Loop 5 (រំកិល 1 Item ម្តង) */
+@keyframes css_autoplay_loop {
+    /* ជំហាននីមួយៗគឺ 100% / 5 = 20% នៃពេលវេលាសរុប */
+
+    /* 0%៖ ចាប់ផ្តើមនៅ Slide 1 */
+    0% { transform: translateX(0); }
+
+    /* 20%៖ បង្ហាញ Slide 2 (ផ្លាស់ទី 1 Item) */
+    20% { transform: translateX(calc(-14.2857% - 10px)); }
+
+    /* 40%៖ បង្ហាញ Slide 3 (ផ្លាស់ទី 2 Items) */
+    40% { transform: translateX(calc(-28.5714% - 20px)); }
+
+    /* 60%៖ បង្ហាញ Slide 4 (ផ្លាស់ទី 3 Items) */
+    60% { transform: translateX(calc(-42.8571% - 30px)); }
+
+    /* 80%៖ បង្ហាញ Slide 5 (ផ្លាស់ទី 4 Items) */
+    80% { transform: translateX(calc(-57.1428% - 40px)); }
+
+    /* 99%៖ ត្រៀមលោត (ផ្លាស់ទី 5 Items ពេញ) - ត្រូវនឹងការចាប់ផ្តើមនៃ Dummy Slides */
+    99% { transform: translateX(calc(-71.4285% - 50px)); }
+
+    /* 100%៖ លោតភ្លាមៗទៅដើមវិញ (Instant Reset) */
+    100% { transform: translateX(0); }
+}
+
+/* 5. ផ្អាកនៅពេល Hover */
+.slider-track-css:hover {
+    animation-play-state: paused;
+}
