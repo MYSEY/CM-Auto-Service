@@ -57,8 +57,8 @@
                         <div class="vehicle_lookup_area">
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
-                                    <div class="col-lg-6 col-md-9">
-                                        <form class="vehicle_lookup_form d-flex justify-content-between align-items-center" method="GET" action="{{url('frontend/product/search')}}">
+                                    <div class="col-lg-10 col-md-12">
+                                        <form class="vehicle_lookup_form d-flex justify-content-between align-items-center">
                                             @csrf
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectCategory" style="font-weight: 600;">
