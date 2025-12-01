@@ -32,7 +32,7 @@ class HomePageController extends Controller
         // }
         // $activeTab = $request->get('tab', 'all');
 
-        $productAll = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+        $productAll = Product::with(['category','subCategory','productType'])->paginate(64, ['*'], 'page_all')->appends(['tab' => 'all']);
 
         $productsByType = [];
         foreach ($productType as $type) {

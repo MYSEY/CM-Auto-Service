@@ -1,12 +1,11 @@
 /* ====================================================================== */
-/* កូដដែលបានកែតម្រូវ: ដក !important ចេញទាំងអស់ */
+/* កូដ CSS សម្រាប់ Centering (ដាក់ចំកណ្តាល) */
 /* ====================================================================== */
 
 /* ១. IMAGE STYLES - រូបភាពធំ (បង្ខំទំហំ 1:1) */
 
 .product-card .product-image-wrapper {
     width: 100%;
-    /* បង្ខំ Aspect Ratio 1:1 សម្រាប់រូបភាព */
     padding-bottom: 100%;
     position: relative;
     overflow: hidden;
@@ -14,6 +13,7 @@
     border: none;
     box-shadow: none;
     line-height: 0;
+    /* មិនត្រូវការ Centering បន្ថែមទេព្រោះវាជា Container ទទឹង 100% */
 }
 
 .product-card .product-image-wrapper img {
@@ -31,8 +31,10 @@
 
 /* ២. PRODUCT CARD & GRID - 6 ជួរថេរ និង Responsive */
 
+/* ត្រូវប្រាកដថា .row អាចដាក់ .product-grid-container ចំកណ្តាលបាន */
 .tab-pane .row {
     display: flex;
+    /* កំណត់ជួរដេកឱ្យដាក់ធាតុនៅចំកណ្តាល */
     justify-content: center;
     padding: 0;
     margin: 0;
@@ -43,28 +45,28 @@
     grid-template-columns: repeat(6, 1fr);
     gap: 8px;
     padding: 5px;
+    /* ត្រូវកំណត់ max-width ដើម្បីឱ្យ justify-content: center ដំណើរការលើ row */
     max-width: 1200px;
 }
 
 /* Media Queries សម្រាប់ Tablet និង Mobile */
-
 @media (max-width: 1200px) {
     .product-grid-container {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns on medium desktop/large tablet */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 992px) {
     .product-grid-container {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 767px) {
     .product-grid-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
-        gap: 5px; /* កាត់បន្ថយគម្លាតបន្ថែមលើ Mobile */
-        padding: 0 5px; /* បន្ថែម padding ឆ្វេងស្តាំបន្តិច */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 0 5px;
     }
 }
 
@@ -79,6 +81,7 @@
     width: 100%;
     margin: 0;
     max-width: none;
+    /* កូដសំខាន់សម្រាប់ដាក់ចំកណ្តាលអត្ថបទទាំងអស់ក្នុង Card */
     text-align: center;
     transition: box-shadow 0.2s;
 }
@@ -95,6 +98,7 @@
     font-size: 0.75em;
     line-height: 1.1;
     margin: 3px 0 2px 0;
+    /* ធានាការដាក់ចំកណ្តាលអត្ថបទ */
     text-align: center;
     display: block;
 }
@@ -105,6 +109,7 @@
     font-weight: 700;
     margin: 4px 0 6px 0;
     display: block;
+    /* ធានាការដាក់ចំកណ្តាលអត្ថបទ */
     text-align: center;
     min-height: 34px;
 }
@@ -115,39 +120,43 @@
     font-weight: bold;
     margin-top: 5px;
     display: block;
+    /* ធានាការដាក់ចំកណ្តាលអត្ថបទ */
     text-align: center;
 }
 
 /* តម្រឹម Action Links ឲ្យនៅចំកណ្តាល */
 .action_links ul {
     display: flex;
+    /* ធានាការដាក់ចំកណ្តាលធាតុក្នុង ul ដោយ Flexbox */
     justify-content: center;
     padding: 0;
     margin-top: 8px;
 }
 
 
+/* ៤. CHAT MESSENGER POP-UP (Social Links Centering) */
+
 /* Button to open the chat form - positioned fixed at bottom right */
 .open-chat-button {
-  background-color: #0084ff; /* Messenger blue */
-  color: white;
-  padding: 15px;
-  border: none;
-  border-radius: 50%; /* Circular button */
-  cursor: pointer;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  opacity: 0.8;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: opacity 0.3s;
+    background-color: #0084ff;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    opacity: 0.8;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.3s;
 }
 
 .open-chat-button:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 .chat-badge {
@@ -163,28 +172,28 @@
 
 /* The actual chat form pop-up */
 .chat-popup {
-  display: none; /* Hidden by default */
-  position: fixed;
-  bottom: 90px; /* Position above the chat button */
-  right: 20px;
-  border: 1px solid #ccc;
-  z-index: 999;
-  width: 320px; /* Typical messenger width */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: white;
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    border: 1px solid #ccc;
+    z-index: 999;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
 }
 
 /* Styling for the form container */
 .chat-form-container {
-  padding: 0;
-  max-width: 100%;
+    padding: 0;
+    max-width: 100%;
 }
 
 /* Chat Header (like a title bar) */
 .chat-header-style {
-    background-color: #0084ff; /* Messenger blue */
+    background-color: #0084ff;
     color: white;
     padding: 10px 15px;
     display: flex;
@@ -217,6 +226,8 @@
     color: #606770;
     font-size: 14px;
     margin-bottom: 15px;
+    /* ធានាការដាក់ចំកណ្តាលអត្ថបទក្នុង Chat Body */
+    text-align: center;
 }
 
 /* Submit button */
@@ -251,17 +262,14 @@
     resize: none;
 }
 
+/* Social Links Centering (footer_social & chat-body-style) */
 .no-li-flex {
-    list-style: none; /* លុបចំនុច ul ចេញ */
+    list-style: none;
     padding: 0;
     margin: 0;
-
-    /* ** កូដសំខាន់សម្រាប់រៀបជាជួរដេក ** */
     display: flex;
-
-    /* តម្រៀបធាតុទាំងអស់នៅចំកណ្តាលតាមអ័ក្សមេ (ផ្ដេក) */
+    /* ** កូដសំខាន់៖ តម្រៀបធាតុទាំងអស់នៅចំកណ្តាលតាមអ័ក្សមេ (ផ្ដេក) */
     justify-content: center;
-
     /* តម្រៀបធាតុទាំងអស់ឲ្យស្មើគ្នាតាមកម្ពស់ (បញ្ឈរ) */
     align-items: center;
 }
@@ -269,21 +277,96 @@
 /* 2. បន្ថែមគម្លាតនៅចន្លោះរូបតំណាងនីមួយៗ */
 /* កំណត់គម្លាតលើ Anchor Tags (<a>) ទាំងអស់ដែលជាកូនផ្ទាល់ */
 .no-li-flex > a {
-    margin: 0 15px; /* ដាក់គម្លាត 15px នៅខាងឆ្វេង និងស្តាំរវាង links */
+    margin: 0 15px;
     display: inline-block;
 }
 
 
 .facebook img, .telegram img, .whatsapp img {
     transition: transform 0.3s ease-in-out, opacity 0.3s;
-    cursor: pointer; /* ប្តូរ Cursor ទៅជា Pointer នៅពេលដាក់ Mouse ពីលើ */
+    cursor: pointer;
 }
 
 
 .facebook:hover img, .telegram:hover img, .whatsapp:hover img {
-    transform: scale(1.1); /* ពង្រីករូបភាព 10% */
-    opacity: 0.85; /* ធ្វើឲ្យមានតម្លាភាពបន្តិច */
+    transform: scale(1.1);
+    opacity: 0.85;
 }
 
+/* កែតម្រូវផ្នែក ២. PRODUCT CARD & GRID - 6 ជួរថេរ និង Responsive */
 
+/* 1. ត្រូវប្រាកដថា .row របស់អ្នកដាក់ចំកណ្តាលធាតុធំ (ដូចជា product-grid-container) */
+.tab-pane .row {
+    display: flex;
+    justify-content: center; /* កូដនេះធានាថាធាតុខាងក្នុង (product-grid-container) ស្ថិតនៅចំកណ្តាល */
+    padding: 0;
+    margin: 0;
+}
 
+/* 2. កែតម្រូវ .product-grid-container ដើម្បីដាក់ចំកណ្តាលខ្លួនវា */
+.product-grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    padding: 5px;
+    max-width: 1200px;
+
+    /* === កូដសំខាន់សម្រាប់ដាក់ចំកណ្តាល Grid ទាំងមូល === */
+    /* កំណត់ Margin ឆ្វេង-ស្តាំ ស្វ័យប្រវត្តិ */
+    margin-left: auto;
+    margin-right: auto;
+    /* ============================================== */
+}
+/* កែតម្រូវផ្នែក ២. PRODUCT CARD & GRID - 8 ជួរថេរ និង Responsive */
+
+/* 1. ត្រូវប្រាកដថា .row របស់អ្នកដាក់ចំកណ្តាលធាតុធំ */
+.tab-pane .row {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* 2. កែតម្រូវ .product-grid-container សម្រាប់ 8 ជួរដេក និង Centering */
+.product-grid-container {
+    display: grid;
+    /* === កូដសំខាន់សម្រាប់ 8 ជួរដេក === */
+    grid-template-columns: repeat(8, 1fr);
+    /* ================================== */
+    gap: 8px;
+    padding: 5px;
+    /* ខ្ញុំបង្កើន Max-width ដើម្បីឱ្យ 8 columns មានទំហំគ្រប់គ្រាន់ */
+    max-width: 1600px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Media Queries សម្រាប់ Tablet និង Mobile (រក្សាទុកឱ្យដំណើរការល្អ) */
+
+@media (max-width: 1400px) {
+     .product-grid-container {
+        grid-template-columns: repeat(6, 1fr); /* ត្រឡប់ទៅ 6 columns នៅលើ Desktop កណ្តាល */
+    }
+}
+@media (max-width: 1200px) {
+    .product-grid-container {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns on medium desktop/large tablet */
+    }
+}
+
+@media (max-width: 992px) {
+    .product-grid-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet */
+    }
+}
+
+@media (max-width: 767px) {
+    .product-grid-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+        gap: 5px;
+        padding: 0 5px;
+    }
+}
+
+/* ... រក្សាកូដ CSS ផ្សេងទៀតឱ្យនៅដដែល ... */
