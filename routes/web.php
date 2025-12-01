@@ -42,7 +42,7 @@ Route::get('/clear', function() {
     return "<script>alert('Cache cleared!'); window.location.href='/';</script>";
 });
 
-Route::get('/', [HomePageController::class,'index']);
+Route::get('/', [HomePageController::class,'index'])->name('products.index');
 Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
@@ -54,11 +54,14 @@ Route::get('/load-miniCart', [CartController::class, 'loadMiniCart'])->name('loa
 Route::get('product/category/filter', [HomePageController::class, 'productCategoryFilter'])->name('product.category.filter');
 Route::get('product/suc-category/filter', [HomePageController::class, 'subCategoryFilter'])->name('product.suc-category.filter');
 Route::get('product/engine/filter', [HomePageController::class, 'engineFilter'])->name('product.engine.filter');
+// web.php
+Route::get('/ajax/filter/products', [HomePageController::class, 'ajaxFilterProducts'])->name('ajax.filter.products');
 
 
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
 Route::resource('frontend-contact', FrontendContactController::class);
 Route::resource('about-as', AboutAsController::class);
+// Route::get('/products/tab', [HomeController::class, 'loadProducts'])->name('products.tab');
 
 // Route សម្រាប់ AJAX
 Route::get('/frontend-categorys', [HomePageController::class, 'frontendCategory']);

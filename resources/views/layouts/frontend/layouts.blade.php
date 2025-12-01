@@ -186,13 +186,28 @@
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
                             <div class="header_right_box">
                                 <div class="search_container">
-                                    <form action="{{url('category/filter')}}" method="GET">
+                                    {{-- <form action="{{url('category/filter')}}" method="GET">
                                         @csrf
                                        <div class="hover_category">
                                             <select class="select_option" name="category_id" id="category_id">
                                                 <option selected value="">All Categories</option>
                                                 @foreach($category as $cat)
                                                     <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="search_box">
+                                            <input placeholder="Search product..." type="text" name="serial_number" id="serial_number">
+                                            <button type="submit" id="btnSearch">Search</button>
+                                        </div>
+                                    </form> --}}
+                                    <form id="filterForm">
+                                        @csrf
+                                        <div class="hover_category">
+                                            <select class="select_option" name="category_id" id="category_id">
+                                                <option selected value="">All Categories</option>
+                                                @foreach($category as $cat)
+                                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -333,23 +348,27 @@
                                                     @if ($category)
                                                         <ul class="sub_menu">
                                                             <li class="has_sub">
-                                                                <a href="{{ route('product.category.filter', ['category_id' => $category->id]) }}">
+                                                                {{-- <a href="{{ route('product.category.filter', ['category_id' => $category->id]) }}">
                                                                     {{ $category->name }} <i class="fa fa-angle-right"></i>
-                                                                </a>
+                                                                </a> --}}
+                                                                <a href="javascript:void(0)" class="menu-filter" data-category="{{ $category->id }}">{{ $category->name }} <i class="fa fa-angle-right"></i></a>
                                                                 @if($category->subCategory->count() > 0)
                                                                     <ul class="sub_sub_menu1">
                                                                         @foreach($category->subCategory as $sub)
                                                                             <li class="has_sub">
-                                                                                <a href="{{ route('product.suc-category.filter', ['sub_category_id' => $sub->id]) }}">
+                                                                                {{-- <a href="{{ route('product.suc-category.filter', ['sub_category_id' => $sub->id]) }}">
                                                                                     {{ $sub->name }} <i class="fa fa-angle-right"></i>
-                                                                                </a>
+                                                                                </a> --}}
+                                                                                <a href="javascript:void(0)" class="menu-filter" data-sub-category="{{ $sub->id }}">{{ $sub->name }} <i class="fa fa-angle-right"></i></a>
+
                                                                                 @if($sub->engine->count() > 0)
                                                                                     <ul class="sub_sub_menu2">
                                                                                         @foreach($sub->engine as $eng)
                                                                                             <li>
-                                                                                                <a href="{{ route('product.engine.filter', ['engine_id' => $eng->id]) }}">
+                                                                                                {{-- <a href="{{ route('product.engine.filter', ['engine_id' => $eng->id]) }}">
                                                                                                     {{ $eng->name }}
-                                                                                                </a>
+                                                                                                </a> --}}
+                                                                                                <a href="javascript:void(0)" class="menu-filter" data-engine="{{ $eng->id }}">{{ $eng->name }}</a>
                                                                                             </li>
                                                                                         @endforeach
                                                                                     </ul>
@@ -564,5 +583,41 @@
     {{-- toastr --}}
     <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
     {!! Toastr::message() !!}
+
+    <script>
+        $(function(){
+            $(document).on("submit", "#filterForm", function(e) {
+                e.preventDefault();
+
+                let formData = $(this).serialize();
+
+                $.ajax({
+                    url: "{{ url('category/filter') }}",
+                    type: "GET",
+                    data: formData + "&ajax=1",
+                    success: function(response) {
+                        $("#productContent").html(response.html);
+                    }
+                });
+            });
+            $(document).on("click", ".menu-filter", function () {
+                let category_id = $(this).data('category') ?? '';
+                let sub_category_id = $(this).data('sub-category') ?? '';
+                let engine_id = $(this).data('engine') ?? '';
+                $.ajax({
+                    url: "{{ route('ajax.filter.products') }}",
+                    type: "GET",
+                    data: {
+                        category_id,
+                        sub_category_id,
+                        engine_id
+                    },
+                    success: function (response) {
+                        $("#productContent").html(response); // update only products
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

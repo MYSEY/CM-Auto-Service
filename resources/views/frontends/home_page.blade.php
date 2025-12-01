@@ -53,8 +53,13 @@
                         <div class="vehicle_lookup_area">
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
+<<<<<<< Updated upstream
                                     <div class="col-lg-6 col-md-9">
                                         <form class="vehicle_lookup_form d-flex justify-content-between align-items-center" method="GET" action="{{url('frontend/product/search')}}">
+=======
+                                    <div class="col-lg-10 col-md-12">
+                                        <form class="vehicle_lookup_form d-flex justify-content-between align-items-center">
+>>>>>>> Stashed changes
                                             @csrf
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectCategory" style="font-weight: 600;">
@@ -118,37 +123,14 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show {{ $activeTab === 'all' ? 'active' : '' }}" id="all" role="tabpanel">
                             <div class="row">
-                                <div class="product-grid-container">
+                                {{-- <div class="product-grid-container">
                                     @foreach($productAll as $item)
                                         @include('frontends.product', ['item' => $item])
                                     @endforeach
-                                </div>
-                                <div class="shop_toolbar t_bottom">
-                                    <div class="pagination">
-                                        <ul>
-                                            @if ($productAll->onFirstPage())
-                                                <li class="disabled"><span><<</span></li>
-                                            @else
-                                                <li><a href="{{ $productAll->previousPageUrl() }}"><</a></li>
-                                            @endif
-
-                                            @foreach ($productAll->getUrlRange(1, $productAll->lastPage()) as $page => $url)
-                                                @if ($page == $productAll->currentPage())
-                                                    <li class="current">{{ $page }}</li>
-                                                @else
-                                                    <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                                @endif
-                                            @endforeach
-
-                                            @if ($productAll->hasMorePages())
-                                                <li class="next"><a href="{{ $productAll->nextPageUrl() }}">next</a></li>
-                                                <li><a href="{{ $productAll->url($productAll->lastPage()) }}">>></a></li>
-                                            @else
-                                                <li class="disabled"><span>next</span></li>
-                                                <li class="disabled"><span>>></span></li>
-                                            @endif
-                                        </ul>
-                                    </div>
+                                </div> --}}
+                                <div id="productContent">
+                                    {{-- default loaded product tab (all) --}}
+                                    @include('frontends.product_list', ['products' => $productAll])
                                 </div>
                             </div>
                         </div>
@@ -157,37 +139,8 @@
                             @php $list = $productsByType[$type->id]; $slug = Str::slug($type->name); @endphp
                             <div class="tab-pane fade {{ $activeTab === $slug ? 'active' : '' }}" id="{{ $slug }}">
                                 <div class="row">
-                                    <div class="product-grid-container">
-                                        @foreach($list as $item)
-                                            @include('frontends.product', ['item' => $item])
-                                        @endforeach
-                                    </div>
-                                    <div class="shop_toolbar t_bottom">
-                                        <div class="pagination">
-                                            <ul>
-                                                @if ($productsByType[$type->id]->onFirstPage())
-                                                    <li class="disabled"><span><<</span></li>
-                                                @else
-                                                    <li><a href="{{ $productsByType[$type->id]->previousPageUrl() }}"><</a></li>
-                                                @endif
-
-                                                @foreach ($productsByType[$type->id]->getUrlRange(1, $productsByType[$type->id]->lastPage()) as $page => $url)
-                                                    @if ($page == $productsByType[$type->id]->currentPage())
-                                                        <li class="current">{{ $page }}</li>
-                                                    @else
-                                                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                                                    @endif
-                                                @endforeach
-
-                                                @if ($productsByType[$type->id]->hasMorePages())
-                                                    <li class="next"><a href="{{ $productsByType[$type->id]->nextPageUrl() }}">next</a></li>
-                                                    <li><a href="{{ $productsByType[$type->id]->url($productsByType[$type->id]->lastPage()) }}">>></a></li>
-                                                @else
-                                                    <li class="disabled"><span>next</span></li>
-                                                    <li class="disabled"><span>>></span></li>
-                                                @endif
-                                            </ul>
-                                        </div>
+                                    <div id="productContent_{{ $slug }}">
+                                        @include('frontends.product_list', ['products' => $list, 'tab' => $slug])
                                     </div>
                                 </div>
                             </div>
@@ -307,7 +260,7 @@
             <div class="footer_social">
                <ul class="social-links-row no-li-flex">
                     <a class="facebook" href="https://www.facebook.com/C.M.Auto.77/">
-                         <img src="{{ asset('frontends/assets/img/facebook.png') }}" alt="Facebook" width="50" height="50">
+                        <img src="{{ asset('frontends/assets/img/facebook.png') }}" alt="Facebook" width="50" height="50">
                         {{--  <i class="icon-facebook" style="font-size: 50px;"></i>  --}}
                     </a>
 
@@ -327,60 +280,21 @@
 {{-- 3. JAVASCRIPT --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // ----------------------------------------------------------------------
-    // CHAT MESSENGER TOGGLE FUNCTION (Newly added)
-    // ----------------------------------------------------------------------
-    function toggleChatForm() {
-        var chatForm = document.getElementById("myForm");
-        if (chatForm.style.display === "block") {
-            chatForm.style.display = "none";
-        } else {
-            chatForm.style.display = "block";
-        }
-    }
-    // ----------------------------------------------------------------------
-
-    function dataBackgroundImage() {
-        $('[data-bgimg]').each(function () {
-            var bgImgUrl = $(this).data('bgimg');
-            $(this).css({
-                'background-image': 'url(' + bgImgUrl + ')',
-            });
-        });
-    }
-
     $(window).on('load', function () {
         dataBackgroundImage();
     });
     $(function(){
-        document.addEventListener('DOMContentLoaded', function () {
-            const params = new URLSearchParams(window.location.search);
-            const tab = params.get('tab') || '{{ $activeTab ?? "all" }}';
-
-            // Activate the tab (Bootstrap 5)
-            const tabLink = document.querySelector(`#nav-tab a[href="#${tab}"]`);
-            if (tabLink) {
-                // Note: You must ensure 'bootstrap.Tab' is defined (Bootstrap JS is loaded)
-                const bsTab = new bootstrap.Tab(tabLink);
-                bsTab.show();
-            }
-
-            // When user switches tabs, update URL (so future pagination links include tab)
-            document.querySelectorAll('#nav-tab a[data-tab]').forEach(a => {
-                a.addEventListener('shown.bs.tab', function (e) {
-                    const slug = e.target.getAttribute('data-tab');
-                    const url = new URL(window.location);
-                    url.searchParams.set('tab', slug);
-                    history.replaceState(null, '', url.toString());
-                });
-            });
+        loadProducts();
+        // Click tab
+        $('.tab-link').click(function (e) {
+            e.preventDefault();
+            let tab = $(this).attr('data-tab-name').toLowerCase();
+            loadProducts("{{ route('products.index') }}?tab=" + tab);
         });
-
         // ... rest of your existing AJAX and jQuery functions ...
         $(document).on('click', '.addToCart', function () {
             let id = $(this).data('id');
             event.preventDefault();
-
             $.ajax({
                 url: "{{ route('addToCart') }}",
                 type: "POST",
@@ -400,6 +314,19 @@
                 error: function (xhr, status, error) {
                     console.error("AJAX Error:", status, error);
                     alert('Something went wrong!');
+                }
+            });
+        });
+
+        $(document).off("submit", ".vehicle_lookup_form").on("submit", ".vehicle_lookup_form", function(e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                url: "{{ url('frontend/product/search') }}",
+                method: "GET",
+                data: formData + "&ajax=1",
+                success: function(response) {
+                    $("#productContent").html(response.html);
                 }
             });
         });
@@ -446,8 +373,22 @@
                 }
             });
         });
-    });
+        $(document).on('click', '.pagination a', function(e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            let tab = new URL(url).searchParams.get('tab') || 'all';
+            let container = tab === 'all' ? '#productContent' : '#productContent_' + tab;
 
+            $.get(url, function(res) {
+                $(container).html(res.html);
+            });
+        });
+    });
+    function loadProducts(url) {
+        $.get(url, function(res) {
+            $('#productContent').html(res.html);
+        });
+    }
     function loadMiniCart() {
         $.ajax({
             url: "{{ route('loadMiniCart') }}",
@@ -455,6 +396,24 @@
             success: function (res) {
                 $('.mini_cart_inner').html(res);
             }
+        });
+    }
+    function toggleChatForm() {
+        var chatForm = document.getElementById("myForm");
+        if (chatForm.style.display === "block") {
+            chatForm.style.display = "none";
+        } else {
+            chatForm.style.display = "block";
+        }
+    }
+    // ----------------------------------------------------------------------
+
+    function dataBackgroundImage() {
+        $('[data-bgimg]').each(function () {
+            var bgImgUrl = $(this).data('bgimg');
+            $(this).css({
+                'background-image': 'url(' + bgImgUrl + ')',
+            });
         });
     }
 </script>
