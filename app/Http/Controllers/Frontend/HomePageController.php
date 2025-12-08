@@ -17,7 +17,6 @@ class HomePageController extends Controller
 {
     public function index(Request $request){
         $company = Company::first();
-        $dataProduct = Product::with(['category','subCategory'])->get();
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         $proEngine = Engine::all();
@@ -46,9 +45,7 @@ class HomePageController extends Controller
             $tab = $request->get('tab', 'all');
 
             if ($tab === 'all') {
-                $products = Product::with(['category','subCategory','productType'])
-                    ->paginate(24, ['*'], 'page_all')
-                    ->appends(['tab' => 'all']);
+                $products = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
             } else {
                 $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
                 if (!$selected) {
@@ -56,10 +53,7 @@ class HomePageController extends Controller
                 }
 
                 $pageName = 'page_' . $tab;
-                $products = Product::with(['category','subCategory','productType'])
-                    ->where('product_type_id', $selected->id)
-                    ->paginate(24, ['*'], $pageName)
-                    ->appends(['tab' => $tab]);
+                $products = Product::with(['category','subCategory','productType'])->where('product_type_id', $selected->id)->paginate(24, ['*'], $pageName)->appends(['tab' => $tab]);
             }
 
             return response()->json([
@@ -67,7 +61,7 @@ class HomePageController extends Controller
             ]);
         }
 
-        return view('frontends.home_page',compact('company','productAll','category','productType','dataProduct','proEngine','slider','productsByType','activeTab'));
+        return view('frontends.home_page',compact('company','productAll','category','productType','proEngine','slider','productsByType','activeTab'));
     }
     public function showLoginForm(){
         $company = Company::first();
@@ -285,21 +279,39 @@ class HomePageController extends Controller
     // }
     public function frontendSearchProduct(Request $request)
     {
-        $query = Product::query();
+        $tab = strtolower($request->tab ?? 'all');
+        $query = Product::query()->with(['category','subCategory','proEngine']);
+        if ($request->keyword) {
+            $keyword = $request->keyword;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('name', 'LIKE', "%$keyword%")
+                ->orWhere('description', 'LIKE', "%$keyword%")
+                ->orWhere('price', 'LIKE', "%$keyword%")
+                ->orWhere('number', 'LIKE', "%$keyword%")
+                ->orWhere('year', 'LIKE', "%$keyword%");
+               // 🔥 Search in Category Name
+                $q->orWhereHas('category', function($cat) use ($keyword) {
+                    $cat->where('name', 'LIKE', "%$keyword%");
+                });
 
-        if ($request->category_id) {
-            $query->where('category_id', $request->category_id);
-        }
-        if ($request->sub_category) {
-            $query->where('sub_category_id', $request->sub_category);
-        }
-        if ($request->engine_id) {
-            $query->where('engine_id', $request->engine_id);
-        }
+                // 🔥 Search in Sub Category Name
+                $q->orWhereHas('subCategory', function($sub) use ($keyword) {
+                    $sub->where('name', 'LIKE', "%$keyword%");
+                });
 
-        $productAll = $query->paginate(12)->appends($request->all());
-
-        // Return only product list if AJAX
+                // 🔥 Search in Engine Name
+                $q->orWhereHas('proEngine', function($engine) use ($keyword) {
+                    $engine->where('name', 'LIKE', "%$keyword%");
+                });
+            });
+        }
+        if ($tab !== 'all') {
+            $productType = ProductType::where('name', $request->tab)->first();
+            if ($productType) {
+                $query->where('product_type_id', $productType->id);
+            }
+        }
+        $productAll = $query->paginate(24)->appends($request->all());
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('frontends.product_list', [
@@ -307,8 +319,6 @@ class HomePageController extends Controller
                 ])->render()
             ]);
         }
-
-        // Normal page load
         $selectedFilters = [
             'category_id' => $request->category_id,
             'sub_category_id' => $request->sub_category,
@@ -321,13 +331,10 @@ class HomePageController extends Controller
         $slider = Slider::all();
         $activeTab = $request->get('tab', 'all');
         $productsByType = [];
-
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
             $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])
-                ->where('product_type_id', $type->id)
-                ->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
         }
 
         return view('frontends.home_page', compact(

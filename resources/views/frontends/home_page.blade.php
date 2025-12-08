@@ -25,20 +25,13 @@
             <div class="col-12">
                 <div class="slider-wrapper-css">
                     <div class="categories_product_inner slider-track-css">
-
                         @foreach($category as $key => $value)
                             <div class="single_categories_product slide-item-css">
-                                {{--  <div class="categories_product_thumb">
-                                    <a href="#">
-                                        <img class="d-block w-100" src="{{ asset('images/category/' . $value->category_photo) }}" alt="{{ $value->name }}">
-                                    </a>
-                                </div>  --}}
                                 <div class="categories_product_content">
                                     <h4><a href="#"> {{ $value->name }}</a></h4>
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
                 </div>
             </div>
@@ -58,7 +51,8 @@
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-lg-10 col-md-12">
-                                        <form class="vehicle_lookup_form d-flex justify-content-between align-items-center">
+                                        <input type="text" id="search_product" class="form-control" placeholder="Search product...">
+                                        {{-- <form class="vehicle_lookup_form d-flex justify-content-between align-items-center">
                                             @csrf
                                             <div class="single_select_box" style="flex: 1; margin-right: 15px;">
                                                 <label for="selectCategory" style="font-weight: 600;">
@@ -95,7 +89,7 @@
                                             <button type="submit" class="btn btn-primary" style="margin-top: 25px; height: 40px; white-space: nowrap; padding: 0 20px;">
                                                 Search
                                             </button>
-                                        </form>
+                                        </form> --}}
                                     </div>
                                 </div>
                             </div>
@@ -118,17 +112,10 @@
                             <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
                         </ul>
                     </div>
-
                     <div class="tab-content">
                         <div class="tab-pane fade show {{ $activeTab === 'all' ? 'active' : '' }}" id="all" role="tabpanel">
                             <div class="row">
-                                {{-- <div class="product-grid-container">
-                                    @foreach($productAll as $item)
-                                        @include('frontends.product', ['item' => $item])
-                                    @endforeach
-                                </div> --}}
                                 <div id="productContent">
-                                    {{-- default loaded product tab (all) --}}
                                     @include('frontends.product_list', ['products' => $productAll])
                                 </div>
                             </div>
@@ -181,7 +168,6 @@
                                 <ul class="social-links-row no-li-flex">
                                     <a class="facebook" href="https://www.facebook.com/C.M.Auto.77/">
                                         <img src="{{ asset('frontends/assets/img/facebook.png') }}" alt="Facebook" width="50" height="50">
-                                        {{--  <i class="icon-facebook" style="font-size: 50px;"></i>  --}}
                                     </a>
 
                                     <a class="telegram" href="https://t.me/CMAUTO">
@@ -231,18 +217,11 @@
     </div>
 </div>
 @endsection
-
-{{-- ****************************************************** --}}
-{{-- START: CHAT MESSENGER POP-UP (HTML & JS) --}}
-{{-- ****************************************************** --}}
-
-{{-- 1. CHAT BUTTON TRIGGER --}}
 <button class="open-chat-button" onclick="toggleChatForm()">
     <i class="ion-chatbubbles" style="font-size: 24px;"></i>
     <span class="chat-badge">Online</span>
 </button>
 
-{{-- 2. CHAT POP-UP WINDOW --}}
 <div class="chat-popup" id="myForm">
     <form action="/submit-chat-message" class="chat-form-container" method="POST">
         @csrf
@@ -255,12 +234,10 @@
 
         <div class="chat-body-style">
             <p>👋 Welcome</p>
-            {{-- Social links inside the Chat Pop-up --}}
             <div class="footer_social">
                <ul class="social-links-row no-li-flex">
                     <a class="facebook" href="https://www.facebook.com/C.M.Auto.77/">
                         <img src="{{ asset('frontends/assets/img/facebook.png') }}" alt="Facebook" width="50" height="50">
-                        {{--  <i class="icon-facebook" style="font-size: 50px;"></i>  --}}
                     </a>
 
                     <a class="telegram" href="https://t.me/CMAUTO">
@@ -275,14 +252,29 @@
         </div>
     </form>
 </div>
-
-{{-- 3. JAVASCRIPT --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(window).on('load', function () {
         dataBackgroundImage();
     });
     $(function(){
+        $("#search_product").on('keyup', function () {
+            let that = $(this);
+            setTimeout(function () {
+                let keyword = that.val();
+                $.ajax({
+                    url: "{{ url('frontend/product/search') }}",
+                    method: "GET",
+                    data: {
+                        keyword: keyword,
+                        ajax: 4
+                    },
+                    success: function (response) {
+                        $("#productContent").html(response.html);
+                    }
+                });
+            }, 10);
+        });
         loadProducts();
         // Click tab
         $('.tab-link').click(function (e) {

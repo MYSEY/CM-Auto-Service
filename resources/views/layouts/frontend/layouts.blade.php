@@ -2,42 +2,40 @@
     <html class="no-js" lang="en">
 
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>CM Auto Service</title>
-        <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
-        <meta property="og:title" content="CM Auto Service — Auto Parts & ECU Programming">
-        <meta property="og:description" content="ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.">
-        <meta property="og:url" content="https://cmautoservic.com">
-        <meta property="og:image" content="https://cmautoservic.com/frontends/assets/img/logo.png">
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="CM Auto Service">
+        <title>CM Auto Service</title>
+        <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
+        <meta property="og:title" content="CM Auto Service — Auto Parts & ECU Programming">
+        <meta property="og:description" content="ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.">
+        <meta property="og:url" content="https://cmautoservic.com">
+        <meta property="og:image" content="https://cmautoservic.com/frontends/assets/img/logo.png">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="CM Auto Service">
 
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "Organization",
-                "name": "CM Auto Service",
-                "url": "https://cmautoservic.com",
-                "logo": "https://cmautoservic.com/frontends/assets/img/logo.png",
-                "contactPoint": [{
-                    "@type": "ContactPoint",
-                    "telephone": "+855 0314866777",
-                    "contactType": "Customer Support"
-                }]
-            }
-        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "CM Auto Service",
+                "url": "https://cmautoservic.com",
+                "logo": "https://cmautoservic.com/frontends/assets/img/logo.png",
+                    "contactPoint": [{
+                    "@type": "ContactPoint",
+                    "telephone": "+855 0314866777",
+                    "contactType": "Customer Support"
+                }]
+            }
+        </script>
 
-            <link rel="icon" href="{{asset('frontends/assets/img/logo.png')}}">
-
-            <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
-            <link rel="stylesheet" href="{{ asset('frontends/assets/css/style.css') }}?v={{ filemtime(public_path('frontends/assets/css/style.css')) }}">
-
-            <link rel="stylesheet" href="{{ asset('frontends/assets/css/cm.css') }}?v={{ filemtime(public_path('frontends/assets/css/cm.css')) }}">
-            {{-- toastr --}}
-            <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
+        <link rel="icon" href="{{asset('frontends/assets/img/logo.png')}}">
+        <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
+        <link rel="stylesheet" href="{{ asset('frontends/assets/css/style.css') }}?v={{ filemtime(public_path('frontends/assets/css/style.css')) }}">
+        <link rel="stylesheet" href="{{ asset('frontends/assets/css/cm.css') }}?v={{ filemtime(public_path('frontends/assets/css/cm.css')) }}">
+        {{-- toastr --}}
+        <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
     </head>
     <style>
         /* first level dropdown */
