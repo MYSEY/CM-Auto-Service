@@ -52,44 +52,6 @@
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-lg-10 col-md-12">
                                         <input type="text" id="search_product" class="form-control" placeholder="Search product...">
-                                        {{-- <form class="vehicle_lookup_form d-flex justify-content-between align-items-center">
-                                            @csrf
-                                            <div class="single_select_box" style="flex: 1; margin-right: 15px;">
-                                                <label for="selectCategory" style="font-weight: 600;">
-                                                    <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Category
-                                                </label>
-                                                <select name="category_id" id="selectCategory" class="form-control custom-select" style="border: 1px solid red; box-shadow: 0 0 0 1px red;">
-                                                    <option value="">-- Select Category --</option>
-                                                    @foreach ($category as $item)
-                                                        <option value="{{ $item->id }}" {{ isset($selectedFilters['category_id']) && $selectedFilters['category_id'] == $item->id ? 'selected' : '' }}>
-                                                            {{ $item->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                            <div class="single_select_box" style="flex: 1; margin-right: 15px;">
-                                                <label for="selectSubCategory" style="font-weight: 600;">
-                                                    <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Sub Category
-                                                </label>
-                                                <select name="sub_category" id="selectSubCategory" class="form-control custom-select sub_category" style="border: 1px solid #ccc; background-color: #ebebeb;">
-                                                    <option value="">-- Select Sub Category --</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="single_select_box" style="flex: 1; margin-right: 15px;">
-                                                <label for="selectEngine" style="font-weight: 600;">
-                                                    <i class="ion-ios-arrow-forward" style="margin-right: 5px; color: #333;"></i> Select Engine
-                                                </label>
-                                                <select name="engine_id" id="selectEngine" class="form-control custom-select engine" style="border: 1px solid #ccc; background-color: #ebebeb;">
-                                                    <option value="">-- Select Engine --</option>
-                                                </select>
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary" style="margin-top: 25px; height: 40px; white-space: nowrap; padding: 0 20px;">
-                                                Search
-                                            </button>
-                                        </form> --}}
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +178,6 @@
         </div>
     </div>
 </div>
-@endsection
 <button class="open-chat-button" onclick="toggleChatForm()">
     <i class="ion-chatbubbles" style="font-size: 24px;"></i>
     <span class="chat-badge">Online</span>
@@ -252,6 +213,7 @@
         </div>
     </form>
 </div>
+@endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(window).on('load', function () {
