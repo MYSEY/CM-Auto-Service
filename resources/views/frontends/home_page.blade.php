@@ -19,25 +19,25 @@
         </div>
     </section>
 
-   <div class="categories_product_area mb-80">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="slider-wrapper-css">
-                    <div class="categories_product_inner slider-track-css">
-                        @foreach($category as $key => $value)
-                            <div class="single_categories_product slide-item-css">
-                                <div class="categories_product_content">
-                                    <h4><a href="#"> {{ $value->name }}</a></h4>
+    <div class="categories_product_area mb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="slider-wrapper-css">
+                        <div class="categories_product_inner slider-track-css">
+                            @foreach($category as $key => $value)
+                                <div class="single_categories_product slide-item-css">
+                                    <div class="categories_product_content">
+                                        <h4><a href="#"> {{ $value->name }}</a></h4>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <div class="home_section_bg">
         <div class="product_area">
             <div class="container">
@@ -220,10 +220,13 @@
         dataBackgroundImage();
     });
     $(function(){
+        let timer = null;
         $("#search_product").on('keyup', function () {
-            let that = $(this);
-            setTimeout(function () {
-                let keyword = that.val();
+            clearTimeout(timer);
+            let keyword = $(this).val();
+
+            timer = setTimeout(function () {
+
                 $.ajax({
                     url: "{{ url('frontend/product/search') }}",
                     method: "GET",
@@ -232,11 +235,14 @@
                         ajax: 4
                     },
                     success: function (response) {
-                        $("#productContent").html(response.html);
+                        // update all tabs
+                        $("div[id^='productContent']").html(response.html);
                     }
                 });
-            }, 10);
+
+            }, 300);
         });
+
         loadProducts();
         // Click tab
         $('.tab-link').click(function (e) {
