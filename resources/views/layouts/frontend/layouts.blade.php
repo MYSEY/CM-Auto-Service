@@ -184,34 +184,10 @@
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
                             <div class="header_right_box">
                                 <div class="search_container">
-                                    {{-- <form action="{{url('category/filter')}}" method="GET">
+                                    <form>
                                         @csrf
-                                       <div class="hover_category">
-                                            <select class="select_option" name="category_id" id="category_id">
-                                                <option selected value="">All Categories</option>
-                                                @foreach($category as $cat)
-                                                    <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
                                         <div class="search_box">
-                                            <input placeholder="Search product..." type="text" name="serial_number" id="serial_number">
-                                            <button type="submit" id="btnSearch">Search</button>
-                                        </div>
-                                    </form> --}}
-                                    <form id="filterForm">
-                                        @csrf
-                                        <div class="hover_category">
-                                            <select class="select_option" name="category_id" id="category_id">
-                                                <option selected value="">All Categories</option>
-                                                @foreach($category as $cat)
-                                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="search_box">
-                                            <input placeholder="Search product..." type="text" name="serial_number" id="serial_number">
-                                            <button type="submit" id="btnSearch">Search</button>
+                                            <input placeholder="Search product..." type="text" name="search_product" id="search_product">
                                         </div>
                                     </form>
                                 </div>
@@ -294,27 +270,6 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-2">
-                            {{--  <div class="categories_menu">
-                                <div class="categories_title active">
-                                    <h2 class="categori_toggle">ALL CATEGORIES</h2>
-                                </div>
-                                <div class="categories_menu_toggle">
-                                    @foreach($category as $cat)
-                                        <ul>
-                                            <li class="menu_item_children">
-                                                <a href="#">{{$cat->name}} <i class="fa fa-angle-right"></i><span class="expand"></span></a>
-                                                <ul class="categories_mega_menu column_2">
-                                                    @foreach($cat->subCategory as $sub)
-                                                        <li>
-                                                            <li class="menu_item_children"><a href="#">{{$sub->name}}<span class="expand"></span></a></li>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    @endforeach
-                                </div>
-                            </div>  --}}
                         </div>
                         <div class="col-lg-6">
                             <div class="main_menu menu_position text-nowrap">
@@ -323,16 +278,6 @@
                                         <li>
                                             <a class="active" href="/">home<i class=""></i></a>
                                         </li>
-                                        {{-- <li>
-                                            <a class="active" href="javascript:void(0)">Ecu Soft<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu">
-                                                @foreach($productType as $value)
-                                                    <li>
-                                                        <a href="{{ url('frontend/product/filter',$value->id) }}">{{ $value->name }}</a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </li> --}}
 
                                         @foreach ($productType as $type)
                                             <li>
@@ -346,26 +291,17 @@
                                                     @if ($category)
                                                         <ul class="sub_menu">
                                                             <li class="has_sub">
-                                                                {{-- <a href="{{ route('product.category.filter', ['category_id' => $category->id]) }}">
-                                                                    {{ $category->name }} <i class="fa fa-angle-right"></i>
-                                                                </a> --}}
                                                                 <a href="javascript:void(0)" class="menu-filter" data-category="{{ $category->id }}">{{ $category->name }} <i class="fa fa-angle-right"></i></a>
                                                                 @if($category->subCategory->count() > 0)
                                                                     <ul class="sub_sub_menu1">
                                                                         @foreach($category->subCategory as $sub)
                                                                             <li class="has_sub">
-                                                                                {{-- <a href="{{ route('product.suc-category.filter', ['sub_category_id' => $sub->id]) }}">
-                                                                                    {{ $sub->name }} <i class="fa fa-angle-right"></i>
-                                                                                </a> --}}
                                                                                 <a href="javascript:void(0)" class="menu-filter" data-sub-category="{{ $sub->id }}">{{ $sub->name }} <i class="fa fa-angle-right"></i></a>
 
                                                                                 @if($sub->engine->count() > 0)
                                                                                     <ul class="sub_sub_menu2">
                                                                                         @foreach($sub->engine as $eng)
                                                                                             <li>
-                                                                                                {{-- <a href="{{ route('product.engine.filter', ['engine_id' => $eng->id]) }}">
-                                                                                                    {{ $eng->name }}
-                                                                                                </a> --}}
                                                                                                 <a href="javascript:void(0)" class="menu-filter" data-engine="{{ $eng->id }}">{{ $eng->name }}</a>
                                                                                             </li>
                                                                                         @endforeach
@@ -463,117 +399,6 @@
     </footer>
     <!--footer area end-->
 
-    <!-- modal area start-->
-    {{-- <div class="modal fade" id="modal_box" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="modal_body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="modal_tab">
-                                    <div class="tab-content product-details-large">
-                                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" >
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="{{asset('frontends/assets/img/product/productbig1.jpg')}}" alt=""></a>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="{{asset('frontends/assets/img/product/productbig2.jpg')}}" alt=""></a>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab3" role="tabpanel">
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="{{asset('frontends/assets/img/product/productbig3.jpg')}}" alt=""></a>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab4" role="tabpanel">
-                                            <div class="modal_tab_img">
-                                                <a href="#"><img src="{{asset('frontends/assets/img/product/productbig4.jpg')}}" alt=""></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal_tab_button">
-                                        <ul class="nav product_navactive owl-carousel" role="tablist">
-                                            <li>
-                                                <a class="nav-link active" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product2.jpg')}}" alt=""></a>
-                                            </li>
-                                            <li>
-                                                <a class="nav-link" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product6.jpg')}}" alt=""></a>
-                                            </li>
-                                            <li>
-                                               <a class="nav-link button_three" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product9.jpg')}}" alt=""></a>
-                                            </li>
-                                            <li>
-                                               <a class="nav-link" data-bs-toggle="tab" href="#tab4" role="tab" aria-controls="tab4" aria-selected="false"><img src="{{asset('frontends/assets/img/product/product3.jpg')}}" alt=""></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-7 col-md-7 col-sm-12">
-                                <div class="modal_right">
-                                    <div class="modal_title mb-10">
-                                        <h2>Sit voluptatem rhoncus sem lectus</h2>
-                                    </div>
-                                    <div class="modal_price mb-10">
-                                        <span class="new_price">$64.99</span>
-                                        <span class="old_price" >$78.99</span>
-                                    </div>
-                                    <div class="modal_description mb-15">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel recusandae </p>
-                                    </div>
-                                    <div class="variants_selects">
-                                        <div class="variants_size">
-                                           <h2>size</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">s</option>
-                                               <option value="1">m</option>
-                                               <option value="1">l</option>
-                                               <option value="1">xl</option>
-                                               <option value="1">xxl</option>
-                                           </select>
-                                        </div>
-                                        <div class="variants_color">
-                                           <h2>color</h2>
-                                           <select class="select_option">
-                                               <option selected value="1">purple</option>
-                                               <option value="1">violet</option>
-                                               <option value="1">black</option>
-                                               <option value="1">pink</option>
-                                               <option value="1">orange</option>
-                                           </select>
-                                        </div>
-                                        <div class="modal_add_to_cart">
-                                            <form action="#">
-                                                <input min="1" max="100" step="1" value="1" type="number">
-                                                <button type="submit">add to cart</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal_social">
-                                        <h2>Share this product</h2>
-                                        <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- modal area end-->
     <!-- Plugins JS -->
     <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
     <!-- Main JS -->
@@ -584,19 +409,24 @@
 
     <script>
         $(function(){
-            $(document).on("submit", "#filterForm", function(e) {
-                e.preventDefault();
-
-                let formData = $(this).serialize();
-
-                $.ajax({
-                    url: "{{ url('category/filter') }}",
-                    type: "GET",
-                    data: formData + "&ajax=1",
-                    success: function(response) {
-                        $("#productContent").html(response.html);
-                    }
-                });
+            let timer = null;
+            $("#search_product").on('keyup', function () {
+                clearTimeout(timer);
+                let keyword = $(this).val();
+                timer = setTimeout(function () {
+                    $.ajax({
+                        url: "{{ url('frontend/product/search') }}",
+                        method: "GET",
+                        data: {
+                            keyword: keyword,
+                            ajax: 4
+                        },
+                        success: function (response) {
+                            // update all tabs
+                            $("div[id^='productContent']").html(response.html);
+                        }
+                    });
+                }, 300);
             });
             $(document).on("click", ".menu-filter", function () {
                 let category_id = $(this).data('category') ?? '';
