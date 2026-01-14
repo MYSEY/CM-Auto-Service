@@ -50,7 +50,7 @@
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-lg-10 col-md-12">
-                                        <input type="text" id="search_product" class="form-control" placeholder="Search product...">
+                                        <input type="text" id="search_product" class="form-control search_product" placeholder="Search product...">
                                     </div>
                                 </div>
                             </div>
@@ -220,12 +220,10 @@
     });
     $(function(){
         let timer = null;
-        $("#search_product").on('keyup', function () {
+        $(".search_product").on('keyup', function () {
             clearTimeout(timer);
             let keyword = $(this).val();
-
             timer = setTimeout(function () {
-
                 $.ajax({
                     url: "{{ url('frontend/product/search') }}",
                     method: "GET",
@@ -238,7 +236,6 @@
                         $("div[id^='productContent']").html(response.html);
                     }
                 });
-
             }, 300);
         });
 
