@@ -18,8 +18,7 @@
             @endforeach
         </div>
     </section>
-
-    <div class="categories_product_area mb-80">
+    {{--  <div class="categories_product_area mb-80">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -37,7 +36,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  --}}
     <div class="home_section_bg">
         <div class="product_area">
             <div class="container">
@@ -375,4 +374,6 @@
             });
         });
     }
+
+
 </script>

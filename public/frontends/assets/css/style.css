@@ -3622,7 +3622,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   line-height: 23px;
 }
 
-.home_section_bg {
+/* .home_section_bg {
   background: #F8F8F8;
   padding: 75px 0 80px;
 }
@@ -3630,7 +3630,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   .home_section_bg {
     padding: 58px 0 60px;
   }
-}
+} */
 
 .section_title {
   text-align: center;
