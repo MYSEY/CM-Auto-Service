@@ -40,7 +40,7 @@ class EngineController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|unique:engines,name', // <--- This is the DUPLICATE CHECK
+            'name' => 'required|string|max:255', // លុប unique:engines,name ចេញពីត្រង់នេះ
             'sub_category_id' => 'required|integer',
             'category_id' => 'required|integer',
         ]);
