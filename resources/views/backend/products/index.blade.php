@@ -65,7 +65,7 @@
                         <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="tbl_product" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info" style="width: 1163px;">
+                                    <table id="tbl_product" class="table table-bordered table-hover table-striped w-100 table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info" style="width: 1163px;">
                                         <thead class="">
                                             <tr>
                                                 <th>#</th>
@@ -308,17 +308,20 @@
                     name: 'action',
                     render: function(data, type, row) {
                         return `
-                            <div class="d-flex demo">
-                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1"
-                                onclick="deleteData(${row.id})" title="Delete Record">
-                                <i class="fal fa-times"></i>
-                                </a>
-                                <a href="/admins/product/${row.id}/edit"
-                                class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit">
-                                <i class="fal fa-edit"></i>
-                                </a>
-                            </div>
-                        `;
+                          <div class="d-flex align-items-center justify-content-center">
+                            <a href="/admins/product/${row.id}/edit"
+                            class="btn btn-icon btn-xs btn-outline-info waves-effect waves-themed mr-2"
+                            title="កែសម្រួល">
+                            <i class="fal fa-pencil"></i>
+                            </a>
+
+                            <a href="javascript:void(0);"
+                            class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed"
+                            onclick="deleteData(${row.id})"
+                            title="លុបទិន្នន័យ">
+                            <i class="fal fa-trash-alt"></i>
+                            </a>
+                        </div>`;
                     },
                 },
             ],

@@ -17,7 +17,7 @@
                             <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info">
+                                        <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100" role="grid" aria-describedby="dt-basic-example_info">
                                             <thead class="">
                                                 <tr>
                                                     <th>#</th>
@@ -38,7 +38,7 @@
                                                         <td>
                                                             @if ($item->is_active == 1)
                                                                 <a href="javascript:void(0);">
-                                                                    <span class="btn btn-xs btn-success waves-effect waves-themed">Active</span>
+                                                                    <span class="badge badge-success fw-400" style="padding: 5px 10px;">Active</span>
                                                                 </a>
                                                             @else
                                                                 <a href="javascript:void(0);">
@@ -47,9 +47,19 @@
                                                             @endif
                                                         </td>
                                                         <td>
-                                                            <div class="d-flex demo">
-                                                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                                <a href="{{url('admins/sub-category',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
+                                                           <div class="d-flex align-items-center justify-content-center">
+                                                                <a href="{{url('admins/sub-category',$item->id)}}/edit"
+                                                                class="btn btn-icon btn-xs btn-outline-info waves-effect waves-themed mr-2"
+                                                                data-toggle="tooltip" title="កែសម្រួល">
+                                                                 <i class="fal fa-pencil"></i>
+                                                                </a>
+
+                                                                <a href="javascript:void(0);"
+                                                                class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed"
+                                                                onclick="deleteData({{$item->id}})"
+                                                                data-toggle="tooltip" title="លុបទិន្នន័យ">
+                                                                <i class="fal fa-trash-alt"></i>
+                                                                </a>
                                                             </div>
                                                         </td>
                                                     </tr>

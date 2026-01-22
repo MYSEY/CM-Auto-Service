@@ -46,10 +46,20 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex demo">
-                                                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                            <a href="{{url('admins/product-type',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
-                                                        </div>
+                                                        <div class="d-flex align-items-center justify-content-center">
+                                                                <a href="{{url('admins/product-type',$item->id)}}/edit"
+                                                                class="btn btn-icon btn-xs btn-outline-info waves-effect waves-themed mr-2"
+                                                                data-toggle="tooltip" title="កែសម្រួល">
+                                                                <i class="fal fa-pencil"></i>
+                                                                </a>
+
+                                                                <a href="javascript:void(0);"
+                                                                class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed"
+                                                                onclick="deleteData({{$item->id}})"
+                                                                data-toggle="tooltip" title="លុបទិន្នន័យ">
+                                                                <i class="fal fa-trash-alt"></i>
+                                                                </a>
+                                                            </div>
                                                     </td>
                                                 </tr>
                                             @endforeach

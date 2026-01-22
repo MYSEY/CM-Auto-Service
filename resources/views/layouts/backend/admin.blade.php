@@ -1,103 +1,128 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>
-            CM Auto Service
-        </title>
-        <meta name="description" content="Page Titile">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-        <!-- Call App Mode on ios devices -->
+<head>
+    <meta charset="utf-8">
+    <title>CM Auto Service</title>
+    <meta name="description" content="Page Title">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
 
-        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontends/assets/img/icon.ico') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('frontends/assets/img/icon.ico') }}">
 
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <!-- Remove Tap Highlight on Windows Phone IE -->
-        <meta name="msapplication-tap-highlight" content="no">
-        <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <!-- base css -->
-        <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/vendors.bundle.css')}}">
-        <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/app.bundle.css')}}">
-        <!-- Place favicon.ico in the root directory -->
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('backends/img/favicon/apple-touch-icon.png')}}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('backends/img/favicon/favicon-32x32.png')}}">
-        <link rel="mask-icon" href="{{asset('backends/img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
-        <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
-        <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/formplugins/summernote/summernote.css') }}">
-        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" rel="stylesheet">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="msapplication-tap-highlight" content="no">
 
-        {{-- toastr --}}
-        <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
-        <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
-       <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    </head>
+    {{-- Core CSS --}}
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/vendors.bundle.css')}}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/app.bundle.css')}}">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('backends/img/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('backends/img/favicon/favicon-32x32.png')}}">
+    <link rel="mask-icon" href="{{asset('backends/img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
+
+    {{-- Plugins CSS --}}
+    <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/formplugins/summernote/summernote.css') }}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
+    <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
+    <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
+
+    {{-- Core Scripts --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        /* ១. កែសម្រួល Footer (លុបចន្លោះក្នុង rem) */
+        .page-footer {
+            height: 2.8125rem;
+            background: #fff;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        /* ២. កំណត់ទំហំអក្សរសម្រាប់ Table ទាំងអស់ */
+        table.dataTable,
+        .table {
+            font-size: 13px !important;
+        }
+
+        /* ៣. ការកំណត់សម្រាប់ក្បាល Table (Header) */
+        .table thead th {
+            background-color: #f9f9f9 !important;
+            font-weight: 700 !important;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #333;
+            vertical-align: middle !important;
+        }
+
+        /* ៤. បង្រួម Row ឱ្យតូចជាងមុន (Table SM) */
+        .table-sm td, .table-sm th {
+            padding: 0.4rem 0.6rem !important;
+            vertical-align: middle !important;
+        }
+
+        /* ៥. ប៊ូតុង Action (Icon Buttons) */
+        .btn-icon.btn-xs {
+            width: 26px !important;
+            height: 26px !important;
+            border-radius: 50% !important; /* ប្តូរជាមូល */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon i {
+            font-size: 12px;
+            line-height: 1;
+        }
+    </style>
+</head>
     @yield('style')
-    <body class="mod-skin-light ">
+    <body class=" ">
         <!-- DOC: script to save and load page settings -->
         <script>
-            /**
-             *	This script should be placed right after the body tag for fast execution
-             *	Note: the script is written in pure javascript and does not depend on thirdparty library
-             **/
-            'use strict';
+    'use strict';
 
-            var classHolder = document.getElementsByTagName("BODY")[0],
-                /**
-                 * Load from localstorage
-                 **/
-                themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
-                {},
-                themeURL = themeSettings.themeURL || '',
-                themeOptions = themeSettings.themeOptions || 'mod-skin-light';
-            /**
-             * Load theme options
-             **/
-            if (themeSettings.themeOptions)
-            {
-                classHolder.className = themeSettings.themeOptions;
-                console.log("%c✔ Theme settings loaded", "color: #148f32");
-            }
-            else
-            {
-                console.log("Heads up! Theme settings is empty or does not exist, loading default settings...");
-            }
-            if (themeSettings.themeURL && !document.getElementById('mytheme'))
-            {
-                var cssfile = document.createElement('link');
-                cssfile.id = 'mytheme';
-                cssfile.rel = 'stylesheet';
-                cssfile.href = themeURL;
-                document.getElementsByTagName('head')[0].appendChild(cssfile);
-            }
-            /**
-             * Save to localstorage
-             **/
-            var saveSettings = function()
-            {
-                themeSettings.themeOptions = String(classHolder.className).split(/[^\w-]+/).filter(function(item)
-                {
-                    return /^(nav|header|mod|display)-/i.test(item);
-                }).join(' ');
-                if (document.getElementById('mytheme'))
-                {
-                    themeSettings.themeURL = document.getElementById('mytheme').getAttribute("href");
-                };
-                // បង្ខំឱ្យ Fixed Layout ដើរជានិច្ច
-                localStorage.setItem('themeSettings', '{"header-function-fixed":true,"nav-function-fixed":true}');
-            }
-            /**
-             * Reset settings
-             **/
-            var resetSettings = function()
-            {
-                localStorage.setItem("themeSettings", "");
-            }
+    var classHolder = document.getElementsByTagName("BODY")[0],
+        // ទាញយក Setting ពី LocalStorage
+        themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) : {
+            "header-function-fixed": true, // បង្ខំឱ្យ Fixed Header ជា Default
+            "nav-function-fixed": true    // បង្ខំឱ្យ Fixed Navigation ជា Default
+        },
+        themeURL = themeSettings.themeURL || '',
+        themeOptions = themeSettings.themeOptions || ' header-function-fixed nav-function-fixed';
 
-        </script>
+    // ១. អនុវត្ត Class ទៅកាន់ Body ភ្លាមៗដើម្បីកុំឱ្យទាក់ (Flicker)
+    if (themeOptions) {
+        classHolder.className = themeOptions;
+    }
+
+    // ២. Load CSS Theme (ប្រសិនបើមាន)
+    if (themeSettings.themeURL && !document.getElementById('mytheme')) {
+        var cssfile = document.createElement('link');
+        cssfile.id = 'mytheme';
+        cssfile.rel = 'stylesheet';
+        cssfile.href = themeURL;
+        document.getElementsByTagName('head')[0].appendChild(cssfile);
+    }
+
+    // ៣. Function សម្រាប់រក្សាទុកការកំណត់
+    var saveSettings = function() {
+        themeSettings.themeOptions = String(classHolder.className).split(/[^\w-]+/).filter(function(item) {
+            return /^(nav|header|mod|display)-/i.test(item);
+        }).join(' ');
+
+        if (document.getElementById('mytheme')) {
+            themeSettings.themeURL = document.getElementById('mytheme').getAttribute("href");
+        };
+
+        localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+    }
+
+</script>
         <!-- BEGIN Page Wrapper -->
         <div class="page-wrapper">
             <div class="page-inner">
