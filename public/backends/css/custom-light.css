@@ -1,0 +1,25 @@
+/* បង្ខំឱ្យផ្ទៃខាងក្រោយសសុទ្ធ និងស្រឡះ */
+.mod-skin-light body,
+.mod-skin-light .page-wrapper {
+    background-color: #ffffff !important;
+}
+
+/* កែប្រែ Overlay ឱ្យទៅជាពណ៌សថ្លា */
+.mod-skin-light .page-content-overlay {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(4px);
+}
+
+/* បន្ថែមចន្លោះ (Padding) ឱ្យមើលទៅស្រឡះភ្នែក */
+.mod-skin-light .page-content {
+    background-color: #ffffff !important;
+    padding: 35px !important; /* បង្កើន Whitespace */
+}
+
+/* កែពណ៌អក្សរឱ្យដិតល្មម ងាយស្រួលអាន */
+.mod-skin-light p,
+.mod-skin-light span,
+.mod-skin-light h1,
+.mod-skin-light h2 {
+    color: #2b2b2b !important;
+}

@@ -1,0 +1,43 @@
+/* បង្ខំឱ្យ SmartAdmin ប្តូរទៅជាស្ទីលសស្រឡះ និងថ្លា */
+body.mod-skin-light {
+    background-color: #fcfcfc !important; /* ពណ៌ផ្ទៃក្រោយសស្រទន់ */
+    color: #333 !important;
+}
+
+/* កែប្រែផ្នែកមាតិកា (Main Content) ឱ្យមានចន្លោះទំនេរច្រើន */
+.mod-skin-light .page-content {
+    background-color: #ffffff !important;
+    padding: 3rem !important; /* បង្កើន Whitespace ជុំវិញមាតិកា */
+    box-shadow: none !important;
+}
+
+/* កែប្រែ Overlay (ផ្ទៃដែលគ្របពេលមានការរំខាន ឬ Menu Mobile) */
+.mod-skin-light .page-content-overlay {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px); /* បន្ថែមភាពព្រិលៗបែបទំនើប */
+}
+
+/* កែប្រែ Header ឱ្យមើលទៅស្រឡះ */
+.mod-skin-light .page-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.05) !important;
+}
+
+/* កែប្រែ Sidebar ឱ្យទៅជាពណ៌ស (Optional: បើចង់បានសទាំងស្រុង) */
+.mod-skin-light .page-sidebar {
+    background-color: #ffffff !important;
+    border-right: 1px solid #f0f0f0 !important;
+}
+
+/* កែពណ៌អក្សរ Menu ក្នុង Sidebar */
+.mod-skin-light .nav-menu li a {
+    color: #444 !important;
+}
+
+/* Whitespace សម្រាប់កាត (Cards) */
+.mod-skin-light .panel {
+    border: 1px solid #f0f0f0 !important;
+    background: #ffffff !important;
+    margin-bottom: 2rem !important;
+}

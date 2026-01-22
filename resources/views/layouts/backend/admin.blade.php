@@ -30,9 +30,11 @@
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
         <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
+       <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
+
     </head>
     @yield('style')
-    <body class="mod-bg-1 ">
+    <body class="mod-skin-light ">
         <!-- DOC: script to save and load page settings -->
         <script>
             /**
@@ -48,7 +50,7 @@
                 themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
                 {},
                 themeURL = themeSettings.themeURL || '',
-                themeOptions = themeSettings.themeOptions || '';
+                themeOptions = themeSettings.themeOptions || 'mod-skin-light';
             /**
              * Load theme options
              **/
