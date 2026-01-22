@@ -27,6 +27,8 @@
         <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
         <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/formplugins/summernote/summernote.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" rel="stylesheet">
+
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
         <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
@@ -84,7 +86,8 @@
                 {
                     themeSettings.themeURL = document.getElementById('mytheme').getAttribute("href");
                 };
-                localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
+                // បង្ខំឱ្យ Fixed Layout ដើរជានិច្ច
+                localStorage.setItem('themeSettings', '{"header-function-fixed":true,"nav-function-fixed":true}');
             }
             /**
              * Reset settings
