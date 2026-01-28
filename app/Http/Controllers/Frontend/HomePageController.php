@@ -29,12 +29,14 @@ class HomePageController extends Controller
             $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
         }
 
+
+
         $activeTab = $request->get('tab', 'all');
         if ($request->ajax()) {
             $tab = $request->get('tab', 'all');
 
             if ($tab === 'all') {
-                $products = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+                $products = Product::with(['category','subCategory','productType'])->orderBy('number','desc')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
             } else {
                 $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
                 if (!$selected) {
