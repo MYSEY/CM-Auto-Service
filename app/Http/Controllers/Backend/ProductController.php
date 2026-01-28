@@ -57,6 +57,10 @@ class ProductController extends Controller
                 $query->where('products.engine_id', $request->engine_id);
             }
 
+            // --- បន្ថែម Order By នៅត្រង់នេះ ---
+            $query->orderByRaw('LENGTH(products.number) ASC')
+                ->orderBy('products.number', 'asc');
+
             $recordsTotal = Product::count();
             $recordsFiltered = $query->count();
             $start = intval($request->input('start', 0));
