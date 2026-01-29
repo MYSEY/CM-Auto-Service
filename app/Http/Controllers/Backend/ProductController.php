@@ -59,7 +59,7 @@ class ProductController extends Controller
 
             // --- បន្ថែម Order By នៅត្រង់នេះ ---
             $query->orderByRaw('LENGTH(products.number) ASC')
-                ->orderBy('products.number', 'asc');
+                ->orderByRaw("CAST(SUBSTRING(products.number, 3) AS UNSIGNED) ASC");
 
             $recordsTotal = Product::count();
             $recordsFiltered = $query->count();

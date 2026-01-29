@@ -21,12 +21,13 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         $proEngine = Engine::all();
         $slider = Slider::all();
-        $productAll = Product::with(['category','subCategory','productType'])->orderBy('number','desc')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+        $productAll = Product::with(['category','subCategory','productType'])->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+        // $productAll = Product::with(['category','subCategory','productType'])->orderBy('number')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
         $productsByType = [];
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
             $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderBy('number','desc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
         }
 
         $activeTab = $request->get('tab', 'all');
@@ -34,7 +35,7 @@ class HomePageController extends Controller
             $tab = $request->get('tab', 'all');
 
             if ($tab === 'all') {
-                $products = Product::with(['category','subCategory','productType'])->orderBy('number','desc')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+                $products = Product::with(['category','subCategory','productType'])->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
             } else {
                 $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
                 if (!$selected) {
@@ -42,7 +43,7 @@ class HomePageController extends Controller
                 }
 
                 $pageName = 'page_' . $tab;
-                $products = Product::with(['category','subCategory','productType'])->where('product_type_id', $selected->id)->orderBy('number','desc')->paginate(24, ['*'], $pageName)->appends(['tab' => $tab]);
+                $products = Product::with(['category','subCategory','productType'])->where('product_type_id', $selected->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $tab]);
             }
 
             return response()->json([
@@ -62,14 +63,14 @@ class HomePageController extends Controller
         $productDetail = Product::with(['productImage','productType','category','subCategory'])->where('id',$request->id)->first();
         $company = Company::first();
         $category = ProductCategory::with('subCategory')->get();
-        $productAll = Product::orderBy('number','desc')->paginate(24)->appends($request->except('page'));
+        $productAll = Product::orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24)->appends($request->except('page'));
         $productType = ProductType::all();
         $slider = Slider::all();
         $productsByType = [];
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
             $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderBy('number','desc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
         }
        return view('frontends.product_detail',compact('productAll','productDetail','company','category','productType','slider','productsByType'));
     }
@@ -105,7 +106,7 @@ class HomePageController extends Controller
     }
 
     public function filter($id,Request $request){
-        $productAll = Product::with(['productImage'])->where('product_type_id',$id)->orderBy('number','desc')->paginate(9);
+        $productAll = Product::with(['productImage'])->where('product_type_id',$id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(9);
         $company = Company::first();
         $category = ProductCategory::all();
         $productType = ProductType::all();
@@ -115,7 +116,7 @@ class HomePageController extends Controller
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
             $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderBy('number','desc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
         }
        return view('frontends.ecu_soft',compact('productAll','company','category','productType','slider','activeTab','productsByType'));
     }
@@ -133,7 +134,7 @@ class HomePageController extends Controller
             $query->where('engine_id', $request->engine_id);
         }
 
-        $products = $query->orderBy('number','desc')->paginate(24)->appends($request->only(['category_id','sub_category_id','engine_id']));
+        $products = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24)->appends($request->only(['category_id','sub_category_id','engine_id']));
 
         return view('frontends.product_list', compact('products'))->render();
     }
@@ -184,7 +185,7 @@ class HomePageController extends Controller
                 });
             });
         }
-        $productAll = $query->orderBy('number','desc')->paginate(24)->appends($request->all());
+        $productAll = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24)->appends($request->all());
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('frontends.product_list', [
