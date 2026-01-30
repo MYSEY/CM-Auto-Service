@@ -21,8 +21,8 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         $proEngine = Engine::all();
         $slider = Slider::all();
-        $productAll = Product::with(['category','subCategory','productType'])->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'desc')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
-        // $productAll = Product::with(['category','subCategory','productType'])->orderBy('number')->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+        $productAll = Product::with(['category','subCategory','productType'])->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+        // $productAll = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
         $productsByType = [];
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
