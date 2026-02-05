@@ -44,12 +44,12 @@
                                     <thead class="">
                                         <tr>
                                             <th>Product</th>
-                                            <th>product type</th>
-                                            <th>category</th>
-                                            <th>sub category</th>
-                                            <th>engine</th>
-                                            <th>quantity</th>
-                                            <th>price</th>
+                                            <th>Product Type</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Engine</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
