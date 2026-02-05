@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('slug');
             $table->boolean('publish')->default(1);
             $table->boolean('status')->default(0);
+            $table->integer('low_stock_qty_warning')->nullable();
             $table->tinyInteger('feature')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

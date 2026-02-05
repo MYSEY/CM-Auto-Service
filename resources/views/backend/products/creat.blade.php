@@ -105,17 +105,28 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="Category">Product Type</label>
-                            <span class="text-danger">*</span>
-                            <select class="form-control" name="product_type_id">
-                                <option value="">Please Choose product type</option>
-                                @foreach ($productType as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Category">Product Type</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control" name="product_type_id">
+                                        <option value="">Please Choose product type</option>
+                                        @foreach ($productType as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="low_stock_qty_warning">Low Stock Quantity Warning</label>
+                                    <input type="number" class="form-control" name="low_stock_qty_warning" id="low_stock_qty_warning" placeholder="Enter Low Stock Quantity Warning" value="{{ old('low_stock_qty_warning') }}">
+                                </div>
+                            </div>
                         </div>
+                        
                         <div class="form-group mb-0" style="text-align: right;">
                             <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
                             <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>

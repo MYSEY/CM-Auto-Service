@@ -157,16 +157,25 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="Category">Product Type</label>
-                            <span class="text-danger">*</span>
-                            <select class="form-control" name="product_type_id">
-                                <option value="">Please choose product type</option>
-                                @foreach ($producttype as $item)
-                                    <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                        
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="Category">Product Type</label>
+                                <span class="text-danger">*</span>
+                                <select class="form-control" name="product_type_id">
+                                    <option value="">Please choose product type</option>
+                                    @foreach ($producttype as $item)
+                                        <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="low_stock_qty_warning">Low Stock Quantity Warning</label>
+                                    <input type="number" class="form-control" name="low_stock_qty_warning" id="low_stock_qty_warning" placeholder="Enter Quantity" value="{{ old('low_stock_qty_warning') ?? $data->low_stock_qty_warning }}">
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">
                             <input type="text" id="id" name="id" value="{{ $data->id }}" hidden>

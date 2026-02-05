@@ -33,6 +33,7 @@ class Product extends Model
         'number',
         'slug',
         'publish',
+        'low_stock_qty_warning',
         'status',
         'created_by',
         'updated_by'

@@ -193,6 +193,7 @@ class ProductController extends Controller
                 'year'            => $request->year,
                 'discount_price'   => $request->discount_price,
                 'number'           => $request->number,
+                'low_stock_qty_warning'    => $request->low_stock_qty_warning,
                 'delivery_note'    => $request->delivery_note,
                 'updated_by'       => Auth::id(),
             ]);
@@ -227,7 +228,6 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-
             // Delete product main photo if exists
             if ($product->product_photo && file_exists(public_path('images/products/' . $product->product_photo))) {
                 unlink(public_path('images/products/' . $product->product_photo));
