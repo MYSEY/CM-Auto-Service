@@ -27,7 +27,11 @@ class ProductSubcategoryController extends Controller
      */
     public function create()
     {
-        $categories = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
+        $categories = ProductCategory::selectRaw('MIN(id) as id, name')
+        ->whereNull('deleted_at') // បញ្ជាក់ឱ្យច្បាស់ថា យកតែអាដែល NULL
+        ->groupBy('name')
+        ->orderBy('name')
+        ->get();
         // Pass the data to the view using compact()
         return view('backend.sub_category.create', compact('categories'));
     }
