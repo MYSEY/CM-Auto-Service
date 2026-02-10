@@ -261,6 +261,7 @@ class ProductController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
     }
+    
     public function onchangeSubCagegory(Request $request){
         try{
             $datasubCategory = Engine::where('sub_category_id',$request->sub_category_id)->get();
