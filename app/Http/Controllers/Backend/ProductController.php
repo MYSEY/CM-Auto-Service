@@ -91,10 +91,11 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductRequesStore $request)
+    public function store(request $request)
     {
         DB::beginTransaction();
         try {
+
             // Handle single product photo
             $filename = null;
             if ($request->hasFile('product_photo')) {
@@ -102,10 +103,32 @@ class ProductController extends Controller
                 $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/products'), $filename);
             }
+
             $data = $request->all();
-            $data['slug']=Str::slug($request->name,'-');
-            $data['product_photo']=$filename;
+
+            // ✅ generate slug
+            $data['slug'] = Str::slug($request->name, '-');
+
+            // ✅ photo
+            $data['product_photo'] = $filename;
+
+            // ✅ created by
             $data['created_by'] = Auth::id();
+
+            // ✅ 👉 ADD THIS — generate code from name + number
+            $productType = ProductType::find($request->product_type_id);
+            $category = ProductCategory::find($request->category_id);
+            $subCategory = ProductSubCategory::find($request->sub_category_id);
+            $engine = Engine::find($request->engine_id);
+
+            $data['code'] = $productType->name . '-' .
+                            $category->name . '-' .
+                            $subCategory->name . '-' .
+                            $engine->name . '-' .
+                            $request->number;
+
+            // dd($data = $request->all());
+
             // Create product
             $product = Product::create($data);
 
@@ -122,9 +145,11 @@ class ProductController extends Controller
                     ]);
                 }
             }
+
             DB::commit();
             Toastr::success('Product created successfully!', 'Success');
             return redirect()->back();
+
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Product creation failed: ' . $e->getMessage(), 'Error');
@@ -166,9 +191,9 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
+
             // Handle product photo update (single main image)
             if ($request->hasFile('product_photo')) {
-                // Delete old photo if exists
                 if ($product->product_photo && file_exists(public_path('images/products/' . $product->product_photo))) {
                     unlink(public_path('images/products/' . $product->product_photo));
                 }
@@ -180,7 +205,19 @@ class ProductController extends Controller
                 $product->product_photo = $filename;
             }
 
-            // Update product details
+            // ✅ ADD THIS — generate code from name + number
+            $productType = ProductType::find($request->product_type_id);
+            $category = ProductCategory::find($request->category_id);
+            $subCategory = ProductSubCategory::find($request->sub_category_id);
+            $engine = Engine::find($request->engine_id);
+
+            $code = ($productType->name ?? '') . '-' .
+                    ($category->name ?? '') . '-' .
+                    ($subCategory->name ?? '') . '-' .
+                    ($engine->name ?? '') . '-' .
+                    $request->number;
+
+            // Update product details (OLD PROCESS KEEP)
             $product->update([
                 'product_type_id'  => $request->product_type_id,
                 'category_id'      => $request->category_id,
@@ -188,20 +225,25 @@ class ProductController extends Controller
                 'name'             => $request->name,
                 'slug'             => Str::slug($request->name, '-'),
                 'description'      => $request->description,
-                'engine_id'          => $request->engine_id,
+                'engine_id'        => $request->engine_id,
                 'price'            => $request->price,
-                'year'            => $request->year,
+                'year'             => $request->year,
                 'discount_price'   => $request->discount_price,
                 'number'           => $request->number,
+                'low_stock_qty_warning' => $request->low_stock_qty_warning,
                 'delivery_note'    => $request->delivery_note,
+                'code'             => $code, // ✅ ADD HERE
                 'updated_by'       => Auth::id(),
             ]);
+
+            // OLD PROCESS KEEP
             ProductImage::where('product_id', $product->id)->delete();
-            // Handle gallery update (optional)
+
             if ($request->hasFile('gallery')) {
                 foreach ($request->file('gallery') as $file) {
                     $galleryName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('images/products/gallery'), $galleryName);
+
                     ProductImage::create([
                         'product_id' => $product->id,
                         'path_name'  => $galleryName,
@@ -213,6 +255,7 @@ class ProductController extends Controller
             DB::commit();
             Toastr::success('Product updated successfully!', 'Success');
             return redirect('admins/product');
+
         } catch (\Exception $e) {
             DB::rollBack();
             Toastr::error('Product update failed: ' . $e->getMessage(), 'Error');
@@ -227,7 +270,6 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-
             // Delete product main photo if exists
             if ($product->product_photo && file_exists(public_path('images/products/' . $product->product_photo))) {
                 unlink(public_path('images/products/' . $product->product_photo));
@@ -261,6 +303,7 @@ class ProductController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
     }
+
     public function onchangeSubCagegory(Request $request){
         try{
             $datasubCategory = Engine::where('sub_category_id',$request->sub_category_id)->get();

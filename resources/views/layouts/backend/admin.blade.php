@@ -212,6 +212,12 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="@if (in_array(Request::instance()->segment(2), ['order'])) active @endif">
+                                <a href="{{url('admins/order')}}" title="order" data-filter-tags="Order">
+                                    <i class="fal fa-user"></i>
+                                    <span class="nav-link-text">order</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="#" title="Theme Settings" data-filter-tags="theme settings">
                                     <i class="fal fa-cog"></i>

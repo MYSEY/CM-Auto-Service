@@ -70,6 +70,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>ProductPhoto</th>
+                                                <th>Code</th>
                                                 <th>Name</th>
                                                 <th>ProductType</th>
                                                 <th>Category</th>
@@ -77,6 +78,7 @@
                                                 <th>Engine</th>
                                                 <th>PatrNnumber</th>
                                                 <th>Price</th>
+                                                <th>Qty</th>
                                                 <th>DiscountPrice</th>
                                                 <th>Year</th>
                                                 <th>Number</th>
@@ -239,6 +241,10 @@
                     }
                 },
                 {
+                    data: 'code',
+                    name: 'code',
+                },
+                {
                     data: 'name',
                     name: 'name',
                 },
@@ -271,6 +277,10 @@
                             maximumFractionDigits: 2
                         }).format(data || 0);
                     }
+                },
+                {
+                    data:'low_stock_qty_warning',
+                    name:'low_stock_qty_warning',
                 },
                 {
                     data: 'discount_price',

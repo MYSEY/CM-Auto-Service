@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Backend\EngineController;
 use App\Http\Controllers\Backend\SliderController;
@@ -83,6 +84,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('company', CompanyController::class);
     Route::resource('shops', BackendShopController::class);
     Route::resource('slide', SliderController::class);
+    Route::resource('order', OrderController::class);
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');
