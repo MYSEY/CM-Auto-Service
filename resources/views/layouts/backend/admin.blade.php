@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
 
+
+
     {{-- Core Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
