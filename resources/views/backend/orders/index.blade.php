@@ -57,7 +57,7 @@
         });
         dataTables();
     });
-    
+
     function dataTables() {
         $('#tbl_product').DataTable({
             pageLength: 10,

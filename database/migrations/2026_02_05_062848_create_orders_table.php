@@ -8,18 +8,17 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * php artisan migrate:refresh --path=database/migrations/2026_02_05_062848_create_orders_table.php 
+     * php artisan migrate:refresh --path=database/migrations/2026_02_05_062848_create_orders_table.php
      */
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('customer_name');
             $table->string('telephone')->nullable();
             $table->string('email')->nullable();
             $table->decimal('total_price', 10, 2);
             $table->integer('total_qty');
-            $table->decimal('total_discount', 10, 2)->nullable();
             $table->dateTime('order_date');
             $table->string('status')->default('unpaid');
             $table->integer('created_by')->nullable();

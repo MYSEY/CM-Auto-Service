@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Order;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -70,7 +73,49 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer_name'       => 'required',
+            'product_code.*'      => 'required',
+            'quantity.*'          => 'required|numeric|min:1',
+            'price.*'             => 'required|numeric|min:0',
+            'sub_total.*'         => 'required|numeric|min:0',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // 1️⃣ Save Order
+            $data = $request->all();
+            $data['created_by'] = Auth::user();
+            $data['status'] = 'requesting';
+            $order = Order::create($data);
+
+            // 2️⃣ Save Order Details (MULTIPLE)
+            $details = [];
+            foreach ($request->orderDetail as $item) {
+                $details[] = [
+                    'order_id'     => $order->id,
+                    'product_id' => $item->product_id,
+                    'quantity'     => $request->quantity,
+                    'price'        => $request->price,
+                    'sub_total'    => $request->sub_total,
+                    'created_at'   => now(),
+                    'updated_at'   => now(),
+                ];
+            }
+            dd($details);
+            OrderDetail::insert(values: $details); // 🔥 FAST & CLEAN
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message'=> 'Order & details saved successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => false,
+                'message'=> $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

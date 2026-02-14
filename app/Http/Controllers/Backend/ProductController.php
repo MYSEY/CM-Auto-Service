@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Company;
 use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Support\Str;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ProductRequesStore;
 use App\Models\Engine;
 use Illuminate\Support\Facades\File;
 
