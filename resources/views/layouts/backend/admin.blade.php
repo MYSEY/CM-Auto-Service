@@ -28,7 +28,11 @@
     <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
 
+<<<<<<< HEAD
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/formplugins/select2/select2.bundle.css')}}">
+=======
+
+>>>>>>> 0814c5aeee9487a663c32169b25c7d9f603cca9c
 
     {{-- Core Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
