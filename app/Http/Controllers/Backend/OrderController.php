@@ -73,43 +73,54 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'customer_name'       => 'required',
-            'product_code.*'      => 'required',
-            'quantity.*'          => 'required|numeric|min:1',
-            'price.*'             => 'required|numeric|min:0',
-            'sub_total.*'         => 'required|numeric|min:0',
-        ]);
-
         DB::beginTransaction();
         try {
-            // 1️⃣ Save Order
-            $data = $request->all();
-            $data['created_by'] = Auth::user();
-            $data['status'] = 'requesting';
-            $order = Order::create($data);
+            $request->validate([
+                'customer_name'              => 'required',
+                'orderDetail'                => 'required|array|min:1',
+                'orderDetail.*.product_id'   => 'required',
+                'orderDetail.*.quantity'     => 'required|numeric|min:1',
+                'orderDetail.*.price'        => 'required|numeric|min:0',
+                'orderDetail.*.sub_total'    => 'required|numeric|min:0',
+            ]);
 
-            // 2️⃣ Save Order Details (MULTIPLE)
+            $totalQty = 0;
+            $totalPrice = 0;
+            foreach ($request->orderDetail as $item) {
+                $totalQty += $item['quantity'];
+                $totalPrice += $item['sub_total'];
+            }
+
+            $order = Order::create([
+                'customer_name' => $request->customer_name,
+                'telephone'     => $request->telephone,
+                'email'         => $request->email,
+                'order_date'    => $request->order_date,
+                'total_qty'     => $totalQty,
+                'total_price'   => $totalPrice,
+                'status'        => 'requesting',
+                'created_by'    => Auth::id(),
+            ]);
+
             $details = [];
             foreach ($request->orderDetail as $item) {
                 $details[] = [
-                    'order_id'     => $order->id,
-                    'product_id' => $item->product_id,
-                    'quantity'     => $request->quantity,
-                    'price'        => $request->price,
-                    'sub_total'    => $request->sub_total,
-                    'created_at'   => now(),
-                    'updated_at'   => now(),
+                    'order_id'   => $order->id,
+                    'product_id' => $item['product_id'],
+                    'quantity'   => $item['quantity'],
+                    'price'      => $item['price'],
+                    'sub_total'  => $item['sub_total'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
             }
-            dd($details);
-            OrderDetail::insert(values: $details); // 🔥 FAST & CLEAN
+            OrderDetail::insert($details);
             DB::commit();
             return response()->json([
-                'status' => true,
+                'status' => 'success',
                 'message'=> 'Order & details saved successfully'
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
                 'status' => false,

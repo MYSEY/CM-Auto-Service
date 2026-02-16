@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->decimal('total_price', 10, 2);
             $table->integer('total_qty');
-            $table->dateTime('order_date');
+            $table->date('order_date');
             $table->string('status')->default('unpaid');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

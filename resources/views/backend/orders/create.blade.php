@@ -65,10 +65,10 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <select name="product_id[]" id="product_id[]" class="form-control select2">
+                                                <select name="product_id[]" id="product_id[]" class="form-control select2 product_id">
                                                     <option value="">Please Select</option>
-                                                    @foreach($products as $product)
-                                                        <option value="{{ $product->id }}">{{ $product->code }}</option>
+                                                    @foreach($products as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->code }}</option>
                                                     @endforeach
                                                 </select>
                                             </td>
@@ -156,8 +156,14 @@
                     },
                     dataType: "JSON",
                     success: function (res) {
-                        console.log(res);
-
+                        if(res.status == 'success'){
+                            toastr.success(res.message);
+                            setTimeout(function(){
+                                window.location.href = "{{ url('admins/order') }}";
+                            }, 2000);
+                        } else {
+                            toastr.error(res.message);
+                        }
                     }
                 });
             });
@@ -167,8 +173,8 @@
                     <td>
                         <select class="form-control select2 product_id" name="product_id[]">
                             <option value="">Please Select</option>
-                            @foreach($products as $product)
-                                <option value="{{ $product->code }}">{{ $product->code }}</option>
+                            @foreach($products as $item)
+                                <option value="{{ $item->id }}">{{ $item->code }}</option>
                             @endforeach
                         </select>
                     </td>

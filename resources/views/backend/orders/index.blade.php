@@ -27,7 +27,6 @@
                                                 <th>email</th>
                                                 <th>Total QTY</th>
                                                 <th>Total Price</th>
-                                                <th>Total Discount</th>
                                                 <th>Order Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -76,8 +75,8 @@
                     name: 'id',
                 },
                 {
-                    data: 'name',
-                    name: 'name',
+                    data: 'customer_name',
+                    name: 'customer_name',
                 },
                 {
                     data: 'telephone',
@@ -96,10 +95,6 @@
                     name: 'total_price',
                 },
                 {
-                    data: 'total_discount',
-                    name: 'total_discount',
-                },
-                {
                     data: 'order_date',
                     name: 'order_date',
                 },
@@ -109,9 +104,8 @@
                     render: function(data, type, row) {
                         return `
                             <select class="form-control changeStatus" data-id="${row.id}">
-                                <option value="1" ${row.status == 1 ? 'selected' : ''}>Publish</option>
-                                <option value="0" ${row.status == 0 ? 'selected' : ''}>Pending</option>
-                                <option value="2" ${row.status == 2 ? 'selected' : ''}>Un-Publish</option>
+                                <option value="requesting" ${row.status == 'requesting' ? 'selected' : ''}>Requesting</option>
+                                <option value="approve" ${row.status == 'approve' ? 'selected' : ''}>Approve</option>
                             </select>
                         `;
                     }
