@@ -98,7 +98,7 @@
                                     <div class="mb-2" style="text-align: right;">
                                         {{-- កែ route ទៅ product-categories.index --}}
                                         <a href="{{url('admins/category')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
-                                        <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
+                                        <button type="submit" id="submit-btn" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,6 @@
 
 @section('script')
     <script>
-
           $(function(){
             $(document).on('change','#profile', function() {
                 if (this.files && this.files[0]) {
@@ -123,6 +122,18 @@
                     img.src = URL.createObjectURL(this.files[0]);
                     document.querySelector(".image_preview").files = this.files;
                 }
+            });
+        });
+
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                // នៅពេល User ចុច Submit យើងនឹង Disable ប៊ូតុង
+                $('#submit-btn').prop('disabled', true);
+
+                // បន្ថែមការបង្ហាញ Loading បន្តិចដើម្បីឱ្យ User ដឹងថា Form កំពុងដំណើរការ (Optional)
+                $('#submit-btn').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+
+                return true; // បន្តទៅកាន់ការ Submit Form ជាធម្មតា
             });
         });
         // Option 1: Live Slug Generation

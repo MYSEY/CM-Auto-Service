@@ -87,11 +87,23 @@
                 }
             });
         });
-        $(document).on('click','#btnSubmit',function(){
+
+        $(document).on('click', '#btnSubmit', function() {
+            let btn = $(this); // បង្កើត variable តំណាងឱ្យប៊ូតុងដែលចុច
+
+            // ១. Disable ប៊ូតុងភ្លាមៗ និងបង្ហាញ Loading
+            btn.addClass('disabled').attr('disabled', true);
+            let originalText = btn.html(); // រក្សាទុកអក្សរដើម (Submit)
+            btn.html('<i class="fal fa-spinner fa-spin"></i> Processing...');
+
+            // លុប Error message ចាស់ៗចោលមុននឹងផ្ញើ Request ថ្មី
+            $('.text-danger').text('');
+
             $.ajax({
                 type: "POST",
                 url: "{{ url('admins/engine') }}",
                 data: {
+                    _token: "{{ csrf_token() }}", // កុំភ្លេចថែម CSRF token សម្រាប់ការប្រើ AJAX POST
                     category_id : $("#category_id").val(),
                     sub_category_id : $("#sub_category_id").val(),
                     name : $("#name").val(),
@@ -102,6 +114,7 @@
                     if (response.status === true) {
                         toastr.success(response.message, 'Success');
                         $("#name").val('');
+                        $("#part_number").val('');
                     } else {
                         toastr.error('Error', 'Fail');
                     }
@@ -110,9 +123,16 @@
                     if (xhr.status === 422) {
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, value) {
-                            $('.error-' + key).text(value[0]); // show error under each input
+                            $('.error-' + key).text(value[0]);
                         });
+                    } else {
+                        toastr.error('Something went wrong!', 'Error');
                     }
+                },
+                complete: function() {
+                    // ២. នៅពេលដំណើរការចប់ (ទោះជោគជ័យ ឬបរាជ័យ) ត្រូវ Enable ប៊ូតុងមកវិញ
+                    btn.removeClass('disabled').removeAttr('disabled');
+                    btn.html(originalText);
                 }
             });
         });
