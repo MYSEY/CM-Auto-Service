@@ -28,11 +28,7 @@
     <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
 
-<<<<<<< HEAD
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/formplugins/select2/select2.bundle.css')}}">
-=======
-
->>>>>>> 0814c5aeee9487a663c32169b25c7d9f603cca9c
 
     {{-- Core Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -83,6 +79,16 @@
         .btn-icon i {
             font-size: 12px;
             line-height: 1;
+        }
+
+        .primary-nav .nav-menu > li > a:hover,
+        .primary-nav .nav-menu > li.active > a {
+            background: rgba(0,0,0,0.025);
+        }
+
+        .primary-nav .nav-menu > li > a:hover i,
+        .primary-nav .nav-menu > li.active > a i {
+            color: #1a73e8;
         }
     </style>
 </head>
@@ -151,118 +157,98 @@
                                 </a>
                             </div>
                         </div>
-                        {{--  <div class="info-card">
-                            <img src="{{asset('backends/img/demo/avatars/avatar-admin.png')}}" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
-                            <div class="info-card-text">
-                                <a href="#" class="d-flex align-items-center text-white">
-                                    <span class="text-truncate text-truncate-sm d-inline-block">
-                                        Dr. Codex Lantern
-                                    </span>
-                                </a>
-                                <span class="d-inline-block text-truncate text-truncate-sm">Toronto, Canada</span>
-                            </div>
-                            <img src="{{asset('backends/img/card-backgrounds/cover-2-lg.png')}}" class="cover" alt="cover">
-                            <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">
-                                <i class="fal fa-angle-down"></i>
-                            </a>
-                        </div>  --}}
+
                         <ul id="js-nav-menu" class="nav-menu">
                             <li class="@if (in_array(Request::instance()->segment(2), ['dashboard'])) active @endif">
                                 <a href="{{url('admins/dashboard')}}" title="Dashboard" data-filter-tags="Dashboard">
-                                    <i class="fal fa-info-circle"></i>
+                                    <i class="fal fa-tachometer-alt"></i>
                                     <span class="nav-link-text" data-i18n="nav.Dashboard">Dashboard</span>
                                 </a>
                             </li>
+
                             <li class="@if (in_array(Request::instance()->segment(2), ['users'])) active @endif">
                                 <a href="{{url('admins/users')}}" title="Users" data-filter-tags="User">
-                                    <i class="fal fa-user"></i>
+                                    <i class="fal fa-users"></i>
                                     <span class="nav-link-text">Users</span>
                                 </a>
                             </li>
+
                             <li class="@if (in_array(Request::instance()->segment(2), ['backend-contact'])) active @endif">
                                 <a href="{{url('admins/backend-contact')}}" title="Contact" data-filter-tags="Contact">
-                                    <i class="fal fa-user"></i>
+                                    <i class="fal fa-address-book"></i>
                                     <span class="nav-link-text">Contact</span>
                                 </a>
                             </li>
+
                             <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-type','engine'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
-                                    <i class="fal fa-cog"></i>
+                                    <i class="fal fa-boxes"></i>
                                     <span class="nav-link-text" data-i18n="nav.product">Product</span>
                                 </a>
                                 <ul>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['product'])) active @endif">
-                                        <a href="{{ url('admins/product') }}" title="Alerts" data-filter-tags="products alerts">
+                                        <a href="{{ url('admins/product') }}" title="Products">
                                             <span class="nav-link-text" data-i18n="nav.products">Products</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['product-type'])) active @endif">
-                                        <a href="{{ url('admins/product-type') }}" title="Alerts" data-filter-tags="Product alerts">
-                                            <span class="nav-link-text" data-i18n="nav.Product">Product Type</span>
+                                        <a href="{{ url('admins/product-type') }}" title="Product Type">
+                                            <span class="nav-link-text">Product Type</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['category'])) active @endif">
-                                        <a href="{{ url('admins/category') }}" title="Alerts" data-filter-tags="Product Category alerts">
-                                            <span class="nav-link-text" data-i18n="nav.Product Category">Category</span>
+                                        <a href="{{ url('admins/category') }}" title="Category">
+                                            <span class="nav-link-text">Category</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['sub-category'])) active @endif">
-                                        <a href="{{ url('admins/sub-category') }}" title="Alerts" data-filter-tags="Sub Category alerts">
-                                            <span class="nav-link-text" data-i18n="nav.Product Category">Sub Category</span>
+                                        <a href="{{ url('admins/sub-category') }}" title="Sub Category">
+                                            <span class="nav-link-text">Sub Category</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['engine'])) active @endif">
-                                        <a href="{{ url('admins/engine') }}" title="Alerts" data-filter-tags="engine alerts">
-                                            <span class="nav-link-text" data-i18n="nav.engine">Engine</span>
+                                        <a href="{{ url('admins/engine') }}" title="Engine">
+                                            <span class="nav-link-text">Engine</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+
                             <li class="@if (in_array(Request::instance()->segment(2), ['order'])) active @endif">
-                                <a href="{{url('admins/order')}}" title="order" data-filter-tags="Order">
-                                    <i class="fal fa-user"></i>
-                                    <span class="nav-link-text">order</span>
+                                <a href="{{url('admins/order')}}" title="Order" data-filter-tags="Order">
+                                    <i class="fal fa-shopping-cart"></i>
+                                    <span class="nav-link-text">Order</span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
+                                <a href="#" title="Settings" data-filter-tags="theme settings">
                                     <i class="fal fa-cog"></i>
                                     <span class="nav-link-text" data-i18n="nav.theme_settings">Settings</span>
                                 </a>
                                 <ul>
-                                    </li>
-                                    <li>
-                                        <li class="@if (in_array(Request::instance()->segment(2), ['slide'])) active @endif">
-                                        <a href="{{ url('admins/slide') }}" title="Alerts" data-filter-tags="Slider">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Slider</span>
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['slide'])) active @endif">
+                                        <a href="{{ url('admins/slide') }}" title="Slider">
+                                            <i class="fal fa-images"></i> <!-- added icon for visual content -->
+                                            <span class="nav-link-text">Slider</span>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+
                             <li>
-                                <a href="#" title="Theme Settings" data-filter-tags="theme settings">
-                                    <i class="fal fa-cog"></i>
-                                    <span class="nav-link-text" data-i18n="nav.theme_settings">Role Permission</span>
+                                <a href="#" title="Role Permission" data-filter-tags="role permission">
+                                    <i class="fal fa-user-shield"></i>
+                                    <span class="nav-link-text">Role Permission</span>
                                 </a>
                                 <ul>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Role</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Permission</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="ui_alerts.html" title="Alerts" data-filter-tags="ui components alerts">
-                                            <span class="nav-link-text" data-i18n="nav.ui_components_alerts">Permission Category</span>
-                                        </a>
-                                    </li>
+                                    <li><a href="#"><span class="nav-link-text">Role</span></a></li>
+                                    <li><a href="#"><span class="nav-link-text">Permission</span></a></li>
+                                    <li><a href="#"><span class="nav-link-text">Permission Category</span></a></li>
                                 </ul>
                             </li>
                         </ul>
+
                         <div class="filter-message js-filter-message bg-success-600"></div>
                     </nav>
                     <!-- END PRIMARY NAVIGATION -->

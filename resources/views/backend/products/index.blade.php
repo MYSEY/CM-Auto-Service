@@ -279,8 +279,8 @@
             },
             // 9. Part # (Part Number)
             {
-                data: 'part_number',
-                name: 'part_number',
+                data: 'number',
+                name: 'number',
                 className: 'align-middle',
                 render: function(data) {
                     return `<span class="font-italic text-info border-bottom border-info small">${data || '-'}</span>`;
