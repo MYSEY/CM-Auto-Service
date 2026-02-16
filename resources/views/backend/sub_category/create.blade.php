@@ -70,7 +70,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-2" style="text-align: right;">
                                         <a href="{{url('admins/sub-category')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
-                                        <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
+                                        <button type="submit" id="submit-btn" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -80,4 +80,19 @@
             </div>
         </div>
     </div>
+@endsection
+  @section('script')
+    <script>
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                // នៅពេល User ចុច Submit យើងនឹង Disable ប៊ូតុង
+                $('#submit-btn').prop('disabled', true);
+
+                // បន្ថែមការបង្ហាញ Loading បន្តិចដើម្បីឱ្យ User ដឹងថា Form កំពុងដំណើរការ (Optional)
+                $('#submit-btn').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+
+                return true; // បន្តទៅកាន់ការ Submit Form ជាធម្មតា
+            });
+        });
+    </script>
 @endsection
