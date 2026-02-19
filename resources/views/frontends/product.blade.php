@@ -1,12 +1,22 @@
 <div class="product-card product_items">
     <article class="single_product">
         <figure>
-            <div class="product-image-wrapper product_thumb">
+            {{--  <div class="product-image-wrapper product_thumb">
                 <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
                     <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
                 </a>
                 <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
                     <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
+                </a>
+            </div>  --}}
+
+            <div class="product-image-wrapper product_thumb">
+                <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                    {{-- កែត្រង់ src នេះ --}}
+                    <img src="https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/{{ $item->product_photo }}" alt="{{ $item->category->name ?? '' }}">
+                </a>
+                <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                    <img src="https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/{{ $item->product_photo }}" alt="{{ $item->category->name ?? '' }}">
                 </a>
             </div>
             <div class="product_content">

@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\BackendContactController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Backend\ProductSubcategoryController;
+// use Illuminate\Support\Facades\Storage;
 
 /*
     php artisan make:controller Backend/UserController --resource
@@ -85,6 +86,17 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('shops', BackendShopController::class);
     Route::resource('slide', SliderController::class);
     Route::resource('order', OrderController::class);
+
+    // Route::get('/test-r2', function () {
+    //         try {
+    //             // បង្កើត file text តូចមួយដើម្បីតេស្ត
+    //             Storage::disk('r2')->put('test-file.txt', 'សួស្តី! ការតេស្តពី Local ទៅ R2 ជោគជ័យហើយ។');
+
+    //             return "Upload ជោគជ័យ! មើល file តាមរយៈ: " . Storage::disk('r2')->url('test-file.txt');
+    //         } catch (\Exception $e) {
+    //             return "មានបញ្ហា: " . $e->getMessage();
+    //         }
+    //     });
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');

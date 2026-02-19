@@ -227,17 +227,18 @@
             },
             // 2. Photo
             {
-                data: 'product_photo',
-                name: 'product_photo',
-                className: 'align-middle',
-                render: function (data, type, row) {
-                    if (data) {
-                        return `<img src="/images/products/${data}" width="50" height="40" style="object-fit:cover; border-radius:6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">`;
-                    } else {
-                        return `<span class="text-muted small">No Image</span>`;
+                    data: 'product_photo',
+                    name: 'product_photo',
+                    className: 'align-middle',
+                    render: function(data) {
+                        const r2Url = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+                        if (data) {
+                            return `<img src="${r2Url}${data}" width="50" height="40" style="object-fit:cover; border-radius:6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">`;
+                        } else {
+                            return `<span class="text-muted small">No Image</span>`;
+                        }
                     }
-                }
-            },
+                },
             // 3. Code
             {
                 data: 'code',
@@ -259,10 +260,14 @@
             // 6. Category
             {
                 data: 'category_name',
-                name: 'category_name',
+                name: 'category_name', // ត្រូវដូចឈ្មោះក្នុង Controller addColumn
                 className: 'align-middle',
                 render: function(data) {
-                    return `<span class="badge badge-light border-0 py-1 px-2 text-primary" style="background: #eef2f7;"><i class="fal fa-tag mr-1"></i> ${data || 'None'}</span>`;
+                    let category = data ? data : 'None';
+                    return `
+                        <span class="badge badge-light border-0 py-1 px-2 text-primary" style="background: #eef2f7;">
+                            <i class="fal fa-tag mr-1"></i> ${category}
+                        </span>`;
                 }
             },
             // 7. Sub (Sub Category)
@@ -309,8 +314,8 @@
                 render: function(data, type, row) {
                     return `
                         <select class="form-control form-control-sm border-light changeStatus shadow-none" data-id="${row.id}" style="width: 115px; border-radius: 20px; font-size: 11px;">
-                            <option value="1" ${data == 1 ? 'selected' : ''}>● Publish</option>
-                            <option value="0" ${data == 0 ? 'selected' : ''}>● Pending</option>
+                            <option value="0" ${data == 0 ? 'selected' : ''}>● Publish</option>
+                            <option value="1" ${data == 1 ? 'selected' : ''}>● Pending</option>
                             <option value="2" ${data == 2 ? 'selected' : ''}>● Un-Publish</option>
                         </select>
                     `;
