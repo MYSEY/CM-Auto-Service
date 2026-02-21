@@ -49,6 +49,7 @@ Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
+Route::get('/product-detail', [HomePageController::class, 'productDetail'])->name('productDetail');
 Route::get('frontend/product/filter/{id}', [HomePageController::class, 'filter'])->name('product.filter');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 Route::post('/add-to-cart-detail', [CartController::class, 'addToCartDetail'])->name('addToCart.Detail');
@@ -86,17 +87,6 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('shops', BackendShopController::class);
     Route::resource('slide', SliderController::class);
     Route::resource('order', OrderController::class);
-
-    // Route::get('/test-r2', function () {
-    //         try {
-    //             // បង្កើត file text តូចមួយដើម្បីតេស្ត
-    //             Storage::disk('r2')->put('test-file.txt', 'សួស្តី! ការតេស្តពី Local ទៅ R2 ជោគជ័យហើយ។');
-
-    //             return "Upload ជោគជ័យ! មើល file តាមរយៈ: " . Storage::disk('r2')->url('test-file.txt');
-    //         } catch (\Exception $e) {
-    //             return "មានបញ្ហា: " . $e->getMessage();
-    //         }
-    //     });
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');
