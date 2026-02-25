@@ -9,12 +9,12 @@
             </div>
             <div class="panel-container show">
                 <div class="panel-content">
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Make">Make</label>
                                 <span class="text-danger">*</span>
-                                <select class="form-control req" id="category_id" name="category_id">
+                                <select class="select2 form-control req" id="category_id" name="category_id">
                                     <option value="">Please choose make</option>
                                     @foreach($category as $item)
                                         <option value="{{ $item->id }}" {{ old('category_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label for="Model">Model</label>
                                 <span class="text-danger">*</span>
-                                <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
+                                <select class="select2 form-control sub_category" id="sub_category_id" name="sub_category_id">
                                     <option value="">Please choose model</option>
                                 </select>
                                 <small class="text-danger error-sub_category_id"></small>
@@ -41,8 +41,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-label" for="part_number">Part Number</label>
                                 <input type="text" id="part_number" name="part_number" class="form-control" value="{{ old('part_number') }}" placeholder="Enter part number">

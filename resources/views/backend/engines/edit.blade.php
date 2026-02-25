@@ -13,24 +13,24 @@
                         <form action="{{ url('admins/engine', $data->id) }}" method="POST" enctype="multipart/form-data" novalidate>
                             @csrf
                             @method('PUT')
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Category">Make</label>
-                                    <span class="text-danger">*</span>
-                                    <select class="form-control" id="category_id" name="category_id">
-                                        <option value="">Please choose make</option>
-                                        @foreach($category as $item)
-                                            <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
+                                    <div class="form-group">
+                                        <label for="Category">Make</label>
+                                        <span class="text-danger">*</span>
+                                        <select class="select2 form-control" id="category_id" name="category_id">
+                                            <option value="">Please choose make</option>
+                                            @foreach($category as $item)
+                                                <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <p class="text-danger">{!! $errors->first('category_id') !!}</p>
+                                    </div>
                                 </div>
-                            </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label " for="sub_category_id">Sub Category <span class="text-danger">*</span></label>
-                                        <select class="form-control  sub_category @error('sub_category_id') is-invalid @enderror" id="sub_category_id" name="sub_category_id" required>
+                                        <select class="select2 form-control  sub_category @error('sub_category_id') is-invalid @enderror" id="sub_category_id" name="sub_category_id" required>
                                             <option value="">Select a Sub Category</option>
                                             @foreach ($subCategory as $item)
                                                 <option value="{{ $item->id }}" {{ $data->sub_category_id == $item->id ? 'selected' : '' }}>
@@ -43,7 +43,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label" for="name">Engines Name <span class="text-danger">*</span></label>
                                         <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $data->name }}" required placeholder="Enter Sub-Category Name">
@@ -53,8 +53,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
+                            <div class="row mb-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="form-label" for="name">Part Number</label>
                                         <input type="text" id="part_number" name="part_number" class="form-control" value="{{ $data->part_number }}" required placeholder="Enter part number">

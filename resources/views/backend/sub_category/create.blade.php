@@ -16,7 +16,7 @@
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
                                         <label class="form-label" for="product_category_id">Category <span class="text-danger">*</span></label>
-                                        <select class="form-control @error('product_category_id') is-invalid @enderror" id="product_category_id" name="product_category_id" required>
+                                        <select class="select2 form-control @error('product_category_id') is-invalid @enderror" id="product_category_id" name="product_category_id" required>
                                             <option value="">Select a Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
