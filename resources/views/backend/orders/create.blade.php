@@ -19,8 +19,7 @@
                                 <div class="form-group">
                                     <label for="name">Customer Name</label>
                                     <span class="text-danger">*</span>
-                                    <input type="text" class="form-control" name="customer_name" id="customer_name" placeholder="Enter customer name" value="{{ old('customer_name') }}">
-                                    <p class="text-danger">{!! $errors->first('customer_name') !!}</p>
+                                    <input type="text" class="form-control required" name="customer_name" id="customer_name" placeholder="Enter customer name" value="{{ old('customer_name') }}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -128,6 +127,13 @@
                 calculateGrandTotal();
             });
             $("#btnCreate").on('click',function(){
+                $('.required').each(function () {
+                    if ($(this).val().trim() === '') {
+                        $(this).css('border', '1px solid red');
+                    } else {
+                        $(this).css('border', '');
+                    }
+                });
                 var customer_name = $("#customer_name").val();
                 var telephone = $("#telephone").val();
                 var email = $("#email").val();
@@ -153,6 +159,7 @@
                         email: email,
                         order_date: order_date,
                         orderDetail : orderDetail,
+                        _token: "{{ csrf_token() }}"
                     },
                     dataType: "JSON",
                     success: function (res) {
@@ -164,6 +171,9 @@
                         } else {
                             toastr.error(res.message);
                         }
+                    },
+                    error: function(xhr) {
+                        toastr.error("Server Error: " + xhr.responseJSON?.message);
                     }
                 });
             });

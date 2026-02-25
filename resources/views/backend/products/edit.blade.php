@@ -93,7 +93,7 @@
                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Product Year">Year</label>
-                                    <select class="form-control" name="year" id="year">
+                                    <select class="form-control select2" name="year" id="year">
                                         <option value="">-- Select --</option>
                                         @php
                                             $startYear = 2000;
@@ -118,7 +118,7 @@
                                 <div class="form-group">
                                     <label for="Category">Make</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="category_id" name="category_id">
+                                    <select class="form-control select2" id="category_id" name="category_id">
                                         <option value="">Please choose make</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
@@ -131,7 +131,7 @@
                                 <div class="form-group">
                                     <label for="Model">Model</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
+                                    <select class="form-control sub_category select2" id="sub_category_id" name="sub_category_id">
                                         <option value="">Please choose model</option>
                                         @foreach($sub_category as $item)
                                             <option value="{{ $item->id }}" {{ $data->sub_category_id == $item->id ? 'selected' : '' }}>
@@ -145,7 +145,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Engine">Engine</label>
-                                    <select class="form-control engine_id" id="engine_id" name="engine_id">
+                                    <select class="form-control engine_id select2" id="engine_id" name="engine_id">
                                         <option value="">Please choose engine</option>
                                         @foreach($engine as $item)
                                             <option value="{{ $item->id }}" {{ $data->engine_id == $item->id ? 'selected' : '' }}>
@@ -157,18 +157,20 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="row">
-                            <div class="form-group">
-                                <label for="Category">Product Type</label>
-                                <span class="text-danger">*</span>
-                                <select class="form-control" name="product_type_id">
-                                    <option value="">Please choose product type</option>
-                                    @foreach ($producttype as $item)
-                                        <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Category">Product Type</label>
+                                    <span class="text-danger">*</span>
+                                    <select class="form-control select2" name="product_type_id">
+                                        <option value="">Please choose product type</option>
+                                        @foreach ($producttype as $item)
+                                            <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -177,6 +179,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group mb-0" style="text-align: right;">
                             <input type="text" id="id" name="id" value="{{ $data->id }}" hidden>
                             <a href="{{url('admins/product')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>

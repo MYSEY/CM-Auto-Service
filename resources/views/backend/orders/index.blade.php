@@ -54,6 +54,9 @@
         $('#btnSearch').on('click', function() {
             $('#tbl_product').DataTable().ajax.reload();
         });
+        $(document).on('change', '.changeStatus', function () {
+            ajax
+        });
         dataTables();
     });
 

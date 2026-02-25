@@ -52,7 +52,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Product Year">Year</label>
-                                    <select class="form-control" name="year" id="year">
+                                    <select class="form-control select2" name="year" id="year">
                                         <option value="">-- Select --</option>
                                         @php
                                             $startYear = 2000;
@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label for="Make">Make</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" id="category_id" name="category_id">
+                                    <select class="form-control select2" id="category_id" name="category_id">
                                         <option value="">Please choose make</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -89,7 +89,7 @@
                                 <div class="form-group">
                                     <label for="Model">Model</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control sub_category" id="sub_category_id" name="sub_category_id">
+                                    <select class="form-control sub_category select2" id="sub_category_id" name="sub_category_id">
                                         <option value="">Please choose model</option>
                                     </select>
                                     <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
@@ -98,7 +98,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Engine">Engine</label>
-                                    <select class="form-control engine_id" id="engine_id" name="engine_id">
+                                    <select class="form-control engine_id select2" id="engine_id" name="engine_id">
                                         <option value="">Please choose engine</option>
                                     </select>
                                 </div>
@@ -110,7 +110,7 @@
                                 <div class="form-group">
                                     <label for="Category">Product Type</label>
                                     <span class="text-danger">*</span>
-                                    <select class="form-control" name="product_type_id">
+                                    <select class="form-control select2" name="product_type_id">
                                         <option value="">Please Choose product type</option>
                                         @foreach ($productType as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>

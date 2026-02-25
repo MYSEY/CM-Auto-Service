@@ -123,8 +123,8 @@ class OrderController extends Controller
         } catch (\Throwable $e) {
             DB::rollback();
             return response()->json([
-                'status' => false,
-                'message'=> $e->getMessage()
+                'status' => 'error',
+                'message'=> 'Something went wrong. Please try again.'
             ], 500);
         }
     }
