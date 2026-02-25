@@ -59,21 +59,51 @@ class HomePageController extends Controller
         $slider = Slider::all();
         return view('frontends.login',compact('company','category','productType','slider'));
     }
-    public function productDetail(Request $request){
-        $productDetail = Product::with(['productImage','productType','category','subCategory'])->where('id',$request->id)->first();
+
+    public function productDetail(Request $request) {
+        // ១. ទាញយកព័ត៌មាន Product Detail
+
+        $productDetail = Product::with(['productImage','productType','category','subCategory','proEngine'])->where('id',$request->id)->firstOrFail();
+
+        // ២. បន្ថែមបន្ទាត់នេះ៖ ទាញយកផលិតផលដែលមាន Category ដូចគ្នា (Related Products)
+        $relatedProducts = Product::where('category_id', $productDetail->category_id)
+                                    ->where('id', '!=', $productDetail->id) // មិនយកខ្លួនឯង
+                                    ->take(8) // យកតែ ៨ គ្រាប់
+                                    ->get();
+
         $company = Company::first();
         $category = ProductCategory::with('subCategory')->get();
-        $productAll = Product::orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24)->appends($request->except('page'));
         $productType = ProductType::all();
         $slider = Slider::all();
+
+        // បង្កើត Pagination សម្រាប់ Tab ផ្សេងៗ (ទុកតាមកូដដើមរបស់អ្នក)
         $productsByType = [];
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
             $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);              // keep tab param when paginating
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])
+                ->where('product_type_id', $type->id)
+                ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
+                ->orderBy('id', 'asc')
+                ->paginate(24, ['*'], $pageName)
+                ->appends(['tab' => $slug]);
         }
-       return view('frontends.product_detail',compact('productAll','productDetail','company','category','productType','slider','productsByType'));
+
+        $r2Url = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+
+        // ៣. កុំភ្លេចបោះ 'relatedProducts' ទៅក្នុង compact ខាងក្រោមនេះ
+        return view('frontends.product_detail', compact(
+            'productDetail',
+            'company',
+            'category',
+            'productType',
+            'slider',
+            'productsByType',
+            'r2Url',
+            'relatedProducts' // <--- ត្រូវតែមានពាក្យនេះ
+        ));
     }
+
     public function categoryFilter(Request $request)
     {
         $query = Product::query()->with('category','subCategory');

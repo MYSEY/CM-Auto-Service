@@ -15,13 +15,14 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Engine;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage; // កុំភ្លេចថែមខាងលើនេះ
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+ public function index(Request $request)
     {
         if ($request->ajax()) {
             $query = Product::select(
@@ -90,19 +91,22 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(request $request)
-    {
+        {
         DB::beginTransaction();
         try {
-
             // Handle single product photo
             $filename = null;
             if ($request->hasFile('product_photo')) {
                 $image = $request->file('product_photo');
                 $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/products'), $filename);
+
+                // ✅ ប្តូរពី move() ទៅជា Storage R2
+                Storage::disk('r2')->put($filename, file_get_contents($image));
             }
 
             $data = $request->all();
+            // // បើ user មិនបានបំពេញ year ឱ្យវាដាក់ឆ្នាំបច្ចុប្បន្ន ឬ 0
+            // $data['year'] = $request->year ?? date('Y');
 
             // ✅ generate slug
             $data['slug'] = Str::slug($request->name, '-');
@@ -113,19 +117,17 @@ class ProductController extends Controller
             // ✅ created by
             $data['created_by'] = Auth::id();
 
-            // ✅ 👉 ADD THIS — generate code from name + number
+            // ✅ generate code
             $productType = ProductType::find($request->product_type_id);
             $category = ProductCategory::find($request->category_id);
             $subCategory = ProductSubCategory::find($request->sub_category_id);
             $engine = Engine::find($request->engine_id);
 
-            $data['code'] = $productType->name . '-' .
-                            $category->name . '-' .
-                            $subCategory->name . '-' .
-                            $engine->name . '-' .
+            $data['code'] = ($productType->name ?? '') . '-' .
+                            ($category->name ?? '') . '-' .
+                            ($subCategory->name ?? '') . '-' .
+                            ($engine->name ?? '') . '-' .
                             $request->number;
-
-            // dd($data = $request->all());
 
             // Create product
             $product = Product::create($data);
@@ -134,12 +136,15 @@ class ProductController extends Controller
             if ($request->hasFile('gallery')) {
                 foreach ($request->file('gallery') as $file) {
                     $galleryName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('images/products/gallery'), $galleryName);
+
+                    // ✅ ប្តូរពី move() ទៅជា Storage R2 (ដាក់ក្នុង folder gallery)
+                    $galleryPath = 'gallery/' . $galleryName;
+                    Storage::disk('r2')->put($galleryPath, file_get_contents($file));
 
                     ProductImage::create([
                         'product_id' => $product->id,
                         'path_name'  => $galleryName,
-                        'path'       => 'images/products/gallery/' . $galleryName,
+                        'path'       => $galleryPath, // រក្សាទុក path សម្រាប់ហៅមកវិញ
                     ]);
                 }
             }
@@ -168,16 +173,21 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        try{
+        try {
             $data = Product::with('productImage')->find($id);
+
+            // បង្កើត URL សម្រាប់រូបភាព (បើប្រើ Public R2 URL)
+            $r2Url = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+            $data->image_url = $data->product_photo ? $r2Url . $data->product_photo : null;
+
             $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();
             $producttype = ProductType::all();
             $sub_category = ProductSubCategory::where('product_category_id', $data->category_id)->get();
             $engine = Engine::where('sub_category_id', $data->sub_category_id)->get();
-            return view('backend.products.edit',compact('data','category','sub_category','producttype','engine'));
-        }catch(\Exception $e){
-            DB::rollback();
-            Toastr::error('Create Users fail','Error');
+
+            return view('backend.products.edit', compact('data', 'category', 'sub_category', 'producttype', 'engine'));
+        } catch (\Exception $e) {
+            Toastr::error('Something went wrong!', 'Error');
             return redirect()->back();
         }
     }
@@ -189,21 +199,23 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-
-            // Handle product photo update (single main image)
+            // --- Handle Main Product Photo (R2) ---
             if ($request->hasFile('product_photo')) {
-                if ($product->product_photo && file_exists(public_path('images/products/' . $product->product_photo))) {
-                    unlink(public_path('images/products/' . $product->product_photo));
+                // លុបរូបចាស់ចេញពី R2 (បើមាន)
+                if ($product->product_photo) {
+                    Storage::disk('r2')->delete($product->product_photo);
                 }
 
                 $image = $request->file('product_photo');
                 $filename = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images/products'), $filename);
+
+                // Upload ទៅ R2
+                Storage::disk('r2')->put($filename, file_get_contents($image));
 
                 $product->product_photo = $filename;
             }
 
-            // ✅ ADD THIS — generate code from name + number
+            // --- Generate Code Logic (Keep as your request) ---
             $productType = ProductType::find($request->product_type_id);
             $category = ProductCategory::find($request->category_id);
             $subCategory = ProductSubCategory::find($request->sub_category_id);
@@ -215,37 +227,45 @@ class ProductController extends Controller
                     ($engine->name ?? '') . '-' .
                     $request->number;
 
-            // Update product details (OLD PROCESS KEEP)
+            // --- Update Product Details ---
             $product->update([
-                'product_type_id'  => $request->product_type_id,
-                'category_id'      => $request->category_id,
-                'sub_category_id'  => $request->sub_category_id,
-                'name'             => $request->name,
-                'slug'             => Str::slug($request->name, '-'),
-                'description'      => $request->description,
-                'engine_id'        => $request->engine_id,
-                'price'            => $request->price,
-                'year'             => $request->year,
-                'discount_price'   => $request->discount_price,
-                'number'           => $request->number,
+                'product_type_id'       => $request->product_type_id,
+                'category_id'           => $request->category_id,
+                'sub_category_id'       => $request->sub_category_id,
+                'name'                  => $request->name,
+                'slug'                  => Str::slug($request->name, '-'),
+                'description'           => $request->description,
+                'engine_id'             => $request->engine_id,
+                'price'                 => $request->price,
+                'year'                  => $request->year,
+                'discount_price'        => $request->discount_price,
+                'number'                => $request->number,
                 'low_stock_qty_warning' => $request->low_stock_qty_warning,
-                'delivery_note'    => $request->delivery_note,
-                'code'             => $code, // ✅ ADD HERE
-                'updated_by'       => Auth::id(),
+                'delivery_note'         => $request->delivery_note,
+                'code'                  => $code,
+                'updated_by'            => Auth::id(),
+                'product_photo'         => $product->product_photo, // រក្សាឈ្មោះ file ថ្មី
             ]);
 
-            // OLD PROCESS KEEP
-            ProductImage::where('product_id', $product->id)->delete();
-
+            // --- Handle Gallery (R2) ---
             if ($request->hasFile('gallery')) {
+                // លុប Gallery ចាស់ក្នុង DB និង R2 (បើចង់រក្សា Logic ចាស់ដែល delete រាល់ពេល update)
+                $oldImages = ProductImage::where('product_id', $product->id)->get();
+                foreach ($oldImages as $oldImg) {
+                    Storage::disk('r2')->delete('gallery/' . $oldImg->path_name);
+                }
+                ProductImage::where('product_id', $product->id)->delete();
+
                 foreach ($request->file('gallery') as $file) {
                     $galleryName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('images/products/gallery'), $galleryName);
+
+                    // Upload ទៅ R2 ក្នុង Folder gallery
+                    Storage::disk('r2')->put('gallery/' . $galleryName, file_get_contents($file));
 
                     ProductImage::create([
                         'product_id' => $product->id,
                         'path_name'  => $galleryName,
-                        'path'       => 'images/products/gallery/' . $galleryName,
+                        'path'       => 'gallery/' . $galleryName, // រក្សាទុក path សម្រាប់ R2
                     ]);
                 }
             }

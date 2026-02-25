@@ -14,6 +14,7 @@
         <meta property="og:image" content="https://cmautoservic.com/frontends/assets/img/logo.png">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="CM Auto Service">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
         <script type="application/ld+json">
         {

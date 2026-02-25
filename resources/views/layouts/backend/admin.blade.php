@@ -27,6 +27,7 @@
     <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
     <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/formplugins/select2/select2.bundle.css')}}">
 

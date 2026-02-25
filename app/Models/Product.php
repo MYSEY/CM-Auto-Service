@@ -60,4 +60,10 @@ class Product extends Model
     public function getDiscountPriceFormatAttribute(){
         return "$"." ".number_format($this->discount_price,2);
     }
+
+    public function getPhotoUrlAttribute()
+    {
+        $baseUrl = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+        return $this->product_photo ? $baseUrl . $this->product_photo : asset('images/default.png');
+    }
 }

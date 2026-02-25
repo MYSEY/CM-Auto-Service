@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\BackendContactController;
 use App\Http\Controllers\Backend\ProductCategoryController;
 use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Backend\ProductSubcategoryController;
+// use Illuminate\Support\Facades\Storage;
 
 /*
     php artisan make:controller Backend/UserController --resource
@@ -48,6 +49,7 @@ Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
+Route::get('/product-detail', [HomePageController::class, 'productDetail'])->name('productDetail');
 Route::get('frontend/product/filter/{id}', [HomePageController::class, 'filter'])->name('product.filter');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
 Route::post('/add-to-cart-detail', [CartController::class, 'addToCartDetail'])->name('addToCart.Detail');
