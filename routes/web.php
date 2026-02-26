@@ -87,6 +87,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('shops', BackendShopController::class);
     Route::resource('slide', SliderController::class);
     Route::resource('order', OrderController::class);
+    Route::post('order/change-status', [OrderController::class, 'changeStatus'])->name('order.change-status');
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');

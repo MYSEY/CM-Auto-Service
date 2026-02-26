@@ -14,7 +14,7 @@
                 <div class="panel-content">
                     {{-- <form id="orderForm">
                         @csrf --}}
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Customer Name</label>
@@ -34,9 +34,9 @@
                                     <input type="text" class="form-control" name="email" id="email" placeholder="Enter email" value="{{ old('email') }}">
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Order Date</label>
@@ -45,10 +45,8 @@
                                     <p class="text-danger">{!! $errors->first('order_date') !!}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <hr>
-                        <h3>Order Details</h3>
                         <div class="row">
                             <div class="col-sm-12">
                                 <table id="tbl_order" class="table table-bordered">

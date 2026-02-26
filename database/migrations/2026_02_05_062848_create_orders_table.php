@@ -14,11 +14,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name');
-            $table->string('telephone')->nullable();
-            $table->string('email')->nullable();
-            $table->decimal('total_price', 10, 2);
-            $table->integer('total_qty');
+            $table->unsignedBigInteger('product_id');
+            $table->integer('quantity');
+            $table->decimal('price', 10, 2);
+            $table->decimal('sub_total', 10, 2);
             $table->date('order_date');
             $table->string('status')->default('unpaid');
             $table->integer('created_by')->nullable();

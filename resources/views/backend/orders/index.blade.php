@@ -55,7 +55,40 @@
             $('#tbl_product').DataTable().ajax.reload();
         });
         $(document).on('change', '.changeStatus', function () {
-            ajax
+
+            let status = $(this).val();
+            let id = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "{{ url('admins/order/change-status') }}",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    id: id,
+                    status: status
+                },
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message,
+                        });
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Something went wrong!',
+                    });
+                }
+            });
         });
         dataTables();
     });

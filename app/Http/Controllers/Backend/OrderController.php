@@ -73,60 +73,62 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            $request->validate([
-                'customer_name'              => 'required',
-                'orderDetail'                => 'required|array|min:1',
-                'orderDetail.*.product_id'   => 'required',
-                'orderDetail.*.quantity'     => 'required|numeric|min:1',
-                'orderDetail.*.price'        => 'required|numeric|min:0',
-                'orderDetail.*.sub_total'    => 'required|numeric|min:0',
-            ]);
+        // DB::beginTransaction();
+        // try {
+            // $request->validate([
+            //     'customer_name'              => 'required',
+            //     'orderDetail'                => 'required|array|min:1',
+            //     'orderDetail.*.product_id'   => 'required',
+            //     'orderDetail.*.quantity'     => 'required|numeric|min:1',
+            //     'orderDetail.*.price'        => 'required|numeric|min:0',
+            //     'orderDetail.*.sub_total'    => 'required|numeric|min:0',
+            // ]);
 
-            $totalQty = 0;
-            $totalPrice = 0;
+            // $totalQty = 0;
+            // $totalPrice = 0;
+            // foreach ($request->orderDetail as $item) {
+            //     $totalQty += $item['quantity'];
+            //     $totalPrice += $item['sub_total'];
+            // }
+
+            // $order = Order::create([
+            //     'customer_name' => $request->customer_name,
+            //     'telephone'     => $request->telephone,
+            //     'email'         => $request->email,
+            //     'order_date'    => $request->order_date,
+            //     'total_qty'     => $totalQty,
+            //     'total_price'   => $totalPrice,
+            //     'status'        => 'requesting',
+            //     'created_by'    => Auth::id(),
+            // ]);
+
+            $order = [];
             foreach ($request->orderDetail as $item) {
-                $totalQty += $item['quantity'];
-                $totalPrice += $item['sub_total'];
-            }
-
-            $order = Order::create([
-                'customer_name' => $request->customer_name,
-                'telephone'     => $request->telephone,
-                'email'         => $request->email,
-                'order_date'    => $request->order_date,
-                'total_qty'     => $totalQty,
-                'total_price'   => $totalPrice,
-                'status'        => 'requesting',
-                'created_by'    => Auth::id(),
-            ]);
-
-            $details = [];
-            foreach ($request->orderDetail as $item) {
-                $details[] = [
-                    'order_id'   => $order->id,
+                $order[] = [
                     'product_id' => $item['product_id'],
                     'quantity'   => $item['quantity'],
                     'price'      => $item['price'],
                     'sub_total'  => $item['sub_total'],
+                    'order_date' => now(),
+                    'status'     => 'requesting',
+                    'created_by' => Auth::id(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             }
-            OrderDetail::insert($details);
+            Order::insert($order);
             DB::commit();
             return response()->json([
                 'status' => 'success',
-                'message'=> 'Order & details saved successfully'
+                'message'=> 'Order saved successfully'
             ]);
-        } catch (\Throwable $e) {
-            DB::rollback();
-            return response()->json([
-                'status' => 'error',
-                'message'=> 'Something went wrong. Please try again.'
-            ], 500);
-        }
+        // } catch (\Throwable $e) {
+        //     DB::rollback();
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message'=> 'Something went wrong. Please try again.'
+        //     ], 500);
+        // }
     }
 
     /**
@@ -159,5 +161,25 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:orders,id',
+            'status'   => 'required',
+        ]);
+
+        $order = Order::find($request->id);
+        $order->status = $request->status;
+        $orderDetail = OrderDetail::where('order_id', $order->id)->first();
+        $order->save();
+        Product::where('id', $orderDetail->product_id)->update([
+            'low_stock_qty_warning' => $orderDetail->quantity 
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message'=> 'Order status updated successfully'
+        ]);
     }
 }
