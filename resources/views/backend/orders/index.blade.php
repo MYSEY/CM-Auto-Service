@@ -22,11 +22,10 @@
                                         <thead class="">
                                             <tr>
                                                 <th>#</th>
-                                                <th>Name</th>
-                                                <th>telephone</th>
-                                                <th>email</th>
-                                                <th>Total QTY</th>
-                                                <th>Total Price</th>
+                                                <th>Product Name</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Sub Total</th>
                                                 <th>Order Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -111,28 +110,20 @@
                     name: 'id',
                 },
                 {
-                    data: 'customer_name',
-                    name: 'customer_name',
+                    data: 'product_name',
+                    name: 'product_name',
                 },
                 {
-                    data: 'telephone',
-                    name: 'telephone',
+                    data: 'quantity',
+                    name: 'quantity',
                 },
                 {
-                    data: 'email',
-                    name: 'email',
+                    data: 'price',
+                    name: 'price',
                 },
                 {
-                    data: 'total_qty',
-                    name: 'total_qty',
-                },
-                {
-                    data: 'total_price',
-                    name: 'total_price',
-                },
-                {
-                    data: 'order_date',
-                    name: 'order_date',
+                    data: 'sub_total',
+                    name: 'sub_total',
                 },
                 {
                     data: 'status',

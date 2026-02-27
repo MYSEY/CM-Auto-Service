@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +19,11 @@ class OrderController extends Controller
         if ($request->ajax()) {
             $query = Order::select(
                 'orders.*',
-            );
+                'products.name as product_name'
+            )->leftJoin('products', 'products.id', '=', 'orders.product_id');
             // 🔍 global search filter
             if ($request->name) {
-                $query->where('name', 'like', "%{$request->name}%");
+                $query->where('products.name', 'like', "%{$request->name}%");
             }
             if ($request->telephone) {
                 $query->where('telephone', 'like', "%{$request->telephone}%");
@@ -73,37 +73,16 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // DB::beginTransaction();
-        // try {
-            // $request->validate([
-            //     'customer_name'              => 'required',
-            //     'orderDetail'                => 'required|array|min:1',
-            //     'orderDetail.*.product_id'   => 'required',
-            //     'orderDetail.*.quantity'     => 'required|numeric|min:1',
-            //     'orderDetail.*.price'        => 'required|numeric|min:0',
-            //     'orderDetail.*.sub_total'    => 'required|numeric|min:0',
-            // ]);
-
-            // $totalQty = 0;
-            // $totalPrice = 0;
-            // foreach ($request->orderDetail as $item) {
-            //     $totalQty += $item['quantity'];
-            //     $totalPrice += $item['sub_total'];
-            // }
-
-            // $order = Order::create([
-            //     'customer_name' => $request->customer_name,
-            //     'telephone'     => $request->telephone,
-            //     'email'         => $request->email,
-            //     'order_date'    => $request->order_date,
-            //     'total_qty'     => $totalQty,
-            //     'total_price'   => $totalPrice,
-            //     'status'        => 'requesting',
-            //     'created_by'    => Auth::id(),
-            // ]);
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'product_id' => 'required',
+                'quantity'   => 'required|numeric',
+                'price'   => 'required|numeric',
+            ]);
 
             $order = [];
-            foreach ($request->orderDetail as $item) {
+            foreach ($request->dataOrder as $item) {
                 $order[] = [
                     'product_id' => $item['product_id'],
                     'quantity'   => $item['quantity'],
@@ -122,13 +101,13 @@ class OrderController extends Controller
                 'status' => 'success',
                 'message'=> 'Order saved successfully'
             ]);
-        // } catch (\Throwable $e) {
-        //     DB::rollback();
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message'=> 'Something went wrong. Please try again.'
-        //     ], 500);
-        // }
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'error',
+                'message'=> 'Something went wrong. Please try again.'
+            ], 500);
+        }
     }
 
     /**
@@ -172,10 +151,9 @@ class OrderController extends Controller
 
         $order = Order::find($request->id);
         $order->status = $request->status;
-        $orderDetail = OrderDetail::where('order_id', $order->id)->first();
         $order->save();
-        Product::where('id', $orderDetail->product_id)->update([
-            'low_stock_qty_warning' => $orderDetail->quantity 
+        Product::where('id', $order->product_id)->update([
+            'low_stock_qty_warning' => $order->quantity 
         ]);
         return response()->json([
             'status' => 'success',

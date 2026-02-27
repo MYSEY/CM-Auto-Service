@@ -136,12 +136,12 @@
                 var telephone = $("#telephone").val();
                 var email = $("#email").val();
                 var order_date = $("#order_date").val();
-                var orderDetail = [];
+                var dataOrder = [];
 
                 $('#tbl_order tbody tr').each(function() {
                     let row = $(this);
 
-                    orderDetail.push({
+                    dataOrder.push({
                         product_id: row.find('.product_id').val(),
                         quantity: row.find('.quantity').val(),
                         price: row.find('.price').val(),
@@ -156,7 +156,7 @@
                         telephone: telephone,
                         email: email,
                         order_date: order_date,
-                        orderDetail : orderDetail,
+                        dataOrder : dataOrder,
                         _token: "{{ csrf_token() }}"
                     },
                     dataType: "JSON",
