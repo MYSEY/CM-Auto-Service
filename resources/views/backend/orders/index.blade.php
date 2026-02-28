@@ -23,6 +23,11 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Product Name</th>
+                                                <th>product TypeName</th>
+                                                <th>category Name</th>
+                                                <th>sub category name</th>
+                                                <th>engine name</th>
+                                                <th>part_number</th>
                                                 <th>Quantity</th>
                                                 <th>Price</th>
                                                 <th>Sub Total</th>
@@ -54,7 +59,6 @@
             $('#tbl_product').DataTable().ajax.reload();
         });
         $(document).on('change', '.changeStatus', function () {
-
             let status = $(this).val();
             let id = $(this).data('id');
             $.ajax({
@@ -66,7 +70,7 @@
                     status: status
                 },
                 success: function (response) {
-                    if (response.success) {
+                    if (response.status=='success') {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success!',
@@ -79,13 +83,6 @@
                             text: response.message,
                         });
                     }
-                },
-                error: function (xhr) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'Something went wrong!',
-                    });
                 }
             });
         });
@@ -114,6 +111,26 @@
                     name: 'product_name',
                 },
                 {
+                    data: 'product_type_name',
+                    name: 'product_type_name',
+                },
+                {
+                    data: 'category_name',
+                    name: 'category_name',
+                },
+                {
+                    data: 'sub_category_name',
+                    name: 'sub_category_name',
+                },
+                {
+                    data: 'engine_name',
+                    name: 'engine_name',
+                },
+                {
+                    data: 'part_number',
+                    name: 'part_number',
+                },
+                {
                     data: 'quantity',
                     name: 'quantity',
                 },
@@ -124,6 +141,10 @@
                 {
                     data: 'sub_total',
                     name: 'sub_total',
+                },
+                {
+                    data: 'order_date',
+                    name: 'order_date',
                 },
                 {
                     data: 'status',

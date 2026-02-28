@@ -19,8 +19,19 @@ class OrderController extends Controller
         if ($request->ajax()) {
             $query = Order::select(
                 'orders.*',
-                'products.name as product_name'
-            )->leftJoin('products', 'products.id', '=', 'orders.product_id');
+                'products.name as product_name',
+                'product_types.name as product_type_name',
+                'product_categories.name as category_name',
+                'product_sub_categories.name as sub_category_name',
+                'engines.name as engine_name',
+                'engines.part_number',
+            )
+            ->leftJoin('products', 'products.id', '=', 'orders.product_id')
+            ->leftJoin('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftJoin('product_categories', 'product_categories.id', '=', 'products.category_id')
+            ->leftJoin('product_sub_categories', 'product_sub_categories.id', '=', 'products.sub_category_id')
+            ->leftJoin('engines', 'engines.id', '=', 'products.engine_id')
+            ;
             // 🔍 global search filter
             if ($request->name) {
                 $query->where('products.name', 'like', "%{$request->name}%");
@@ -76,9 +87,9 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $request->validate([
-                'product_id' => 'required',
-                'quantity'   => 'required|numeric',
-                'price'   => 'required|numeric',
+                'product_id.*' => 'required',
+                'quantity.*'   => 'required|numeric',
+                'price.*'      => 'required|numeric',
             ]);
 
             $order = [];
@@ -153,7 +164,7 @@ class OrderController extends Controller
         $order->status = $request->status;
         $order->save();
         Product::where('id', $order->product_id)->update([
-            'low_stock_qty_warning' => $order->quantity 
+            'low_stock_qty_warning' => $order->quantity
         ]);
         return response()->json([
             'status' => 'success',
