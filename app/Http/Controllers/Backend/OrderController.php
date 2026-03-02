@@ -134,7 +134,9 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Order::findOrFail($id);
+        $products = Product::all();
+        return view('backend.orders.edit', compact('products', 'data'));
     }
 
     /**
@@ -142,7 +144,34 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'product_id.*' => 'required',
+                'quantity.*'   => 'required|numeric',
+                'price.*'      => 'required|numeric',
+            ]);
+
+            Order::where('id', $request->order_id)->update([
+                'product_id' => $request->product_id,
+                'quantity'   => $request->quantity,
+                'price'      => $request->price,
+                'sub_total'  => $request->sub_total,
+                'updated_by' => Auth::id(),
+                'updated_at' => now(),
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Order updated successfully'
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => 'error',
+                'message'=> 'Something went wrong. Please try again.'
+            ], 500);
+        }
     }
 
     /**
@@ -150,7 +179,18 @@ class OrderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Order::where('id', $id)->delete();
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Order deleted successfully'
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'message'=> 'Something went wrong. Please try again.'
+            ], 500);
+        }
     }
 
     public function changeStatus(Request $request)

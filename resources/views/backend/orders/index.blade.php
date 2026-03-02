@@ -86,6 +86,44 @@
                 }
             });
         });
+        $(document).on('click','.deleteData', function () {
+            let id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ url('admins/order') }}/" + id,
+                        data: {
+                            _token: $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        success: function (response) {
+                            if (response.status=='success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Deleted!',
+                                    text: response.message,
+                                });
+                                $('#tbl_product').DataTable().ajax.reload();
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: response.message,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
         dataTables();
     });
 
@@ -164,18 +202,8 @@
                     render: function(data, type, row) {
                         return `
                           <div class="d-flex align-items-center justify-content-center">
-                            <a href="/admins/product/${row.id}/edit"
-                            class="btn btn-icon btn-xs btn-outline-info waves-effect waves-themed mr-2"
-                            title="កែសម្រួល">
-                            <i class="fal fa-pencil"></i>
-                            </a>
-
-                            <a href="javascript:void(0);"
-                            class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed"
-                            onclick="deleteData(${row.id})"
-                            title="លុបទិន្នន័យ">
-                            <i class="fal fa-trash-alt"></i>
-                            </a>
+                            <a href="{{ url('/admins/order') }}/${row.id}/edit" class="btn btn-icon btn-xs btn-outline-info waves-effect waves-themed mr-2" title="កែសម្រួល"> <i class="fal fa-pencil"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed deleteData" data-id="${row.id}" title="លុបទិន្នន័យ"><i class="fal fa-trash-alt"></i></a>
                         </div>`;
                     },
                 },
