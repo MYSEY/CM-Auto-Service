@@ -199,16 +199,24 @@ class OrderController extends Controller
             'id' => 'required|exists:orders,id',
             'status'   => 'required',
         ]);
-
-        $order = Order::find($request->id);
-        $order->status = $request->status;
-        $order->save();
-        Product::where('id', $order->product_id)->update([
-            'low_stock_qty_warning' => $order->quantity
-        ]);
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Order status updated successfully'
-        ]);
+        try {
+            $order = Order::find($request->id);
+            $order->status = $request->status;
+            $order->save();
+            Product::where('id', $order->product_id)->update([
+                'low_stock_qty_warning' => $order->quantity
+            ]);
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Order status updated successfully'
+            ]);
+        } catch (\Throwable $exp) {
+            DB::rollBack(); // ✅ Roll back only if transaction started
+            return response()->json([
+                'error'     => 'Order not found.',
+                'exception' => $exp->getMessage()
+            ], 500);
+        }
     }
 }
