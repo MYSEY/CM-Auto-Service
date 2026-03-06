@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
     <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/formplugins/select2/select2.bundle.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/noty.css')}}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/mint.css')}}">
 
     {{-- Core Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -1052,7 +1055,10 @@
         <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
         <script src="{{ asset('backends/js/datagrid/datatables/datatables.bundle.js') }}"></script>
         <script src="{{asset('backends/js/formplugins/select2/select2.bundle.js')}}"></script>
-
+        <script src="{{asset('backends/js/noty.js')}}"></script>
+        <script src="{{asset('backends/js/noty.min.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         {!! Toastr::message() !!}
         @yield('script')
 

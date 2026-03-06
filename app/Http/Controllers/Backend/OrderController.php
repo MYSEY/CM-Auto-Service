@@ -208,7 +208,9 @@ class OrderController extends Controller
             ]);
             DB::commit();
             return response()->json([
-                'status' => 'success',
+                // 'status' => 'success',
+                'success' => true,
+                'status'  => 200,
                 'message'=> 'Order status updated successfully'
             ]);
         } catch (\Throwable $exp) {

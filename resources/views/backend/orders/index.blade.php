@@ -61,76 +61,51 @@
         $(document).on('change', '.changeStatus', function () {
             let status = $(this).val();
             let id = $(this).data('id');
-            $.confirm({
-                title: 'Accepted',
-                content: 'Are you sure want to accepted this order?',
-                type: "blue",
-                buttons: {
-                    submit: {
-                        text: 'Submit',
-                        btnClass: 'btn-green',
-                        action: function () {
-                            axios.post('{{ URL("admins/order/change-status") }}', {
-                                id: id,
-                                status: status
-                            }).then(function (response) {
-                                $('#modal-loading').modal('hide');
-                                if (response.data.success) {
-                                    new Noty({
-                                        text: 'The process has been successfully',
-                                        type: "success",
-                                        timeout: 2500
-                                    }).show();
-                                    window.location.replace("{{ URL('admins/order') }}");
-                                    return;
-                                } else {
+            if (status !='requesting') {
+                $.confirm({
+                    title: 'Accepted',
+                    content: 'Are you sure want to accepted this order?',
+                    type: "blue",
+                    buttons: {
+                        submit: {
+                            text: 'Submit',
+                            btnClass: 'btn-green',
+                            action: function () {
+                                axios.post('{{ URL("admins/order/change-status") }}', {
+                                    id: id,
+                                    status: status
+                                }).then(function (response) {
+                                    if (response.data.success) {
+                                        new Noty({
+                                            text: 'The process has been successfully',
+                                            type: "success",
+                                            timeout: 2500
+                                        }).show();
+                                        window.location.replace("{{ URL('admins/order') }}");
+                                        return;
+                                    } else {
+                                        new Noty({
+                                            text: 'Something went wrong please try again later',
+                                            type: "error",
+                                            timeout: 3000
+                                        }).show();
+                                    }
+                                }).catch(function (error) {
                                     new Noty({
                                         text: 'Something went wrong please try again later',
                                         type: "error",
                                         timeout: 3000
                                     }).show();
-                                }
-                            }).catch(function (error) {
-                                $('#modal-loading').modal('hide');
-                                new Noty({
-                                    text: 'Something went wrong please try again later',
-                                    type: "error",
-                                    timeout: 3000
-                                }).show();
-                            });
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: 'Cancel',
+                            btnClass: 'btn-secondary btn-sm'
                         }
-                    },
-                    cancel: {
-                        text: 'Cancel',
-                        btnClass: 'btn-secondary btn-sm'
                     }
-                }
-            });
-            
-            // $.ajax({
-            //     type: "POST",
-            //     url: "{{ url('admins/order/change-status') }}",
-            //     data: {
-            //         _token: $('meta[name="csrf-token"]').attr('content'),
-            //         id: id,
-            //         status: status
-            //     },
-            //     success: function (response) {
-            //         if (response.status=='success') {
-            //             Swal.fire({
-            //                 icon: 'success',
-            //                 title: 'Success!',
-            //                 text: response.message,
-            //             });
-            //         } else {
-            //             Swal.fire({
-            //                 icon: 'error',
-            //                 title: 'Error!',
-            //                 text: response.message,
-            //             });
-            //         }
-            //     }
-            // });
+                });
+            }
         });
         $(document).on('click','.deleteData', function () {
             let id = $(this).data('id');
@@ -234,12 +209,16 @@
                     data: 'status',
                     name: 'status',
                     render: function(data, type, row) {
-                        return `
-                            <select class="form-control changeStatus" data-id="${row.id}">
-                                <option value="requesting" ${row.status == 'requesting' ? 'selected' : ''}>Requesting</option>
-                                <option value="approve" ${row.status == 'approve' ? 'selected' : ''}>Approve</option>
-                            </select>
-                        `;
+                        if(row.status == 'requesting') {
+                            return `
+                                <select class="form-control changeStatus" data-id="${row.id}">
+                                    <option value="requesting" ${row.status == 'requesting' ? 'selected' : ''}>Requesting</option>
+                                    <option value="approve" ${row.status == 'approve' ? 'selected' : ''}>Approve</option>
+                                </select>
+                            `;
+                        } else if(row.status == 'approve') {
+                            return `<span class="badge badge-success">Approved</span>`;
+                        }
                     }
                 },
                 {
