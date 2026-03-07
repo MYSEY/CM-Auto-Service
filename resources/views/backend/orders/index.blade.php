@@ -226,10 +226,7 @@
                     name: 'action',
                     render: function(data, type, row) {
                         if (row.status=='approve') {
-                            return `
-                            <div class="d-flex align-items-center justify-content-center">
-                                <a href="javascript:void(0);" class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed deleteData" data-id="${row.id}" title="លុបទិន្នន័យ"><i class="fal fa-trash-alt"></i></a>
-                            </div>`;
+                            return ``;
                         }else{
                             return `
                             <div class="d-flex align-items-center justify-content-center">
