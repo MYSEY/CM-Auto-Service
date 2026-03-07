@@ -1,7 +1,7 @@
 @extends('layouts.backend.admin')
 @section('content')
 <div class="row">
-    <div class="col-xl-12">
+    <div class="col-md-12">
         <div class="card mb-g border-0 shadow-sm bg-white p-3" style="border-radius: 12px;">
             <div class="row mb-2 align-items-center">
                 <div class='col-md-4'>
@@ -48,8 +48,110 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div id="panel-1" class="panel">
+            <div class="panel-hdr">
+                <h2>
+                    Products <span class="fw-300 text-muted ml-1">Management</span>
+                </h2>
+                <div class="panel-toolbar">
+                    <a href="{{url('admins/product/create')}}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">
+                        <i class="fal fa-plus-circle mr-1"></i> Add New Product
+                    </a>
+                </div>
+            </div>
+            <div class="panel-container show">
+                <div class="panel-content">
+                    <div class="table-responsive">
+                        <!-- datatable start -->
+                        <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table id="tbl_product" class="table m-0 table-hover w-100 dataTable dtr-inline" role="grid">
+                                        <thead class="bg-light">
+                                            <tr class="text-uppercase fs-nano text-muted">
+                                                <th class="border-top-0 py-3 pl-4">#</th>
+                                                <th class="border-top-0 py-3">Photo</th>
+                                                <th class="border-top-0 py-3">Code</th>
+                                                <th class="border-top-0 py-3 text-dark">Name</th>
+                                                <th class="border-top-0 py-3">Type</th>
+                                                <th class="border-top-0 py-3">Category</th>
+                                                <th class="border-top-0 py-3">Sub</th>
+                                                <th class="border-top-0 py-3">Engine</th>
+                                                <th class="border-top-0 py-3">Part #</th>
+                                                <th class="border-top-0 py-3">Price</th>
+                                                <th class="border-top-0 py-3">Qty</th>
+                                                <th class="border-top-0 py-3">Status</th>
+                                                <th class="border-top-0 py-3 text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- datatable end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <div id="panel-1" class="panel card mb-g border-0 shadow-sm bg-white" style="border-radius: 12px; overflow: hidden;">
+{{-- <div class="row">
+    <div class="col-xl-12"> --}}
+        {{-- <div class="card mb-g border-0 shadow-sm bg-white p-3" style="border-radius: 12px;">
+            <div class="row mb-2 align-items-center">
+                <div class='col-md-4'>
+                    <label class="form-label text-muted">Name</label>
+                    <input type="text" name="name" value="" id="name" class='form-control shadow-none border-light-dark'>
+                </div>
+                <div class='col-md-4'>
+                    <label class="form-label text-muted">Product Type</label>
+                    <select class="select2 form-control w-100" name="product_type_id" id="product_type_id">
+                        <option value="">-- Select --</option>
+                        @foreach ($productTypes as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class='col-md-4'>
+                    <label class="form-label text-muted">Category</label>
+                    <select class="select2 form-control w-100" name="category_id" id="category_id">
+                        <option value="">-- Select --</option>
+                        @foreach ($dataCategory as $item)
+                            <option value="{{$item->id}}">{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3 align-items-center">
+                <div class='col-md-4'>
+                    <label class="form-label text-muted">Sub Category</label>
+                    <select class="select2 form-control w-100 sub_category" name="sub_category_id" id="sub_category_id">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <div class='col-md-4'>
+                    <label class="form-label text-muted">Engine</label>
+                    <select class="select2 form-control w-100 engine_id" name="engine_id" id="engine_id">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <div class='col-md-1'>
+                    <label for=""></label>
+                    <button type="submit" id="btnSearch" class="btn btn-primary btn-block mt-2 rounded-pill shadow-sm">
+                        <i class="fal fa-search mr-1"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div> --}}
+
+        {{-- <div id="panel-1" class="panel card mb-g border-0 shadow-sm bg-white" style="border-radius: 12px; overflow: hidden;">
             <div class="panel-hdr bg-white border-bottom-0 h6 font-weight-bold text-uppercase" style="min-height: 70px; padding: 0 1.5rem;">
                 <h2 class="text-primary d-flex align-items-center">
                     <span class="p-2 bg-primary-50 rounded-circle mr-2">
@@ -91,9 +193,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+        </div> --}}
+    {{-- </div>
+</div> --}}
 <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 @endsection
 @section('script')

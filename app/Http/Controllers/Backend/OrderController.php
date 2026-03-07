@@ -195,28 +195,35 @@ class OrderController extends Controller
 
     public function changeStatus(Request $request)
     {
+        DB::beginTransaction();
         $request->validate([
-            'id' => 'required|exists:orders,id',
-            'status'   => 'required',
+            'id' => 'required',
+            'status' => 'required',
         ]);
+
         try {
-            $order = Order::find($request->id);
-            $order->status = $request->status;
-            $order->save();
+            $order = Order::findOrFail($request->id);
+            // update order status
+            $order->update([
+                'status' => $request->status
+            ]);
+
+            // get product
+            $product = Product::where('id', $order->product_id)->first();
+            // update with sum
             Product::where('id', $order->product_id)->update([
-                'low_stock_qty_warning' => $order->quantity
+                'low_stock_qty_warning' => $product->low_stock_qty_warning + $order->quantity
             ]);
             DB::commit();
             return response()->json([
-                // 'status' => 'success',
                 'success' => true,
                 'status'  => 200,
-                'message'=> 'Order status updated successfully'
+                'message' => 'Order status updated successfully'
             ]);
         } catch (\Throwable $exp) {
-            DB::rollBack(); // ✅ Roll back only if transaction started
+            DB::rollBack();
             return response()->json([
-                'error'     => 'Order not found.',
+                'error' => 'Order not found.',
                 'exception' => $exp->getMessage()
             ], 500);
         }
