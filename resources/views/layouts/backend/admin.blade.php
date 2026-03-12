@@ -225,6 +225,13 @@
                                 </a>
                             </li>
 
+                            <li class="@if (in_array(Request::instance()->segment(2), ['sell'])) active @endif">
+                                <a href="{{url('admins/sell')}}" title="Sell" data-filter-tags="Sell">
+                                    <i class="fal fa-shopping-cart"></i>
+                                    <span class="nav-link-text">Sell</span>
+                                </a>
+                            </li>
+
                             <li>
                                 <a href="#" title="Settings" data-filter-tags="theme settings">
                                     <i class="fal fa-cog"></i>

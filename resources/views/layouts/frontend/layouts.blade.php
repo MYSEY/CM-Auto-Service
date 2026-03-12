@@ -16,7 +16,7 @@
         <meta property="og:site_name" content="CM Auto Service">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
-        <script type="application/ld+json">
+        {{--  <script type="application/ld+json">
             {
             "@context": "https://schema.org",
             "@type": "ItemList",
@@ -38,7 +38,7 @@
                     @endforeach
                 ]
             }
-        </script>
+        </script>  --}}
 
         <script type="application/ld+json">
         {
@@ -164,7 +164,7 @@
         </div>
     </div>
     <!--offcanvas menu area end-->
-    
+
     <header>
         <div class="main_header">
             <!--header top start-->

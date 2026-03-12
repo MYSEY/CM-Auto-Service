@@ -1,26 +1,29 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Backend\AddressController;
+use App\Http\Controllers\Backend\BackendContactController;
+use App\Http\Controllers\Backend\BackendShopController;
+use App\Http\Controllers\Backend\CompanyController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\EngineController;
+use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Backend\ProductCategoryController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\ProductSubcategoryController;
+use App\Http\Controllers\Backend\ProductTypeController;
+use App\Http\Controllers\Backend\SellController;
+use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Frontend\AboutAsController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\FrontendContactController;
+use App\Http\Controllers\Frontend\HomePageController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Backend\OrderController;
-use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Backend\EngineController;
-use App\Http\Controllers\Backend\SliderController;
-use App\Http\Controllers\Backend\AddressController;
-use App\Http\Controllers\Backend\CompanyController;
-use App\Http\Controllers\Backend\ProductController;
-use App\Http\Controllers\Frontend\AboutAsController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Frontend\HomePageController;
-use App\Http\Controllers\Backend\BackendShopController;
-use App\Http\Controllers\Backend\ProductTypeController;
-use App\Http\Controllers\Backend\BackendContactController;
-use App\Http\Controllers\Backend\ProductCategoryController;
-use App\Http\Controllers\Frontend\FrontendContactController;
-use App\Http\Controllers\Backend\ProductSubcategoryController;
+
+
 // use Illuminate\Support\Facades\Storage;
 
 /*
@@ -88,6 +91,9 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::resource('slide', SliderController::class);
     Route::resource('order', OrderController::class);
     Route::post('order/change-status', [OrderController::class, 'changeStatus'])->name('order.change-status');
+    Route::resource('sell',  SellController::class);
+    Route::post('sell/change-status', [SellController::class, 'changeStatus'])->name('sell.change-status');
+
 
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');
