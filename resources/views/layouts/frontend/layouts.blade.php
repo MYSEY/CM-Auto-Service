@@ -17,6 +17,30 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
         <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+                    @foreach($productAll as $key => $item)
+                    {
+                        "@type": "Product",
+                        "position": "{{ $key+1 }}",
+                        "name": "{{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} {{ $item->year }} {{ $item->proEngine?->name ?? '' }}",
+                        "image": "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/{{ $item->product_photo }}",
+                        "url": "{{ url('frontend/product/detail',$item->id) }}",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "{{ $item->price }}",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        }
+                    }@if(!$loop->last),@endif
+                    @endforeach
+                ]
+            }
+        </script>
+
+        <script type="application/ld+json">
         {
             "@context": "https://schema.org",
                 "@type": "Organization",
@@ -140,7 +164,7 @@
         </div>
     </div>
     <!--offcanvas menu area end-->
-
+    
     <header>
         <div class="main_header">
             <!--header top start-->
