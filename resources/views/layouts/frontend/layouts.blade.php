@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< Updated upstream
         
         @if(isset($productDetail))
             <title>{{ $productDetail->name }} | CM Auto Service</title>
@@ -18,6 +19,17 @@
         <meta property="og:description" content="{{ isset($productDetail) ? $productDetail->name : 'ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.' }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:image" content="{{ isset($productDetail) ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $productDetail->product_photo : 'https://cmautoservic.com/frontends/assets/img/logo.png' }}">
+=======
+        <meta name="google-site-verification" content="a8mdUz9mwXLRoGRmciyr-Q7LyOLT_UqXmwMFf2jnY2M" />
+        
+        <link rel="canonical" href="https://www.cmautoservic.com{{ request()->getPathInfo() }}">
+        <title>CM Auto Service</title>
+        <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
+        <meta property="og:title" content="CM Auto Service — Auto Parts & ECU Programming">
+        <meta property="og:description" content="ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.">
+        <meta property="og:url" content="https://www.cmautoservic.com">
+        <meta property="og:image" content="https://www.cmautoservic.com/frontends/assets/img/logo.png">
+>>>>>>> Stashed changes
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="CM Auto Service">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
