@@ -259,18 +259,25 @@
         });
 
         // Click tab
-        $('.tab-link').click(function (e) {
-            e.preventDefault();
-            // moveUnderline after a small delay to allow bootstrap to set active class
-            setTimeout(moveUnderline, 50);
-            
-            let href = $(this).attr('href').substring(1);
+        $('.tab-link').on('click', function (e) {
+            let $this = $(this);
+            let href = $this.attr('href').substring(1);
             let container = href === 'all' ? '#productContent' : '#productContent_' + href;
-            let keyword = $(".search_product").val();
+            let keyword = $(".search_product").val() || '';
+            
+            console.log("Tab changed to:", href);
+
+            // moveUnderline after a small delay to allow bootstrap to set active class
+            setTimeout(moveUnderline, 100);
             
             let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
             
             loadProducts(url, container);
+        });
+
+        // Refresh underline on resize
+        $(window).on('resize', function() {
+            moveUnderline();
         });
 
         $(document).on('click', '.addToCart', function () {
