@@ -90,7 +90,7 @@
                             </form>
                         </div>
                         <div class="page_amount">
-                            <p>Showing {{ $product->firstItem() }} - {{ $product->lastItem() }} of {{ $product->total() }} results</p>
+                            <p>Showing {{ $productAll->firstItem() }} - {{ $productAll->lastItem() }} of {{ $productAll->total() }} results</p>
                         </div>
                     </div>
                     <div class="row">
@@ -105,7 +105,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($product as $key => $item)
+                                            @foreach($productAll as $key => $item)
                                                 <tr>
                                                     <td><a href="{{ url('frontend/product/detail',$item->id) }}">{{ $item->category->name }} {{ $item->subCategory->name }} {{ $item->subCategory->serial_number }} {{ $item->year }}</a></td>
                                                     <td class="product_total">
@@ -124,23 +124,23 @@
                     <div class="shop_toolbar t_bottom">
                         <div class="pagination">
                             <ul>
-                                @if ($product->onFirstPage())
+                                @if ($productAll->onFirstPage())
                                     <li class="disabled"><span><<</span></li>
                                 @else
-                                    <li><a href="{{ $product->previousPageUrl() }}"><</a></li>
+                                    <li><a href="{{ $productAll->previousPageUrl() }}"><</a></li>
                                 @endif
 
-                                @foreach ($product->getUrlRange(1, $product->lastPage()) as $page => $url)
-                                    @if ($page == $product->currentPage())
+                                @foreach ($productAll->getUrlRange(1, $productAll->lastPage()) as $page => $url)
+                                    @if ($page == $productAll->currentPage())
                                         <li class="current">{{ $page }}</li>
                                     @else
                                         <li><a href="{{ $url }}">{{ $page }}</a></li>
                                     @endif
                                 @endforeach
 
-                                @if ($product->hasMorePages())
-                                    <li class="next"><a href="{{ $product->nextPageUrl() }}">next</a></li>
-                                    <li><a href="{{ $product->url($product->lastPage()) }}">>></a></li>
+                                @if ($productAll->hasMorePages())
+                                    <li class="next"><a href="{{ $productAll->nextPageUrl() }}">next</a></li>
+                                    <li><a href="{{ $productAll->url($productAll->lastPage()) }}">>></a></li>
                                 @else
                                     <li class="disabled"><span>next</span></li>
                                     <li class="disabled"><span>>></span></li>

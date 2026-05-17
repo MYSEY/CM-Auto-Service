@@ -217,36 +217,62 @@
 <script>
     $(window).on('load', function () {
         dataBackgroundImage();
+        moveUnderline();
     });
+
+    function moveUnderline() {
+        const $activeTab = $('#nav-tab .active.tab-link');
+        const $underline = $('.sliding-underline');
+        if ($activeTab.length && $underline.length) {
+            const position = $activeTab.parent().position();
+            const width = $activeTab.parent().outerWidth();
+            $underline.css({
+                'left': position.left + 'px',
+                'width': width + 'px'
+            });
+        }
+    }
+
     $(function(){
         let timer = null;
         $(".search_product").on('keyup', function () {
             clearTimeout(timer);
             let keyword = $(this).val();
+            let $activeTab = $('#nav-tab .active.tab-link');
+            let tab = $activeTab.length ? $activeTab.attr('href').substring(1) : 'all';
+            let container = tab === 'all' ? '#productContent' : '#productContent_' + tab;
+
             timer = setTimeout(function () {
                 $.ajax({
                     url: "{{ url('frontend/product/search') }}",
                     method: "GET",
                     data: {
                         keyword: keyword,
+                        tab: tab,
                         ajax: 4
                     },
                     success: function (response) {
-                        // update all tabs
-                        $("div[id^='productContent']").html(response.html);
+                        $(container).html(response.html);
                     }
                 });
             }, 300);
         });
 
-        loadProducts();
         // Click tab
         $('.tab-link').click(function (e) {
             e.preventDefault();
-            let tab = $(this).attr('data-tab-name').toLowerCase();
-            loadProducts("{{ route('products.index') }}?tab=" + tab);
+            // moveUnderline after a small delay to allow bootstrap to set active class
+            setTimeout(moveUnderline, 50);
+            
+            let href = $(this).attr('href').substring(1);
+            let container = href === 'all' ? '#productContent' : '#productContent_' + href;
+            let keyword = $(".search_product").val();
+            
+            let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
+            
+            loadProducts(url, container);
         });
-        // ... rest of your existing AJAX and jQuery functions ...
+
         $(document).on('click', '.addToCart', function () {
             let id = $(this).data('id');
             event.preventDefault();
@@ -273,23 +299,11 @@
             });
         });
 
-        $(document).off("submit", ".vehicle_lookup_form").on("submit", ".vehicle_lookup_form", function(e) {
-            e.preventDefault();
-            let formData = $(this).serialize();
-            $.ajax({
-                url: "{{ url('frontend/product/search') }}",
-                method: "GET",
-                data: formData + "&ajax=1",
-                success: function(response) {
-                    $("#productContent").html(response.html);
-                }
-            });
-        });
-
         $(document).on('click', '#cartIcon', function () {
             $('.mini_cart').toggleClass('open');
             loadMiniCart();
         });
+        
         $("#selectCategory").on('change',function(){
             var category_id = $(this).val();
             $.ajax({
@@ -334,16 +348,17 @@
             let tab = new URL(url).searchParams.get('tab') || 'all';
             let container = tab === 'all' ? '#productContent' : '#productContent_' + tab;
 
-            $.get(url, function(res) {
-                $(container).html(res.html);
-            });
+            loadProducts(url, container);
         });
     });
-    function loadProducts(url) {
+
+    function loadProducts(url, container = '#productContent') {
+        if(!url) return;
         $.get(url, function(res) {
-            $('#productContent').html(res.html);
+            $(container).html(res.html);
         });
     }
+
     function loadMiniCart() {
         $.ajax({
             url: "{{ route('loadMiniCart') }}",

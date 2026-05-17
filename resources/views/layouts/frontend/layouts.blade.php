@@ -5,13 +5,19 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        @if(isset($productDetail))
+            <title>{{ $productDetail->name }} | CM Auto Service</title>
+            <meta name="description" content="{{ $productDetail->name }} ECU {{ $productDetail->part_number ?? '' }} {{ $productDetail->bosch_number ?? '' }}">
+        @else
+            <title>CM Auto Service</title>
+            <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
+        @endif
 
-        <title>CM Auto Service</title>
-        <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
-        <meta property="og:title" content="CM Auto Service — Auto Parts & ECU Programming">
-        <meta property="og:description" content="ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.">
-        <meta property="og:url" content="https://cmautoservic.com">
-        <meta property="og:image" content="https://cmautoservic.com/frontends/assets/img/logo.png">
+        <meta property="og:title" content="{{ isset($productDetail) ? $productDetail->name : 'CM Auto Service — Auto Parts & ECU Programming' }}">
+        <meta property="og:description" content="{{ isset($productDetail) ? $productDetail->name : 'ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.' }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="{{ isset($productDetail) ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $productDetail->product_photo : 'https://cmautoservic.com/frontends/assets/img/logo.png' }}">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="CM Auto Service">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
@@ -212,7 +218,7 @@
                                     <form>
                                         @csrf
                                         <div class="search_box">
-                                            <input placeholder="Search product..." type="text" name="search_product" id="search_product">
+                                            <input placeholder="Search product..." type="text" name="search_product" id="header_search_input">
                                         </div>
                                     </form>
                                 </div>
@@ -435,7 +441,7 @@
     <script>
         $(function(){
             let timer = null;
-            $("#search_product").on('keyup', function () {
+            $("#header_search_input").on('keyup', function () {
                 clearTimeout(timer);
                 let keyword = $(this).val();
                 timer = setTimeout(function () {

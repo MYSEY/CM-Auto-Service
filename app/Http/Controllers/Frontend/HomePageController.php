@@ -21,8 +21,13 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         $proEngine = Engine::all();
         $slider = Slider::all();
-        $productAll = Product::with(['category','subCategory','productType'])->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
-        // $productAll = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+        
+        $productAll = Product::with(['category','subCategory','productType'])
+            ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
+            ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
+            ->paginate(24, ['*'], 'page_all')
+            ->appends(['tab' => 'all']);
+
         $productsByType = [];
         foreach ($productType as $type) {
             $slug = Str::slug($type->name);
@@ -35,7 +40,11 @@ class HomePageController extends Controller
             $tab = $request->get('tab', 'all');
 
             if ($tab === 'all') {
-                $products = Product::with(['category','subCategory','productType'])->paginate(24, ['*'], 'page_all')->appends(['tab' => 'all']);
+                $products = Product::with(['category','subCategory','productType'])
+                    ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
+                    ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
+                    ->paginate(24, ['*'], 'page_all')
+                    ->appends(['tab' => 'all']);
             } else {
                 $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
                 if (!$selected) {
@@ -115,7 +124,10 @@ class HomePageController extends Controller
                 $q->where('serial_number', $request->serial_number)
             );
         }
-        $productAll = $query->orderBy('number','desc')->paginate(24)->appends($request->except('page'));
+        $productAll = $query->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
+            ->orderBy('number','desc')
+            ->paginate(24)
+            ->appends($request->except('page'));
         // Return only HTML for AJAX
         if ($request->ajax()) {
             return response()->json([
@@ -191,6 +203,16 @@ class HomePageController extends Controller
     public function frontendSearchProduct(Request $request)
     {
         $query = Product::query()->with(['category','subCategory','proEngine']);
+        
+        $tab = $request->get('tab', 'all');
+        if ($tab !== 'all') {
+            $productType = ProductType::all();
+            $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
+            if ($selected) {
+                $query->where('product_type_id', $selected->id);
+            }
+        }
+
         if ($request->keyword) {
             $keyword = $request->keyword;
             $query->where(function ($q) use ($keyword) {
@@ -215,11 +237,21 @@ class HomePageController extends Controller
                 });
             });
         }
-        $productAll = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24)->appends($request->all());
+
+        if ($tab === 'all') {
+            $query->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END");
+        }
+        
+        $productAll = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
+            ->orderBy('id', 'asc')
+            ->paginate(24)
+            ->appends($request->all());
+
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('frontends.product_list', [
-                    'products' => $productAll
+                    'products' => $productAll,
+                    'tab' => $tab
                 ])->render()
             ]);
         }
