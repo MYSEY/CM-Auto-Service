@@ -259,25 +259,18 @@
         });
 
         // Click tab
-        $('.tab-link').on('click', function (e) {
-            let $this = $(this);
-            let href = $this.attr('href').substring(1);
-            let container = href === 'all' ? '#productContent' : '#productContent_' + href;
-            let keyword = $(".search_product").val() || '';
-            
-            console.log("Tab changed to:", href);
-
+        $('.tab-link').click(function (e) {
+            e.preventDefault();
             // moveUnderline after a small delay to allow bootstrap to set active class
-            setTimeout(moveUnderline, 100);
-            
-            let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
-            
-            loadProducts(url, container);
-        });
+            setTimeout(moveUnderline, 50);
 
-        // Refresh underline on resize
-        $(window).on('resize', function() {
-            moveUnderline();
+            let href = $(this).attr('href').substring(1);
+            let container = href === 'all' ? '#productContent' : '#productContent_' + href;
+            let keyword = $(".search_product").val();
+
+            let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
+
+            loadProducts(url, container);
         });
 
         $(document).on('click', '.addToCart', function () {
@@ -310,7 +303,7 @@
             $('.mini_cart').toggleClass('open');
             loadMiniCart();
         });
-        
+
         $("#selectCategory").on('change',function(){
             var category_id = $(this).val();
             $.ajax({
