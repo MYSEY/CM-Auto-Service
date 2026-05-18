@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\AboutAsController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,8 @@ Route::get('/clear', function() {
     // return "Cleared!";
     return "<script>alert('Cache cleared!'); window.location.href='/';</script>";
 });
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
 Route::get('/', [HomePageController::class,'index'])->name('products.index');
 Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login.form');
