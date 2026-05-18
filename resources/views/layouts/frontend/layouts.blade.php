@@ -8,15 +8,16 @@
 <<<<<<< Updated upstream
         
         @if(isset($productDetail))
-            <title>{{ $productDetail->name }} | CM Auto Service</title>
-            <meta name="description" content="{{ $productDetail->name }} ECU {{ $productDetail->part_number ?? '' }} {{ $productDetail->bosch_number ?? '' }}">
+            <title>{{ $productDetail->name }} {{ $productDetail->proEngine?->name ?? '' }} | CM Auto Service</title>
+            <meta name="description" content="Buy {{ $productDetail->name }} for {{ $productDetail->proEngine?->name ?? '' }}. Part Number: {{ $productDetail->proEngine?->part_number ?? 'N/A' }}, SKU: {{ $productDetail->number ?? '' }}. Best price ${{ number_format($productDetail->price, 2) }} at CM Auto Service.">
+            <meta name="keywords" content="{{ $productDetail->name }}, {{ $productDetail->proEngine?->name ?? '' }}, {{ $productDetail->proEngine?->part_number ?? '' }}, {{ $productDetail->number }}, ECU, CM Auto Service">
         @else
-            <title>CM Auto Service</title>
+            <title>CM Auto Service — ECU Sell, Original & Tuning Files</title>
             <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
         @endif
 
-        <meta property="og:title" content="{{ isset($productDetail) ? $productDetail->name : 'CM Auto Service — Auto Parts & ECU Programming' }}">
-        <meta property="og:description" content="{{ isset($productDetail) ? $productDetail->name : 'ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.' }}">
+        <meta property="og:title" content="{{ isset($productDetail) ? $productDetail->name . ' ' . ($productDetail->proEngine?->name ?? '') : 'CM Auto Service — Auto Parts & ECU Programming' }}">
+        <meta property="og:description" content="{{ isset($productDetail) ? 'Check out ' . $productDetail->name . ' for ' . ($productDetail->proEngine?->name ?? '') . '. Price: $' . number_format($productDetail->price, 2) : 'ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.' }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:image" content="{{ isset($productDetail) ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $productDetail->product_photo : 'https://cmautoservic.com/frontends/assets/img/logo.png' }}">
 =======
@@ -34,29 +35,33 @@
         <meta property="og:site_name" content="CM Auto Service">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
-        {{--  <script type="application/ld+json">
-            {
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            "itemListElement": [
-                    @foreach($productAll as $key => $item)
-                    {
-                        "@type": "Product",
-                        "position": "{{ $key+1 }}",
-                        "name": "{{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} {{ $item->year }} {{ $item->proEngine?->name ?? '' }}",
-                        "image": "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/{{ $item->product_photo }}",
-                        "url": "{{ url('frontend/product/detail',$item->id) }}",
-                        "offers": {
-                            "@type": "Offer",
-                            "price": "{{ $item->price }}",
-                            "priceCurrency": "USD",
-                            "availability": "https://schema.org/InStock"
-                        }
-                    }@if(!$loop->last),@endif
-                    @endforeach
-                ]
+        @if(isset($productDetail))
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": "{{ $productDetail->name }} {{ $productDetail->proEngine?->name ?? '' }}",
+            "image": [
+                "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/{{ $productDetail->product_photo }}"
+            ],
+            "description": "{{ strip_tags($productDetail->description) }}",
+            "sku": "{{ $productDetail->number }}",
+            "mpn": "{{ $productDetail->proEngine?->part_number }}",
+            "brand": {
+                "@type": "Brand",
+                "name": "CM Auto Service"
+            },
+            "offers": {
+                "@type": "Offer",
+                "url": "{{ url()->current() }}",
+                "priceCurrency": "USD",
+                "price": "{{ $productDetail->price }}",
+                "availability": "https://schema.org/InStock",
+                "itemCondition": "https://schema.org/NewCondition"
             }
-        </script>  --}}
+        }
+        </script>
+        @endif
 
         <script type="application/ld+json">
         {
