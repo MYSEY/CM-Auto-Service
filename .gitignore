@@ -19,5 +19,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-public/images/
-*.zip
+public/images/products/*
+public/users/profiles/*
