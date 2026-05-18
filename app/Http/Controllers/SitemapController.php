@@ -11,7 +11,7 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $products = Product::where('status', 1)->get();
+        $products = Product::all();
         $categories = ProductCategory::all();
 
         return Response::view('sitemap', [
