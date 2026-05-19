@@ -263,6 +263,7 @@
             e.preventDefault();
             // moveUnderline after a small delay to allow bootstrap to set active class
             setTimeout(moveUnderline, 50);
+<<<<<<< Updated upstream
 
             let href = $(this).attr('href').substring(1);
             let container = href === 'all' ? '#productContent' : '#productContent_' + href;
@@ -270,6 +271,15 @@
 
             let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
 
+=======
+            
+            let href = $(this).attr('href').substring(1);
+            let container = href === 'all' ? '#productContent' : '#productContent_' + href;
+            let keyword = $(".search_product").val();
+            
+            let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
+            
+>>>>>>> Stashed changes
             loadProducts(url, container);
         });
 
@@ -303,7 +313,11 @@
             $('.mini_cart').toggleClass('open');
             loadMiniCart();
         });
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
         $("#selectCategory").on('change',function(){
             var category_id = $(this).val();
             $.ajax({
