@@ -239,10 +239,6 @@ class HomePageController extends Controller
         // Fallback to local search
         $query = Product::query()->with(['category','subCategory','proEngine']);
 
-<<<<<<< Updated upstream
-=======
-        $tab = $request->get('tab', 'all');
->>>>>>> Stashed changes
         if ($tab !== 'all') {
             $productType = ProductType::all();
             $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
@@ -251,12 +247,7 @@ class HomePageController extends Controller
             }
         }
 
-<<<<<<< Updated upstream
         if ($keyword) {
-=======
-        if ($request->keyword) {
-            $keyword = $request->keyword;
->>>>>>> Stashed changes
             $query->where(function ($q) use ($keyword) {
                 $q->where('name', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
