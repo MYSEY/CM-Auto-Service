@@ -22,7 +22,7 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         $proEngine = Engine::all();
         $slider = Slider::all();
-        
+
         $productAll = Product::with(['category','subCategory','productType'])
             ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
             ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
@@ -238,7 +238,7 @@ class HomePageController extends Controller
 
         // Fallback to local search
         $query = Product::query()->with(['category','subCategory','proEngine']);
-        
+
         if ($tab !== 'all') {
             $productType = ProductType::all();
             $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
@@ -274,7 +274,7 @@ class HomePageController extends Controller
         if ($tab === 'all') {
             $query->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END");
         }
-        
+
         $productAll = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
             ->orderBy('id', 'asc')
             ->paginate(24)
