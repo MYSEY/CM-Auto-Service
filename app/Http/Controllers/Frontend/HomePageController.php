@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use App\Http\Controllers\Controller;
@@ -22,7 +21,7 @@ class HomePageController extends Controller
         $productType = ProductType::all();
         $proEngine = Engine::all();
         $slider = Slider::all();
-        
+
         $productAll = Product::with(['category','subCategory','productType'])
             ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
             ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
@@ -203,42 +202,9 @@ class HomePageController extends Controller
     }
     public function frontendSearchProduct(Request $request)
     {
-        $keyword = $request->keyword;
-        $tab = $request->get('tab', 'all');
-
-        // Google Custom Search Integration
-        $apiKey = config('services.google.search_api_key');
-        $cxId = config('services.google.search_cx_id');
-
-        if ($apiKey && $cxId && $keyword) {
-            try {
-                $response = Http::get('https://www.googleapis.com/customsearch/v1', [
-                    'key' => $apiKey,
-                    'cx' => $cxId,
-                    'q' => $keyword,
-                ]);
-
-                if ($response->successful()) {
-                    $results = $response->json();
-                    $items = $results['items'] ?? [];
-
-                    if ($request->ajax()) {
-                        return response()->json([
-                            'html' => view('frontends.google_search_list', [
-                                'items' => $items,
-                                'tab' => $tab
-                            ])->render()
-                        ]);
-                    }
-                }
-            } catch (\Exception $e) {
-                \Log::error('Google Search Error: ' . $e->getMessage());
-            }
-        }
-
-        // Fallback to local search
         $query = Product::query()->with(['category','subCategory','proEngine']);
-        
+
+        $tab = $request->get('tab', 'all');
         if ($tab !== 'all') {
             $productType = ProductType::all();
             $selected = $productType->firstWhere(fn($row) => Str::slug($row->name) === $tab);
@@ -247,7 +213,8 @@ class HomePageController extends Controller
             }
         }
 
-        if ($keyword) {
+        if ($request->keyword) {
+            $keyword = $request->keyword;
             $query->where(function ($q) use ($keyword) {
                 $q->where('name', 'LIKE', "%$keyword%")
                 ->orWhere('description', 'LIKE', "%$keyword%")
@@ -274,7 +241,7 @@ class HomePageController extends Controller
         if ($tab === 'all') {
             $query->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END");
         }
-        
+
         $productAll = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
             ->orderBy('id', 'asc')
             ->paginate(24)
@@ -290,3 +257,4 @@ class HomePageController extends Controller
         }
     }
 }
+//***s */
