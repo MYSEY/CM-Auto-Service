@@ -21,3 +21,5 @@ yarn-error.log
 /.vscode
 public/images/products/*
 public/users/profiles/*
+*.zip
+/public/images/*.zip
