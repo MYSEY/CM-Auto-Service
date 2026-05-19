@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
     php artisan make:controller Backend/UserController --resource
     php artisan make:model Company -m
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routess
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
