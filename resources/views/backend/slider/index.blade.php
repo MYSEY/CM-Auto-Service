@@ -70,7 +70,7 @@
     </div>
 </div>
 @endsection
-<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 @section('script')
 <script>
     // --- STATUS CHANGE LOGIC (មុខងារប្តូរស្ថានភាព) ---

@@ -93,7 +93,7 @@
         </div>
     </div>
 </div>
-<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 
 @endsection
 @section('script')
