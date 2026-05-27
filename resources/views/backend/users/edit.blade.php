@@ -17,13 +17,13 @@
                         @method('PUT')
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="form-label">@lang('lang.name') <span class="text-danger">*</span></label>
+                                <label class="form-label">@lang('lang.name') <span class="text-primary">*</span></label>
                                 <div class="custom-file">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$data->name}}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">@lang('lang.user_name') <span class="text-danger">*</span></label>
+                                <label class="form-label">@lang('lang.user_name') <span class="text-primary">*</span></label>
                                 <div class="custom-file">
                                     <input id="user_name" type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" value="{{ $data->user_name }}" required autocomplete="user_name" autofocus>
                                 </div>
@@ -36,7 +36,7 @@
                                 <input id="email" type="email" class="form-control" name="email" value="{{ $data->email }}" autocomplete="email">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label" for="single-default">@lang('lang.sex') <span class="text-danger">*</span></label>
+                                <label class="form-label" for="single-default">@lang('lang.sex') <span class="text-primary">*</span></label>
                                 <select class="select2 form-control @error('sex') is-invalid @enderror" name="sex" id="sex">
                                     <option value="1" {{$data->sex == 1 ? 'selected' : ''}}>Male</option>
                                     <option value="2" {{$data->sex == 2 ? 'selected' : ''}}>FeMale</option>
@@ -45,7 +45,7 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="form-label">@lang('lang.password') <span class="text-danger">*</span></label>
+                                <label class="form-label">@lang('lang.password') <span class="text-primary">*</span></label>
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                             </div>
                             <div class="col-md-6">
@@ -55,7 +55,7 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="form-label" for="single-default">@lang('lang.role') <span class="text-danger">*</span></label>
+                                <label class="form-label" for="single-default">@lang('lang.role') <span class="text-primary">*</span></label>
                                 <select class="select2 form-control" name="role_id" id="role_id">
                                     <option value="1" {{$data->role_id == 1 ? 'selected' : ''}}>Administrator</option>
                                     <option value="2" {{$data->role_id == 2 ? 'selected' : ''}}>Staff</option>

@@ -32,13 +32,13 @@
                         <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
                     </div>
                 </div>
-                <div class="action_links">
+                {{--  <div class="action_links">
                     <ul>
                         <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
                             <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
                         </li>
                     </ul>
-                </div>
+                </div>  --}}
             </div>
         </figure>
     </article>

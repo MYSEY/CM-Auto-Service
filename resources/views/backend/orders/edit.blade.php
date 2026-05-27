@@ -92,7 +92,7 @@
             $("#btnCreate").on('click',function(){
                 $('.required').each(function () {
                     if ($(this).val().trim() === '') {
-                        $(this).css('border', '1px solid red');
+                        $(this).css('border', '1px solid blue');
                     } else {
                         $(this).css('border', '');
                     }
@@ -155,7 +155,7 @@
                     <td><input type="number" class="form-control price" name="price[]"></td>
                     <td><input type="number" class="form-control sub_total" name="sub_total[]" readonly></td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-danger btnRemoveRow">×</button>
+                        <button type="button" class="btn btn-sm btn-primary btnRemoveRow">×</button>
                     </td>
                 </tr>`;
 

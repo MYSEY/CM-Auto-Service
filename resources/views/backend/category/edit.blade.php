@@ -30,7 +30,7 @@
                                 {{-- 1. Category Name --}}
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="name">Category Name <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="name">Category Name <span class="text-primary">*</span></label>
                                         <input type="text" id="name" name="name"
                                             class="form-control @error('name') is-invalid @enderror"
                                             value="{{ old('name', $data->name) }}" required
@@ -44,7 +44,7 @@
                                 {{-- 2. Slug --}}
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="slug">Slug <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="slug">Slug <span class="text-primary">*</span></label>
                                         <input type="text" id="slug" name="slug"
                                             class="form-control @error('slug') is-invalid @enderror"
                                             value="{{ old('slug', $data->slug) }}"
@@ -78,7 +78,7 @@
                                         <label for="category_photo">Photo</label>
                                         <input type="file" name="category_photo" class="form-control @error('category_photo') is-invalid @enderror" id="image-input">
                                         @error('category_photo')
-                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                            <div class="text-primary mt-1">{{ $message }}</div>
                                         @enderror
                                         <small class="form-text text-muted">Max 2MB. Recommended dimensions: 100x50 pixels.</small>
 
@@ -89,7 +89,7 @@
                                                          style="object-fit: cover; width: 100px; height: 50px;" alt="category photo">
 
                                                     {{-- AJAX REMOVE MAIN PHOTO LINK (Use correct route) --}}
-                                                    <a href="#" class="text-danger delete-photo"
+                                                    <a href="#" class="text-primary delete-photo"
                                                        data-id="{{ $data->id }}"
                                                        data-url="{{ route('productcate.delete_photo', $data->id) }}">
                                                         Remove Photo
@@ -105,7 +105,7 @@
                                 {{-- 5. Status (is_active) --}}
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label">Status (Active/Inactive) <span class="text-danger">*</span></label>
+                                        <label class="form-label">Status (Active/Inactive) <span class="text-primary">*</span></label>
                                         @php
                                             $isActiveValue = old('is_active', $data->is_active ?? 1);
                                         @endphp
@@ -120,7 +120,7 @@
                                             </div>
                                         </div>
                                         @error('is_active')
-                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                            <div class="text-primary mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
             function showAlert(message, type = 'success') {
                 const alertBox = $('#alert-message');
                 // Hide alert, change classes, set message, then show.
-                alertBox.hide().removeClass('alert-success alert-danger').addClass(`alert-${type}`).text(message).fadeIn();
+                alertBox.hide().removeClass('alert-success alert-info').addClass(`alert-${type}`).text(message).fadeIn();
 
                 // Hide after 3 seconds, or use Toastr directly if available globally
                 if (typeof toastr !== 'undefined') {

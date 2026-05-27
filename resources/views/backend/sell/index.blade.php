@@ -185,7 +185,7 @@ function dataTables() {
                         <a href="{{ url('/admins/sell') }}/${row.id}/edit" class="btn btn-icon btn-xs btn-outline-info mr-2">
                             <i class="fal fa-pencil"></i>
                         </a>
-                       <a href="javascript:void(0);" class="btn btn-icon btn-xs btn-outline-danger deleteData" data-id="${row.id}">
+                       <a href="javascript:void(0);" class="btn btn-icon btn-xs btn-outline-primary deleteData" data-id="${row.id}">
                             <i class="fal fa-trash-alt"></i>
                         </a>
                     </div>`;

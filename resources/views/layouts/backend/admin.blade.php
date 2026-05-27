@@ -304,7 +304,7 @@
                         <div class="search">
                             <form class="app-forms hidden-xs-down" role="search" action="page_search.html" autocomplete="off">
                                 <input type="text" id="search-field" placeholder="Search for anything" class="form-control" tabindex="1">
-                                <a href="#" onclick="return false;" class="btn-danger btn-search-close js-waves-off d-none" data-action="toggle" data-class="mobile-search-on">
+                                <a href="#" onclick="return false;" class="btn-primary btn-search-close js-waves-off d-none" data-action="toggle" data-class="mobile-search-on">
                                     <i class="fal fa-times"></i>
                                 </a>
                             </form>
@@ -620,7 +620,7 @@
                                                 <div class="d-table-cell w-100 align-middle pl-2 pr-2">
                                                     <div class="text-truncate text-truncate-md">
                                                         oliver.kopyuv@gotbootstrap.com
-                                                        <small class="d-block font-italic fs-xs text-danger">
+                                                        <small class="d-block font-italic fs-xs text-primary">
                                                             Busy
                                                         </small>
                                                     </div>
@@ -1041,10 +1041,10 @@
                             <div class="pl-5 pr-3 py-3 bg-faded">
                                 <div class="row no-gutters">
                                     <div class="col-6 pr-1">
-                                        <a href="#" class="btn btn-outline-danger fw-500 btn-block" data-action="app-reset">Reset Settings</a>
+                                        <a href="#" class="btn btn-outline-primary fw-500 btn-block" data-action="app-reset">Reset Settings</a>
                                     </div>
                                     <div class="col-6 pl-1">
-                                        <a href="#" class="btn btn-danger fw-500 btn-block" data-action="factory-reset">Factory Reset</a>
+                                        <a href="#" class="btn btn-primary fw-500 btn-block" data-action="factory-reset">Factory Reset</a>
                                     </div>
                                 </div>
                             </div>

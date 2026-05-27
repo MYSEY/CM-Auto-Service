@@ -16,16 +16,16 @@
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <span class="text-danger">*</span>
+                            <span class="text-primary">*</span>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ old('name') }}">
-                            <p class="text-danger">{!! $errors->first('name') !!}</p>
+                            <p class="text-primary">{!! $errors->first('name') !!}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="title">Logo Company</label>
-                            <span class="text-danger">*</span>
+                            <span class="text-primary">*</span>
                             <input type="file" name="logo_company" id="logo_company" class="form-control" id="image-input">
-                            <p class="text-danger">{!! $errors->first('logo_company') !!}</p>
+                            <p class="text-primary">{!! $errors->first('logo_company') !!}</p>
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-6">
@@ -46,24 +46,24 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="provinc">Provinc</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control select2" id="province" name="province">
                                         <option value="">Select provice</option>
                                         @foreach($provice as $item)
                                             <option value="{{ $item->code  }}">{{ $item->english }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('province') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('province') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Category">district</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control" id="district" name="district">
                                         <option value="">Select district </option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('district') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('district') !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -71,21 +71,21 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="provinc">Commun</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control" id="commune" name="commune">
                                         <option value="">Select commun</option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('commune') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('commune') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Category">Villag</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control" id="village" name="village">
                                         <option value="">Select village </option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('village') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('village') !!}</p>
                                 </div>
                             </div>
                         </div>

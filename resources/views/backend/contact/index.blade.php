@@ -18,7 +18,7 @@
         </div>
     @endif
     @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
             {!! session('error') !!}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -109,7 +109,7 @@
                                                         <td>
                                                             <div class="d-flex demo">
                                                                 {{-- 💡 DELETE BUTTON --}}
-                                                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-danger btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
+                                                                <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
 
                                                                 {{-- 💡 SHOW DETAIL BUTTON --}}
                                                                 <a href="{{ url('admins/backend-contact/'.$item->id) }}" class="btn btn-sm btn-outline-info btn-icon btn-inline-block mr-1" title="View Detail"><i class="fal fa-eye"></i></a>

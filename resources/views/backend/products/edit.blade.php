@@ -17,9 +17,9 @@
                         @method('PUT')
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <span class="text-danger">*</span>
+                            <span class="text-primary">*</span>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ $data->name }}">
-                            <p class="text-danger">{!! $errors->first('name') !!}</p>
+                            <p class="text-primary">{!! $errors->first('name') !!}</p>
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
@@ -30,16 +30,16 @@
 
                         <div class="form-group">
                             <label for="title">Photo</label>
-                            <span class="text-danger">*</span>
+                            <span class="text-primary">*</span>
                             <input type="file" name="product_photo" class="form-control" id="image-input">
-                            <p class="text-danger">{!! $errors->first('product_photo') !!}</p>
+                            <p class="text-primary">{!! $errors->first('product_photo') !!}</p>
                             <div id="photo-preview" style="margin-top:10px;">
                                 @if ($data->product_photo)
                                     <div id="main-photo-container" style="display:flex; align-items:center; gap: 8px;">
                                         <img id="main-product-photo" src="{{ asset('images/products/' . $data->product_photo) }}"
                                             style="object-fit: cover; width: 100px; height: 50px;" alt="product photo">
                                         {{-- AJAX REMOVE MAIN PHOTO LINK --}}
-                                        <a href="#" class="text-danger delete-photo"
+                                        <a href="#" class="text-primary delete-photo"
                                             data-id="{{ $data->id }}"
                                             data-url="{{ route('product.delete_photo', $data->id) }}">
                                             Remove Photo
@@ -117,20 +117,20 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Category">Make</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control select2" id="category_id" name="category_id">
                                         <option value="">Please choose make</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('category_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Model">Model</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control sub_category select2" id="sub_category_id" name="sub_category_id">
                                         <option value="">Please choose model</option>
                                         @foreach($sub_category as $item)
@@ -139,7 +139,7 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('sub_category_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -162,14 +162,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Category">Product Type</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control select2" name="product_type_id">
                                         <option value="">Please choose product type</option>
                                         @foreach ($producttype as $item)
                                             <option value="{{ $item->id }}" {{ $data->product_type_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('product_type_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -223,7 +223,7 @@
             // Function to display a temporary alert message
             function showAlert(message, type = 'success') {
                 const alertBox = $('#alert-message');
-                alertBox.removeClass('alert-success alert-danger').addClass(`alert-${type}`).text(message).fadeIn();
+                alertBox.removeClass('alert-success alert-info').addClass(`alert-${type}`).text(message).fadeIn();
                 setTimeout(() => alertBox.fadeOut(), 3000);
             }
 

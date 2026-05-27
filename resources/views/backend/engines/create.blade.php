@@ -13,31 +13,31 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Make">Make</label>
-                                <span class="text-danger">*</span>
+                                <span class="text-primary">*</span>
                                 <select class="select2 form-control req" id="category_id" name="category_id">
                                     <option value="">Please choose make</option>
                                     @foreach($category as $item)
                                         <option value="{{ $item->id }}" {{ old('category_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                                <small class="text-danger error-category_id"></small>
+                                <small class="text-primary error-category_id"></small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Model">Model</label>
-                                <span class="text-danger">*</span>
+                                <span class="text-primary">*</span>
                                 <select class="select2 form-control sub_category" id="sub_category_id" name="sub_category_id">
                                     <option value="">Please choose model</option>
                                 </select>
-                                <small class="text-danger error-sub_category_id"></small>
+                                <small class="text-primary error-sub_category_id"></small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="form-label" for="engine">Engine Name</label>
                                 <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter part name">
-                                <small class="text-danger error-name"></small>
+                                <small class="text-primary error-name"></small>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
             btn.html('<i class="fal fa-spinner fa-spin"></i> Processing...');
 
             // លុប Error message ចាស់ៗចោលមុននឹងផ្ញើ Request ថ្មី
-            $('.text-danger').text('');
+            $('.text-primary').text('');
 
             $.ajax({
                 type: "POST",

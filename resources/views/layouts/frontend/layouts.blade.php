@@ -6,7 +6,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        
+
         @if(isset($productDetail))
             <title>{{ $productDetail->name }} {{ $productDetail->proEngine?->name ?? '' }} | CM Auto Service</title>
             <meta name="description" content="Buy {{ $productDetail->name }} for {{ $productDetail->proEngine?->name ?? '' }}. Part Number: {{ $productDetail->proEngine?->part_number ?? 'N/A' }}, SKU: {{ $productDetail->number ?? '' }}. Best price ${{ number_format($productDetail->price, 2) }} at CM Auto Service.">
@@ -22,7 +22,7 @@
         <meta property="og:image" content="{{ isset($productDetail) ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $productDetail->product_photo : 'https://cmautoservic.com/frontends/assets/img/logo.png' }}">
 
         <meta name="google-site-verification" content="a8mdUz9mwXLRoGRmciyr-Q7LyOLT_UqXmwMFf2jnY2M" />
-        
+
         <link rel="canonical" href="https://www.cmautoservic.com{{ request()->getPathInfo() }}">
         <title>CM Auto Service</title>
         <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">

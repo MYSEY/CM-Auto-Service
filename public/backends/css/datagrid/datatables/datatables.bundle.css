@@ -675,7 +675,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
 table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.dtr-control:before,
 table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th.dtr-control:before {
   content: "-";
-  background-color: #d33333; }
+  background-color: #3085d6; }
 
 table.dataTable.dtr-inline.collapsed.compact > tbody > tr > td.dtr-control,
 table.dataTable.dtr-inline.collapsed.compact > tbody > tr > th.dtr-control {
@@ -728,7 +728,7 @@ table.dataTable.dtr-column > tbody > tr.parent th.dtr-control:before,
 table.dataTable.dtr-column > tbody > tr.parent td.control:before,
 table.dataTable.dtr-column > tbody > tr.parent th.control:before {
   content: "-";
-  background-color: #d33333; }
+  background-color: #3085d6; }
 
 table.dataTable > tbody > tr.child {
   padding: 0.5em 1em; }
@@ -1041,7 +1041,7 @@ $color-primary:						#826bb0;
 $color-success:						#31cb55;
 $color-info:						#5e93ec;
 $color-warning:						#eec559;
-$color-danger:						#dc4b92;
+$color-danger:						#5e93ec;
 $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%); */
 /*  Color Polarity
 ========================================================================== */

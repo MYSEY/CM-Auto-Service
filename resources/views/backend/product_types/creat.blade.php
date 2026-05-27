@@ -17,11 +17,11 @@
                         @csrf
                         <div class="row mb-2">
                             <div class="col-md-12">
-                                <label class="form-label">Name <span class="text-danger">*</span></label>
+                                <label class="form-label">Name <span class="text-primary">*</span></label>
                                 <div class="custom-file">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
                                 </div>
-                                <p class="text-danger">{!! $errors->first('name') !!}</p>
+                                <p class="text-primary">{!! $errors->first('name') !!}</p>
                             </div>
                         </div>
                         <div class="row mb-2">

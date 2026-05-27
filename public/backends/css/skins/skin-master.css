@@ -190,7 +190,7 @@ body:not(.mod-skin-light):not(.mod-skin-dark) #skin-default:before {
     background: transparent; }
   .mod-skin-dark:not(.mod-skin-light) .alert-primary,
   .mod-skin-dark:not(.mod-skin-light) .alert-sucess,
-  .mod-skin-dark:not(.mod-skin-light) .alert-danger .alert-warning,
+  .mod-skin-dark:not(.mod-skin-light) .alert-info .alert-warning,
   .mod-skin-dark:not(.mod-skin-light) .alert-info .alert-secondary {
     background-color: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.09);
@@ -209,7 +209,7 @@ body:not(.mod-skin-light):not(.mod-skin-dark) #skin-default:before {
     background-color: rgba(var(--theme-rgb-success), 0.2);
     border-color: rgba(29, 201, 183, 0.6);
     border-color: rgba(var(--theme-rgb-success), 0.6); }
-  .mod-skin-dark:not(.mod-skin-light) .alert-danger {
+  .mod-skin-dark:not(.mod-skin-light) .alert-info {
     color: #ffffff;
     color: var(--theme-danger-100);
     background-color: rgba(253, 57, 149, 0.2);
@@ -305,7 +305,7 @@ body:not(.mod-skin-light):not(.mod-skin-dark) #skin-default:before {
     color: var(--theme-primary-200); }
   .mod-skin-dark:not(.mod-skin-light) .text-success {
     color: var(--theme-success-300) !important; }
-  .mod-skin-dark:not(.mod-skin-light) .text-danger {
+  .mod-skin-dark:not(.mod-skin-light) .text-primary {
     color: var(--theme-danger-300) !important; }
   .mod-skin-dark:not(.mod-skin-light) .text-warning {
     color: var(--theme-warning-300) !important; }

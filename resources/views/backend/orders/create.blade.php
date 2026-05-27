@@ -18,7 +18,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Customer Name</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <input type="text" class="form-control required" name="customer_name" id="customer_name" placeholder="Enter customer name" value="{{ old('customer_name') }}">
                                 </div>
                             </div>
@@ -40,9 +40,9 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name">Order Date</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <input type="date" class="form-control" name="order_date" id="order_date" placeholder="Enter order date" value="{{ old('order_date') }}">
-                                    <p class="text-danger">{!! $errors->first('order_date') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('order_date') !!}</p>
                                 </div>
                             </div>
                         </div> --}}
@@ -127,7 +127,7 @@
             $("#btnCreate").on('click',function(){
                 $('.required').each(function () {
                     if ($(this).val().trim() === '') {
-                        $(this).css('border', '1px solid red');
+                        $(this).css('border', '1px solid blue');
                     } else {
                         $(this).css('border', '');
                     }
@@ -190,7 +190,7 @@
                     <td><input type="number" class="form-control price" name="price[]"></td>
                     <td><input type="number" class="form-control sub_total" name="sub_total[]" readonly></td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-danger btnRemoveRow">×</button>
+                        <button type="button" class="btn btn-sm btn-primary btnRemoveRow">×</button>
                     </td>
                 </tr>`;
 

@@ -437,7 +437,7 @@
                                 <i class="fal fa-pencil"></i>
                             </a>
                             <a href="javascript:void(0);"
-                            class="btn btn-icon btn-xs btn-outline-danger rounded-circle shadow-sm"
+                            class="btn btn-icon btn-xs btn-outline-primary rounded-circle shadow-sm"
                             onclick="deleteData(${row.id})"
                             data-toggle="tooltip"
                             title="លុបទិន្នន័យ">

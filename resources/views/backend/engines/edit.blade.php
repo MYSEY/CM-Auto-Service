@@ -17,19 +17,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="Category">Make</label>
-                                        <span class="text-danger">*</span>
+                                        <span class="text-primary">*</span>
                                         <select class="select2 form-control" id="category_id" name="category_id">
                                             <option value="">Please choose make</option>
                                             @foreach($category as $item)
                                                 <option value="{{ $item->id }}" {{ $data->category_id == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                             @endforeach
                                         </select>
-                                        <p class="text-danger">{!! $errors->first('category_id') !!}</p>
+                                        <p class="text-primary">{!! $errors->first('category_id') !!}</p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="form-label " for="sub_category_id">Sub Category <span class="text-danger">*</span></label>
+                                        <label class="form-label " for="sub_category_id">Sub Category <span class="text-primary">*</span></label>
                                         <select class="select2 form-control  sub_category @error('sub_category_id') is-invalid @enderror" id="sub_category_id" name="sub_category_id" required>
                                             <option value="">Select a Sub Category</option>
                                             @foreach ($subCategory as $item)
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label class="form-label" for="name">Engines Name <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="name">Engines Name <span class="text-primary">*</span></label>
                                         <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $data->name }}" required placeholder="Enter Sub-Category Name">
                                         @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>

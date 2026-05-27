@@ -18,14 +18,14 @@
                         <div class="form-group">
                             <label for="title">Title (Optional)</label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="Enter slider title" value="{{ old('title') }}">
-                            <p class="text-danger">{!! $errors->first('title') !!}</p>
+                            <p class="text-primary">{!! $errors->first('title') !!}</p>
                         </div>
 
                         <div class="form-group">
                             <label for="image_slider">Slider Image</label>
-                            <span class="text-danger">*</span>
+                            <span class="text-primary">*</span>
                             <input type="file" name="image_slider" class="form-control" id="image_slider" required accept="image/*">
-                            <p class="text-danger">{!! $errors->first('image_slider') !!}</p>
+                            <p class="text-primary">{!! $errors->first('image_slider') !!}</p>
                             <div id="image-preview-container" style="margin-top: 10px;"></div>
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">

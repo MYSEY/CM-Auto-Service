@@ -17,7 +17,7 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Customer Name <span class="text-danger">*</span></label>
+                                <label>Customer Name <span class="text-primary">*</span></label>
                                 <input type="text"
                                        class="form-control"
                                        id="customer_name"
@@ -37,7 +37,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Sell Date <span class="text-danger">*</span></label>
+                                <label>Sell Date <span class="text-primary">*</span></label>
                                 <input type="date"
                                        class="form-control"
                                        id="sell_date"
@@ -138,7 +138,7 @@ $(function(){
                 <td><input type="number" class="form-control price" min="0" step="0.01"></td>
                 <td><input type="number" class="form-control sub_total" readonly></td>
                 <td>
-                    <button type="button" class="btn btn-danger btnRemoveRow">x</button>
+                    <button type="button" class="btn btn-primary btnRemoveRow">x</button>
                 </td>
             </tr>
         `;

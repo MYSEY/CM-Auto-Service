@@ -208,7 +208,7 @@
                                         <a href="{{ route('productDetail', ['id' => $item->id]) }}" class="text-dark font-weight-bold text-decoration-none">{{ Str::limit($item->name, 45) }}</a>
                                     </h4>
                                     <div class="price_box mb-3">
-                                        <span class="text-danger font-weight-bold" style="font-size: 18px;">${{ number_format($item->price, 2) }}</span>
+                                        <span class="text-primary font-weight-bold" style="font-size: 18px;">${{ number_format($item->price, 2) }}</span>
                                     </div>
                                     {{-- កែត្រង់នេះ --}}
                                     <a href="{{ route('productDetail', ['id' => $item->id]) }}" class="btn btn-sm btn-outline-dark btn-block rounded-0">View Detail</a>

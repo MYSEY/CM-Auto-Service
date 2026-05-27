@@ -1,6 +1,6 @@
 <style>
     .pagination li.current span {
-        background: #ef0505;
+        background: #220070;
         color: #fff;
         padding: 6px 12px;
         border-radius: 4px;

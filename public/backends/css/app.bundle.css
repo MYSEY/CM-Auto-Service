@@ -67,7 +67,7 @@ $color-primary:						#826bb0;
 $color-success:						#31cb55;
 $color-info:						#5e93ec;
 $color-warning:						#eec559;
-$color-danger:						#dc4b92;
+$color-danger:						#5e93ec;
 $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%); */
 /*  Color Polarity
 ========================================================================== */
@@ -576,9 +576,9 @@ RESULT:
 /* patterns */
 .mod-color-blind .page-sidebar .primary-nav .nav-menu > li.active > a,
 .mod-color-blind [class*="bg-danger-"],
-.mod-color-blind .btn-danger,
-.mod-color-blind .btn-outline-danger,
-.mod-color-blind .alert-danger,
+.mod-color-blind .btn-primary,
+.mod-color-blind .btn-outline-primary,
+.mod-color-blind .alert-info,
 .pattern-0 {
   background-size: 10px 10px;
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.07) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.07) 50%, rgba(255, 255, 255, 0.05) 75%, transparent 75%, transparent);
@@ -2674,7 +2674,7 @@ html {
   background-color: #f7fdfc;
   border-color: #a3ebe4; }
 
-.alert-danger {
+.alert-info {
   color: #e7026e;
   background-color: #ffe5f1;
   border-color: #fe9ecb; }
@@ -3062,7 +3062,7 @@ html {
   -webkit-box-shadow: 0 2px 6px 0 rgba(255, 194, 65, 0.5);
           box-shadow: 0 2px 6px 0 rgba(255, 194, 65, 0.5); }
 
-.btn-danger {
+.btn-primary {
   -webkit-box-shadow: 0 2px 6px 0 rgba(253, 57, 149, 0.5);
           box-shadow: 0 2px 6px 0 rgba(253, 57, 149, 0.5); }
 
@@ -6604,7 +6604,7 @@ body:not(.no-slimscroll) .custom-scroll {
   background: rgba(0, 0, 0, 0.6);
   background: radial-gradient(rgba(0, 0, 0, 0.1) 0, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 70%); }
 
-.waves-themed.btn-primary .waves-ripple, .waves-themed.btn-outline-primary .waves-ripple, .waves-themed.btn-info .waves-ripple, .waves-themed.btn-outline-info .waves-ripple, .waves-themed.btn-danger .waves-ripple, .waves-themed.btn-outline-danger .waves-ripple, .waves-themed.btn-success .waves-ripple, .waves-themed.btn-outline-success .waves-ripple, .waves-themed.btn-dark .waves-ripple, .waves-themed.btn-outline-dark .waves-ripple {
+.waves-themed.btn-primary .waves-ripple, .waves-themed.btn-outline-primary .waves-ripple, .waves-themed.btn-info .waves-ripple, .waves-themed.btn-outline-info .waves-ripple, .waves-themed.btn-primary .waves-ripple, .waves-themed.btn-outline-primary .waves-ripple, .waves-themed.btn-success .waves-ripple, .waves-themed.btn-outline-success .waves-ripple, .waves-themed.btn-dark .waves-ripple, .waves-themed.btn-outline-dark .waves-ripple {
   background: rgba(255, 255, 255, 0.6);
   background: radial-gradient(rgba(255, 255, 255, 0.3) 0, rgba(255, 255, 255, 0.4) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.6) 60%, rgba(255, 255, 255, 0) 70%); }
 

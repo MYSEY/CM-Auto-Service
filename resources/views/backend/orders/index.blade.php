@@ -231,7 +231,7 @@
                             return `
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="{{ url('/admins/order') }}/${row.id}/edit" class="btn btn-icon btn-xs btn-outline-info waves-effect waves-themed mr-2" title="កែសម្រួល"> <i class="fal fa-pencil"></i></a>
-                                <a href="javascript:void(0);" class="btn btn-icon btn-xs btn-outline-danger waves-effect waves-themed deleteData" data-id="${row.id}" title="លុបទិន្នន័យ"><i class="fal fa-trash-alt"></i></a>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-xs btn-outline-primary waves-effect waves-themed deleteData" data-id="${row.id}" title="លុបទិន្នន័យ"><i class="fal fa-trash-alt"></i></a>
                             </div>`;
                         }
                     },

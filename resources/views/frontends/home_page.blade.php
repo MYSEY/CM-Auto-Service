@@ -70,7 +70,7 @@
                                     </a>
                                 </li>
                             @endforeach
-                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: red; transition: left 0.3s ease, width 0.3s ease;"></div>
+                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: blue; transition: left 0.3s ease, width 0.3s ease;"></div>
                         </ul>
                     </div>
                     <div class="tab-content">

@@ -346,7 +346,7 @@
 .note-editor.note-frame .note-status-output .text-warning, .note-editor.note-airframe .note-status-output .text-warning {
   color: #8a6d3b; }
 
-.note-editor.note-frame .note-status-output .text-danger, .note-editor.note-airframe .note-status-output .text-danger {
+.note-editor.note-frame .note-status-output .text-primary, .note-editor.note-airframe .note-status-output .text-primary {
   color: #a94442; }
 
 .note-editor.note-frame .note-status-output .alert, .note-editor.note-airframe .note-status-output .alert {
@@ -371,7 +371,7 @@
   color: #8a6d3b !important;
   background-color: #fcf8e3 !important; }
 
-.note-editor.note-frame .note-status-output .alert-danger, .note-editor.note-airframe .note-status-output .alert-danger {
+.note-editor.note-frame .note-status-output .alert-info, .note-editor.note-airframe .note-status-output .alert-info {
   color: #a94442 !important;
   background-color: #f2dede !important; }
 
@@ -761,7 +761,7 @@ $color-primary:						#826bb0;
 $color-success:						#31cb55;
 $color-info:						#5e93ec;
 $color-warning:						#eec559;
-$color-danger:						#dc4b92;
+$color-danger:						#5e93ec;
 $color-fusion:						darken(desaturate(adjust-hue($color-primary, 5), 80%), 25%); */
 /*  Color Polarity
 ========================================================================== */

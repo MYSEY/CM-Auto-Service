@@ -32,34 +32,34 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="name_kh">@lang('lang.name_kh') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="name_kh">@lang('lang.name_kh') <span class="text-primary">*</span></label>
                                         <input type="text" id="name_kh" name="name_kh" class="form-control @error('name_kh') is-invalid @enderror" value="">
                                     </div>
 
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="name_en">@lang('lang.name_en') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="name_en">@lang('lang.name_en') <span class="text-primary">*</span></label>
                                         <input type="text" id="name_en" name="name_en" class="form-control @error('name_en') is-invalid @enderror" value="">
                                     </div>
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="address_kh">@lang('lang.address_kh') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="address_kh">@lang('lang.address_kh') <span class="text-primary">*</span></label>
                                         <input type="text" id="address_kh" name="address_kh" class="form-control @error('address_kh') is-invalid @enderror" value="">
                                     </div>
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="address_en">@lang('lang.address_en') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="address_en">@lang('lang.address_en') <span class="text-primary">*</span></label>
                                         <input type="text" id="address_en" name="address_en" class="form-control @error('address_en') is-invalid @enderror" value="">
                                     </div>
 
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="Phone_Number">@lang('lang.phone_number') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="Phone_Number">@lang('lang.phone_number') <span class="text-primary">*</span></label>
                                         <input type="number" id="Phone_Number" name="phone_number" class="form-control @error('phone_number') is-invalid @enderror" value="">
                                     </div>
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="email">@lang('lang.email') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="email">@lang('lang.email') <span class="text-primary">*</span></label>
                                         <input type="text" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="">
                                     </div>
 
                                     <div class="col-md-12 mb-2">
-                                        <label class="form-label" for="website">@lang('lang.website') <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="website">@lang('lang.website') <span class="text-primary">*</span></label>
                                         <input type="text" id="website" name="website" class="form-control @error('website') is-invalid @enderror" value="">
                                     </div>
                                     <div class="col-md-12">

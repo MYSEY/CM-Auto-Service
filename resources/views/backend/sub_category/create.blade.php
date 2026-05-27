@@ -15,7 +15,7 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="product_category_id">Category <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="product_category_id">Category <span class="text-primary">*</span></label>
                                         <select class="select2 form-control @error('product_category_id') is-invalid @enderror" id="product_category_id" name="product_category_id" required>
                                             <option value="">Select a Category</option>
                                             @foreach ($categories as $category)
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-group">
-                                        <label class="form-label" for="name">Sub Category Name <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="name">Sub Category Name <span class="text-primary">*</span></label>
                                         <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required placeholder="Enter Sub-Category Name">
                                         @error('name')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -58,7 +58,7 @@
                                                 </div>
                                             </div>
                                             @error('is_active')
-                                                <div class="text-danger mt-1">{{ $message }}</div>
+                                                <div class="text-primary mt-1">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>

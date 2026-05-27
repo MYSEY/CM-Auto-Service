@@ -32,7 +32,7 @@
 
             {{-- ✨ DISPLAY GENERAL FAILURE MESSAGE --}}
             @if ($errors->has('submission'))
-                <div class="alert alert-danger mt-4">
+                <div class="alert alert-info mt-4">
                     {{ $errors->first('submission') }}
                 </div>
             @endif
@@ -62,27 +62,27 @@
                                    <label> Your Name (required)</label>
                                    <input name="name" placeholder="Name *" type="text" required>
                                    {{-- Display specific validation error --}}
-                                   @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                                   @error('name') <span class="text-primary">{{ $message }}</span> @enderror
                                 </p>
                                 <p>
                                    <label> Your Email (required)</label>
                                    <input name="email" placeholder="Email *" type="email" required>
-                                   @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                                   @error('email') <span class="text-primary">{{ $message }}</span> @enderror
                                 </p>
                                 <p>
                                    <label> Your Phone</label>
                                    <input name="phone" placeholder="Phone" type="text">
-                                   @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                                   @error('phone') <span class="text-primary">{{ $message }}</span> @enderror
                                 </p>
                                 <p>
                                    <label> Subject</label>
                                    <input name="subject" placeholder="Subject *" type="text" required>
-                                   @error('subject') <span class="text-danger">{{ $message }}</span> @enderror
+                                   @error('subject') <span class="text-primary">{{ $message }}</span> @enderror
                                 </p>
                                 <div class="contact_textarea">
                                    <label> Your Message (required)</label>
                                    <textarea placeholder="Message *" name="message" class="form-control2" required></textarea>
-                                   @error('message') <span class="text-danger">{{ $message }}</span> @enderror
+                                   @error('message') <span class="text-primary">{{ $message }}</span> @enderror
                                 </div>
                                 <button type="submit"> Send</button>
                                 <p class="form-messege"></p>

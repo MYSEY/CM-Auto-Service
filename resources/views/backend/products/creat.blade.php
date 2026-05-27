@@ -16,9 +16,9 @@
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <span class="text-danger">*</span>
+                            <span class="text-primary">*</span>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ old('name') }}">
-                            <p class="text-danger">{!! $errors->first('name') !!}</p>
+                            <p class="text-primary">{!! $errors->first('name') !!}</p>
                         </div>
                          <div class="form-group">
                             <label for="content">description</label>
@@ -38,9 +38,9 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="Price">Price</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <input type="number" class="form-control" name="price" id="price" placeholder="Enter price" value="{{ old('price') }}">
-                                    <p class="text-danger">{!! $errors->first('price') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('price') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -75,24 +75,24 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Make">Make</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control select2" id="category_id" name="category_id">
                                         <option value="">Please choose make</option>
                                         @foreach($category as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('category_id') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('category_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Model">Model</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control sub_category select2" id="sub_category_id" name="sub_category_id">
                                         <option value="">Please choose model</option>
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('sub_category_id') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('sub_category_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -109,14 +109,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Category">Product Type</label>
-                                    <span class="text-danger">*</span>
+                                    <span class="text-primary">*</span>
                                     <select class="form-control select2" name="product_type_id">
                                         <option value="">Please Choose product type</option>
                                         @foreach ($productType as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger">{!! $errors->first('product_type_id') !!}</p>
+                                    <p class="text-primary">{!! $errors->first('product_type_id') !!}</p>
                                 </div>
                             </div>
                             <div class="col-md-4">
