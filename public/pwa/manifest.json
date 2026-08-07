@@ -3,7 +3,7 @@
     "name": "CM Auto Service",
     "short_name": "CM Auto",
     "description": "ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.",
-    "start_url": "/splash",
+    "start_url": "/pwa",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#0d1b3e",

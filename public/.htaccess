@@ -8,6 +8,9 @@
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://www.cmautoservic.com/$1 [L,R=301]
 
+    # Route /pwa through Laravel (fix directory conflict)
+    RewriteRule ^pwa/?$ index.php [L]
+
     # Laravel routing
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
