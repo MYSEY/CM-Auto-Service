@@ -32,7 +32,7 @@ class SliderController extends Controller
     {
         $request->validate([
             'title' => 'nullable|string|max:255',
-            'image_slider' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB Max
+            'image_slider' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10MB Max
         ]);
         DB::beginTransaction();
         try {
@@ -88,7 +88,7 @@ class SliderController extends Controller
     {
         $request->validate([
             'title' => 'nullable|string|max:255',
-            'image_slider' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional on update
+            'image_slider' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240', // 10MB Max
         ]);
         DB::beginTransaction();
         try {

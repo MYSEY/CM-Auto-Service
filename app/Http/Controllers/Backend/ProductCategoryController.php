@@ -112,7 +112,7 @@ class ProductCategoryController extends Controller
             'slug'           => 'required|string|max:255|unique:product_categories,slug,' . $category->id,
             'description'    => 'nullable|string',
             'is_active'      => 'required|in:0,1',
-            'category_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'category_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
         ]);
 
         $photoPath = 'images/category';

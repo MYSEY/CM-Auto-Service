@@ -12,22 +12,40 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        $cart = Session::get('cart', []);
+        $subtotal = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+        $shipping = 0;
+        $total = $subtotal + $shipping;
+
+        $company = Company::first();
+        $category = ProductCategory::with('subCategory')->get();
+        $productType = ProductType::all();
+
+        return view('frontends.cart', compact('cart', 'subtotal', 'shipping', 'total', 'company', 'category', 'productType'));
+    }
+
     public function addToCart(Request $request)
     {
         $product = Product::find($request->id);
         if (!$product) {
             return response()->json(['status' => 'error', 'message' => 'Product not found']);
         }
+
         $cart = Session::get('cart', []);
         $cart[$product->id] = [
+            'id' => $product->id,
             'name' => $product->name ?? $product->category->name,
             'price' => $product->price ?? 0,
+            'image' => $product->product_photo,
             'quantity' => ($cart[$product->id]['quantity'] ?? 0) + 1
         ];
         Session::put('cart', $cart);
-        // Calculate total price & item count
+
         $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cart));
         $count = array_sum(array_column($cart, 'quantity'));
+
         return response()->json([
             'status' => 'success',
             'message' => 'Added to cart successfully',
@@ -35,15 +53,14 @@ class CartController extends Controller
             'total' => $total,
         ]);
     }
+
     public function addToCartDetail(Request $request)
     {
-       $product = Product::find($request->id);
+        $product = Product::find($request->id);
         if (!$product) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Product not found'
-            ]);
+            return response()->json(['status' => 'error', 'message' => 'Product not found']);
         }
+
         $quantity = $request->qty ?? 1;
         $cart = session()->get('cart', []);
 
@@ -51,40 +68,87 @@ class CartController extends Controller
             $cart[$product->id]['quantity'] = ($cart[$product->id]['quantity'] ?? 0) + $quantity;
         } else {
             $cart[$product->id] = [
-                'id'       => $product->id,
-                'price'    => $product->price,
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'image' => $product->product_photo,
                 'quantity' => $quantity,
             ];
         }
 
-        // Save session
         session()->put('cart', $cart);
-        // Calculate totals
+
         $totalQty = array_sum(array_column($cart, 'quantity'));
-        $totalPrice = array_sum(array_map(function ($item) {
-            return $item['price'] * $item['quantity'];
-        }, $cart));
+        $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
 
         return response()->json([
             'status' => 'success',
-            'count'  => $totalQty,
-            'total'  => $totalPrice,
+            'count' => $totalQty,
+            'total' => $totalPrice,
         ]);
     }
 
-   public function loadMiniCart()
+    public function update(Request $request)
     {
-        // ១. ទាញយកទិន្នន័យ Cart (ឧទាហរណ៍ ដោយប្រើ Session ឬ Database)
-        $cartItems = session('cart', []);
+        $cart = session()->get('cart', []);
+        $productId = $request->product_id;
+        $quantity = max(1, (int) $request->quantity);
 
-        // ២. បញ្ចូលទិន្នន័យទៅក្នុង View (ឧទាហរណ៍៖ mini_cart_view.blade.php)
-        $miniCartHtml = view('path.to.mini_cart_view', compact('cartItems'))->render();
+        if (isset($cart[$productId])) {
+            $cart[$productId]['quantity'] = $quantity;
+            session()->put('cart', $cart);
+        }
 
-        // ៣. ត្រឡប់ទិន្នន័យជា JSON ទៅកាន់ AJAX
+        $totalQty = array_sum(array_column($cart, 'quantity'));
+        $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+
+        return response()->json([
+            'status' => 'success',
+            'count' => $totalQty,
+            'total' => $totalPrice,
+            'item_total' => isset($cart[$productId]) ? $cart[$productId]['price'] * $quantity : 0,
+        ]);
+    }
+
+    public function remove(Request $request)
+    {
+        $cart = session()->get('cart', []);
+        $productId = $request->product_id;
+
+        if (isset($cart[$productId])) {
+            unset($cart[$productId]);
+            session()->put('cart', $cart);
+        }
+
+        $totalQty = array_sum(array_column($cart, 'quantity'));
+        $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+
+        return response()->json([
+            'status' => 'success',
+            'count' => $totalQty,
+            'total' => $totalPrice,
+        ]);
+    }
+
+    public function clear()
+    {
+        Session::forget('cart');
+        return response()->json(['status' => 'success', 'message' => 'Cart cleared']);
+    }
+
+    public function loadMiniCart()
+    {
+        $cart = session('cart', []);
+        $totalQty = array_sum(array_column($cart, 'quantity'));
+        $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+
+        $html = view('frontends.partials.mini_cart', compact('cart', 'totalQty', 'totalPrice'))->render();
+
         return response()->json([
             'success' => true,
-            'html' => $miniCartHtml, // HTML ដែលត្រូវបាន render រួច
-            'count' => count($cartItems)
+            'html' => $html,
+            'count' => $totalQty,
+            'total' => $totalPrice,
         ]);
     }
 }

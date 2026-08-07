@@ -184,6 +184,25 @@
                                 </a>
                             </li>
 
+                            <li class="@if (in_array(Request::instance()->segment(2), ['chat', 'chatbot'])) active @endif">
+                                <a href="#" title="Chat" data-filter-tags="Chat">
+                                    <i class="fal fa-comments"></i>
+                                    <span class="nav-link-text">Chat</span>
+                                </a>
+                                <ul>
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['chat'])) active @endif">
+                                        <a href="{{ url('admins/chat') }}" title="Chat Inbox">
+                                            <span class="nav-link-text">Chat Inbox</span>
+                                        </a>
+                                    </li>
+                                    <li class="@if (in_array(Request::instance()->segment(2), ['chatbot'])) active @endif">
+                                        <a href="{{ url('admins/chatbot') }}" title="Chat Bot">
+                                            <span class="nav-link-text">Chat Bot</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
                             <li class="@if (in_array(Request::instance()->segment(2), ['product', 'category', 'sub-category','product-type','engine'])) active @endif">
                                 <a href="#" title="Product" data-filter-tags="Product">
                                     <i class="fal fa-boxes"></i>

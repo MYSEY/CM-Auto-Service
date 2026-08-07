@@ -1,10 +1,16 @@
-    <!doctype html>
-    <html class="no-js" lang="en">
+<!doctype html>
+<html class="no-js" lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d1b3e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CM Auto Service">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
 
 
         @if(isset($productDetail))
@@ -24,12 +30,6 @@
         <meta name="google-site-verification" content="a8mdUz9mwXLRoGRmciyr-Q7LyOLT_UqXmwMFf2jnY2M" />
 
         <link rel="canonical" href="https://www.cmautoservic.com{{ request()->getPathInfo() }}">
-        <title>CM Auto Service</title>
-        <meta name="description" content="CM Auto Service Cambodia — ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic, Auto Parts & Repair With 24/7 Hotline Support.">
-        <meta property="og:title" content="CM Auto Service — Auto Parts & ECU Programming">
-        <meta property="og:description" content="ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.">
-        <meta property="og:url" content="https://www.cmautoservic.com">
-        <meta property="og:image" content="https://www.cmautoservic.com/frontends/assets/img/logo.png">
 
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="CM Auto Service">
@@ -84,7 +84,6 @@
         <link rel="stylesheet" href="{{ asset('frontends/assets/css/cm.css') }}?v={{ filemtime(public_path('frontends/assets/css/cm.css')) }}">
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
-    </head>
     <style>
         /* first level dropdown */
         .sub_menu {
@@ -159,8 +158,8 @@
                         <div class="header_top_links">
                             <ul>
                                 <li><a href="{{ url('logins') }}">login</a></li>
-                                <li><a href="javascript:void(0)">Shopping Cart</a></li>
-                                <li><a href="javascript:void(0)">Checkout</a></li>
+                                <li><a href="{{ url('cart') }}">Shopping Cart</a></li>
+                                <li><a href="{{ url('checkout') }}">Checkout</a></li>
                             </ul>
                         </div>
                         <div id="menu" class="text-left">
@@ -210,8 +209,8 @@
                             <div class="header_top_links text-right">
                                 <ul>
                                     <li><a href="{{ url('logins') }}">login</a></li>
-                                    <li><a href="javascript:void(0)">Shopping Cart</a></li>
-                                    <li><a href="javascript:void(0)">Checkout</a></li>
+                                    <li><a href="{{ url('cart') }}">Shopping Cart</a></li>
+                                    <li><a href="{{ url('checkout') }}">Checkout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -226,7 +225,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2 col-md-4 col-sm-4 col-4">
                             <div class="logo">
-                                <a href="/"><img src="{{$company->company_logo}}" alt=""></a>
+                                <a href="/"><img src="{{ $company->company_logo ?? asset('frontends/assets/img/logo.png') }}" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
@@ -241,15 +240,18 @@
                                 </div>
                                 <div class="header_configure_area">
                                     <div class="header_wishlist">
-                                        <a href="wishlist.html"><i class="icon-heart"></i>
-                                            <span class="wishlist_count">3</span>
-                                        </a>
+                                        <a href="{{ url('wishlist') }}"><i class="icon-heart"></i></a>
                                     </div>
                                     <div class="mini_cart_wrapper">
                                         <a href="javascript:void(0)" id="cartIcon">
                                             <i class="icon-shopping-bag2"></i>
-                                            <span class="cart_price">$0.00 <i class="ion-ios-arrow-down"></i></span>
-                                            <span class="cart_count">0</span>
+                                            @php
+                                                $cart = session('cart', []);
+                                                $cartCount = array_sum(array_column($cart, 'quantity'));
+                                                $cartTotal = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cart));
+                                            @endphp
+                                            <span class="cart_price">${{ number_format($cartTotal, 2) }} <i class="ion-ios-arrow-down"></i></span>
+                                            <span class="cart_count">{{ $cartCount }}</span>
                                         </a>
                                         <!--mini cart-->
                                         <div class="mini_cart">
@@ -263,17 +265,17 @@
                                                     </div>
                                                 </div>
                                                 @if(!empty($cart) && count($cart) > 0)
-                                                    @foreach ($cart as $item)
+                                                    @foreach ($cart as $productId => $item)
                                                     <div class="cart_item">
                                                         <div class="cart_img">
-                                                            <a href="#"><img src="{{ asset($item['image']) }}" alt=""></a>
+                                                            <a href="#"><img src="{{ isset($item['image']) && $item['image'] ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt=""></a>
                                                         </div>
                                                         <div class="cart_info">
                                                             <a href="#">{{ $item['name'] }}</a>
                                                             <p>Qty: {{ $item['quantity'] }} X <span>${{ number_format($item['price'],2) }}</span></p>
                                                         </div>
                                                         <div class="cart_remove">
-                                                            <a href="javascript:void(0)" class="removeCart" data-id="{{ $item['id'] }}">
+                                                            <a href="javascript:void(0)" class="removeCart" data-id="{{ $productId }}">
                                                                 <i class="ion-android-close"></i>
                                                             </a>
                                                         </div>
@@ -286,20 +288,20 @@
                                                 <div class="mini_cart_table">
                                                     <div class="cart_total">
                                                         <span>Sub total:</span>
-                                                        <span class="price">$138.00</span>
+                                                        <span class="price">${{ number_format($cartTotal, 2) }}</span>
                                                     </div>
                                                     <div class="cart_total mt-10">
-                                                        <span>total:</span>
-                                                        <span class="price">$138.00</span>
+                                                        <span>Total:</span>
+                                                        <span class="price">${{ number_format($cartTotal, 2) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mini_cart_footer">
                                                <div class="cart_button">
-                                                    <a href="javascript:void(0)">View cart</a>
+                                                    <a href="{{ url('cart') }}">View cart</a>
                                                 </div>
                                                 <div class="cart_button">
-                                                    <a class="active" href="javascript:void(0)">Checkout</a>
+                                                    <a class="active" href="{{ url('checkout') }}">Checkout</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -451,6 +453,7 @@
     <script src="{{asset('frontends/assets/js/plugins.js')}}"></script>
     <!-- Main JS -->
     <script src="{{asset('frontends/assets/js/main.js')}}"></script>
+    <script src="{{ asset('js/sw-register.js') }}"></script>
     {{-- toastr --}}
     <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
     {!! Toastr::message() !!}
@@ -494,6 +497,36 @@
                 });
             });
         });
+    </script>
+    <script>
+        (function() {
+            'use strict';
+            var ERR_MSGS = {
+                network: 'Network error. Please check your connection.',
+                server: 'Something went wrong. Please try again later.',
+                default: 'An unexpected error occurred.'
+            };
+            function showToast(msg) {
+                if (document.querySelector('.fe-error-toast')) return;
+                var t = document.createElement('div');
+                t.className = 'fe-error-toast';
+                t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;z-index:99999;max-width:90%;text-align:center;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+                t.textContent = msg || ERR_MSGS.default;
+                document.body.appendChild(t);
+                requestAnimationFrame(function() { t.style.opacity = '1'; });
+                setTimeout(function() {
+                    t.style.opacity = '0';
+                    setTimeout(function() { if (t.parentNode) t.parentNode.removeChild(t); }, 300);
+                }, 3000);
+            }
+            window.onerror = function() { showToast(ERR_MSGS.default); return true; };
+            window.addEventListener('unhandledrejection', function(e) {
+                var r = String(e.reason || '').toLowerCase();
+                if (r.indexOf('network') !== -1 || r.indexOf('fetch') !== -1) showToast(ERR_MSGS.network);
+                else showToast(ERR_MSGS.server);
+                e.preventDefault();
+            });
+        })();
     </script>
 </body>
 </html>
