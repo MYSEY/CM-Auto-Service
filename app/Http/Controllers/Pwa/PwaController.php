@@ -8,9 +8,11 @@ use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
+use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class PwaController extends Controller
@@ -33,18 +35,36 @@ class PwaController extends Controller
         return view('pwa.splash');
     }
 
-    public function home()
+    public function home(Request $request)
     {
-        $company = Company::first();
-        $productType = ProductType::all();
-        $productAll = Product::with(['category', 'subCategory', 'productType', 'proEngine'])
-            ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
+        $query = Product::with(['category', 'subCategory', 'productType', 'proEngine']);
+
+        if ($request->filled('keyword')) {
+            $keyword = $request->keyword;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('name', 'LIKE', "%$keyword%")
+                    ->orWhere('description', 'LIKE', "%$keyword%")
+                    ->orWhere('number', 'LIKE', "%$keyword%")
+                    ->orWhereHas('category', fn($c) => $c->where('name', 'LIKE', "%$keyword%"))
+                    ->orWhereHas('subCategory', fn($s) => $s->where('name', 'LIKE', "%$keyword%"))
+                    ->orWhereHas('proEngine', fn($e) => $e->where('name', 'LIKE', "%$keyword%"));
+            });
+        }
+
+        $products = $query->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
             ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
             ->paginate(24);
 
+        if ($request->ajax()) {
+            $html = view('pwa.partials.product_grid', ['products' => $products])->render();
+            return response()->json(['html' => $html]);
+        }
+
+        $company = Company::first();
+        $productType = ProductType::all();
         $wishlistCount = $this->getWishlistCount();
 
-        return view('pwa.home_pwa', compact('company', 'productType', 'productAll', 'wishlistCount'));
+        return view('pwa.home_pwa', compact('company', 'productType', 'products', 'wishlistCount'));
     }
 
     public function search(Request $request)
@@ -82,7 +102,7 @@ class PwaController extends Controller
         $company = Company::first();
         $productType = ProductType::all();
         $wishlistCount = $this->getWishlistCount();
-        return view('pwa.home_pwa', compact('company', 'productType'))->with('productAll', $products)->with('wishlistCount', $wishlistCount);
+        return view('pwa.home_pwa', compact('company', 'productType', 'products', 'wishlistCount'));
     }
 
     public function productDetail($id)
@@ -206,5 +226,65 @@ class PwaController extends Controller
         $wishlistCount = $this->getWishlistCount();
 
         return view('pwa.account', compact('user', 'company', 'productType', 'wishlistCount'));
+    }
+
+    public function profile()
+    {
+        if (!auth()->check()) {
+            return redirect()->route('pwa.home');
+        }
+
+        $user = auth()->user();
+        $company = Company::first();
+        $productType = ProductType::all();
+        $wishlistCount = $this->getWishlistCount();
+
+        return view('pwa.profile', compact('user', 'company', 'productType', 'wishlistCount'));
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        if (!auth()->check()) {
+            return response()->json(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        $user = auth()->user();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+        ]);
+
+        $emailExists = User::where('email', $request->email)->where('id', '!=', $user->id)->first();
+        if ($emailExists) {
+            return response()->json(['status' => 'error', 'message' => 'Email already taken.']);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json(['status' => 'success']);
+    }
+
+    public function profilePassword(Request $request)
+    {
+        if (!auth()->check()) {
+            return response()->json(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+
+        $user = auth()->user();
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['status' => 'error', 'message' => 'Current password is incorrect.']);
+        }
+
+        $request->validate([
+            'new_password' => 'required|string|min:6',
+        ]);
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['status' => 'success']);
     }
 }

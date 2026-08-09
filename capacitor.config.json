@@ -1,0 +1,13 @@
+{
+    "appId": "com.cmautoservice.app",
+    "appName": "CM Auto Service",
+    "webDir": "public",
+    "server": {
+        "url": "https://www.cmautoservic.com/splash",
+        "cleartext": false,
+        "androidScheme": "https"
+    },
+    "android": {
+        "allowMixedContent": true
+    }
+}

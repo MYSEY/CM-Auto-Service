@@ -73,6 +73,9 @@ Route::post('/pwa/cart/remove', [\App\Http\Controllers\Pwa\PwaController::class,
 Route::get('/pwa/wishlist', [\App\Http\Controllers\Pwa\PwaController::class, 'wishlist'])->name('pwa.wishlist');
 Route::get('/pwa/contact', [\App\Http\Controllers\Pwa\PwaController::class, 'contact'])->name('pwa.contact');
 Route::get('/pwa/account', [\App\Http\Controllers\Pwa\PwaController::class, 'account'])->name('pwa.account');
+Route::get('/pwa/profile', [\App\Http\Controllers\Pwa\PwaController::class, 'profile'])->name('pwa.profile');
+Route::post('/pwa/profile/update', [\App\Http\Controllers\Pwa\PwaController::class, 'profileUpdate'])->name('pwa.profile.update');
+Route::post('/pwa/profile/password', [\App\Http\Controllers\Pwa\PwaController::class, 'profilePassword'])->name('pwa.profile.password');
 Route::get('/pwa/chat', [\App\Http\Controllers\Pwa\ChatController::class, 'index'])->name('pwa.chat');
 Route::post('/pwa/chat/send', [\App\Http\Controllers\Pwa\ChatController::class, 'send'])->name('pwa.chat.send');
 Route::get('/pwa/chat/poll', [\App\Http\Controllers\Pwa\ChatController::class, 'poll'])->name('pwa.chat.poll');

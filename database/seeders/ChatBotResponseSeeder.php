@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+**// php artisan db:seed --class=ChatBotResponseSeeder
+
 class ChatBotResponseSeeder extends Seeder
 {
     public function run(): void

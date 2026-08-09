@@ -50,26 +50,21 @@
         </div>
 
         <div class="pwa-account-menu">
-            <div class="pwa-account-item">
+            <a href="{{ route('pwa.profile') }}" class="pwa-account-item">
                 <span class="pwa-account-item-icon">&#128100;</span>
                 <span>Profile</span>
                 <span class="pwa-account-item-arrow">&#8250;</span>
-            </div>
-            <div class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#128722;</span>
-                <span>My Orders</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
-            </div>
-            <div class="pwa-account-item">
+            </a>
+            <a href="{{ route('pwa.wishlist') }}" class="pwa-account-item">
                 <span class="pwa-account-item-icon">&#9825;</span>
                 <span>Wishlist</span>
                 <span class="pwa-account-item-arrow">&#8250;</span>
-            </div>
-            <div class="pwa-account-item">
+            </a>
+            <a href="{{ route('pwa.contact') }}" class="pwa-account-item">
                 <span class="pwa-account-item-icon">&#128222;</span>
                 <span>Support</span>
                 <span class="pwa-account-item-arrow">&#8250;</span>
-            </div>
+            </a>
             <div class="pwa-account-item" onclick="togglePushNotification()" id="pushToggleItem">
                 <span class="pwa-account-item-icon">&#128276;</span>
                 <span>Push Notifications</span>

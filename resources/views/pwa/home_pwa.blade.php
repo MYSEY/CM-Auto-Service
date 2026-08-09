@@ -82,7 +82,7 @@
 
     <!-- Products -->
     <div class="pwa-products" id="pwaProducts">
-        @include('pwa.partials.product_grid', ['products' => $productAll])
+        @include('pwa.partials.product_grid', ['products' => $products])
     </div>
     </div>
 

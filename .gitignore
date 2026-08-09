@@ -23,3 +23,9 @@ public/images/products/*
 public/users/profiles/*
 *.zip
 /public/images/*.zip
+/android
+error_log
+/tests
+phpunit.xml
+.editorconfig
+.gitattributes
