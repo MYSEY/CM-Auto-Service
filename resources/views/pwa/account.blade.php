@@ -43,6 +43,7 @@
     </div>
 
     <div class="pwa-content" style="padding: 16px;">
+        @auth
         <div class="pwa-account-header">
             <div class="pwa-account-avatar">{{ substr($user->name, 0, 1) }}</div>
             <div class="pwa-account-name">{{ $user->name }}</div>
@@ -70,7 +71,40 @@
                 <span>Push Notifications</span>
                 <span class="push-toggle-label" id="pushStatusLabel">Off</span>
             </div>
+            <form action="{{ route('pwa.logout') }}" method="POST" style="margin:0;">
+                @csrf
+                <button type="submit" class="pwa-account-item" style="width:100%;border:none;background:none;text-align:left;font-family:inherit;color:inherit;">
+                    <span class="pwa-account-item-icon">&#128682;</span>
+                    <span>Logout</span>
+                    <span class="pwa-account-item-arrow">&#8250;</span>
+                </button>
+            </form>
         </div>
+        @else
+        <div class="pwa-account-header">
+            <div class="pwa-account-avatar">?</div>
+            <div class="pwa-account-name">Guest</div>
+            <div class="pwa-account-email">Login to manage your account</div>
+        </div>
+
+        <div class="pwa-account-menu">
+            <a href="{{ route('pwa.login') }}" class="pwa-account-item">
+                <span class="pwa-account-item-icon">&#128100;</span>
+                <span>Login</span>
+                <span class="pwa-account-item-arrow">&#8250;</span>
+            </a>
+            <a href="{{ route('pwa.wishlist') }}" class="pwa-account-item">
+                <span class="pwa-account-item-icon">&#9825;</span>
+                <span>Wishlist</span>
+                <span class="pwa-account-item-arrow">&#8250;</span>
+            </a>
+            <a href="{{ route('pwa.contact') }}" class="pwa-account-item">
+                <span class="pwa-account-item-icon">&#128222;</span>
+                <span>Support</span>
+                <span class="pwa-account-item-arrow">&#8250;</span>
+            </a>
+        </div>
+        @endauth
 
         <div class="pwa-theme-section">
             <div class="pwa-theme-title">Appearance</div>

@@ -74,7 +74,7 @@
 
     <!-- Tabs -->
     <div class="pwa-tabs" id="pwaTabs">
-        <a href="{{ route('pwa.home') }}" class="pwa-tab active" data-url="{{ route('pwa.home') }}">All</a>
+        <a href="{{ route('pwa.search') }}" class="pwa-tab active" data-url="{{ route('pwa.search') }}">All</a>
         @foreach($productType as $type)
             <a href="{{ route('pwa.search', ['type' => $type->id]) }}" class="pwa-tab" data-url="{{ route('pwa.search', ['type' => $type->id]) }}">{{ $type->name }}</a>
         @endforeach
@@ -200,7 +200,7 @@
         const pwaTabs = document.getElementById('pwaTabs');
         let searchTimer = null;
         let currentKeyword = '';
-        let currentTabUrl = '{{ route("pwa.home") }}';
+        let currentTabUrl = '{{ route("pwa.search") }}';
 
         // Live Search - keyup
         searchInput.addEventListener('keyup', function(e) {

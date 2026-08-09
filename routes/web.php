@@ -73,6 +73,9 @@ Route::post('/pwa/cart/remove', [\App\Http\Controllers\Pwa\PwaController::class,
 Route::get('/pwa/wishlist', [\App\Http\Controllers\Pwa\PwaController::class, 'wishlist'])->name('pwa.wishlist');
 Route::get('/pwa/contact', [\App\Http\Controllers\Pwa\PwaController::class, 'contact'])->name('pwa.contact');
 Route::get('/pwa/account', [\App\Http\Controllers\Pwa\PwaController::class, 'account'])->name('pwa.account');
+Route::get('/pwa/login', [\App\Http\Controllers\Pwa\PwaController::class, 'login'])->name('pwa.login');
+Route::post('/pwa/login', [\App\Http\Controllers\Pwa\PwaController::class, 'loginSubmit'])->name('pwa.login.submit');
+Route::post('/pwa/logout', [\App\Http\Controllers\Pwa\PwaController::class, 'logout'])->name('pwa.logout');
 Route::get('/pwa/profile', [\App\Http\Controllers\Pwa\PwaController::class, 'profile'])->name('pwa.profile');
 Route::post('/pwa/profile/update', [\App\Http\Controllers\Pwa\PwaController::class, 'profileUpdate'])->name('pwa.profile.update');
 Route::post('/pwa/profile/password', [\App\Http\Controllers\Pwa\PwaController::class, 'profilePassword'])->name('pwa.profile.password');

@@ -91,7 +91,8 @@ class PwaController extends Controller
             $query->where('category_id', $request->category);
         }
 
-        $products = $query->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
+        $products = $query->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
+            ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
             ->paginate(24);
 
         if ($request->ajax()) {
@@ -216,10 +217,6 @@ class PwaController extends Controller
 
     public function account()
     {
-        if (!auth()->check()) {
-            return redirect()->route('pwa.home');
-        }
-
         $user = auth()->user();
         $company = Company::first();
         $productType = ProductType::all();
@@ -286,5 +283,38 @@ class PwaController extends Controller
         $user->save();
 
         return response()->json(['status' => 'success']);
+    }
+
+    public function login()
+    {
+        if (auth()->check()) {
+            return redirect()->route('pwa.account');
+        }
+
+        $company = Company::first();
+        $productType = ProductType::all();
+        $wishlistCount = $this->getWishlistCount();
+
+        return view('pwa.login', compact('company', 'productType', 'wishlistCount'));
+    }
+
+    public function loginSubmit(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (auth()->attempt($credentials)) {
+            $request->session()->regenerate();
+            return response()->json(['status' => 'success', 'redirect' => route('pwa.account')]);
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'Invalid email or password.']);
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('pwa.home');
     }
 }
