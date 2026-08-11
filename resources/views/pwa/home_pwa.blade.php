@@ -8,7 +8,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CM Auto">
     <link rel="manifest" href="{{ asset('pwa/manifest.json') }}">
-    <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
+    {{-- <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}"> --}}
+    <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/favicon.png') }}">
     <title>CM Auto Service</title>
     <link rel="stylesheet" href="{{ asset('build/pwa.css') }}">
     <style>
