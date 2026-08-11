@@ -16,12 +16,12 @@
             -webkit-tap-highlight-color: transparent;
         }
         .ios-header {
-            background: rgba(255,255,255,0.92);
+            background: linear-gradient(135deg, #0f2444 0%, #1b3a6b 50%, #2d5aa0 100%);
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
         }
         .dark .ios-header {
-            background: rgba(15,17,35,0.92);
+            background: linear-gradient(135deg, #0a0e1a 0%, #0f1123 50%, #151829 100%);
         }
         .nav-pill {
             position: relative;
@@ -41,12 +41,12 @@
             background: #60a5fa;
         }
         .ios-search-container {
-            background: rgba(255,255,255,0.92);
+            background: linear-gradient(135deg, #0f2444 0%, #1b3a6b 50%, #2d5aa0 100%);
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
         }
         .dark .ios-search-container {
-            background: rgba(15,17,35,0.92);
+            background: linear-gradient(135deg, #0a0e1a 0%, #0f1123 50%, #151829 100%);
         }
         .ios-bottom-nav {
             background: rgba(255,255,255,0.90);
@@ -122,14 +122,14 @@
 <body class="bg-[#f2f2f7] dark:bg-[#0f1123] text-gray-900 dark:text-gray-200 font-sans antialiased">
 
     <!-- iOS Header -->
-    <header class="ios-header sticky top-0 z-50 border-b border-gray-200/60 dark:border-white/[0.06]" style="padding-top: env(safe-area-inset-top, 0);">
+    <header class="ios-header sticky top-0 z-50 border-b border-white/10" style="padding-top: env(safe-area-inset-top, 0);">
         <div class="flex items-center justify-between px-4 py-3">
             <a href="{{ route('pwa.home') }}" class="flex items-center gap-2">
                 <img src="{{ $company->company_logo ?? asset('frontends/assets/img/logo.png') }}" alt="CM Auto" class="h-8">
             </a>
             <div class="flex items-center gap-1">
                 <button type="button" id="pwaRefreshBtn" onclick="pwaRefreshData()" title="Refresh"
-                    class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors">
+                    class="w-9 h-9 flex items-center justify-center rounded-full text-white active:bg-white/10 transition-colors">
                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="23 4 23 10 17 10"/>
                         <polyline points="1 20 1 14 7 14"/>
@@ -137,19 +137,19 @@
                     </svg>
                 </button>
                 <button type="button" onclick="pwaTogglePanel()" id="floatThemeBtn" title="Theme"
-                    class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors">
+                    class="w-9 h-9 flex items-center justify-center rounded-full text-white active:bg-white/10 transition-colors">
                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="3"/>
                         <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
                     </svg>
                 </button>
-                <a href="{{ route('pwa.wishlist') }}" class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors relative">
+                <a href="{{ route('pwa.wishlist') }}" class="w-9 h-9 flex items-center justify-center rounded-full text-white active:bg-white/10 transition-colors relative">
                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                     </svg>
                     <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] font-semibold px-1 py-0 rounded-full min-w-[15px] text-center leading-[15px]" id="wishBadge">{{ $wishlistCount ?? 0 }}</span>
                 </a>
-                <a href="{{ route('pwa.cart') }}" class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors relative">
+                <a href="{{ route('pwa.cart') }}" class="w-9 h-9 flex items-center justify-center rounded-full text-white active:bg-white/10 transition-colors relative">
                     <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="9" cy="21" r="1"/>
                         <circle cx="20" cy="21" r="1"/>
@@ -162,19 +162,19 @@
     </header>
 
     <!-- Search Bar -->
-    <div class="ios-search-container sticky top-[52px] z-40 px-4 py-2.5 border-b border-gray-200/60 dark:border-white/[0.06]" style="top: calc(52px + env(safe-area-inset-top, 0));">
-        <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-gray-100 dark:bg-white/[0.06] border border-gray-200/50 dark:border-white/[0.08] focus-within:bg-white dark:focus-within:bg-white/[0.1] focus-within:border-gray-300 dark:focus-within:border-white/[0.15] focus-within:shadow-sm transition-all duration-200">
-            <svg class="flex-shrink-0 text-gray-400 dark:text-gray-500 w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <div class="ios-search-container sticky top-[52px] z-40 px-4 py-2.5 border-b border-white/10" style="top: calc(52px + env(safe-area-inset-top, 0));">
+        <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-white/15 border border-white/20 focus-within:bg-white/25 focus-within:border-white/30 focus-within:shadow-sm transition-all duration-200">
+            <svg class="flex-shrink-0 text-white/60 w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <input type="text" id="pwaSearchInput" name="keyword" placeholder="Search parts, ECU, tools..." autocomplete="off"
-                class="flex-1 bg-transparent border-none outline-none text-[15px] text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500">
+                class="flex-1 bg-transparent border-none outline-none text-[15px] text-white placeholder-white/50">
             <button type="button" id="pwaSearchClear"
-                class="hidden flex-shrink-0 w-[18px] h-[18px] rounded-full bg-gray-300 dark:bg-gray-600 text-white dark:text-gray-300 text-[11px] leading-[18px] text-center cursor-pointer p-0 border-none">&times;</button>
+                class="hidden flex-shrink-0 w-[18px] h-[18px] rounded-full bg-white/30 text-white text-[11px] leading-[18px] text-center cursor-pointer p-0 border-none">&times;</button>
         </div>
         <div id="pwaSearchLoading" class="hidden pt-2">
-            <div class="w-5 h-5 border-2 border-gray-200 dark:border-gray-600 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
+            <div class="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto"></div>
         </div>
     </div>
 

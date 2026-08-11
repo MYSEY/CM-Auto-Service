@@ -146,28 +146,34 @@ button,
 .pwa-nav-item.active { color: var(--color-primary); }
 .pwa-wishlist-btn.active { color: #fff; background: var(--color-accent-red); }
 
-body.pwa-blur .pwa-header {
+body.pwa-blur .pwa-header,
+body.pwa-blur .ios-header {
     background: rgba(13,27,62,0.85) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
-body.pwa-blur.dark .pwa-header {
+body.pwa-blur.dark .pwa-header,
+body.pwa-blur.dark .ios-header {
     background: rgba(15,17,35,0.85) !important;
 }
-body.pwa-blur .pwa-search-box {
+body.pwa-blur .pwa-search-box,
+body.pwa-blur .ios-search-container {
     background: rgba(255,255,255,0.6) !important;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
 }
-body.pwa-blur.dark .pwa-search-box {
+body.pwa-blur.dark .pwa-search-box,
+body.pwa-blur.dark .ios-search-container {
     background: rgba(26,29,46,0.6) !important;
 }
-body.pwa-blur .pwa-bottom-nav {
+body.pwa-blur .pwa-bottom-nav,
+body.pwa-blur .ios-bottom-nav {
     background: rgba(255,255,255,0.85) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
-body.pwa-blur.dark .pwa-bottom-nav {
+body.pwa-blur.dark .pwa-bottom-nav,
+body.pwa-blur.dark .ios-bottom-nav {
     background: rgba(26,29,46,0.85) !important;
 }
 body.pwa-blur .pwa-product-card,
