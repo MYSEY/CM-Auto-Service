@@ -82,6 +82,7 @@ Route::post('/pwa/profile/password', [\App\Http\Controllers\Pwa\PwaController::c
 Route::get('/pwa/chat', [\App\Http\Controllers\Pwa\ChatController::class, 'index'])->name('pwa.chat');
 Route::post('/pwa/chat/send', [\App\Http\Controllers\Pwa\ChatController::class, 'send'])->name('pwa.chat.send');
 Route::get('/pwa/chat/poll', [\App\Http\Controllers\Pwa\ChatController::class, 'poll'])->name('pwa.chat.poll');
+
 Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');

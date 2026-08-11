@@ -1,11 +1,11 @@
-const CACHE_NAME = 'cm-auto-v8';
+const CACHE_NAME = 'cm-auto-v12';
 const OFFLINE_URL = '/offline.html';
 const urlsToCache = [
     '/',
     '/pwa',
     '/splash',
     '/offline.html',
-    '/pwa/pwa.css',
+    '/build/pwa.css',
     '/pwa/pwa.js',
     '/pwa/error-handler.js',
     '/pwa/pwa-connectivity.js',
@@ -64,6 +64,8 @@ self.addEventListener('fetch', (event) => {
                         });
                 })
         );
+    } else if (event.request.destination === 'video' || event.request.destination === 'audio') {
+        event.respondWith(fetch(event.request));
     } else {
         event.respondWith(
             caches.match(event.request)

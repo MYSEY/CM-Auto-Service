@@ -1,0 +1,249 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+@import "tailwindcss";
+
+@source "../views/pwa/**/*.blade.php";
+
+@theme {
+  --color-primary: #1b3a6b;
+  --color-primary-light: #2d5aa0;
+  --color-primary-dark: #0f2444;
+  --color-accent: #d0d8e4;
+  --color-accent-red: #e05252;
+  --color-success: #2ebd6e;
+  --color-warning: #f5a623;
+  --color-info: #4a9ff5;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* =============================================
+   SMOOTH LIGHT THEME
+   ============================================= */
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Cards & surfaces */
+.pwa-header,
+.pwa-bottom-nav,
+.pwa-theme-panel,
+.pwa-product-card,
+.pwa-wishlist-item,
+.pwa-cart-item,
+.pwa-contact-card,
+.pwa-account-menu,
+.pwa-search {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Smooth header gradient */
+.pwa-header {
+  background: linear-gradient(135deg, #0f2444 0%, #1b3a6b 50%, #2d5aa0 100%) !important;
+}
+
+/* Smooth card shadows — light mode only */
+:not(.dark) .bg-white {
+  box-shadow: 0 1px 3px rgba(27, 58, 107, 0.06), 0 1px 2px rgba(27, 58, 107, 0.04);
+}
+
+/* Smooth bottom nav */
+.pwa-bottom-nav {
+  box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Smooth tab underline transition */
+.pwa-tab {
+  transition: color 0.2s ease, border-color 0.2s ease, font-weight 0.15s ease;
+}
+
+/* Smooth nav items */
+.pwa-nav-item {
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+/* Smooth quick action cards */
+.pwa-quick-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pwa-quick-item:hover,
+.pwa-quick-item:active {
+  box-shadow: 0 4px 12px rgba(27, 58, 107, 0.12);
+}
+
+/* Smooth wishlist button */
+.pwa-wishlist-btn {
+  transition: all 0.25s ease;
+}
+.pwa-wishlist-btn.active {
+  background: var(--color-accent-red);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Smooth theme panel */
+.pwa-theme-panel {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.pwa-theme-panel.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Smooth input focus */
+input:focus,
+textarea:focus {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Smooth buttons */
+button,
+.pwa-banner-btn,
+.pwa-add-cart,
+.pwa-detail-btn {
+  transition: transform 0.15s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+/* Smooth page transitions */
+.pwa-content {
+  animation: fadeSlideIn 0.3s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Visible Scrollbar (iOS/Safari hides by default) === */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
+}
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 2px;
+}
+.dark *::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+}
+
+/* === Blur Mode - Glassmorphism (dynamic, cannot be pure Tailwind) === */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Active states for JS toggling */
+.pwa-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); font-weight: 600; }
+.dark .pwa-tab.active { color: #e4e6f0; }
+.pwa-nav-item.active { color: var(--color-primary); }
+.pwa-wishlist-btn.active { color: #fff; background: var(--color-accent-red); }
+
+body.pwa-blur .pwa-header {
+    background: rgba(13,27,62,0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+body.pwa-blur.dark .pwa-header {
+    background: rgba(15,17,35,0.85) !important;
+}
+body.pwa-blur .pwa-search-box {
+    background: rgba(255,255,255,0.6) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+body.pwa-blur.dark .pwa-search-box {
+    background: rgba(26,29,46,0.6) !important;
+}
+body.pwa-blur .pwa-bottom-nav {
+    background: rgba(255,255,255,0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+body.pwa-blur.dark .pwa-bottom-nav {
+    background: rgba(26,29,46,0.85) !important;
+}
+body.pwa-blur .pwa-product-card,
+body.pwa-blur .pwa-wishlist-item,
+body.pwa-blur .pwa-cart-item,
+body.pwa-blur .pwa-contact-card,
+body.pwa-blur .pwa-account-menu {
+    background: rgba(255,255,255,0.7) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+body.pwa-blur.dark .pwa-product-card,
+body.pwa-blur.dark .pwa-wishlist-item,
+body.pwa-blur.dark .pwa-cart-item,
+body.pwa-blur.dark .pwa-contact-card,
+body.pwa-blur.dark .pwa-account-menu {
+    background: rgba(26,29,46,0.7) !important;
+}
+
+/* Offline adjustments */
+body.pwa-is-offline .pwa-header {
+    top: 40px;
+}
+body.pwa-is-offline .pwa-offline-banner + * {
+    margin-top: 40px;
+}
+body.pwa-is-offline .pwa-add-cart,
+body.pwa-is-offline .pwa-detail-btn,
+body.pwa-is-offline .pwa-banner-btn {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* === Animations === */
+@keyframes refreshSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.spinning {
+    animation: refreshSpin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes pulse-offline {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 1; }
+}
+@keyframes logoFadeIn {
+    0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes textFadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+@keyframes lineShimmer {
+    0%, 100% { opacity: 0.3; width: 40px; }
+    50% { opacity: 1; width: 60px; }
+}
+
+@keyframes bubbleIn {
+    0% { opacity: 0; transform: translateY(8px) scale(0.95); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0.6); }
+    40% { transform: scale(1); }
+}

@@ -10,164 +10,220 @@
     <link rel="manifest" href="{{ asset('pwa/manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
     <title>Account — CM Auto</title>
-    <link rel="stylesheet" href="{{ asset('pwa/pwa.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}">
     <style>
-        .pwa-account-header { text-align: center; padding: 24px 16px; background: var(--card); border-radius: var(--radius); margin-bottom: 12px; box-shadow: var(--shadow); }
-        .pwa-account-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 12px; }
-        .pwa-account-name { font-size: 18px; font-weight: 600; }
-        .pwa-account-email { font-size: 13px; color: var(--text-light); margin-top: 4px; }
-        .pwa-account-menu { background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
-        .pwa-account-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 14px; cursor: pointer; }
-        .pwa-account-item:last-child { border-bottom: none; }
-        .pwa-account-item:active { background: var(--bg); }
-        .pwa-account-item-icon { font-size: 18px; width: 24px; text-align: center; }
-        .pwa-account-item-arrow { margin-left: auto; color: var(--text-light); }
-        .pwa-section-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--primary); padding: 0 16px; }
+        .ios-header {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+        .dark .ios-header { background: rgba(15,17,35,0.92); }
+        .nav-pill { position: relative; }
+        .nav-pill.active::before {
+            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 2px; border-radius: 1px; background: #0d1b3e;
+        }
+        .dark .nav-pill.active::before { background: #60a5fa; }
     </style>
 </head>
-<body>
-    <div class="pwa-header">
-        <a href="{{ route('pwa.home') }}" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-size:13px;color:#fff;font-weight:500;">&#8592; Back</a>
-        <div class="pwa-header-icons">
-            <button type="button" class="pwa-refresh-btn" onclick="pwaTogglePanel()" id="floatThemeBtn" title="Theme">&#9881;</button>
-            <button type="button" class="pwa-refresh-btn" onclick="location.reload()" title="Refresh">&#8635;</button>
-            <a href="{{ route('pwa.wishlist') }}">
-                &#9825;
-                <span class="pwa-badge">{{ $wishlistCount ?? 0 }}</span>
-            </a>
-            <a href="{{ route('pwa.cart') }}">
-                &#128722;
-                <span class="pwa-badge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
-            </a>
-        </div>
-    </div>
+<body class="bg-[#f2f2f7] dark:bg-[#0f1123] text-gray-900 dark:text-gray-200 font-sans antialiased">
 
-    <div class="pwa-content" style="padding: 16px;">
+    <!-- iOS Header -->
+    <header class="ios-header sticky top-0 z-50 border-b border-black/[0.06] dark:border-white/[0.08]" style="padding-top: env(safe-area-inset-top, 0);">
+        <div class="px-4 py-3 flex items-center justify-between">
+            <a href="{{ route('pwa.home') }}" class="inline-flex items-center gap-1 text-[15px] font-medium text-[#0d1b3e] dark:text-blue-400">
+                <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path d="M15 19l-7-7 7-7"/></svg>
+                Back
+            </a>
+            <div class="flex gap-3 items-center">
+                <button type="button" onclick="pwaTogglePanel()" id="floatThemeBtn" title="Theme" class="w-9 h-9 rounded-full flex items-center justify-center text-[#636366] dark:text-[#98989d] active:bg-black/[0.06] dark:active:bg-white/[0.08] transition-colors duration-200">
+                    <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+                <button type="button" onclick="location.reload()" title="Refresh" class="w-9 h-9 rounded-full flex items-center justify-center text-[#636366] dark:text-[#98989d] active:bg-black/[0.06] dark:active:bg-white/[0.08] transition-colors duration-200">
+                    <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                </button>
+                <a href="{{ route('pwa.cart') }}" class="relative w-9 h-9 rounded-full flex items-center justify-center text-[#636366] dark:text-[#98989d] active:bg-black/[0.06] dark:active:bg-white/[0.08] transition-colors duration-200">
+                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                    <span class="absolute -top-0.5 -right-0.5 bg-[#ff3b30] text-white text-[10px] font-semibold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center leading-none">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="px-4 pt-4 pb-28">
         @auth
-        <div class="pwa-account-header">
-            <div class="pwa-account-avatar">{{ substr($user->name, 0, 1) }}</div>
-            <div class="pwa-account-name">{{ $user->name }}</div>
-            <div class="pwa-account-email">{{ $user->email }}</div>
+        <!-- User Card -->
+        <div class="text-center py-6 px-4 rounded-2xl bg-white dark:bg-[#1c1e2d] mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
+            <div class="w-16 h-16 rounded-full bg-[#007aff] dark:bg-[#0a84ff] text-white flex items-center justify-center text-[24px] font-semibold mx-auto mb-3">{{ substr($user->name, 0, 1) }}</div>
+            <div class="text-[17px] font-semibold text-gray-900 dark:text-white">{{ $user->name }}</div>
+            <div class="text-[13px] text-[#8e8e93] mt-1">{{ $user->email }}</div>
         </div>
 
-        <div class="pwa-account-menu">
-            <a href="{{ route('pwa.profile') }}" class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#128100;</span>
-                <span>Profile</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
+        <!-- Menu Section -->
+        <div class="rounded-2xl bg-white dark:bg-[#1c1e2d] overflow-hidden shadow-sm shadow-black/[0.04] dark:shadow-black/20 mb-4">
+            <a href="{{ route('pwa.profile') }}" class="flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.04] dark:border-white/[0.06] text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200">
+                <span class="w-7 flex items-center justify-center text-[#007aff]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Profile</span>
+                <span class="ml-auto text-[#c7c7cc]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
-            <a href="{{ route('pwa.wishlist') }}" class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#9825;</span>
-                <span>Wishlist</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
+            <a href="{{ route('pwa.wishlist') }}" class="flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.04] dark:border-white/[0.06] text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200">
+                <span class="w-7 flex items-center justify-center text-[#ff2d55]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Wishlist</span>
+                <span class="ml-auto text-[#c7c7cc]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
-            <a href="{{ route('pwa.contact') }}" class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#128222;</span>
-                <span>Support</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
+            <a href="{{ route('pwa.contact') }}" class="flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.04] dark:border-white/[0.06] text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200">
+                <span class="w-7 flex items-center justify-center text-[#34c759]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Support</span>
+                <span class="ml-auto text-[#c7c7cc]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
-            <div class="pwa-account-item" onclick="togglePushNotification()" id="pushToggleItem">
-                <span class="pwa-account-item-icon">&#128276;</span>
-                <span>Push Notifications</span>
-                <span class="push-toggle-label" id="pushStatusLabel">Off</span>
+            <div class="flex items-center gap-3 px-4 py-3.5 text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200" onclick="togglePushNotification()" id="pushToggleItem">
+                <span class="w-7 flex items-center justify-center text-[#ff9500]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Push Notifications</span>
+                <span class="ml-auto text-[13px] font-medium text-[#8e8e93]" id="pushStatusLabel">Off</span>
             </div>
             <form action="{{ route('pwa.logout') }}" method="POST" style="margin:0;">
                 @csrf
-                <button type="submit" class="pwa-account-item" style="width:100%;border:none;background:none;text-align:left;font-family:inherit;color:inherit;">
-                    <span class="pwa-account-item-icon">&#128682;</span>
+                <button type="submit" class="flex items-center gap-3 px-4 py-3.5 text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200 w-full border-none bg-none text-left font-sans text-gray-900 dark:text-white">
+                    <span class="w-7 flex items-center justify-center text-[#ff3b30]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    </span>
                     <span>Logout</span>
-                    <span class="pwa-account-item-arrow">&#8250;</span>
                 </button>
             </form>
         </div>
         @else
-        <div class="pwa-account-header">
-            <div class="pwa-account-avatar">?</div>
-            <div class="pwa-account-name">Guest</div>
-            <div class="pwa-account-email">Login to manage your account</div>
+        <!-- Guest Card -->
+        <div class="text-center py-6 px-4 rounded-2xl bg-white dark:bg-[#1c1e2d] mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
+            <div class="w-16 h-16 rounded-full bg-[#e5e5ea] dark:bg-[#3a3a3c] text-[#8e8e93] flex items-center justify-center text-[24px] font-semibold mx-auto mb-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="text-[17px] font-semibold text-gray-900 dark:text-white">Guest</div>
+            <div class="text-[13px] text-[#8e8e93] mt-1">Login to manage your account</div>
         </div>
 
-        <div class="pwa-account-menu">
-            <a href="{{ route('pwa.login') }}" class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#128100;</span>
-                <span>Login</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
+        <!-- Guest Menu -->
+        <div class="rounded-2xl bg-white dark:bg-[#1c1e2d] overflow-hidden shadow-sm shadow-black/[0.04] dark:shadow-black/20 mb-4">
+            <a href="{{ route('pwa.login') }}" class="flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.04] dark:border-white/[0.06] text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200">
+                <span class="w-7 flex items-center justify-center text-[#007aff]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Login</span>
+                <span class="ml-auto text-[#c7c7cc]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
-            <a href="{{ route('pwa.wishlist') }}" class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#9825;</span>
-                <span>Wishlist</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
+            <a href="{{ route('pwa.wishlist') }}" class="flex items-center gap-3 px-4 py-3.5 border-b border-black/[0.04] dark:border-white/[0.06] text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200">
+                <span class="w-7 flex items-center justify-center text-[#ff2d55]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Wishlist</span>
+                <span class="ml-auto text-[#c7c7cc]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
-            <a href="{{ route('pwa.contact') }}" class="pwa-account-item">
-                <span class="pwa-account-item-icon">&#128222;</span>
-                <span>Support</span>
-                <span class="pwa-account-item-arrow">&#8250;</span>
+            <a href="{{ route('pwa.contact') }}" class="flex items-center gap-3 px-4 py-3.5 text-[15px] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200">
+                <span class="w-7 flex items-center justify-center text-[#34c759]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                </span>
+                <span class="text-gray-900 dark:text-white">Support</span>
+                <span class="ml-auto text-[#c7c7cc]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                </span>
             </a>
         </div>
         @endauth
 
-        <div class="pwa-theme-section">
-            <div class="pwa-theme-title">Appearance</div>
-            <div class="pwa-theme-card">
-                <div class="pwa-theme-item" id="themeToggle" onclick="pwaToggleTheme()">
-                    <div class="pwa-theme-left">
-                        <span class="pwa-theme-icon theme-icon">&#9790;</span>
-                        <span class="pwa-theme-label">Dark Mode</span>
+        <!-- Appearance Section -->
+        <div class="mb-4">
+            <div class="text-[13px] font-medium text-[#8e8e93] uppercase tracking-wider px-1 mb-2">Appearance</div>
+            <div class="rounded-2xl bg-white dark:bg-[#1c1e2d] overflow-hidden shadow-sm shadow-black/[0.04] dark:shadow-black/20">
+                <div class="flex items-center justify-between px-4 py-3.5 border-b border-black/[0.04] dark:border-white/[0.06] cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200" id="themeToggle" onclick="pwaToggleTheme()">
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 flex items-center justify-center text-[#007aff] theme-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                        </span>
+                        <span class="text-[15px] font-medium text-gray-900 dark:text-white">Dark Mode</span>
                     </div>
-                    <div class="pwa-theme-right">
-                        <span class="pwa-theme-arrow">&#8250;</span>
-                    </div>
+                    <span class="text-[#c7c7cc]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+                    </span>
                 </div>
-                <div class="pwa-theme-item" id="blurToggle" onclick="pwaToggleBlur()">
-                    <div class="pwa-theme-left">
-                        <span class="pwa-theme-icon">&#128171;</span>
-                        <span class="pwa-theme-label">Blur On</span>
+                <div class="flex items-center justify-between px-4 py-3.5 cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200" id="blurToggle" onclick="pwaToggleBlur()">
+                    <div class="flex items-center gap-3">
+                        <span class="w-7 flex items-center justify-center text-[#5856d6]">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/><circle cx="12" cy="12" r="4"/></svg>
+                        </span>
+                        <span class="text-[15px] font-medium text-gray-900 dark:text-white">Blur On</span>
                     </div>
-                    <div class="pwa-theme-right">
-                        <div class="blur-dot"></div>
+                    <div class="w-10 h-[22px] rounded-full bg-[#e5e5ea] dark:bg-[#3a3a3c] relative transition-colors duration-300">
+                        <div class="absolute top-[3px] left-[3px] w-[14px] h-[14px] rounded-full bg-white shadow transition-transform duration-300"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <div class="pwa-bottom-nav">
-        <a href="{{ route('pwa.home') }}" class="pwa-nav-item">
-            <span class="nav-icon">&#127968;</span>
-            <span>Home</span>
-        </a>
-        <a href="{{ route('pwa.cart') }}" class="pwa-nav-item">
-            <span class="nav-badge">
-                <span class="nav-icon">&#128722;</span>
-                <span class="badge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
-            </span>
-            <span>Cart</span>
-        </a>
-        <a href="{{ route('pwa.chat') }}" class="pwa-nav-item">
-            <span class="nav-icon">&#128172;</span>
-            <span>Chat</span>
-        </a>
-        <a href="{{ route('pwa.wishlist') }}" class="pwa-nav-item">
-            <span class="nav-icon">&#9825;</span>
-            <span>Wishlist</span>
-        </a>
-        <a href="{{ route('pwa.account') }}" class="pwa-nav-item active">
-            <span class="nav-icon">&#128100;</span>
-            <span>Account</span>
-        </a>
-    </div>
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-[#1c1e2d]/90 backdrop-blur-xl border-t border-black/[0.06] dark:border-white/[0.08] z-50" style="padding-bottom: calc(6px + env(safe-area-inset-bottom, 0));">
+        <div class="flex justify-around items-center py-1.5">
+            <a href="{{ route('pwa.home') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-[#8e8e93] transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Home</span>
+            </a>
+            <a href="{{ route('pwa.cart') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-[#8e8e93] transition-colors duration-200">
+                <span class="relative">
+                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                    <span class="absolute -top-1 -right-1.5 bg-[#ff3b30] text-white text-[9px] font-semibold min-w-[14px] h-3.5 px-0.5 rounded-full flex items-center justify-center leading-none">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
+                </span>
+                <span>Cart</span>
+            </a>
+            <a href="{{ route('pwa.chat') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-[#8e8e93] transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                <span>Chat</span>
+            </a>
+            <a href="{{ route('pwa.wishlist') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-[#8e8e93] transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                <span>Wishlist</span>
+            </a>
+            <a href="{{ route('pwa.account') }}" class="nav-pill active flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-[#007aff] dark:text-[#60a5fa] transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Account</span>
+            </a>
+        </div>
+    </nav>
 
     <!-- Theme Panel -->
-    <div class="pwa-theme-panel" id="themePanel">
-        <div class="pwa-panel-title">Appearance</div>
-        <div class="pwa-panel-item" onclick="pwaToggleTheme()">
-            <span class="pwa-panel-icon" id="panelThemeIcon">&#9790;</span>
+    <div class="pwa-theme-panel fixed top-[52px] right-3 bg-white dark:bg-[#1c1e2d] rounded-2xl shadow-2xl shadow-black/20 py-2 z-[199] min-w-[180px] opacity-0 -translate-y-2.5 scale-95 pointer-events-none transition-all duration-300 ease-out border border-black/[0.06] dark:border-white/[0.08]" id="themePanel" style="margin-top: env(safe-area-inset-top, 0);">
+        <div class="text-[11px] font-semibold text-[#8e8e93] uppercase tracking-wider px-4 pt-2 pb-1">Appearance</div>
+        <div class="flex items-center gap-2.5 px-4 py-3 text-sm font-medium cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200 rounded-lg mx-2" onclick="pwaToggleTheme()">
+            <span class="w-6 text-center" id="panelThemeIcon">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            </span>
             <span id="panelThemeLabel">Dark Mode</span>
         </div>
-        <div class="pwa-panel-item" onclick="pwaToggleBlur()">
-            <span class="pwa-panel-icon">&#128171;</span>
+        <div class="flex items-center gap-2.5 px-4 py-3 text-sm font-medium cursor-pointer active:bg-black/[0.04] dark:active:bg-white/[0.06] transition-colors duration-200 rounded-lg mx-2" onclick="pwaToggleBlur()">
+            <span class="w-6 text-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/><circle cx="12" cy="12" r="4"/></svg>
+            </span>
             <span id="panelBlurLabel">Blur On</span>
-            <div class="pwa-panel-dot" id="panelBlurDot"></div>
+            <div class="ml-auto w-9 h-5 rounded-full bg-[#e5e5ea] dark:bg-[#3a3a3c] relative transition-colors duration-300" id="panelBlurDot">
+                <div class="absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform duration-300"></div>
+            </div>
         </div>
     </div>
 

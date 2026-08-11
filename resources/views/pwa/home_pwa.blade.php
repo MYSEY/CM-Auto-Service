@@ -10,125 +10,346 @@
     <link rel="manifest" href="{{ asset('pwa/manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
     <title>CM Auto Service</title>
-    <link rel="stylesheet" href="{{ asset('pwa/pwa.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}">
+    <style>
+        *, *::before, *::after {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-header {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+        .dark .ios-header {
+            background: rgba(15,17,35,0.92);
+        }
+        .nav-pill {
+            position: relative;
+        }
+        .nav-pill.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            border-radius: 1px;
+            background: #0d1b3e;
+        }
+        .dark .nav-pill.active::before {
+            background: #60a5fa;
+        }
+        .ios-search-container {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+        .dark .ios-search-container {
+            background: rgba(15,17,35,0.92);
+        }
+        .ios-bottom-nav {
+            background: rgba(255,255,255,0.90);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .dark .ios-bottom-nav {
+            background: rgba(28,30,45,0.90);
+        }
+        .ios-quick-action {
+            transition: transform 0.15s ease;
+        }
+        .ios-quick-action:active {
+            transform: scale(0.93);
+        }
+        .ios-card {
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+        }
+        .dark .ios-card {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.15);
+        }
+        .ios-tab-item {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        .ios-tab-item::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 1px;
+            background: transparent;
+            transition: background 0.2s ease;
+        }
+        .ios-tab-item.active::after {
+            background: #0d1b3e;
+        }
+        .dark .ios-tab-item.active::after {
+            background: #60a5fa;
+        }
+        .ios-theme-panel {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+        .dark .ios-theme-panel {
+            background: rgba(28,30,45,0.96);
+        }
+        .ios-theme-panel.show, .pwa-theme-panel.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .ios-toggle-track {
+            transition: background-color 0.3s ease;
+        }
+        .ios-toggle-thumb {
+            transition: transform 0.3s ease;
+        }
+        @keyframes ios-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .ios-spinning {
+            animation: ios-spin 0.8s linear infinite;
+        }
+
+    </style>
 </head>
-<body>
-    <!-- Header -->
-    <div class="pwa-header">
-        <a href="{{ route('pwa.home') }}">
-            <img src="{{ $company->company_logo ?? asset('frontends/assets/img/logo.png') }}" alt="CM Auto" class="logo">
-        </a>
-        <div class="pwa-header-icons">
-            <button type="button" id="pwaRefreshBtn" class="pwa-refresh-btn" onclick="pwaRefreshData()" title="Refresh">&#8635;</button>
-            <button type="button" class="pwa-refresh-btn" onclick="pwaTogglePanel()" id="floatThemeBtn" title="Theme">&#9881;</button>
-            <a href="{{ route('pwa.wishlist') }}">
-                &#9825;
-                <span class="pwa-badge" id="wishBadge">{{ $wishlistCount ?? 0 }}</span>
+<body class="bg-[#f2f2f7] dark:bg-[#0f1123] text-gray-900 dark:text-gray-200 font-sans antialiased">
+
+    <!-- iOS Header -->
+    <header class="ios-header sticky top-0 z-50 border-b border-gray-200/60 dark:border-white/[0.06]" style="padding-top: env(safe-area-inset-top, 0);">
+        <div class="flex items-center justify-between px-4 py-3">
+            <a href="{{ route('pwa.home') }}" class="flex items-center gap-2">
+                <img src="{{ $company->company_logo ?? asset('frontends/assets/img/logo.png') }}" alt="CM Auto" class="h-8">
             </a>
-            <a href="{{ route('pwa.cart') }}">
-                &#128722;
-                <span class="pwa-badge" id="cartBadge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
-            </a>
+            <div class="flex items-center gap-1">
+                <button type="button" id="pwaRefreshBtn" onclick="pwaRefreshData()" title="Refresh"
+                    class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors">
+                    <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <polyline points="1 20 1 14 7 14"/>
+                        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+                    </svg>
+                </button>
+                <button type="button" onclick="pwaTogglePanel()" id="floatThemeBtn" title="Theme"
+                    class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors">
+                    <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+                    </svg>
+                </button>
+                <a href="{{ route('pwa.wishlist') }}" class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors relative">
+                    <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                    </svg>
+                    <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] font-semibold px-1 py-0 rounded-full min-w-[15px] text-center leading-[15px]" id="wishBadge">{{ $wishlistCount ?? 0 }}</span>
+                </a>
+                <a href="{{ route('pwa.cart') }}" class="w-9 h-9 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-400 active:bg-gray-100 dark:active:bg-white/10 transition-colors relative">
+                    <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                    </svg>
+                    <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] font-semibold px-1 py-0 rounded-full min-w-[15px] text-center leading-[15px]" id="cartBadge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="ios-search-container sticky top-[52px] z-40 px-4 py-2.5 border-b border-gray-200/60 dark:border-white/[0.06]" style="top: calc(52px + env(safe-area-inset-top, 0));">
+        <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-gray-100 dark:bg-white/[0.06] border border-gray-200/50 dark:border-white/[0.08] focus-within:bg-white dark:focus-within:bg-white/[0.1] focus-within:border-gray-300 dark:focus-within:border-white/[0.15] focus-within:shadow-sm transition-all duration-200">
+            <svg class="flex-shrink-0 text-gray-400 dark:text-gray-500 w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="pwaSearchInput" name="keyword" placeholder="Search parts, ECU, tools..." autocomplete="off"
+                class="flex-1 bg-transparent border-none outline-none text-[15px] text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500">
+            <button type="button" id="pwaSearchClear"
+                class="hidden flex-shrink-0 w-[18px] h-[18px] rounded-full bg-gray-300 dark:bg-gray-600 text-white dark:text-gray-300 text-[11px] leading-[18px] text-center cursor-pointer p-0 border-none">&times;</button>
+        </div>
+        <div id="pwaSearchLoading" class="hidden pt-2">
+            <div class="w-5 h-5 border-2 border-gray-200 dark:border-gray-600 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
         </div>
     </div>
 
-    <!-- Search -->
-    <div class="pwa-search">
-        <div class="pwa-search-box">
-            <svg class="pwa-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="text" id="pwaSearchInput" name="keyword" placeholder="Search parts, ECU, tools..." autocomplete="off">
-            <button type="button" id="pwaSearchClear" class="pwa-search-clear" style="display:none;">&times;</button>
-        </div>
-        <div id="pwaSearchLoading" class="pwa-search-loading" style="display:none;">
-            <div class="pwa-spinner" style="width:20px;height:20px;border-width:2px;margin:0 auto;"></div>
-        </div>
-    </div>
+    <!-- Content -->
+    <div class="pwa-content pb-[90px]">
 
-    <div class="pwa-content">
         <!-- Quick Actions -->
-        <div class="pwa-quick">
-            <a href="{{ route('pwa.cart') }}" class="pwa-quick-item">
-                <div class="pwa-quick-icon blue">&#128722;</div>
-                <span>Cart</span>
-            </a>
-            <a href="{{ route('pwa.wishlist') }}" class="pwa-quick-item">
-                <div class="pwa-quick-icon red">&#9825;</div>
-                <span>Wishlist</span>
-            </a>
-            <a href="{{ route('pwa.contact') }}" class="pwa-quick-item">
-                <div class="pwa-quick-icon green">&#128222;</div>
-                <span>Contact</span>
-            </a>
-            <a href="{{ route('pwa.account') }}" class="pwa-quick-item">
-                <div class="pwa-quick-icon orange">&#128100;</div>
-                <span>Account</span>
-            </a>
+        <div class="px-4 pt-4 pb-2">
+            <div class="grid grid-cols-4 gap-2.5">
+                <a href="{{ route('pwa.cart') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-500/25">
+                        <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                        </svg>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Cart</span>
+                </a>
+                <a href="{{ route('pwa.wishlist') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-sm shadow-rose-500/25">
+                        <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Wishlist</span>
+                </a>
+                <a href="{{ route('pwa.contact') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-sm shadow-emerald-500/25">
+                        <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Contact</span>
+                </a>
+                <a href="{{ route('pwa.account') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-sm shadow-amber-500/25">
+                        <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Account</span>
+                </a>
+            </div>
         </div>
 
         <!-- Banner -->
-        <div class="pwa-banner">
-            <h2>CM Auto Service</h2>
-            <p>ECU, Auto Parts & Online Programming</p>
-            <a href="{{ route('pwa.contact') }}" class="pwa-banner-btn">Contact Us</a>
+        <div class="px-4 py-2">
+            <div class="ios-card overflow-hidden bg-gradient-to-br from-[#0d1b3e] via-[#1a3a6e] to-[#2a5298] text-white p-5 relative">
+                <div class="absolute -top-12 -right-12 w-40 h-40 bg-white/[0.06] rounded-full"></div>
+                <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-white/[0.04] rounded-full"></div>
+                <div class="relative z-10">
+                    <h2 class="text-[17px] font-semibold mb-1">CM Auto Service</h2>
+                    <p class="text-[13px] text-white/70 mb-3.5">ECU, Auto Parts & Online Programming</p>
+                    <a href="{{ route('pwa.contact') }}"
+                        class="inline-flex items-center gap-1.5 bg-white text-[#0d1b3e] px-4 py-2 rounded-full text-[13px] font-semibold active:bg-white/90 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                        Contact Us
+                    </a>
+                </div>
+            </div>
         </div>
 
-    <!-- Tabs -->
-    <div class="pwa-tabs" id="pwaTabs">
-        <a href="{{ route('pwa.search') }}" class="pwa-tab active" data-url="{{ route('pwa.search') }}">All</a>
-        @foreach($productType as $type)
-            <a href="{{ route('pwa.search', ['type' => $type->id]) }}" class="pwa-tab" data-url="{{ route('pwa.search', ['type' => $type->id]) }}">{{ $type->name }}</a>
-        @endforeach
-    </div>
+        <!-- Service Video -->
+        <div class="px-4 py-2">
+            <div class="ios-card overflow-hidden bg-white dark:bg-[#1c1e2d] border border-gray-200/60 dark:border-white/[0.06]">
+                <div class="flex items-center justify-between px-4 pt-3.5 pb-2">
+                    <h3 class="text-[15px] font-semibold text-[#0d1b3e] dark:text-white">Our Services</h3>
+                    <span class="text-[11px] text-[#8e8e93] dark:text-gray-500 font-medium">Watch</span>
+                </div>
+                <div class="relative mx-3 mb-3 rounded-xl overflow-hidden bg-black aspect-square" id="videoWrapper">
+                    <video id="pwaServiceVideo"
+                        class="w-full h-full object-cover"
+                        playsinline webkit-playsinline preload="metadata"
+                        autoplay muted loop
+                        controls
+                        poster="https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/CM_Thumnail.png">
+                        <source src="https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/CM_Final_For_Fackbook.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
 
-    <!-- Products -->
-    <div class="pwa-products" id="pwaProducts">
-        @include('pwa.partials.product_grid', ['products' => $products])
-    </div>
+        <!-- Tabs -->
+        <div class="px-4 pt-2">
+            <div class="ios-card bg-white dark:bg-white/[0.05] border border-gray-200/60 dark:border-white/[0.06] px-1 py-1 overflow-x-auto no-scrollbar" id="pwaTabs">
+                <div class="flex gap-0.5 min-w-max">
+                    <a href="{{ route('pwa.search') }}"
+                        class="ios-tab-item active px-4 py-2 text-[13px] font-medium rounded-lg text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-white/[0.08] whitespace-nowrap transition-all duration-200"
+                        data-url="{{ route('pwa.search') }}">All</a>
+                    @foreach($productType as $type)
+                        <a href="{{ route('pwa.search', ['type' => $type->id]) }}"
+                            class="ios-tab-item px-4 py-2 text-[13px] font-medium rounded-lg text-gray-500 dark:text-gray-400 whitespace-nowrap transition-all duration-200"
+                            data-url="{{ route('pwa.search', ['type' => $type->id]) }}">{{ $type->name }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <!-- Products -->
+        <div class="px-4 py-3" id="pwaProducts">
+            @include('pwa.partials.product_grid', ['products' => $products])
+        </div>
     </div>
 
     <!-- Theme Panel -->
-    <div class="pwa-theme-panel" id="themePanel">
-        <div class="pwa-panel-title">Appearance</div>
-        <div class="pwa-panel-item" onclick="pwaToggleTheme()">
-            <span class="pwa-panel-icon" id="panelThemeIcon">&#9790;</span>
+    <div class="ios-theme-panel fixed top-[60px] right-3 rounded-2xl shadow-2xl shadow-black/20 py-1.5 z-[199] min-w-[190px] opacity-0 -translate-y-2.5 scale-95 pointer-events-none transition-all duration-300 ease-out border border-gray-200/60 dark:border-white/[0.08]"
+        id="themePanel" style="top: calc(60px + env(safe-area-inset-top, 0));">
+        <div class="text-[11px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider px-4 pt-2 pb-1.5">Appearance</div>
+        <div class="flex items-center gap-3 px-4 py-3 text-[14px] font-medium cursor-pointer active:bg-gray-100 dark:active:bg-white/5 transition-colors duration-200 rounded-lg mx-1" onclick="pwaToggleTheme()">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="panelThemeIcon">
+                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
             <span id="panelThemeLabel">Dark Mode</span>
         </div>
-        <div class="pwa-panel-item" onclick="pwaToggleBlur()">
-            <span class="pwa-panel-icon">&#128171;</span>
+        <div class="flex items-center gap-3 px-4 py-3 text-[14px] font-medium cursor-pointer active:bg-gray-100 dark:active:bg-white/5 transition-colors duration-200 rounded-lg mx-1" onclick="pwaToggleBlur()">
+            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
+                <circle cx="12" cy="12" r="4"/>
+            </svg>
             <span id="panelBlurLabel">Blur On</span>
-            <div class="pwa-panel-dot" id="panelBlurDot"></div>
+            <div class="ml-auto w-10 h-[22px] rounded-full bg-gray-300 dark:bg-gray-600 relative transition-colors duration-300 ios-toggle-track" id="panelBlurDot">
+                <div class="absolute top-[2px] left-[2px] w-[18px] h-[18px] rounded-full bg-white shadow-sm transition-transform duration-300 ios-toggle-thumb"></div>
+            </div>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
-    <div class="pwa-bottom-nav">
-        <a href="{{ route('pwa.home') }}" class="pwa-nav-item active">
-            <span class="nav-icon">&#127968;</span>
-            <span>Home</span>
-        </a>
-        <a href="{{ route('pwa.cart') }}" class="pwa-nav-item">
-            <span class="nav-badge">
-                <span class="nav-icon">&#128722;</span>
-                <span class="badge" id="navCartBadge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
-            </span>
-            <span>Cart</span>
-        </a>
-        <a href="{{ route('pwa.chat') }}" class="pwa-nav-item">
-            <span class="nav-icon">&#128172;</span>
-            <span>Chat</span>
-        </a>
-        <a href="{{ route('pwa.wishlist') }}" class="pwa-nav-item">
-            <span class="nav-badge">
-                <span class="nav-icon">&#9825;</span>
-                <span class="badge" id="navWishBadge">{{ $wishlistCount ?? 0 }}</span>
-            </span>
-            <span>Wishlist</span>
-        </a>
-        <a href="{{ route('pwa.account') }}" class="pwa-nav-item">
-            <span class="nav-icon">&#128100;</span>
-            <span>Account</span>
-        </a>
-    </div>
+    <nav class="ios-bottom-nav fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200/60 dark:border-white/[0.06]"
+        style="padding-bottom: calc(6px + env(safe-area-inset-bottom, 0));">
+        <div class="flex justify-around items-center py-1.5">
+            <a href="{{ route('pwa.home') }}" class="nav-pill active flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-[#0d1b3e] dark:text-blue-400 transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>Home</span>
+            </a>
+            <a href="{{ route('pwa.cart') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-gray-400 dark:text-gray-500 transition-colors duration-200 relative">
+                <div class="relative">
+                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                    </svg>
+                    <span class="absolute -top-1.5 -right-2 bg-red-500 text-white text-[8px] font-semibold px-1 py-0 rounded-full min-w-[14px] text-center leading-[14px]" id="navCartBadge">{{ array_sum(array_column(session('cart', []), 'quantity')) }}</span>
+                </div>
+                <span>Cart</span>
+            </a>
+            <a href="{{ route('pwa.chat') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-gray-400 dark:text-gray-500 transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+                <span>Chat</span>
+            </a>
+            <a href="{{ route('pwa.wishlist') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-gray-400 dark:text-gray-500 transition-colors duration-200 relative">
+                <div class="relative">
+                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                    </svg>
+                    <span class="absolute -top-1.5 -right-2 bg-red-500 text-white text-[8px] font-semibold px-1 py-0 rounded-full min-w-[14px] text-center leading-[14px]" id="navWishBadge">{{ $wishlistCount ?? 0 }}</span>
+                </div>
+                <span>Wishlist</span>
+            </a>
+            <a href="{{ route('pwa.account') }}" class="nav-pill flex flex-col items-center gap-0.5 px-3 py-1 text-[10px] font-medium text-gray-400 dark:text-gray-500 transition-colors duration-200">
+                <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Account</span>
+            </a>
+        </div>
+    </nav>
 
     <script src="{{ asset('pwa/error-handler.js') }}"></script>
     <script src="{{ asset('pwa/pwa-connectivity.js') }}"></script>
@@ -138,7 +359,10 @@
     <script>
         function pwaRefreshData() {
             var btn = document.getElementById('pwaRefreshBtn');
-            if (btn) btn.classList.add('spinning');
+            if (btn) {
+                var svg = btn.querySelector('svg');
+                if (svg) svg.classList.add('ios-spinning');
+            }
             location.reload();
         }
 
@@ -202,10 +426,9 @@
         let currentKeyword = '';
         let currentTabUrl = '{{ route("pwa.search") }}';
 
-        // Live Search - keyup
         searchInput.addEventListener('keyup', function(e) {
             currentKeyword = this.value.trim();
-            searchClear.style.display = currentKeyword ? 'block' : 'none';
+            searchClear.style.display = currentKeyword ? 'flex' : 'none';
             clearTimeout(searchTimer);
 
             if (currentKeyword.length === 0) {
@@ -220,7 +443,6 @@
             }, 400);
         });
 
-        // Clear search
         searchClear.addEventListener('click', function() {
             searchInput.value = '';
             currentKeyword = '';
@@ -229,13 +451,19 @@
             searchProducts(currentTabUrl);
         });
 
-        // Tab click
         pwaTabs.addEventListener('click', function(e) {
             e.preventDefault();
-            const tab = e.target.closest('.pwa-tab');
+            const tab = e.target.closest('.ios-tab-item');
             if (!tab) return;
-            pwaTabs.querySelectorAll('.pwa-tab').forEach(t => t.classList.remove('active'));
+            pwaTabs.querySelectorAll('.ios-tab-item').forEach(function(t) {
+                t.classList.remove('active');
+                t.classList.remove('bg-gray-100', 'dark:bg-white/[0.08]');
+                t.classList.add('text-gray-500', 'dark:text-gray-400');
+            });
             tab.classList.add('active');
+            tab.classList.add('bg-gray-100', 'dark:bg-white/[0.08]');
+            tab.classList.remove('text-gray-500', 'dark:text-gray-400');
+            tab.classList.add('text-gray-900', 'dark:text-gray-100');
             currentTabUrl = tab.getAttribute('data-url');
             currentKeyword = '';
             searchInput.value = '';
@@ -243,7 +471,6 @@
             searchProducts(currentTabUrl);
         });
 
-        // Pagination click (delegated)
         document.addEventListener('click', function(e) {
             const pageLink = e.target.closest('.pwa-pagination-wrap a');
             if (pageLink) {
@@ -282,8 +509,7 @@
 
         function pwaShowSuccess(msg) {
             var t = document.createElement('div');
-            t.className = 'pwa-success-toast';
-            t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#27ae60;color:#fff;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:500;z-index:99999;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 12px rgba(39,174,96,0.3);white-space:nowrap;';
+            t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#34c759;color:#fff;padding:10px 24px;border-radius:14px;font-size:13px;font-weight:500;z-index:99999;opacity:0;transition:opacity 0.3s;box-shadow:0 4px 16px rgba(52,199,89,0.3);white-space:nowrap;backdrop-filter:blur(10px);';
             t.textContent = msg;
             document.body.appendChild(t);
             requestAnimationFrame(function() { t.style.opacity = '1'; });

@@ -5,59 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0d1b3e">
     <title>Offline - CM Auto Service</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
-        }
-        .offline-container {
-            text-align: center;
-            padding: 40px 20px;
-            max-width: 400px;
-        }
-        .offline-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-        .offline-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #0d1b3e;
-            margin-bottom: 12px;
-        }
-        .offline-message {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-        .retry-btn {
-            display: inline-block;
-            padding: 12px 32px;
-            background: #0d1b3e;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        .retry-btn:hover { background: #1a2f5e; }
-    </style>
+    <link rel="stylesheet" href="build/pwa.css">
 </head>
-<body>
-    <div class="offline-container">
-        <div class="offline-icon">📡</div>
-        <h1 class="offline-title">You're Offline</h1>
-        <p class="offline-message">Please check your internet connection and try again.</p>
-        <a href="/" class="retry-btn">Retry</a>
+<body class="bg-gray-50 flex justify-center items-center min-h-screen text-gray-800 font-sans m-0 p-0">
+    <div class="text-center px-5 py-10 max-w-[400px]">
+        <div class="text-[64px] mb-5">&#128225;</div>
+        <h1 class="text-2xl font-semibold text-primary mb-3">You're Offline</h1>
+        <p class="text-base text-gray-500 mb-7 leading-relaxed">Please check your internet connection and try again.</p>
+        <a href="/" class="inline-block px-8 py-3 bg-primary text-white border-none rounded-lg text-base no-underline transition-colors duration-200 hover:bg-primary-light">Retry</a>
     </div>
     <script>
         window.addEventListener('online', function() {

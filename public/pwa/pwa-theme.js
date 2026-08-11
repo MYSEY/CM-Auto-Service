@@ -15,6 +15,13 @@
     function applyTheme(theme) {
         document.body.classList.remove('pwa-light', 'pwa-dark');
         document.body.classList.add('pwa-' + theme);
+
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
         localStorage.setItem(THEME_KEY, theme);
         updateUI(theme, getBlur());
     }
@@ -26,18 +33,20 @@
     }
 
     function updateUI(theme, blur) {
-        // Account page buttons
         var themeBtn = document.getElementById('themeToggle');
         var blurBtn = document.getElementById('blurToggle');
         if (themeBtn) {
-            themeBtn.querySelector('.theme-label').textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
-            themeBtn.querySelector('.theme-icon').textContent = theme === 'dark' ? '\u2600' : '\u263E';
+            var label = themeBtn.querySelector('.theme-label');
+            var icon = themeBtn.querySelector('.theme-icon');
+            if (label) label.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            if (icon) icon.textContent = theme === 'dark' ? '\u2600' : '\u263E';
         }
         if (blurBtn) {
-            blurBtn.querySelector('.theme-label').textContent = blur ? 'Blur Off' : 'Blur On';
-            blurBtn.querySelector('.blur-dot').style.background = blur ? '#27ae60' : '#7a8299';
+            var bLabel = blurBtn.querySelector('.theme-label');
+            var dot = blurBtn.querySelector('.blur-dot');
+            if (bLabel) bLabel.textContent = blur ? 'Blur Off' : 'Blur On';
+            if (dot) dot.style.background = blur ? '#27ae60' : '#7a8299';
         }
-        // Floating panel
         var panelIcon = document.getElementById('panelThemeIcon');
         var panelLabel = document.getElementById('panelThemeLabel');
         var panelBlurLabel = document.getElementById('panelBlurLabel');
@@ -60,7 +69,6 @@
         if (panel) panel.classList.toggle('show');
     };
 
-    // Close panel on outside click
     document.addEventListener('click', function(e) {
         var panel = document.getElementById('themePanel');
         var btn = document.getElementById('floatThemeBtn');
@@ -69,7 +77,6 @@
         }
     });
 
-    // Apply on load
     applyTheme(getTheme());
     applyBlur(getBlur());
 })();
