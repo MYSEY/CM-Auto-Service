@@ -98,7 +98,7 @@ class HomePageController extends Controller
                 ->appends(['tab' => $slug]);
         }
 
-        $r2Url = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+        $r2Url = "https://cdn.cmautoservic.com/";
 
         // ៣. កុំភ្លេចបោះ 'relatedProducts' ទៅក្នុង compact ខាងក្រោមនេះ
         return view('frontends.product_detail', compact(

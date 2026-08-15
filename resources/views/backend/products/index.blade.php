@@ -333,7 +333,7 @@
                     name: 'product_photo',
                     className: 'align-middle',
                     render: function(data) {
-                        const r2Url = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+                        const r2Url = "https://cdn.cmautoservic.com/";
                         if (data) {
                             return `<img src="${r2Url}${data}" width="50" height="40" style="object-fit:cover; border-radius:6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">`;
                         } else {

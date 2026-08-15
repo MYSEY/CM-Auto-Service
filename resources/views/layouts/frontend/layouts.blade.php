@@ -27,7 +27,7 @@
         <meta property="og:title" content="{{ isset($productDetail) ? $productDetail->name . ' ' . ($productDetail->proEngine?->name ?? '') : 'CM Auto Service — Auto Parts & ECU Programming' }}">
         <meta property="og:description" content="{{ isset($productDetail) ? 'Check out ' . $productDetail->name . ' for ' . ($productDetail->proEngine?->name ?? '') . '. Price: $' . number_format($productDetail->price, 2) : 'ECU Sell, Original & Tuning Files, Online Programming, Auto Diagnostic & Spare Parts. Fast and professional service with 24/7 Hotline.' }}">
         <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:image" content="{{ isset($productDetail) ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $productDetail->product_photo : 'https://cmautoservic.com/frontends/assets/img/logo.png' }}">
+        <meta property="og:image" content="{{ isset($productDetail) ? 'https://cdn.cmautoservic.com/' . $productDetail->product_photo : 'https://cmautoservic.com/frontends/assets/img/logo.png' }}">
 
         <meta name="google-site-verification" content="a8mdUz9mwXLRoGRmciyr-Q7LyOLT_UqXmwMFf2jnY2M" />
 
@@ -44,7 +44,7 @@
             "@type": "Product",
             "name": "{{ $productDetail->name }} {{ $productDetail->proEngine?->name ?? '' }}",
             "image": [
-                "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/{{ $productDetail->product_photo }}"
+                "https://cdn.cmautoservic.com/{{ $productDetail->product_photo }}"
             ],
             "description": "{{ strip_tags($productDetail->description) }}",
             "sku": "{{ $productDetail->number }}",
@@ -270,7 +270,7 @@
                                                     @foreach ($cart as $productId => $item)
                                                     <div class="cart_item">
                                                         <div class="cart_img">
-                                                            <a href="#"><img src="{{ isset($item['image']) && $item['image'] ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt=""></a>
+                                                            <a href="#"><img src="{{ isset($item['image']) && $item['image'] ? 'https://cdn.cmautoservic.com/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt=""></a>
                                                         </div>
                                                         <div class="cart_info">
                                                             <a href="#">{{ $item['name'] }}</a>

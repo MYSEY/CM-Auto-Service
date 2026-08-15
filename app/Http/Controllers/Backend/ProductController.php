@@ -177,7 +177,7 @@ class ProductController extends Controller
             $data = Product::with('productImage')->find($id);
 
             // បង្កើត URL សម្រាប់រូបភាព (បើប្រើ Public R2 URL)
-            $r2Url = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+            $r2Url = "https://cdn.cmautoservic.com/";
             $data->image_url = $data->product_photo ? $r2Url . $data->product_photo : null;
 
             $category = ProductCategory::selectRaw('MIN(id) as id, name')->groupBy('name')->orderBy('name')->get();

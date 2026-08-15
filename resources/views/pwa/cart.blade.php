@@ -68,7 +68,7 @@
             @foreach($cart as $productId => $item)
                 <div class="cart-item-card flex items-center gap-3 p-3 bg-white dark:bg-[#1c1e2d] rounded-2xl mb-3 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
                     <div class="w-[76px] h-[76px] rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-[#252838]">
-                        <img src="{{ isset($item['image']) && $item['image'] ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $item['image'] : asset('frontends/assets/img/logo.png') }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover">
+                        <img src="{{ isset($item['image']) && $item['image'] ? 'https://cdn.cmautoservic.com/' . $item['image'] : asset('frontends/assets/img/logo.png') }}" alt="{{ $item['name'] }}" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 min-w-0 py-0.5">
                         <h3 class="text-[15px] font-medium text-gray-900 dark:text-white truncate leading-tight">{{ $item['name'] }}</h3>

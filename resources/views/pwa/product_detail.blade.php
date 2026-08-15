@@ -55,7 +55,7 @@
 
         <!-- Product Image -->
         <div class="rounded-2xl overflow-hidden bg-white dark:bg-[#1c1e2d] mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
-            <img src="{{ $product->product_photo ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $product->name }}" class="w-full aspect-square object-cover">
+            <img src="{{ $product->product_photo ? 'https://cdn.cmautoservic.com/' . $product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $product->name }}" class="w-full aspect-square object-cover">
         </div>
 
         <!-- Product Info Card -->
@@ -91,7 +91,7 @@
                 <div class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
                     @foreach($relatedProducts as $rp)
                         <a href="{{ route('pwa.product', $rp->id) }}" class="snap-start flex-shrink-0 w-[140px] rounded-2xl bg-white dark:bg-[#1c1e2d] overflow-hidden shadow-sm shadow-black/[0.04] dark:shadow-black/20 active:scale-[0.97] transition-transform duration-200">
-                            <img src="{{ $rp->product_photo ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $rp->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $rp->name }}" class="w-full aspect-square object-cover">
+                            <img src="{{ $rp->product_photo ? 'https://cdn.cmautoservic.com/' . $rp->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $rp->name }}" class="w-full aspect-square object-cover">
                             <div class="p-2.5">
                                 <div class="text-[12px] font-medium text-gray-900 dark:text-white truncate">{{ $rp->name }}</div>
                                 <div class="text-[13px] font-bold text-[#007aff] dark:text-[#60a5fa] mt-0.5">${{ number_format($rp->price, 2) }}</div>

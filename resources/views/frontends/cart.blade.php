@@ -40,7 +40,7 @@
                                         <a href="javascript:void(0)" class="remove-item" data-id="{{ $productId }}"><i class="ion-android-close"></i></a>
                                     </td>
                                     <td class="product_thumb">
-                                        <a href="#"><img src="{{ $item['image'] ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt="{{ $item['name'] }}"></a>
+                                        <a href="#"><img src="{{ $item['image'] ? 'https://cdn.cmautoservic.com/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt="{{ $item['name'] }}"></a>
                                     </td>
                                     <td class="product_name"><a href="#">{{ $item['name'] }}</a></td>
                                     <td class="product-price">${{ number_format($item['price'], 2) }}</td>

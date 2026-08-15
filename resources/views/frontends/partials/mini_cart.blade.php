@@ -6,7 +6,7 @@
     @foreach($cart as $productId => $item)
     <div class="cart_item">
         <div class="cart_img">
-            <a href="#"><img src="{{ $item['image'] ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt=""></a>
+            <a href="#"><img src="{{ $item['image'] ? 'https://cdn.cmautoservic.com/' . $item['image'] : asset('frontends/assets/img/product/product1.jpg') }}" alt=""></a>
         </div>
         <div class="cart_info">
             <a href="#">{{ $item['name'] }}</a>

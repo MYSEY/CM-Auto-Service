@@ -25,7 +25,7 @@ class ProductImage extends Model
      */
     public function getFullUrlAttribute()
     {
-        $baseUrl = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+        $baseUrl = "https://cdn.cmautoservic.com/";
 
         if (!$this->path) {
             return asset('images/default.png');

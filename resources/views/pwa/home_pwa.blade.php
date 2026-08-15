@@ -254,8 +254,8 @@
                         playsinline webkit-playsinline preload="metadata"
                         autoplay muted loop
                         controls
-                        poster="https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/CM_Thumnail.png">
-                        <source src="https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/CM_Final_For_Fackbook.mp4" type="video/mp4">
+                        poster="https://cdn.cmautoservic.com/CM_Thumnail.png">
+                        <source src="https://cdn.cmautoservic.com/CM_Final_For_Fackbook.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>

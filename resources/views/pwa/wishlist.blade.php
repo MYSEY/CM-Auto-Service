@@ -45,7 +45,7 @@
                 @if($item->product)
                 <div class="flex items-center gap-3.5 p-3.5 mb-2.5 rounded-2xl shadow-sm shadow-black/[0.04] dark:shadow-black/20 bg-white dark:bg-[#1c1e2d] transition-all duration-200" id="wishlist-item-{{ $item->product_id }}">
                     <a href="{{ route('pwa.product', $item->product_id) }}" class="flex-shrink-0">
-                        <img src="{{ $item->product->product_photo ? 'https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/' . $item->product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $item->product->name }}" class="w-[64px] h-[64px] rounded-xl object-cover bg-[#f2f2f7] dark:bg-white/5">
+                        <img src="{{ $item->product->product_photo ? 'https://cdn.cmautoservic.com/' . $item->product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $item->product->name }}" class="w-[64px] h-[64px] rounded-xl object-cover bg-[#f2f2f7] dark:bg-white/5">
                     </a>
                     <div class="flex-1 min-w-0">
                         <a href="{{ route('pwa.product', $item->product_id) }}">

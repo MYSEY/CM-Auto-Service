@@ -63,7 +63,7 @@ class Product extends Model
 
     public function getPhotoUrlAttribute()
     {
-        $baseUrl = "https://pub-9b03345fc5f94d94bdb5bb0b90d3912f.r2.dev/";
+        $baseUrl = "https://cdn.cmautoservic.com/";
         return $this->product_photo ? $baseUrl . $this->product_photo : asset('images/default.png');
     }
 }
