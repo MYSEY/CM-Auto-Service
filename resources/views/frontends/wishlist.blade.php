@@ -93,40 +93,4 @@
         </div>
     </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-
-    $(document).on('click', '.remove-wishlist', function() {
-        let productId = $(this).data('id');
-        let $row = $(this).closest('tr');
-        $.ajax({
-            url: "{{ route('wishlist.remove') }}",
-            type: "POST",
-            data: { product_id: productId },
-            success: function(res) {
-                if (res.status === 'success') {
-                    $row.fadeOut(300, function() { $(this).remove(); });
-                }
-            }
-        });
-    });
-
-    $(document).on('click', '.addToCart', function() {
-        let id = $(this).data('id');
-        $.ajax({
-            url: "{{ route('addToCart') }}",
-            type: "POST",
-            data: { id: id, _token: "{{ csrf_token() }}" },
-            success: function(res) {
-                if (res.status === 'success') {
-                    $('.cart_count').text(res.count);
-                    alert('Product added to cart!');
-                }
-            }
-        });
-    });
-});
-</script>
 @endsection

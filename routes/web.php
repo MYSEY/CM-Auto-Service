@@ -126,6 +126,11 @@ Route::get('/ajax/filter/products', [HomePageController::class, 'ajaxFilterProdu
 Route::get('category/filter', [HomePageController::class,'categoryFilter']);
 Route::resource('frontend-contact', FrontendContactController::class);
 Route::resource('about-as', AboutAsController::class);
+Route::get('/privacy-policy', function () {
+    $company = \App\Models\Company::first();
+    $productType = \App\Models\ProductType::all();
+    return view('frontends.privacy_policy', compact('company', 'productType'));
+})->name('privacy.policy');
 // Route::get('/products/tab', [HomeController::class, 'loadProducts'])->name('products.tab');
 
 // Route សម្រាប់ AJAX

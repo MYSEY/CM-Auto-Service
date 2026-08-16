@@ -1,23 +1,91 @@
 /* ====================================================================== */
-/* កូដ CSS ពេញលេញ (Centering, Grid 8-Column, Image 1:1, & No Horizontal Scroll) */
+/* CM AUTO SERVICE - FRESH UI/UX FRONTEND DESIGN SYSTEM                    */
 /* ====================================================================== */
 
-/* ------------------------------------------------------------------- */
-/* កូដទូទៅ: ដក Scrollbar ផ្ដេកចេញពីទំព័រទាំងមូល */
-/* ------------------------------------------------------------------- */
-body {
-    overflow-x: hidden; /* **សំខាន់**៖ លាក់ Scrollbar ផ្ដេក */
-    margin: 0;
-    padding: 0;
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --cm-primary-dark: #090038;
+    --cm-primary: #17005e;
+    --cm-primary-light: #2c0099;
+    --cm-accent-amber: #ffb800;
+    --cm-accent-red: #ff3547;
+    --cm-bg-body: #f8fafc;
+    --cm-card-bg: #ffffff;
+    --cm-text-primary: #0f172a;
+    --cm-text-secondary: #475569;
+    --cm-text-muted: #64748b;
+    --cm-border-light: #e2e8f0;
+    --cm-radius-sm: 8px;
+    --cm-radius-md: 14px;
+    --cm-radius-lg: 20px;
+    --cm-radius-pill: 50px;
+    --cm-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+    --cm-shadow-md: 0 8px 24px rgba(23, 0, 94, 0.08);
+    --cm-shadow-hover: 0 16px 36px rgba(23, 0, 94, 0.14);
 }
 
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--cm-bg-body);
+    color: var(--cm-text-primary);
+    -webkit-font-smoothing: antialiased;
+}
 
 /* ------------------------------------------------------------------- */
-/* ១. IMAGE STYLES - រូបភាពធំ (បង្ខំទំហំ 1:1) */
+/* 1. PRODUCT GRID LAYOUT (8 COLUMNS ON DESKTOP)                       */
 /* ------------------------------------------------------------------- */
+
+.tab-pane .row {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.product-grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    padding: 5px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 1366px) {
+    .product-grid-container {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+@media (max-width: 1100px) {
+    .product-grid-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+@media (max-width: 992px) {
+    .product-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 767px) {
+    .product-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 0 5px;
+    }
+}
+
+/* ------------------------------------------------------------------- */
+/* 2. PRODUCT CARDS & IMAGE PRESENTATION                               */
+/* ------------------------------------------------------------------- */
+
 .product-card .product-image-wrapper {
     width: 100%;
-    padding-bottom: 100%; /* បង្ខំឱ្យ Container មាន Aspect Ratio 1:1 (ការ៉េ) */
+    padding-bottom: 100%;
     position: relative;
     overflow: hidden;
     margin-bottom: 5px;
@@ -32,65 +100,12 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    object-fit: cover; /* រក្សាសមាមាត្រដើម និងបំពេញ Container ដោយមិនបង្ខូចរូបភាព */
+    object-fit: cover;
     transform: none;
     transition: none;
     max-width: 100%;
 }
 
-
-/* ------------------------------------------------------------------- */
-/* ២. PRODUCT CARD & GRID - 8 ជួរថេរ និង Responsive */
-/* ------------------------------------------------------------------- */
-
-/* កុងតឺន័រខាងក្រៅ៖ ដាក់ Grid ទាំងមូលចំកណ្តាល */
-.tab-pane .row {
-    display: flex;
-    justify-content: center; /* ធានាថាធាតុខាងក្នុងស្ថិតនៅចំកណ្តាល */
-    padding: 0;
-    margin: 0;
-}
-
-/* Grid Container៖ កំណត់ 8 ជួរដេក និង Centering ខ្លួនវា */
-.product-grid-container {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr); /* កំណត់ 8 ជួរដេកសម្រាប់ Desktop ធំ */
-    gap: 8px;
-    padding: 5px;
-    max-width: 1600px;
-
-    /* Centering Grid ទាំងមូលនៅខាងក្នុង .row */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Media Queries សម្រាប់ Responsive Design */
-@media (max-width: 1400px) {
-     .product-grid-container {
-       grid-template-columns: repeat(6, 1fr);
-    }
-}
-@media (max-width: 1200px) {
-    .product-grid-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (max-width: 992px) {
-    .product-grid-container {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (max-width: 767px) {
-    .product-grid-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-        padding: 0 5px;
-    }
-}
-
-/* Product Card Base Style (Card នីមួយៗ) */
 .product-card {
     background-color: #ffffff;
     padding: 8px;
@@ -101,7 +116,7 @@ body {
     width: 100%;
     margin: 0;
     max-width: none;
-    text-align: center; /* ដាក់អត្ថបទទាំងអស់ក្នុង Card ចំកណ្តាល */
+    text-align: center;
     transition: box-shadow 0.2s;
 }
 
@@ -109,12 +124,6 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-/* ------------------------------------------------------------------- */
-/* ៣. ព័ត៌មានលម្អិត (តម្រឹមចំកណ្តាល) */
-/* ------------------------------------------------------------------- */
-
-/* Category/Description */
 .product_content .category a {
     font-size: 0.75em;
     line-height: 1.1;
@@ -122,7 +131,7 @@ body {
     text-align: center;
     display: block;
 }
-/* Product Name */
+
 .product-name a {
     font-size: 14px;
     line-height: 1.2;
@@ -133,7 +142,6 @@ body {
     min-height: 34px;
 }
 
-/* Price */
 .price-original {
     font-size: 1em;
     font-weight: bold;
@@ -142,142 +150,137 @@ body {
     text-align: center;
 }
 
-/* តម្រឹម Action Links ឲ្យនៅចំកណ្តាល */
-.action_links ul {
-    display: flex;
-    justify-content: center; /* ធានាការដាក់ចំកណ្តាលធាតុក្នុង ul ដោយ Flexbox */
-    padding: 0;
-    margin-top: 8px;
+/* ------------------------------------------------------------------- */
+/* 3. SECTION TITLES & VEHICLE LOOKUP                                  */
+/* ------------------------------------------------------------------- */
+
+.section_title {
+    text-align: center;
+    margin-bottom: 24px;
 }
 
+.section_title h2 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    color: var(--cm-primary);
+    position: relative;
+    display: inline-block;
+}
+
+.section_title h2 span {
+    color: var(--cm-accent-red);
+}
+
+.product_tab_btn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.product_tab_btn ul.nav {
+    display: inline-flex;
+    background: #ffffff;
+    padding: 5px;
+    border-radius: var(--cm-radius-pill);
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+    border: 1px solid var(--cm-border-light);
+    gap: 4px;
+}
+
+.product_tab_btn ul.nav li a.tab-link {
+    padding: 8px 22px;
+    border-radius: var(--cm-radius-pill);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cm-text-muted);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: block;
+}
+
+.product_tab_btn ul.nav li a.tab-link.active,
+.product_tab_btn ul.nav li a.tab-link:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--cm-primary) 0%, var(--cm-primary-light) 100%);
+    box-shadow: 0 4px 14px rgba(23, 0, 94, 0.3);
+}
+
+.sliding-underline {
+    display: none !important;
+}
 
 /* ------------------------------------------------------------------- */
-/* ៤. CHAT MESSENGER POP-UP (Social Links Centering) */
+/* 4. CHAT MESSENGER POP-UP                                           */
 /* ------------------------------------------------------------------- */
 
-/* Button to open the chat form */
 .open-chat-button {
-    background-color: #0084ff;
+    background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%);
     color: white;
     padding: 15px;
     border: none;
     border-radius: 50%;
     cursor: pointer;
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    opacity: 0.8;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: opacity 0.3s;
+    box-shadow: 0 8px 24px rgba(0, 132, 255, 0.38);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .open-chat-button:hover {
-    opacity: 1;
+    transform: scale(1.08);
+    box-shadow: 0 12px 28px rgba(0, 132, 255, 0.48);
 }
 
-.chat-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    padding: 3px 7px;
-    border-radius: 50%;
-    background-color: red;
-    color: white;
-    font-size: 10px;
-}
-
-/* The actual chat form pop-up */
 .chat-popup {
     display: none;
     position: fixed;
-    bottom: 90px;
-    right: 20px;
-    border: 1px solid #ccc;
+    bottom: 95px;
+    right: 24px;
+    border: none;
     z-index: 999;
     width: 320px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+    border-radius: var(--cm-radius-md);
     overflow: hidden;
     background-color: white;
 }
 
-/* Styling for the form container */
-.chat-form-container {
-    padding: 0;
-    max-width: 100%;
-}
-
-/* Chat Header */
 .chat-header-style {
-    background-color: #0084ff;
+    background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%);
     color: white;
-    padding: 10px 15px;
+    padding: 14px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
 .chat-header-style h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 700;
 }
 
-.btn-close-chat {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    line-height: 1;
-}
-
-/* Chat Body */
-.chat-body-style {
-    padding: 15px;
-}
-
-.chat-body-style p {
-    color: #606770;
-    font-size: 14px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* Submit button */
 .btn-chat-submit {
-    background-color: #0084ff;
+    background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%);
     color: white;
-    padding: 10px 15px;
+    padding: 12px;
     border: none;
+    border-radius: var(--cm-radius-sm);
+    font-weight: 700;
     cursor: pointer;
     width: 100%;
-    margin: 0;
-    opacity: 0.9;
-    font-size: 16px;
+    font-size: 14px;
+    transition: opacity 0.2s;
 }
 
 .btn-chat-submit:hover {
-    opacity: 1;
-}
-
-/* Form controls */
-.chat-body-style .form-control {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 10px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.chat-body-style textarea.form-control {
-    resize: none;
+    opacity: 0.92;
 }
 
 /* Social Links Centering */
@@ -286,23 +289,124 @@ body {
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: center; /* តម្រៀបធាតុនៅចំកណ្តាល (ផ្ដេក) */
+    justify-content: center;
     align-items: center;
+    gap: 16px;
 }
-
-.no-li-flex > a {
-    margin: 0 15px;
-    display: inline-block;
-}
-
 
 .facebook img, .telegram img, .whatsapp img {
-    transition: transform 0.3s ease-in-out, opacity 0.3s;
+    transition: transform 0.25s ease, filter 0.25s ease;
     cursor: pointer;
 }
 
-
 .facebook:hover img, .telegram:hover img, .whatsapp:hover img {
-    transform: scale(1.1);
-    opacity: 0.85;
+    transform: translateY(-3px) scale(1.08);
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+}
+
+/* ------------------------------------------------------------------- */
+/* 5. MENU HOVER COLORS & ACCESSIBILITY FIX                            */
+/* ------------------------------------------------------------------- */
+
+.main_menu nav > ul > li > a {
+    color: #ffffff !important;
+    transition: color 0.2s ease;
+}
+
+.main_menu nav > ul > li:hover > a,
+.main_menu nav > ul > li > a.active {
+    color: #ffb800 !important;
+}
+
+.sub_menu,
+.sub_sub_menu1,
+.sub_sub_menu2 {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+}
+
+.sub_menu li a,
+.sub_sub_menu1 li a,
+.sub_sub_menu2 li a {
+    color: #1e293b !important;
+    font-weight: 500 !important;
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    display: block !important;
+    text-decoration: none !important;
+}
+
+.sub_menu li a:hover,
+.sub_sub_menu1 li a:hover,
+.sub_sub_menu2 li a:hover {
+    color: #17005e !important;
+    background-color: #f1f5f9 !important;
+}
+
+/* Ensure Login, Shopping Cart, Checkout, and Phone Number stay white on hover */
+.header_top_links ul li a,
+.header_top_links ul li a:hover,
+.header_account ul li a,
+.header_account ul li a:hover,
+.call_support p,
+.call_support p a,
+.call_support p a:hover,
+.call_support span,
+.call_support span a,
+.call_support span a:hover {
+    color: #ffffff !important;
+}
+
+/* ------------------------------------------------------------------- */
+/* 6. OVERLAY BUTTONS ON PRODUCT IMAGE (CART LEFT, WISHLIST RIGHT)     */
+/* ------------------------------------------------------------------- */
+
+.product-image-wrapper {
+    position: relative !important;
+}
+
+.item-overlay-btn {
+    position: absolute !important;
+    top: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #17005e !important;
+    font-size: 12px !important;
+    z-index: 12 !important;
+    text-decoration: none !important;
+    transition: all 0.22s ease-in-out !important;
+}
+
+.item-overlay-btn:hover {
+    transform: scale(1.12) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22) !important;
+}
+
+/* Cart Icon on LEFT */
+.btn-cart-overlay {
+    left: 6px !important;
+}
+.btn-cart-overlay:hover {
+    background: #17005e !important;
+    color: #ffffff !important;
+}
+
+/* Wishlist Icon on RIGHT */
+.btn-wishlist-overlay {
+    right: 6px !important;
+}
+.btn-wishlist-overlay:hover,
+.btn-wishlist-overlay.active {
+    background: #ff3547 !important;
+    color: #ffffff !important;
 }

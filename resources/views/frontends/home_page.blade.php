@@ -43,14 +43,16 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section_title">
-                            <h2><span>our</span> Products</h2>
-                            <p>Consectetuer sociis mauris eu augue velit pulvinar ullamcorper in ac mauris ac vel, interdum sed malesuada curae sit amet non nec quis arcu massa. </p>
+                            <h2><span>OUR</span> PRODUCTS</h2>
+                            <p class="text-muted fs-6">Explore our original ECU files, tuning services, and premium automotive parts.</p>
                         </div>
-                        <div class="vehicle_lookup_area">
+                        <div class="vehicle_lookup_area mb-4">
                             <div class="container">
                                 <div class="row d-flex justify-content-center">
-                                    <div class="col-lg-10 col-md-12">
-                                        <input type="text" id="search_product" class="form-control search_product" placeholder="Search product...">
+                                    <div class="col-lg-8 col-md-10">
+                                        <div class="position-relative">
+                                            <input type="text" id="search_product" class="form-control search_product shadow-sm py-3 px-4 rounded-pill border-0" placeholder="Search by model, part number, engine, or category..." style="font-size: 14px; background: #ffffff; border: 1px solid #e2e8f0 !important;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

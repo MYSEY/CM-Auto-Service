@@ -128,48 +128,4 @@
         </div>
     </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
-
-    $(document).on('click', '.remove-item', function() {
-        let productId = $(this).data('id');
-        let $row = $(this).closest('tr');
-        $.ajax({
-            url: "{{ route('cart.remove') }}",
-            type: "POST",
-            data: { product_id: productId },
-            success: function(res) {
-                if (res.status === 'success') {
-                    $row.fadeOut(300, function() { $(this).remove(); });
-                    $('#cartSubtotal').text('$' + res.total.toFixed(2));
-                    $('#cartTotal').text('$' + res.total.toFixed(2));
-                    $('.cart_count').text(res.count);
-                    if (res.count === 0) location.reload();
-                }
-            }
-        });
-    });
-
-    $(document).on('change', '.cart-qty-input', function() {
-        let productId = $(this).data('id');
-        let quantity = parseInt($(this).val()) || 1;
-        let $row = $(this).closest('tr');
-        $.ajax({
-            url: "{{ route('cart.update') }}",
-            type: "POST",
-            data: { product_id: productId, quantity: quantity },
-            success: function(res) {
-                if (res.status === 'success') {
-                    $row.find('.item-total').text('$' + res.item_total.toFixed(2));
-                    $('#cartSubtotal').text('$' + res.total.toFixed(2));
-                    $('#cartTotal').text('$' + res.total.toFixed(2));
-                    $('.cart_count').text(res.count);
-                }
-            }
-        });
-    });
-});
-</script>
 @endsection

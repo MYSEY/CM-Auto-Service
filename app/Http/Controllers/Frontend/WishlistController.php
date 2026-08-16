@@ -49,7 +49,11 @@ class WishlistController extends Controller
 
         if ($existing) {
             $existing->delete();
-            return response()->json(['status' => 'removed', 'message' => 'Removed from wishlist']);
+            $count = Wishlist::where(function ($query) use ($userId, $sessionId) {
+                if ($userId) { $query->where('user_id', $userId); }
+                else { $query->where('session_id', $sessionId); }
+            })->count();
+            return response()->json(['status' => 'removed', 'message' => 'Removed from wishlist', 'count' => $count]);
         }
 
         Wishlist::create([
@@ -58,7 +62,12 @@ class WishlistController extends Controller
             'product_id' => $productId,
         ]);
 
-        return response()->json(['status' => 'added', 'message' => 'Added to wishlist']);
+        $count = Wishlist::where(function ($query) use ($userId, $sessionId) {
+            if ($userId) { $query->where('user_id', $userId); }
+            else { $query->where('session_id', $sessionId); }
+        })->count();
+
+        return response()->json(['status' => 'added', 'message' => 'Added to wishlist', 'count' => $count]);
     }
 
     public function remove(Request $request)
@@ -76,7 +85,12 @@ class WishlistController extends Controller
             })
             ->delete();
 
-        return response()->json(['status' => 'success', 'message' => 'Removed from wishlist']);
+        $count = Wishlist::where(function ($query) use ($userId, $sessionId) {
+            if ($userId) { $query->where('user_id', $userId); }
+            else { $query->where('session_id', $sessionId); }
+        })->count();
+
+        return response()->json(['status' => 'success', 'message' => 'Removed from wishlist', 'count' => $count]);
     }
 
     public function check(Request $request)

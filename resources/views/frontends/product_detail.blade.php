@@ -3,57 +3,260 @@
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
-    <style>
-        /* Professional E-commerce Styling */
-        .product_page_bg { background: #f4f7f6; padding: 40px 0; }
-        .product_details { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .product_d_right h3 { font-weight: 700; color: #222; line-height: 1.3; font-size: 26px; margin-bottom: 10px; }
-        .current_price { font-size: 32px; font-weight: 800; color: #d9121f; }
-
-        /* Improved Quantity Input */
-        .qty-container { display: flex; align-items: center; margin-bottom: 25px; }
-        .qty-btn {
-            width: 45px; height: 45px; border: 1px solid #e1e1e1; background: #fff;
-            display: flex; align-items: center; justify-content: center; cursor: pointer;
-            transition: 0.2s; font-size: 20px; color: #555;
-        }
-        .qty-btn:hover { background: #222; color: #fff; border-color: #222; }
-        .qty-input {
-            width: 60px; height: 45px; text-align: center; border: 1px solid #e1e1e1;
-            border-left: 0; border-right: 0; outline: none; font-weight: 700; font-size: 16px;
-        }
-
-        .btn-add-cart {
-            background: #222; color: #fff; padding: 0 40px; height: 45px; border: none;
-            font-weight: 600; text-transform: uppercase; transition: 0.3s; margin-left: 15px;
-        }
-        .btn-add-cart:hover { background: #d9121f; color: #fff; transform: translateY(-2px); }
-
-        /* Thumbnails Styling */
-        .elevatezoom-gallery { border: 2px solid transparent; transition: 0.3s; border-radius: 4px; overflow: hidden; }
-        .elevatezoom-gallery.active { border-color: #d9121f; }
-
-        /* Related Products Section */
-        .section_title { margin-bottom: 30px; position: relative; }
-        .section_title h2 { font-weight: 700; font-size: 22px; text-transform: uppercase; }
-        .section_title::after { content: ""; width: 50px; height: 3px; background: #d9121f; position: absolute; bottom: -8px; left: 0; }
-        .single_product { background: #fff; transition: 0.3s; border-radius: 8px; overflow: hidden; height: 100%; }
-        .single_product:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.1); transform: translateY(-5px); }
-
-        .hover-effect {
-        transition: transform 0.2s ease-in-out;
+<style>
+    .product_page_bg {
+        background: #f8fafc;
+        padding: 35px 0 60px 0;
+    }
+    .product_details {
+        background: #ffffff;
+        padding: 32px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+        border: 1px solid #e2e8f0;
+    }
+    .main-image-box {
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        padding: 15px;
+    }
+    .main-image-box img {
+        width: 100%;
+        height: 380px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+    .thumb-gallery {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    .thumb-item {
+        width: 76px;
+        height: 76px;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        background: #ffffff;
+    }
+    .thumb-item.active, .thumb-item:hover {
+        border-color: #17005e;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(23, 0, 94, 0.15);
+    }
+    .thumb-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .product-type-badge {
+        display: inline-block;
+        background: rgba(23, 0, 94, 0.08);
+        color: #17005e;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 4px 14px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+    }
+    .product_d_right h3 {
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.35;
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    .engine-title {
+        color: #17005e;
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .part-number-pill {
+        display: inline-flex;
+        align-items: center;
+        background: #f1f5f9;
+        color: #334155;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 5px 14px;
+        border-radius: 6px;
+        border: 1px solid #cbd5e1;
+        margin-bottom: 18px;
+    }
+    .detail-price-box {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+    .detail-current-price {
+        font-size: 34px;
+        font-weight: 800;
+        color: #17005e;
+    }
+    .sku-tag {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 600;
+    }
+    .qty-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+    }
+    .qty-btn-group {
+        display: flex;
+        align-items: center;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #ffffff;
+    }
+    .qty-btn {
+        width: 40px;
+        height: 42px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+        color: #334155;
+        user-select: none;
+        transition: background 0.2s;
+    }
+    .qty-btn:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+    }
+    .qty-input {
+        width: 50px;
+        height: 42px;
+        text-align: center;
+        border: none;
+        outline: none;
+        font-weight: 700;
+        font-size: 15px;
+        color: #0f172a;
+    }
+    .btn-detail-add-cart {
+        background: linear-gradient(135deg, #17005e 0%, #2c0099 100%);
+        color: #ffffff !important;
+        padding: 0 28px;
+        height: 44px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 14px rgba(23, 0, 94, 0.25);
+    }
+    .btn-detail-add-cart:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(23, 0, 94, 0.35);
+    }
+    .btn-detail-wishlist {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        background: #ffffff;
+        color: #64748b;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .btn-detail-wishlist:hover, .btn-detail-wishlist.active {
+        border-color: #ff3547;
+        background: #ffe4e6;
+        color: #ff3547;
+    }
+    .social-contact-wrapper {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #f1f5f9;
+    }
+    .social-contact-wrapper p {
+        font-weight: 700;
+        font-size: 13px;
+        color: #475569;
+        margin-bottom: 10px;
+    }
+    .social-icons-list {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    .social-icon-btn {
+        transition: transform 0.22s ease, filter 0.22s ease;
         display: inline-block;
     }
-        .priduct_social .hover-effect {
-                transition: all 0.3s ease;
-                display: inline-block;
-            }
-
-            .priduct_social .hover-effect:hover {
-                transform: scale(1.15); /* រីកធំបន្តិចពេលដាក់ Mouse លើ */
-                filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.2)); /* បន្ថែមស្រមោលតិចៗ */
-            }
-    </style>
+    .social-icon-btn:hover {
+        transform: translateY(-3px) scale(1.1);
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+    }
+    .product_d_info {
+        margin-top: 35px;
+    }
+    .info-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+        overflow: hidden;
+    }
+    .info-nav-tabs {
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0 16px;
+    }
+    .info-nav-tabs .nav-link {
+        border: none !important;
+        padding: 14px 24px !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        color: #64748b !important;
+        background: transparent !important;
+        border-bottom: 3px solid transparent !important;
+        transition: all 0.2s ease;
+    }
+    .info-nav-tabs .nav-link.active {
+        color: #17005e !important;
+        border-bottom-color: #17005e !important;
+    }
+    .section_title_custom {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-weight: 800;
+        font-size: 20px;
+        color: #0f172a;
+        position: relative;
+        padding-left: 12px;
+        border-left: 4px solid #17005e;
+    }
+</style>
 
 <div class="breadcrumbs_area">
     <div class="container">
@@ -74,83 +277,96 @@
     <div class="container">
         <div class="product_details">
             <div class="row">
-                <div class="col-lg-5 col-md-6">
-                    <div class="product-details-tab">
-                        <div id="img-1" class="zoomWrapper border rounded bg-white overflow-hidden">
-                            @php
-                                $mainImage = $productDetail->product_photo ? $r2Url . $productDetail->product_photo : asset('images/no-image.png');
-                            @endphp
-                            <a href="{{ $mainImage }}" data-fancybox="gallery" data-caption="{{ $productDetail->name }}">
-                                <img id="zoom1" src="{{ $mainImage }}" alt="{{ $productDetail->name }}" style="width: 100%; height: 450px; object-fit: contain;">
-                            </a>
-                        </div>
-                        <div class="single-zoom-thumb mt-3">
-                            <ul class="s-tab-zoom owl-carousel single-product-active" id="gallery_01">
-                                @if($productDetail->productImage && $productDetail->productImage->count() > 0)
-                                    @foreach($productDetail->productImage as $image)
-                                        <li>
-                                            <a href="{{ $r2Url . $image->path }}"
-                                               class="elevatezoom-gallery {{ $loop->first ? 'active' : '' }}"
-                                               data-fancybox="gallery"
-                                               data-image="{{ $r2Url . $image->path }}">
-                                                <img src="{{ $r2Url . $image->path }}" alt="thumbnail" style="height: 80px; width: 100%; object-fit: cover;">
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                @endif
-                            </ul>
-                        </div>
+                <!-- Product Gallery Images -->
+                <div class="col-lg-5 col-md-6 mb-4 mb-md-0">
+                    @php
+                        $cdnBase = 'https://cdn.cmautoservic.com/';
+                        $mainPhoto = $productDetail->product_photo ? $cdnBase . $productDetail->product_photo : asset('images/no-image.png');
+                    @endphp
+                    <div class="main-image-box">
+                        <a href="{{ $mainPhoto }}" data-fancybox="gallery" id="mainFancyLink" data-caption="{{ $productDetail->category->name ?? '' }} {{ $productDetail->subCategory->name ?? '' }}">
+                            <img id="mainDetailImage" src="{{ $mainPhoto }}" alt="{{ $productDetail->category->name ?? '' }}">
+                        </a>
                     </div>
+
+                    @if($productDetail->productImage && $productDetail->productImage->count() > 0)
+                        <div class="thumb-gallery">
+                            <div class="thumb-item active" data-image="{{ $mainPhoto }}">
+                                <img src="{{ $mainPhoto }}" alt="Main Thumb">
+                            </div>
+                            @foreach($productDetail->productImage as $img)
+                                @php $imgPath = $cdnBase . $img->path; @endphp
+                                <div class="thumb-item" data-image="{{ $imgPath }}">
+                                    <img src="{{ $imgPath }}" alt="Thumb {{ $loop->iteration }}">
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
 
+                <!-- Product Details Information -->
                 <div class="col-lg-7 col-md-6">
-                    <div class="product_d_right pl-md-4">
-                        <div class="mb-2">
-                            <span class="badge badge-dark p-2 px-3">{{ $productDetail->productType->name ?? 'Standard' }}</span>
+                    <div class="product_d_right pl-lg-3">
+                        <span class="product-type-badge">{{ $productDetail->productType->name ?? 'Parts' }}</span>
+
+                        <h3>
+                            {{ $productDetail->category->name ?? '' }} 
+                            {{ $productDetail->subCategory->name ?? '' }} 
+                            {{ $productDetail->year ?? '' }}
+                        </h3>
+
+                        @if($productDetail->proEngine?->name)
+                            <div class="engine-title"><i class="fa fa-cogs mr-1"></i> {{ $productDetail->proEngine->name }}</div>
+                        @endif
+
+                        @if($productDetail->proEngine?->part_number)
+                            <div class="part-number-pill">
+                                <span>Part Number: <strong>{{ $productDetail->proEngine->part_number }}</strong></span>
+                            </div>
+                        @endif
+
+                        <div class="detail-price-box">
+                            <span class="detail-current-price">${{ number_format($productDetail->price, 2) }}</span>
+                            @if($productDetail->number)
+                                <span class="sku-tag">SKU: {{ $productDetail->number }}</span>
+                            @endif
                         </div>
 
-                        <h3>{{ $productDetail->category->name ?? '' }} {{ $productDetail->subCategory->name ?? '' }} {{ $productDetail->year ?? '' }}</h3>
-                        <div class="text-primary h4 font-weight-bold">{{ $productDetail->proEngine->name ?? '' }}</div>
-                        <p class="text-muted small mb-4">Part Number: <strong>{{ $productDetail->proEngine->part_number ?? 'N/A' }}</strong></p>
+                        @if($productDetail->description)
+                            <div class="text-secondary small mb-4 leading-relaxed" style="max-height: 120px; overflow: hidden;">
+                                {!! Str::limit(strip_tags($productDetail->description), 260) !!}
+                            </div>
+                        @endif
 
-                        <div class="price_box mb-4">
-                            <span class="current_price">${{ number_format($productDetail->price, 2) }}</span>
-                            <span class="ml-3 text-secondary">SKU: {{ $productDetail->number ?? 'N/A' }}</span>
-                        </div>
-
-                        <div class="product_desc mb-4 border-bottom pb-4 text-secondary">
-                            {!! Str::limit(strip_tags($productDetail->description), 280) !!}
-                        </div>
-
-                        <div class="product_variant quantity">
-                            <label class="font-weight-bold mb-2">Quantity:</label>
+                        <div class="quantity-wrapper">
+                            <label class="font-weight-bold text-dark mb-1" style="font-size: 13px;">Quantity:</label>
                             <div class="qty-container">
-                                <div class="qty-btn dec">-</div>
-                                <input type="number" min="1" max="100" value="1" class="qty-input">
-                                <div class="qty-btn inc">+</div>
-                                <button class="btn btn-add-cart addToCart" type="button" data-id="{{ $productDetail->id }}">
-                                    <i class="fa fa-shopping-cart mr-2"></i> Add to Cart
+                                <div class="qty-btn-group">
+                                    <div class="qty-btn dec">-</div>
+                                    <input type="number" min="1" max="100" value="1" class="qty-input" id="detailQtyInput">
+                                    <div class="qty-btn inc">+</div>
+                                </div>
+                                <button class="btn-detail-add-cart addToCartDetail" type="button" data-id="{{ $productDetail->id }}">
+                                    <i class="icon-shopping-bag"></i> Add to Cart
+                                </button>
+                                <button class="btn-detail-wishlist toggle-wishlist" type="button" data-id="{{ $productDetail->id }}" title="Add to Wishlist">
+                                    <i class="icon-heart"></i>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="priduct_social mt-5 pt-4 border-top">
-                            <p class="mb-3 font-weight-bold" style="color: #444;">Contact via:</p>
-
-                            <div class="d-flex align-items-center" style="gap: 20px;">
-
-                                <a href="https://www.facebook.com/C.M.Auto.77/" target="_blank" class="hover-effect">
-                                    <img src="/images/products/facebook.png" width="42" alt="Facebook">
+                        <div class="social-contact-wrapper">
+                            <p>Contact Us via:</p>
+                            <div class="social-icons-list">
+                                <a href="https://www.facebook.com/C.M.Auto.77/" target="_blank" class="social-icon-btn">
+                                    <img src="{{ asset('frontends/assets/img/icon/facebook.png') }}" onerror="this.onerror=null;this.src='/images/products/facebook.png';" width="38" alt="Facebook">
                                 </a>
-
-                                <a href="https://t.me/CMAUTO" target="_blank" class="hover-effect">
-                                    <img src="/images/products/telegram.png" width="42" alt="Telegram">
+                                <a href="https://t.me/CMAUTO" target="_blank" class="social-icon-btn">
+                                    <img src="{{ asset('frontends/assets/img/icon/telegram.png') }}" onerror="this.onerror=null;this.src='/images/products/telegram.png';" width="38" alt="Telegram">
                                 </a>
-
-                                <a href="https://wa.me/qr/PLBWAXBSGCKPG1" target="_blank" class="hover-effect">
-                                    <img src="/images/products/whatapp.png" width="42" alt="WhatsApp">
+                                <a href="https://wa.me/qr/PLBWAXBSGCKPG1" target="_blank" class="social-icon-btn">
+                                    <img src="{{ asset('frontends/assets/img/icon/whatsapp.png') }}" onerror="this.onerror=null;this.src='/images/products/whatapp.png';" width="38" alt="WhatsApp">
                                 </a>
-
                             </div>
                         </div>
                     </div>
@@ -158,183 +374,122 @@
             </div>
         </div>
 
-        <div class="product_d_info mt-5">
-            <div class="product_d_inner border rounded bg-white overflow-hidden">
-                <div class="product_info_button border-bottom bg-light">
+        <!-- Description & Specification Tabs -->
+        <div class="product_d_info">
+            <div class="info-card">
+                <div class="info-nav-tabs">
                     <ul class="nav nav-tabs border-0" id="productTab">
                         <li class="nav-item">
-                            <button class="nav-link active border-0 py-3 px-5 font-weight-bold" data-bs-toggle="tab" data-bs-target="#info">Description</button>
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#descTab" type="button">Description</button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link border-0 py-3 px-5 font-weight-bold" data-bs-toggle="tab" data-bs-target="#sheet">Specification</button>
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#specTab" type="button">Specification</button>
                         </li>
                     </ul>
                 </div>
                 <div class="tab-content p-4">
-                    <div class="tab-pane fade show active" id="info">
-                        {!! $productDetail->description ?: '<p class="text-muted italic">No description provided.</p>' !!}
+                    <div class="tab-pane fade show active" id="descTab">
+                        <div class="text-secondary leading-relaxed">
+                            {!! $productDetail->description ?: '<p class="text-muted italic mb-0">No description available for this item.</p>' !!}
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="sheet">
-                        <table class="table table-bordered table-striped">
-                            <tr><th class="bg-light" width="30%">Engine Model</th><td>{{ $productDetail->proEngine->name ?? '—' }}</td></tr>
-                            <tr><th class="bg-light">Part Number</th><td>{{ $productDetail->proEngine->part_number ?? '—' }}</td></tr>
-                            <tr><th class="bg-light">Year</th><td>{{ $productDetail->year ?? '—' }}</td></tr>
-                            <tr><th class="bg-light">Category</th><td>{{ $productDetail->category->name ?? '—' }}</td></tr>
+                    <div class="tab-pane fade" id="specTab">
+                        <table class="table table-bordered table-striped mb-0">
+                            <tbody>
+                                <tr><th class="bg-light" width="30%">Engine Model</th><td>{{ $productDetail->proEngine->name ?? '—' }}</td></tr>
+                                <tr><th class="bg-light">Part Number</th><td>{{ $productDetail->proEngine->part_number ?? '—' }}</td></tr>
+                                <tr><th class="bg-light">Year</th><td>{{ $productDetail->year ?? '—' }}</td></tr>
+                                <tr><th class="bg-light">Category</th><td>{{ $productDetail->category->name ?? '—' }}</td></tr>
+                                <tr><th class="bg-light">Sub-Category</th><td>{{ $productDetail->subCategory->name ?? '—' }}</td></tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Related Products Section -->
         @if(isset($relatedProducts) && $relatedProducts->count() > 0)
-            <div class="related_products mt-5 mb-5">
-                <div class="section_title mb-4">
-                    <h2 class="h4 font-weight-bold" style="border-left: 4px solid #d9121f; padding-left: 15px;">Related Products</h2>
-                </div>
-                <div class="row">
+            <div class="related_products_wrapper">
+                <h3 class="section_title_custom">Related Products</h3>
+                <div class="product-grid-container">
                     @foreach($relatedProducts as $item)
-                        @php $itemImg = $item->product_photo ? $r2Url . $item->product_photo : asset('images/no-image.png'); @endphp
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-6 mb-4">
-                            <article class="single_product border p-3 text-center bg-white shadow-sm h-100">
-                                <div class="product_thumb" style="height: 180px;">
-                                    {{-- កែត្រង់នេះ --}}
-                                    <a href="{{ route('productDetail', ['id' => $item->id]) }}">
-                                        <img src="{{ $itemImg }}" alt="{{ $item->name }}" style="height: 100%; width: 100%; object-fit: contain;">
-                                    </a>
-                                </div>
-                                <div class="product_content mt-3">
-                                    <h4 class="h6 mb-2" style="height: 40px; overflow: hidden;">
-                                        {{-- កែត្រង់នេះ --}}
-                                        <a href="{{ route('productDetail', ['id' => $item->id]) }}" class="text-dark font-weight-bold text-decoration-none">{{ Str::limit($item->name, 45) }}</a>
-                                    </h4>
-                                    <div class="price_box mb-3">
-                                        <span class="text-primary font-weight-bold" style="font-size: 18px;">${{ number_format($item->price, 2) }}</span>
-                                    </div>
-                                    {{-- កែត្រង់នេះ --}}
-                                    <a href="{{ route('productDetail', ['id' => $item->id]) }}" class="btn btn-sm btn-outline-dark btn-block rounded-0">View Detail</a>
-                                </div>
-                            </article>
-                        </div>
+                        @include('frontends.product', ['item' => $item])
                     @endforeach
                 </div>
             </div>
-            @endif
+        @endif
     </div>
 </div>
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+$(document).ready(function() {
+    // Quantity + / - buttons
+    $(document).on('click', '.qty-btn', function() {
+        let input = $('#detailQtyInput');
+        let val = parseInt(input.val()) || 1;
+        if ($(this).hasClass('inc')) {
+            input.val(val + 1);
+        } else if (val > 1) {
+            input.val(val - 1);
+        }
+    });
 
-    <script>
-        $(function () {
-            /**
-             * 1. លក្ខណៈបច្ចេកទេសប៊ូតុងបង្កើន/បន្ថយចំនួន (Quantity)
-             */
-            $(document).on('click', '.qty-btn', function() {
-                var $input = $(this).parent().find('.qty-input');
-                var val = parseInt($input.val());
-                if ($(this).hasClass('inc')) {
-                    $input.val(val + 1);
-                } else if (val > 1) {
-                    $input.val(val - 1);
-                }
-            });
+    // Image thumbnail click selector
+    $(document).on('click', '.thumb-item', function() {
+        let newSrc = $(this).data('image');
+        $('#mainDetailImage').attr('src', newSrc);
+        $('#mainFancyLink').attr('href', newSrc);
+        $('.thumb-item').removeClass('active');
+        $(this).addClass('active');
+    });
 
-            /**
-             * 2. កំណត់ដំណើរការ Fancybox (សម្រាប់ចុចមើលរូបភាពធំ)
-             */
-            Fancybox.bind("[data-fancybox='gallery']", {
-                Hash: false,
-                Thumbs: { autoStart: true },
-                Toolbar: {
-                    display: {
-                        left: ["infobar"],
-                        middle: [],
-                        right: ["iterateZoom", "slideshow", "fullScreen", "download", "thumbs", "close"],
+    // Fancybox initialization
+    if (typeof Fancybox !== 'undefined') {
+        Fancybox.bind("[data-fancybox='gallery']", {
+            Hash: false,
+            Thumbs: { autoStart: true }
+        });
+    }
+
+    // Add to Cart from detail page handler
+    $(document).on('click', '.addToCartDetail', function(e) {
+        e.preventDefault();
+        let btn = $(this);
+        let id = btn.data('id');
+        let qty = $('#detailQtyInput').val() || 1;
+
+        btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Adding...');
+
+        $.ajax({
+            url: "{{ route('addToCart.Detail') }}",
+            type: "POST",
+            data: {
+                id: id,
+                qty: qty,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(res) {
+                btn.prop('disabled', false).html('<i class="icon-shopping-bag"></i> Add to Cart');
+                if (res.status === 'success') {
+                    $('.cart_count').text(res.count);
+                    if (res.total) {
+                        $('.cart_price').html(`$${parseFloat(res.total).toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
                     }
+                    alert('Product added to cart!');
+                } else {
+                    alert(res.message || 'Could not add to cart.');
                 }
-            });
-
-            /**
-             * 3. មុខងារ AJAX បន្ថែមផលិតផលទៅក្នុងកន្ត្រក (Add to Cart)
-             */
-            $(document).on('click', '.addToCart', function (e) {
-                e.preventDefault();
-                const btn = $(this);
-                const id = btn.data('id');
-                const qty = $('.qty-input').val() || 1;
-
-                // បង្ហាញ Loading នៅលើប៊ូតុង
-                btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Processing...');
-
-                $.ajax({
-                    url: "{{ route('addToCart.Detail') }}",
-                    type: "POST",
-                    data: {
-                        id: id,
-                        qty: qty,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function (res) {
-                        btn.prop('disabled', false).html('<i class="fa fa-shopping-cart mr-2"></i> Add to Cart');
-                        if (res.status === 'success') {
-                            // បច្ចុប្បន្នភាពចំនួនក្នុងកន្ត្រកលើ Header
-                            $('.cart_count').text(res.count);
-                            if(res.total) {
-                                $('.cart_price').html(`$${parseFloat(res.total).toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
-                            }
-
-                            // បង្ហាញការជូនដំណឹងស្អាតជាងមុន (Optional: ប្រើ SweetAlert2 បើមាន)
-                            alert('ជោគជ័យ: ផលិតផលត្រូវបានបញ្ចូលទៅក្នុងកន្ត្រក!');
-                        }
-                    },
-                    error: function () {
-                        btn.prop('disabled', false).html('<i class="fa fa-shopping-cart mr-2"></i> Add to Cart');
-                        alert('មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្តងទៀត ឬ Refresh ទំព័រនេះ។');
-                    }
-                });
-            });
-
-            /**
-             * 4. ប្តូររូបភាពធំនៅពេលចុចលើរូបភាពតូចៗ (Thumbnails)
-             */
-            $(document).on('click', '.elevatezoom-gallery', function(e) {
-                e.preventDefault();
-                var newImg = $(this).data('image');
-
-                // ប្តូរ src របស់រូបភាពមេ
-                $('#zoom1').attr('src', newImg);
-
-                // ប្តូរ Link របស់ Fancybox ឱ្យត្រូវតាមរូបភាពថ្មី
-                $('#zoom1').parent().attr('href', newImg);
-
-                // បន្ថែម Class active លើរូបភាពដែលបានចុច
-                $('.elevatezoom-gallery').removeClass('active');
-                $(this).addClass('active');
-            });
-
-            /**
-             * 5. មុខងារ Slide សម្រាប់ផលិតផលពាក់ព័ន្ធ (Related Products)
-             * កូដនេះនឹងដំនើរការលុះត្រាតែអ្នកប្រើ Class 'product_carousel' និង 'owl-carousel' ក្នុង HTML
-             */
-            if ($('.product_carousel').length > 0) {
-                $('.product_carousel').owlCarousel({
-                    loop: false,
-                    margin: 20,
-                    nav: true,
-                    dots: false,
-                    autoplay: true,
-                    autoplayTimeout: 5000,
-                    responsive: {
-                        0: { items: 1 },
-                        480: { items: 2 },
-                        768: { items: 3 },
-                        1200: { items: 4 }
-                    },
-                    navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>']
-                });
+            },
+            error: function() {
+                btn.prop('disabled', false).html('<i class="icon-shopping-bag"></i> Add to Cart');
+                alert('Error adding product to cart.');
             }
         });
-    </script>
+    });
+});
+</script>
 @endsection

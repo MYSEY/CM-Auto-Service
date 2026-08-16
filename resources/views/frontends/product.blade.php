@@ -1,18 +1,14 @@
 <div class="product-card product_items">
     <article class="single_product">
         <figure>
-            {{--  <div class="product-image-wrapper product_thumb">
-                <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                    <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                </a>
-                <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                    <img src="{{ asset('images/products/' . $item->product_photo) }}" alt="{{ $item->category->name ?? '' }}">
-                </a>
-            </div>  --}}
-
             <div class="product-image-wrapper product_thumb">
+                <a href="javascript:void(0)" class="item-overlay-btn btn-cart-overlay addToCart" data-id="{{ $item->id }}" title="Add to Cart">
+                    <i class="icon-shopping-bag"></i>
+                </a>
+                <a href="javascript:void(0)" class="item-overlay-btn btn-wishlist-overlay toggle-wishlist" data-id="{{ $item->id }}" title="Add to Wishlist">
+                    <i class="icon-heart"></i>
+                </a>
                 <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
-                    {{-- កែត្រង់ src នេះ --}}
                     <img src="https://cdn.cmautoservic.com/{{ $item->product_photo }}" alt="{{ $item->category->name ?? '' }}">
                 </a>
                 <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
@@ -32,13 +28,6 @@
                         <span class="current_price price-original">${{ number_format($item->price,2) }} {{$item->number}}</span>
                     </div>
                 </div>
-                {{--  <div class="action_links">
-                    <ul>
-                        <li class="add_to_cart addToCart" data-id="{{ $item->id }}">
-                            <a href="javascript:void(0)" title="Add to cart">Add to cart</a>
-                        </li>
-                    </ul>
-                </div>  --}}
             </div>
         </figure>
     </article>

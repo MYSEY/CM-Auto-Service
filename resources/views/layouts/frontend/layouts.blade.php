@@ -124,6 +124,7 @@
         .has_sub:hover > .sub_sub_menu2 {
             display: block;
         }
+
     </style>
 </head>
 
@@ -167,10 +168,13 @@
                         <div id="menu" class="text-left">
                             <ul class="offcanvas_main_menu">
                                 <li class="menu-item-has-children active">
-                                    <a href="#">Home</a>
+                                    <a href="/">Home</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="{{url('contact')}}"> Contact Us</a>
+                                    <a href="{{url('frontend-contact')}}"> Contact Us</a>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href="{{url('privacy-policy')}}"> Privacy Policy</a>
                                 </li>
                             </ul>
                         </div>
@@ -240,9 +244,20 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="header_configure_area">
+                                 <div class="header_configure_area">
+                                    @php
+                                        $wSessionId = session()->getId();
+                                        $wUserId = auth()->id();
+                                        $wishlistCount = \App\Models\Wishlist::where(function ($query) use ($wUserId, $wSessionId) {
+                                            if ($wUserId) { $query->where('user_id', $wUserId); }
+                                            else { $query->where('session_id', $wSessionId); }
+                                        })->count();
+                                    @endphp
                                     <div class="header_wishlist">
-                                        <a href="{{ url('wishlist') }}"><i class="icon-heart"></i></a>
+                                        <a href="{{ url('wishlist') }}" style="position: relative; display: inline-block;">
+                                            <i class="icon-heart"></i>
+                                            <span class="wishlist_count" style="position: absolute; top: -6px; right: -8px; background: #ff3b30; color: #ffffff; font-size: 10px; font-weight: 800; border-radius: 10px; padding: 1px 5px; min-width: 16px; text-align: center; line-height: 14px;">{{ $wishlistCount }}</span>
+                                        </a>
                                     </div>
                                     <div class="mini_cart_wrapper">
                                         <a href="javascript:void(0)" id="cartIcon">
@@ -330,46 +345,8 @@
                                         <li>
                                             <a class="active" href="/">home<i class=""></i></a>
                                         </li>
-
-                                        @foreach ($productType as $type)
-                                            <li>
-                                                <a class="active" href="javascript:void(0)">
-                                                    {{ $type->name }} <i class="fa fa-angle-down"></i>
-                                                </a>
-                                                @php
-                                                    $categories = $type->products->pluck('category')->unique('id');
-                                                @endphp
-                                                @foreach ($categories as $category)
-                                                    @if ($category)
-                                                        <ul class="sub_menu">
-                                                            <li class="has_sub">
-                                                                <a href="javascript:void(0)" class="menu-filter" data-category="{{ $category->id }}">{{ $category->name }} <i class="fa fa-angle-right"></i></a>
-                                                                @if($category->subCategory->count() > 0)
-                                                                    <ul class="sub_sub_menu1">
-                                                                        @foreach($category->subCategory as $sub)
-                                                                            <li class="has_sub">
-                                                                                <a href="javascript:void(0)" class="menu-filter" data-sub-category="{{ $sub->id }}">{{ $sub->name }} <i class="fa fa-angle-right"></i></a>
-
-                                                                                @if($sub->engine->count() > 0)
-                                                                                    <ul class="sub_sub_menu2">
-                                                                                        @foreach($sub->engine as $eng)
-                                                                                            <li>
-                                                                                                <a href="javascript:void(0)" class="menu-filter" data-engine="{{ $eng->id }}">{{ $eng->name }}</a>
-                                                                                            </li>
-                                                                                        @endforeach
-                                                                                    </ul>
-                                                                                @endif
-                                                                            </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                @endif
-                                                            </li>
-                                                        </ul>
-                                                    @endif
-                                                @endforeach
-                                            </li>
-                                        @endforeach
                                         <li><a href="{{url('frontend-contact')}}"> Contact Us</a></li>
+                                        <li><a href="{{url('privacy-policy')}}"> Privacy Policy</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -498,6 +475,135 @@
                     }
                 });
             });
+
+            $(document).on("click", ".toggle-wishlist", function (e) {
+                e.preventDefault();
+                let btn = $(this);
+                let productId = btn.data('id');
+                $.ajax({
+                    url: "{{ route('wishlist.toggle') }}",
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (res) {
+                        if (res.count !== undefined) {
+                            $('.wishlist_count').text(res.count);
+                        }
+                        if (res.status === 'added') {
+                            btn.addClass('active');
+                            alert('Added to wishlist!');
+                        } else if (res.status === 'removed') {
+                            btn.removeClass('active');
+                            alert('Removed from wishlist!');
+                        }
+                    },
+                    error: function () {
+                        alert('Could not update wishlist.');
+                    }
+                });
+            });
+
+            $(document).on("click", ".remove-wishlist", function (e) {
+                e.preventDefault();
+                let btn = $(this);
+                let productId = btn.data('id');
+                let row = btn.closest('tr');
+                $.ajax({
+                    url: "{{ route('wishlist.remove') }}",
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (res) {
+                        if (res.status === 'success') {
+                            if (res.count !== undefined) {
+                                $('.wishlist_count').text(res.count);
+                            }
+                            row.fadeOut(300, function() { $(this).remove(); });
+                            alert('Removed from wishlist!');
+                        }
+                    },
+                    error: function () {
+                        alert('Could not remove from wishlist.');
+                    }
+                });
+            });
+
+            $(document).on('click', '.addToCart', function (e) {
+                e.preventDefault();
+                let id = $(this).data('id');
+                $.ajax({
+                    url: "{{ route('addToCart') }}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (res) {
+                        if (res.status === 'success') {
+                            $('.cart_count').text(res.count);
+                            $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
+                            alert('Product added to cart successfully!');
+                        } else {
+                            alert(res.message || 'Failed to add product to cart!');
+                        }
+                    },
+                    error: function () {
+                        alert('Something went wrong!');
+                    }
+                });
+            });
+
+            $(document).on('click', '.remove-item', function (e) {
+                e.preventDefault();
+                let productId = $(this).data('id');
+                let row = $(this).closest('tr');
+                $.ajax({
+                    url: "{{ route('cart.remove') }}",
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (res) {
+                        if (res.status === 'success') {
+                            row.fadeOut(300, function() { $(this).remove(); });
+                            $('#cartSubtotal').text('$' + res.total.toFixed(2));
+                            $('#cartTotal').text('$' + res.total.toFixed(2));
+                            $('.cart_count').text(res.count);
+                            $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
+                            if (res.count === 0) location.reload();
+                        }
+                    }
+                });
+            });
+
+            $(document).on('change', '.cart-qty-input', function () {
+                let productId = $(this).data('id');
+                let quantity = parseInt($(this).val()) || 1;
+                let row = $(this).closest('tr');
+                $.ajax({
+                    url: "{{ route('cart.update') }}",
+                    type: "POST",
+                    data: {
+                        product_id: productId,
+                        quantity: quantity,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function (res) {
+                        if (res.status === 'success') {
+                            row.find('.item-total').text('$' + res.item_total.toFixed(2));
+                            $('#cartSubtotal').text('$' + res.total.toFixed(2));
+                            $('#cartTotal').text('$' + res.total.toFixed(2));
+                            $('.cart_count').text(res.count);
+                            $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
+                        }
+                    }
+                });
+            });
         });
     </script>
     <script>
@@ -530,5 +636,6 @@
             });
         })();
     </script>
+    @yield('scripts')
 </body>
 </html>
