@@ -38,61 +38,286 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
-        /* ១. កែសម្រួល Footer (លុបចន្លោះក្នុង rem) */
-        .page-footer {
-            height: 2.8125rem;
-            background: #fff;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            padding: 0 1.5rem;
+        /* ------------------------------------------------------------------- */
+        /* MODERN BACKEND ADMIN DESIGN SYSTEM                                  */
+        /* ------------------------------------------------------------------- */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            background-color: #f8fafc !important;
+            color: #0f172a;
         }
 
-        /* ២. កំណត់ទំហំអក្សរសម្រាប់ Table ទាំងអស់ */
+        /* 1. Page Sidebar & Navigation */
+        .page-sidebar {
+            background: linear-gradient(180deg, #090038 0%, #17005e 100%) !important;
+            box-shadow: 4px 0 24px rgba(15, 23, 42, 0.12) !important;
+        }
+
+        .page-logo {
+            background: rgba(0, 0, 0, 0.25) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .page-logo-text {
+            color: #ffffff !important;
+            font-weight: 800 !important;
+            font-size: 15px !important;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu li a {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            padding: 10px 16px !important;
+            border-radius: 8px !important;
+            margin: 2px 8px !important;
+            transition: all 0.22s ease-in-out !important;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li.active > a {
+            background: rgba(255, 255, 255, 0.14) !important;
+            color: #ffb800 !important;
+            transform: translateX(3px);
+        }
+
+        .nav-menu li.active > a {
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-menu li a i {
+            color: rgba(255, 255, 255, 0.75) !important;
+            font-size: 15px !important;
+            transition: color 0.2s ease;
+        }
+
+        .nav-menu li:hover > a i,
+        .nav-menu li.active > a i {
+            color: #ffb800 !important;
+        }
+
+        .nav-menu sub {
+            background: rgba(0, 0, 0, 0.2) !important;
+            border-radius: 8px !important;
+            margin: 4px 8px !important;
+            padding: 4px 0 !important;
+        }
+
+        /* 2. Page Header Bar */
+        .page-header {
+            background: #ffffff !important;
+            box-shadow: 0 2px 14px rgba(15, 23, 42, 0.06) !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            height: 3.8rem !important;
+        }
+
+        .header_search input,
+        .header-search input {
+            border-radius: 20px !important;
+            border: 1px solid #cbd5e1 !important;
+            background: #f8fafc !important;
+            padding: 6px 16px !important;
+            font-size: 13px !important;
+            transition: all 0.2s ease;
+        }
+
+        .header_search input:focus,
+        .header-search input:focus {
+            background: #ffffff !important;
+            border-color: #17005e !important;
+            box-shadow: 0 0 0 3px rgba(23, 0, 94, 0.15) !important;
+        }
+
+        /* 3. Cards & Panels */
+        .panel,
+        .card {
+            border-radius: 14px !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+            background: #ffffff !important;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-hdr {
+            background: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding: 14px 20px !important;
+        }
+
+        .panel-hdr h2 {
+            font-weight: 700 !important;
+            font-size: 15px !important;
+            color: #0f172a !important;
+        }
+
+        /* 4. DataTables & Tables Styling */
         table.dataTable,
         .table {
             font-size: 13px !important;
+            color: #334155 !important;
         }
 
-        /* ៣. ការកំណត់សម្រាប់ក្បាល Table (Header) */
         .table thead th {
-            background-color: #f9f9f9 !important;
+            background-color: #f1f5f9 !important;
             font-weight: 700 !important;
             text-transform: uppercase;
-            font-size: 12px;
-            color: #333;
+            font-size: 11px !important;
+            letter-spacing: 0.5px;
+            color: #475569 !important;
+            border-bottom: 2px solid #e2e8f0 !important;
             vertical-align: middle !important;
+            padding: 12px 14px !important;
         }
 
-        /* ៤. បង្រួម Row ឱ្យតូចជាងមុន (Table SM) */
-        .table-sm td, .table-sm th {
-            padding: 0.4rem 0.6rem !important;
+        .table td {
             vertical-align: middle !important;
+            padding: 10px 14px !important;
+            border-top: 1px solid #f1f5f9 !important;
         }
 
-        /* ៥. ប៊ូតុង Action (Icon Buttons) */
+        .table-hover tbody tr:hover {
+            background-color: #f8fafc !important;
+        }
+
+        /* 5. Status Badges & Action Buttons */
+        .badge-pill,
+        .badge {
+            font-weight: 700 !important;
+            padding: 5px 12px !important;
+            border-radius: 20px !important;
+            font-size: 11px !important;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-success { background-color: #10b981 !important; color: #fff !important; }
+        .badge-primary { background-color: #17005e !important; color: #fff !important; }
+        .badge-warning { background-color: #f59e0b !important; color: #fff !important; }
+        .badge-danger { background-color: #ef4444 !important; color: #fff !important; }
+
         .btn-icon.btn-xs {
-            width: 26px !important;
-            height: 26px !important;
-            border-radius: 50% !important; /* ប្តូរជាមូល */
-            display: inline-flex;
+            width: 30px !important;
+            height: 30px !important;
+            border-radius: 50% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
+        }
+
+        .btn-icon.btn-xs:hover {
+            transform: translateY(-2px) scale(1.08) !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+        }
+
+        .page-footer {
+            height: 3rem;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
             align-items: center;
-            justify-content: center;
+            padding: 0 1.5rem;
+            color: #64748b;
+            font-size: 13px;
         }
 
-        .btn-icon i {
-            font-size: 12px;
-            line-height: 1;
+        /* 6. Unified DataTables & Pagination Control Template */
+        .dataTables_wrapper {
+            padding: 16px !important;
         }
 
-        .primary-nav .nav-menu > li > a:hover,
-        .primary-nav .nav-menu > li.active > a {
-            background: rgba(0,0,0,0.025);
+        .dataTables_wrapper .dataTables_paginate {
+            margin-top: 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            gap: 4px !important;
         }
 
-        .primary-nav .nav-menu > li > a:hover i,
-        .primary-nav .nav-menu > li.active > a i {
-            color: #1a73e8;
+        .dataTables_wrapper .dataTables_paginate .paginate_button,
+        .pagination .page-item .page-link {
+            border-radius: 8px !important;
+            margin: 0 2px !important;
+            border: 1px solid #cbd5e1 !important;
+            background: #ffffff !important;
+            color: #334155 !important;
+            font-weight: 600 !important;
+            font-size: 12px !important;
+            padding: 6px 12px !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+        .pagination .page-item.active .page-link,
+        .pagination .page-item .page-link:hover {
+            background: linear-gradient(135deg, #17005e 0%, #2c0099 100%) !important;
+            color: #ffffff !important;
+            border-color: #17005e !important;
+            box-shadow: 0 4px 12px rgba(23, 0, 94, 0.25) !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+        .pagination .page-item.disabled .page-link {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            background: #f1f5f9 !important;
+            border-color: #e2e8f0 !important;
+            color: #94a3b8 !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input,
+        .dataTables_wrapper .dataTables_length select {
+            border-radius: 8px !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 6px 12px !important;
+            font-size: 13px !important;
+            background: #f8fafc !important;
+            color: #0f172a !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus,
+        .dataTables_wrapper .dataTables_length select:focus {
+            background: #ffffff !important;
+            border-color: #17005e !important;
+            box-shadow: 0 0 0 3px rgba(23, 0, 94, 0.12) !important;
+        }
+
+        .dataTables_wrapper .dataTables_info {
+            color: #64748b !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            padding-top: 10px !important;
+        }
+
+        /* 7. VIBRANT BLUE PRIMARY & ADD NEW BUTTONS */
+        .btn-primary,
+        .btn-primary:not(:disabled):not(.disabled) {
+            background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%) !important;
+            border-color: #0066cc !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3) !important;
+            font-weight: 700 !important;
+            transition: all 0.22s ease-in-out !important;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus,
+        .btn-primary:not(:disabled):not(.disabled):hover {
+            background: linear-gradient(135deg, #0073e6 0%, #0052a3 100%) !important;
+            border-color: #0052a3 !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 16px rgba(0, 132, 255, 0.45) !important;
+            transform: translateY(-2px) !important;
         }
     </style>
 </head>

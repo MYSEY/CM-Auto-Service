@@ -1,81 +1,90 @@
 @extends('layouts.backend.admin')
+
 @section('content')
 <div class="row">
     <div class="col-xl-12">
-        <div id="panel-1" class="panel">
-            <div class="panel-hdr">
-                <h2>
-                    Users Infor
+        <div id="panel-1" class="panel card mb-g border-0 shadow-sm bg-white" style="border-radius: 12px; overflow: hidden;">
+            <div class="panel-hdr bg-white border-bottom-0 h6 font-weight-bold text-uppercase" style="min-height: 70px; padding: 0 1.5rem;">
+                <h2 class="text-primary d-flex align-items-center">
+                    <span class="p-2 bg-primary-50 rounded-circle mr-2">
+                        <i class="fal fa-users text-primary"></i>
+                    </span>
+                    Users <span class="fw-300 text-muted ml-1">Management</span>
                 </h2>
                 <div class="panel-toolbar">
-                    <a href="{{url('admins/users/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> @lang('lang.add_new')</a>
+                    <a href="{{url('admins/users/create')}}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">
+                        <i class="fal fa-plus-circle mr-1"></i> @lang('lang.add_new')
+                    </a>
                 </div>
             </div>
             <div class="panel-container show">
-                <div class="panel-content">
-                    <!-- datatable start -->
-                    <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info" style="width: 1163px;">
-                                    <thead class="">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>@lang('lang.profile')</th>
-                                            <th>@lang('lang.name')</th>
-                                            <th>@lang('lang.user_name')</th>
-                                            <th>@lang('lang.sex')</th>
-                                            <th>@lang('lang.email')</th>
-                                            <th>@lang('lang.role')</th>
-                                            <th>@lang('lang.status')</th>
-                                            <th>@lang('lang.action')</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $key=>$item)
-                                            <tr>
-                                                <td>{{$key + 1}}</td>
-                                                <td>
-                                                    @if ($item->profile==null)
-                                                        <img src="{{asset('backends/img/demo/avatars/avatar-admin.png')}}" class="profile-image rounded-circle" style="object-fit: cover;" alt="profile">
-                                                    @else
-                                                        <img src="{{ asset('users/profiles/' . $item->profile) }}" class="profile-image rounded-circle" style="object-fit: cover;" alt="profile">
-                                                    @endif
-                                                </td>
-                                                <td>{{$item->name}}</td>
-                                                <td>{{$item->user_name}}</td>
-                                                <td>{{$item->sex == 1 ? "Male" : "Female"}}</td>
-                                                <td>{{$item->email}}</td>
-                                                <td>
-                                                    <a href="javascript:void(0);">
-                                                        <span class="btn btn-xs btn-success waves-effect waves-themed">{{$item->role_id}}</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    @if ($item->is_active == 1)
-                                                        <a href="javascript:void(0);">
-                                                            <span class="btn btn-xs btn-success waves-effect waves-themed">Active</span>
-                                                        </a>
-                                                    @else
-                                                        <a href="javascript:void(0);">
-                                                            <span class="btn btn-xs btn-success waves-effect waves-themed">Inactive</span>
-                                                        </a>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex demo">
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                        <a href="{{url('admins/users',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                <div class="panel-content p-0">
+                    <div class="table-responsive">
+                        <table id="dt-basic-example" class="table m-0 table-hover w-100 dataTable dtr-inline" role="grid">
+                            <thead class="bg-light">
+                                <tr class="text-uppercase fs-nano text-muted">
+                                    <th class="border-top-0 py-3 pl-4" style="width: 50px;">#</th>
+                                    <th class="border-top-0 py-3">@lang('lang.profile')</th>
+                                    <th class="border-top-0 py-3 text-dark">@lang('lang.name')</th>
+                                    <th class="border-top-0 py-3">@lang('lang.user_name')</th>
+                                    <th class="border-top-0 py-3">@lang('lang.sex')</th>
+                                    <th class="border-top-0 py-3">@lang('lang.email')</th>
+                                    <th class="border-top-0 py-3 text-center">@lang('lang.role')</th>
+                                    <th class="border-top-0 py-3 text-center">@lang('lang.status')</th>
+                                    <th class="border-top-0 py-3 text-center" style="width: 120px;">@lang('lang.action')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $key=>$item)
+                                    <tr>
+                                        <td class="align-middle pl-4 text-muted">{{ $key + 1 }}</td>
+                                        <td class="align-middle">
+                                            @if ($item->profile == null)
+                                                <img src="{{asset('backends/img/demo/avatars/avatar-admin.png')}}" class="profile-image rounded-circle" style="width: 36px; height: 36px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="profile">
+                                            @else
+                                                <img src="{{ asset('users/profiles/' . $item->profile) }}" class="profile-image rounded-circle" style="width: 36px; height: 36px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" alt="profile">
+                                            @endif
+                                        </td>
+                                        <td class="align-middle text-dark font-weight-bold">{{ $item->name }}</td>
+                                        <td class="align-middle text-muted">{{ $item->user_name }}</td>
+                                        <td class="align-middle">{{ $item->sex == 1 ? "Male" : "Female" }}</td>
+                                        <td class="align-middle text-muted">{{ $item->email }}</td>
+                                        <td class="align-middle text-center">
+                                            <span class="badge badge-info badge-pill py-1 px-3" style="font-size: 11px;">
+                                                Role: {{ $item->role_id }}
+                                            </span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @if ($item->is_active == 1)
+                                                <span class="badge badge-success badge-pill py-1 px-3" style="font-size: 11px;">
+                                                    <i class="fal fa-check-circle mr-1"></i> Active
+                                                </span>
+                                            @else
+                                                <span class="badge badge-warning badge-pill py-1 px-3" style="font-size: 11px;">
+                                                    <i class="fal fa-times-circle mr-1"></i> Inactive
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <div class="btn-group">
+                                                <a href="{{url('admins/users',$item->id)}}/edit"
+                                                   class="btn btn-icon btn-xs btn-outline-info rounded-circle mr-2 shadow-sm"
+                                                   data-toggle="tooltip" title="កែសម្រួល">
+                                                    <i class="fal fa-pencil"></i>
+                                                </a>
+                                                <a href="javascript:void(0);"
+                                                   class="btn btn-icon btn-xs btn-outline-primary rounded-circle shadow-sm"
+                                                   onclick="deleteData({{$item->id}})"
+                                                   data-toggle="tooltip" title="លុបទិន្នន័យ">
+                                                    <i class="fal fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- datatable end -->
                 </div>
             </div>
         </div>
@@ -124,7 +133,6 @@
                     success: function (data) {
                         if (data.mg == "success") {
                             toastr.success("Your file has been deleted.", "Deleted!");
-                            // ✅ Delay reload by 2 seconds
                             setTimeout(() => {
                                 window.location.reload();
                             }, 2000);
