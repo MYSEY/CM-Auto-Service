@@ -15,11 +15,23 @@
                     <form method="POST" action="{{ url('admins/product',$data->id) }}" enctype="multipart/form-data" novalidate>
                         @csrf
                         @method('PUT')
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <span class="text-primary">*</span>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ $data->name }}">
-                            <p class="text-primary">{!! $errors->first('name') !!}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <span class="text-primary">*</span>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{ old('name', $data->name) }}">
+                                    <p class="text-primary">{!! $errors->first('name') !!}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="slug">Slug (Optional)</label>
+                                    <input type="text" class="form-control" name="slug" id="slug" placeholder="product-slug" value="{{ old('slug', $data->slug) }}">
+                                    <small class="form-text text-muted">Leave empty to auto-generate from the name.</small>
+                                    <p class="text-primary">{!! $errors->first('slug') !!}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
@@ -178,6 +190,15 @@
                                     <input type="number" class="form-control" name="low_stock_qty_warning" id="low_stock_qty_warning" placeholder="Enter Quantity" value="{{ old('low_stock_qty_warning') ?? $data->low_stock_qty_warning }}">
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="status">Stock Status (ស្ថានភាពស្តុក)</label>
+                                    <select class="form-control select2" name="status" id="status">
+                                        <option value="0" {{ old('status', $data->status) == 0 ? 'selected' : '' }}>មានស្តុក (In Stock)</option>
+                                        <option value="1" {{ old('status', $data->status) == 1 ? 'selected' : '' }}>អស់ស្តុក (Out of Stock)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group mb-0" style="text-align: right;">
@@ -327,6 +348,64 @@
                     }
                 });
             });
+
+            // Live Slug Generation from Make, Model, Engine, Product Type, Name, Number
+            function generateAutoSlug() {
+                let parts = [];
+
+                let makeText = $('#category_id option:selected').text();
+                if (makeText && !makeText.toLowerCase().includes('choose') && !makeText.toLowerCase().includes('select')) {
+                    parts.push(makeText.trim());
+                }
+
+                let modelText = $('#sub_category_id option:selected').text();
+                if (modelText && !modelText.toLowerCase().includes('choose') && !modelText.toLowerCase().includes('select')) {
+                    parts.push(modelText.trim());
+                }
+
+                let engineText = $('#engine_id option:selected').text();
+                if (engineText && !engineText.toLowerCase().includes('choose') && !engineText.toLowerCase().includes('select')) {
+                    parts.push(engineText.trim());
+                }
+
+                let typeText = $('select[name="product_type_id"] option:selected').text();
+                if (typeText && !typeText.toLowerCase().includes('choose') && !typeText.toLowerCase().includes('select')) {
+                    parts.push(typeText.trim());
+                }
+
+                let nameVal = $('#name').val();
+                if (nameVal) {
+                    parts.push(nameVal.trim());
+                }
+
+                let numVal = $('#number').val();
+                if (numVal) {
+                    parts.push(numVal.trim());
+                }
+
+                let rawString = parts.join(' ');
+                let slugValue = rawString.toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+
+                $('#slug').val(slugValue);
+            }
+
+            $(document).on('change input', '#category_id, #sub_category_id, #engine_id, select[name="product_type_id"], #name, #number', function() {
+                generateAutoSlug();
+            });
+
+            const slugEl = document.getElementById('slug');
+            if (slugEl) {
+                slugEl.addEventListener('keypress', function(event) {
+                    const char = String.fromCharCode(event.which);
+                    const pattern = /[a-z0-9- ]/;
+                    if (!pattern.test(char)) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            }
         });
     </script>
 @endsection

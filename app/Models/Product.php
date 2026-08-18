@@ -66,4 +66,9 @@ class Product extends Model
         $baseUrl = "https://cdn.cmautoservic.com/";
         return $this->product_photo ? $baseUrl . $this->product_photo : asset('images/default.png');
     }
+
+    public function getDetailUrlAttribute()
+    {
+        return url('product/' . ($this->slug ?: $this->id));
+    }
 }

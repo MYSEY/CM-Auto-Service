@@ -86,7 +86,8 @@ Route::get('/pwa/chat/poll', [\App\Http\Controllers\Pwa\ChatController::class, '
 Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
-Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
+Route::get('/product/{slug}', [HomePageController::class, 'productDetail'])->name('product.detail.slug');
+Route::get('frontend/product/detail/{slug}', [HomePageController::class, 'productDetail']);
 Route::get('/product-detail', [HomePageController::class, 'productDetail'])->name('productDetail');
 Route::get('frontend/product/filter/{id}', [HomePageController::class, 'filter'])->name('product.filter');
 Route::post('/add-to-cart', [CartController::class, 'addToCart'])->name('addToCart');
@@ -145,6 +146,7 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('product/category/onchange', [ProductController::class,'onchangeCagegory']);
     Route::get('product/sub-category/onchange', [ProductController::class,'onchangeSubCagegory']);
     Route::post('product/change/publish/{id}', [ProductController::class,'changePublish']);
+    Route::post('product/change/status/{id}', [ProductController::class,'changeStatus']);
     Route::resource('backend-contact', BackendContactController::class);
     Route::resource('category', ProductCategoryController::class);
     Route::resource('sub-category', ProductSubcategoryController::class);

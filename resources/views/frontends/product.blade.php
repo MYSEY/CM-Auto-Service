@@ -1,17 +1,45 @@
+<style>
+    .out-of-stock-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: #ffffff !important;
+        font-weight: 800;
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 6px;
+        z-index: 15;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+        pointer-events: none;
+        display: inline-block;
+        line-height: 1.2;
+    }
+    .product-image-wrapper {
+        position: relative;
+    }
+    .product_thumb_is_out_of_stock img {
+        filter: grayscale(0.2) opacity(0.88);
+    }
+</style>
 <div class="product-card product_items">
     <article class="single_product">
         <figure>
-            <div class="product-image-wrapper product_thumb">
+            <div class="product-image-wrapper product_thumb {{ ($item->status ?? 0) == 1 ? 'product_thumb_is_out_of_stock' : '' }}" style="position: relative;">
+                @if(($item->status ?? 0) == 1)
+                    <span class="out-of-stock-badge"><i class="fa fa-ban mr-1"></i> អស់ស្តុក</span>
+                @endif
                 <a href="javascript:void(0)" class="item-overlay-btn btn-cart-overlay addToCart" data-id="{{ $item->id }}" title="Add to Cart">
                     <i class="icon-shopping-bag"></i>
                 </a>
                 <a href="javascript:void(0)" class="item-overlay-btn btn-wishlist-overlay toggle-wishlist" data-id="{{ $item->id }}" title="Add to Wishlist">
                     <i class="icon-heart"></i>
                 </a>
-                <a class="primary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                <a class="primary_img" href="{{ url('product/' . ($item->slug ?: $item->id)) }}">
                     <img src="https://cdn.cmautoservic.com/{{ $item->product_photo }}" alt="{{ $item->category->name ?? '' }}">
                 </a>
-                <a class="secondary_img" href="{{ url('frontend/product/detail',$item->id) }}">
+                <a class="secondary_img" href="{{ url('product/' . ($item->slug ?: $item->id)) }}">
                     <img src="https://cdn.cmautoservic.com/{{ $item->product_photo }}" alt="{{ $item->category->name ?? '' }}">
                 </a>
             </div>
@@ -20,7 +48,7 @@
                     <div class="category"><a href="#">Parts</a></div>
                     <div class="category"><a href="#">{{ $item->productType->name ?? '' }}</a></div>
                     <h4 class="product-name">
-                        <a href="{{ url('frontend/product/detail',$item->id) }}">
+                        <a href="{{ url('product/' . ($item->slug ?: $item->id)) }}">
                             {{ $item->category->name ?? '' }} {{ $item->subCategory->name ?? '' }} {{$item->year}} {{ $item->proEngine?->name ?? '' }} {{ $item->proEngine?->part_number ?? ''}}
                         </a>
                     </h4>

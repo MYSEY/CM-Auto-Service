@@ -9,5 +9,11 @@
     },
     "android": {
         "allowMixedContent": true
+    },
+    "plugins": {
+        "StatusBar": {
+            "overlaysWebView": true,
+            "style": "DARK"
+        }
     }
 }

@@ -283,9 +283,12 @@
                         $cdnBase = 'https://cdn.cmautoservic.com/';
                         $mainPhoto = $productDetail->product_photo ? $cdnBase . $productDetail->product_photo : asset('images/no-image.png');
                     @endphp
-                    <div class="main-image-box">
+                    <div class="main-image-box" style="position: relative;">
+                        @if(($productDetail->status ?? 0) == 1)
+                            <span class="out-of-stock-badge" style="position: absolute; top: 14px; left: 14px; z-index: 20; background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: #fff; font-weight: 800; font-size: 12px; padding: 5px 12px; border-radius: 6px; box-shadow: 0 4px 12px rgba(220,38,38,0.4);"><i class="fa fa-ban mr-1"></i> អស់ស្តុក</span>
+                        @endif
                         <a href="{{ $mainPhoto }}" data-fancybox="gallery" id="mainFancyLink" data-caption="{{ $productDetail->category->name ?? '' }} {{ $productDetail->subCategory->name ?? '' }}">
-                            <img id="mainDetailImage" src="{{ $mainPhoto }}" alt="{{ $productDetail->category->name ?? '' }}">
+                            <img id="mainDetailImage" src="{{ $mainPhoto }}" alt="{{ $productDetail->category->name ?? '' }}" style="{{ ($productDetail->status ?? 0) == 1 ? 'filter: grayscale(0.25);' : '' }}">
                         </a>
                     </div>
 
@@ -308,6 +311,11 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="product_d_right pl-lg-3">
                         <span class="product-type-badge">{{ $productDetail->productType->name ?? 'Parts' }}</span>
+                        @if(($productDetail->status ?? 0) == 1)
+                            <span class="badge bg-danger text-white ml-2 p-2" style="font-size: 12px; border-radius: 6px;"><i class="fa fa-ban mr-1"></i> អស់ស្តុក</span>
+                        @else
+                            <span class="badge bg-success text-white ml-2 p-2" style="font-size: 12px; border-radius: 6px;"><i class="fa fa-check-circle mr-1"></i> មានស្តុក</span>
+                        @endif
 
                         <h3>
                             {{ $productDetail->category->name ?? '' }} 

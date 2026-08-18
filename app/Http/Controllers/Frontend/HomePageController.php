@@ -69,10 +69,15 @@ class HomePageController extends Controller
         return view('frontends.login',compact('company','category','productType','slider'));
     }
 
-    public function productDetail(Request $request) {
-        // ១. ទាញយកព័ត៌មាន Product Detail
+    public function productDetail(Request $request, $slug = null) {
+        // ១. ទាញយកព័ត៌មាន Product Detail (ស្វែងរកតាម slug ឬ id)
+        $identifier = $slug ?? $request->slug ?? $request->id;
 
-        $productDetail = Product::with(['productImage','productType','category','subCategory','proEngine'])->where('id',$request->id)->firstOrFail();
+        $productDetail = Product::with(['productImage','productType','category','subCategory','proEngine'])
+            ->where(function($q) use ($identifier) {
+                $q->where('slug', $identifier)->orWhere('id', $identifier);
+            })
+            ->firstOrFail();
 
         // ២. បន្ថែមបន្ទាត់នេះ៖ ទាញយកផលិតផលដែលមាន Category ដូចគ្នា (Related Products)
         $relatedProducts = Product::where('category_id', $productDetail->category_id)

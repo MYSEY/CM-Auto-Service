@@ -77,6 +77,7 @@
                                                 <th class="border-top-0 py-3">Photo</th>
                                                 <th class="border-top-0 py-3">Code</th>
                                                 <th class="border-top-0 py-3 text-dark">Name</th>
+                                                <th class="border-top-0 py-3">Slug</th>
                                                 <th class="border-top-0 py-3">Type</th>
                                                 <th class="border-top-0 py-3">Category</th>
                                                 <th class="border-top-0 py-3">Sub</th>
@@ -205,23 +206,20 @@
             $('#tbl_product').DataTable().ajax.reload();
         });
         dataTables();
-        $("#btnStatus").on('change',function(){
-            var publish = $(this).val();
-            var id = $("#id").val();
+        $(document).on('change', '.changeStatus', function() {
+            var status = $(this).val();
+            var id = $(this).data('id');
             $.ajax({
                 type: "POST",
-                url: "{{ url('admins/product/change/publish') }}/" + id,
+                url: "{{ url('admins/product/change/status') }}/" + id,
                 data: {
-                    publish:publish,
+                    status: status,
                     _token: "{{ csrf_token() }}"
                 },
                 dataType: "JSON",
                 success: function (response) {
                     if (response.msg === 'success') {
-                        toastr.success('Publish product successfully!');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2000);
+                        toastr.success('Stock status updated successfully!');
                     } else {
                         toastr.error('Failed to update status.');
                     }
@@ -353,6 +351,15 @@
                 name: 'name',
                 className: 'align-middle font-weight-bold text-dark'
             },
+            // Slug
+            {
+                data: 'slug',
+                name: 'slug',
+                className: 'align-middle',
+                render: function(data) {
+                    return data ? `<code class="p-1 bg-light text-info rounded" style="font-size: 85%;">${data}</code>` : '-';
+                }
+            },
             // 5. Type
             {
                 data: 'product_type_name',
@@ -414,11 +421,11 @@
                 name: 'status',
                 className: 'align-middle',
                 render: function(data, type, row) {
+                    let isOutOfStock = data == 1;
                     return `
-                        <select class="form-control form-control-sm border-light changeStatus shadow-none" data-id="${row.id}" style="width: 115px; border-radius: 20px; font-size: 11px;">
-                            <option value="0" ${data == 0 ? 'selected' : ''}>● Publish</option>
-                            <option value="1" ${data == 1 ? 'selected' : ''}>● Pending</option>
-                            <option value="2" ${data == 2 ? 'selected' : ''}>● Un-Publish</option>
+                        <select class="form-control form-control-sm changeStatus shadow-none ${isOutOfStock ? 'text-danger font-weight-bold' : 'text-success font-weight-bold'}" data-id="${row.id}" style="width: 120px; border-radius: 20px; font-size: 11px; border: 1px solid ${isOutOfStock ? '#f87171' : '#4ade80'};">
+                            <option value="0" ${data == 0 ? 'selected' : ''}>● មានស្តុក</option>
+                            <option value="1" ${data == 1 ? 'selected' : ''}>● អស់ស្តុក</option>
                         </select>
                     `;
                 }

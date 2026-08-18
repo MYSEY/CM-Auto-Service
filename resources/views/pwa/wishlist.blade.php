@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#0d1b3e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -44,8 +44,11 @@
             @foreach($wishlistItems as $item)
                 @if($item->product)
                 <div class="flex items-center gap-3.5 p-3.5 mb-2.5 rounded-2xl shadow-sm shadow-black/[0.04] dark:shadow-black/20 bg-white dark:bg-[#1c1e2d] transition-all duration-200" id="wishlist-item-{{ $item->product_id }}">
-                    <a href="{{ route('pwa.product', $item->product_id) }}" class="flex-shrink-0">
-                        <img src="{{ $item->product->product_photo ? 'https://cdn.cmautoservic.com/' . $item->product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $item->product->name }}" class="w-[64px] h-[64px] rounded-xl object-cover bg-[#f2f2f7] dark:bg-white/5">
+                    <a href="{{ route('pwa.product', $item->product_id) }}" class="flex-shrink-0 relative">
+                        @if(($item->product->status ?? 0) == 1)
+                            <span class="absolute top-0 left-0 px-1 py-0.5 bg-red-600 text-white font-extrabold text-[8px] rounded z-10">🚫 អស់ស្តុក</span>
+                        @endif
+                        <img src="{{ $item->product->product_photo ? 'https://cdn.cmautoservic.com/' . $item->product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $item->product->name }}" class="w-[64px] h-[64px] rounded-xl object-cover bg-[#f2f2f7] dark:bg-white/5 {{ ($item->product->status ?? 0) == 1 ? 'grayscale opacity-75' : '' }}">
                     </a>
                     <div class="flex-1 min-w-0">
                         <a href="{{ route('pwa.product', $item->product_id) }}">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#0d1b3e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -54,13 +54,23 @@
     <main class="px-4 pt-4 pb-28">
 
         <!-- Product Image -->
-        <div class="rounded-2xl overflow-hidden bg-white dark:bg-[#1c1e2d] mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
-            <img src="{{ $product->product_photo ? 'https://cdn.cmautoservic.com/' . $product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $product->name }}" class="w-full aspect-square object-cover">
+        <div class="rounded-2xl overflow-hidden bg-white dark:bg-[#1c1e2d] mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20 relative">
+            @if(($product->status ?? 0) == 1)
+                <span class="absolute top-3 left-3 px-3 py-1 bg-red-600/95 backdrop-blur-sm text-white font-extrabold text-xs rounded-lg z-10 shadow-lg tracking-wider">🚫 អស់ស្តុក</span>
+            @endif
+            <img src="{{ $product->product_photo ? 'https://cdn.cmautoservic.com/' . $product->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $product->name }}" class="w-full aspect-square object-cover {{ ($product->status ?? 0) == 1 ? 'grayscale opacity-80' : '' }}">
         </div>
 
         <!-- Product Info Card -->
         <div class="rounded-2xl bg-white dark:bg-[#1c1e2d] p-5 mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
-            <div class="text-[11px] font-medium text-[#8e8e93] uppercase tracking-wider mb-2">{{ $product->category->name ?? '' }} {{ $product->subCategory->name ? '/ ' . $product->subCategory->name : '' }}</div>
+            <div class="flex justify-between items-center mb-2">
+                <div class="text-[11px] font-medium text-[#8e8e93] uppercase tracking-wider">{{ $product->category->name ?? '' }} {{ $product->subCategory->name ? '/ ' . $product->subCategory->name : '' }}</div>
+                @if(($product->status ?? 0) == 1)
+                    <span class="px-2.5 py-0.5 bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 text-[11px] font-bold rounded-md">🚫 អស់ស្តុក</span>
+                @else
+                    <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 text-[11px] font-bold rounded-md">✓ មានស្តុក</span>
+                @endif
+            </div>
             <h1 class="text-[19px] font-semibold text-gray-900 dark:text-white mb-2 leading-snug">{{ $product->name }}</h1>
             <div class="text-[22px] font-bold text-[#007aff] dark:text-[#60a5fa] mb-4">${{ number_format($product->price, 2) }}</div>
 
@@ -82,7 +92,11 @@
         @endif
 
         <!-- Add to Cart Button -->
-        <button class="pwa-detail-btn w-full py-3.5 bg-[#007aff] hover:bg-[#0066d6] dark:bg-[#0a84ff] dark:hover:bg-[#0077ed] text-white border-none rounded-2xl text-[16px] font-semibold cursor-pointer text-center transition-colors duration-200 active:scale-[0.98]" onclick="addToCart({{ $product->id }})">Add to Cart</button>
+        @if(($product->status ?? 0) == 1)
+            <button class="pwa-detail-btn w-full py-3.5 bg-gray-400 dark:bg-gray-600 text-white border-none rounded-2xl text-[16px] font-bold cursor-not-allowed text-center opacity-80" disabled>🚫 អស់ស្តុក (Out of Stock)</button>
+        @else
+            <button class="pwa-detail-btn w-full py-3.5 bg-[#007aff] hover:bg-[#0066d6] dark:bg-[#0a84ff] dark:hover:bg-[#0077ed] text-white border-none rounded-2xl text-[16px] font-semibold cursor-pointer text-center transition-colors duration-200 active:scale-[0.98]" onclick="addToCart({{ $product->id }})">Add to Cart</button>
+        @endif
 
         <!-- Related Products -->
         @if($relatedProducts->count())
@@ -90,8 +104,11 @@
                 <div class="text-[17px] font-semibold text-gray-900 dark:text-white mb-3">Related Products</div>
                 <div class="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
                     @foreach($relatedProducts as $rp)
-                        <a href="{{ route('pwa.product', $rp->id) }}" class="snap-start flex-shrink-0 w-[140px] rounded-2xl bg-white dark:bg-[#1c1e2d] overflow-hidden shadow-sm shadow-black/[0.04] dark:shadow-black/20 active:scale-[0.97] transition-transform duration-200">
-                            <img src="{{ $rp->product_photo ? 'https://cdn.cmautoservic.com/' . $rp->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $rp->name }}" class="w-full aspect-square object-cover">
+                        <a href="{{ route('pwa.product', $rp->id) }}" class="snap-start flex-shrink-0 w-[140px] rounded-2xl bg-white dark:bg-[#1c1e2d] overflow-hidden shadow-sm shadow-black/[0.04] dark:shadow-black/20 active:scale-[0.97] transition-transform duration-200 relative">
+                            @if(($rp->status ?? 0) == 1)
+                                <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 bg-red-600/90 text-white font-bold text-[9px] rounded z-10">🚫 អស់ស្តុក</span>
+                            @endif
+                            <img src="{{ $rp->product_photo ? 'https://cdn.cmautoservic.com/' . $rp->product_photo : asset('frontends/assets/img/logo.png') }}" alt="{{ $rp->name }}" class="w-full aspect-square object-cover {{ ($rp->status ?? 0) == 1 ? 'grayscale opacity-75' : '' }}">
                             <div class="p-2.5">
                                 <div class="text-[12px] font-medium text-gray-900 dark:text-white truncate">{{ $rp->name }}</div>
                                 <div class="text-[13px] font-bold text-[#007aff] dark:text-[#60a5fa] mt-0.5">${{ number_format($rp->price, 2) }}</div>

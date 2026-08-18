@@ -108,16 +108,7 @@ class ProductController extends Controller
             // // បើ user មិនបានបំពេញ year ឱ្យវាដាក់ឆ្នាំបច្ចុប្បន្ន ឬ 0
             // $data['year'] = $request->year ?? date('Y');
 
-            // ✅ generate slug
-            $data['slug'] = Str::slug($request->name, '-');
-
-            // ✅ photo
-            $data['product_photo'] = $filename;
-
-            // ✅ created by
-            $data['created_by'] = Auth::id();
-
-            // ✅ generate code
+            // ✅ generate code & slug
             $productType = ProductType::find($request->product_type_id);
             $category = ProductCategory::find($request->category_id);
             $subCategory = ProductSubCategory::find($request->sub_category_id);
@@ -128,6 +119,28 @@ class ProductController extends Controller
                             ($subCategory->name ?? '') . '-' .
                             ($engine->name ?? '') . '-' .
                             $request->number;
+
+            $slugText = $request->slug;
+            if (!$slugText) {
+                $slugText = implode(' ', array_filter([
+                    $category->name ?? '',
+                    $subCategory->name ?? '',
+                    $engine->name ?? '',
+                    $productType->name ?? '',
+                    $request->name,
+                    $request->number
+                ]));
+            }
+            $data['slug'] = Str::slug($slugText, '-');
+
+            // ✅ photo
+            $data['product_photo'] = $filename;
+
+            // ✅ stock status (0: In Stock, 1: Out of Stock)
+            $data['status'] = $request->status ?? 0;
+
+            // ✅ created by
+            $data['created_by'] = Auth::id();
 
             // Create product
             $product = Product::create($data);
@@ -227,13 +240,25 @@ class ProductController extends Controller
                     ($engine->name ?? '') . '-' .
                     $request->number;
 
+            $slugText = $request->slug;
+            if (!$slugText) {
+                $slugText = implode(' ', array_filter([
+                    $category->name ?? '',
+                    $subCategory->name ?? '',
+                    $engine->name ?? '',
+                    $productType->name ?? '',
+                    $request->name,
+                    $request->number
+                ]));
+            }
+
             // --- Update Product Details ---
             $product->update([
                 'product_type_id'       => $request->product_type_id,
                 'category_id'           => $request->category_id,
                 'sub_category_id'       => $request->sub_category_id,
                 'name'                  => $request->name,
-                'slug'                  => Str::slug($request->name, '-'),
+                'slug'                  => Str::slug($slugText, '-'),
                 'description'           => $request->description,
                 'engine_id'             => $request->engine_id,
                 'price'                 => $request->price,
@@ -242,6 +267,7 @@ class ProductController extends Controller
                 'number'                => $request->number,
                 'low_stock_qty_warning' => $request->low_stock_qty_warning,
                 'delivery_note'         => $request->delivery_note,
+                'status'                => $request->status ?? 0,
                 'code'                  => $code,
                 'updated_by'            => Auth::id(),
                 'product_photo'         => $product->product_photo, // រក្សាឈ្មោះ file ថ្មី
@@ -336,6 +362,17 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
             $product->publish = $request->publish;
+            $product->save();
+            return response()->json(['msg' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['msg' => 'error', 'error' => $e->getMessage()]);
+        }
+    }
+
+    public function changeStatus(Request $request, $id){
+        try {
+            $product = Product::findOrFail($id);
+            $product->status = $request->status;
             $product->save();
             return response()->json(['msg' => 'success']);
         } catch (\Exception $e) {
