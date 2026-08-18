@@ -86,6 +86,7 @@ Route::get('/pwa/chat/poll', [\App\Http\Controllers\Pwa\ChatController::class, '
 Route::get('/logins', [HomePageController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logoutForm'])->name('logout');
+Route::get('/product/{slug}', [HomePageController::class, 'productDetail'])->name('product.detail.slug');
 Route::get('frontend/product/detail/{id}', [HomePageController::class,'productDetail']);
 Route::get('/product-detail', [HomePageController::class, 'productDetail'])->name('productDetail');
 Route::get('frontend/product/filter/{id}', [HomePageController::class, 'filter'])->name('product.filter');
