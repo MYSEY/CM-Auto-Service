@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cm-auto-v12';
+const CACHE_NAME = 'cm-auto-v17';
 const OFFLINE_URL = '/offline.html';
 const urlsToCache = [
     '/',

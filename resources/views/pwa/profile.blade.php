@@ -10,7 +10,7 @@
     <link rel="manifest" href="{{ asset('pwa/manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
     <title>Profile — CM Auto</title>
-    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ filemtime(public_path('build/pwa.css')) }}">
     <style>
         .ios-header {
             background: rgba(255,255,255,0.92);

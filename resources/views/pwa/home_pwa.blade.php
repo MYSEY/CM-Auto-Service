@@ -11,7 +11,7 @@
     {{-- <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}"> --}}
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/favicon.png') }}">
     <title>CM Auto Service</title>
-    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ filemtime(public_path('build/pwa.css')) }}">
     <style>
         *, *::before, *::after {
             -webkit-tap-highlight-color: transparent;
@@ -186,7 +186,7 @@
         <div class="px-4 pt-4 pb-2">
             <div class="grid grid-cols-4 gap-2.5">
                 <a href="{{ route('pwa.cart') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm shadow-blue-500/25">
+                    <div class="w-12 h-12 rounded-2xl ios-quick-icon-cart flex items-center justify-center shadow-sm shadow-blue-500/25">
                         <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                             <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
@@ -195,7 +195,7 @@
                     <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Cart</span>
                 </a>
                 <a href="{{ route('pwa.wishlist') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center shadow-sm shadow-rose-500/25">
+                    <div class="w-12 h-12 rounded-2xl ios-quick-icon-wishlist flex items-center justify-center shadow-sm shadow-rose-500/25">
                         <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                         </svg>
@@ -203,7 +203,7 @@
                     <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Wishlist</span>
                 </a>
                 <a href="{{ route('pwa.contact') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-sm shadow-emerald-500/25">
+                    <div class="w-12 h-12 rounded-2xl ios-quick-icon-contact flex items-center justify-center shadow-sm shadow-emerald-500/25">
                         <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
                         </svg>
@@ -211,7 +211,7 @@
                     <span class="text-[11px] font-medium text-gray-700 dark:text-gray-300">Contact</span>
                 </a>
                 <a href="{{ route('pwa.account') }}" class="ios-quick-action flex flex-col items-center gap-2 py-3 px-1">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-sm shadow-amber-500/25">
+                    <div class="w-12 h-12 rounded-2xl ios-quick-icon-account flex items-center justify-center shadow-sm shadow-amber-500/25">
                         <svg class="w-[20px] h-[20px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
@@ -224,14 +224,14 @@
 
         <!-- Banner -->
         <div class="px-4 py-2">
-            <div class="ios-card overflow-hidden bg-gradient-to-br from-[#0d1b3e] via-[#1a3a6e] to-[#2a5298] text-white p-5 relative">
+            <div class="ios-card ios-banner-card overflow-hidden text-white p-5 relative">
                 <div class="absolute -top-12 -right-12 w-40 h-40 bg-white/[0.06] rounded-full"></div>
                 <div class="absolute -bottom-16 -left-16 w-48 h-48 bg-white/[0.04] rounded-full"></div>
                 <div class="relative z-10">
-                    <h2 class="text-[17px] font-semibold mb-1">CM Auto Service</h2>
-                    <p class="text-[13px] text-white/70 mb-3.5">ECU, Auto Parts & Online Programming</p>
+                    <h2 class="text-[17px] font-semibold mb-1 text-white">CM Auto Service</h2>
+                    <p class="text-[13px] text-white/80 mb-3.5">ECU, Auto Parts & Online Programming</p>
                     <a href="{{ route('pwa.contact') }}"
-                        class="inline-flex items-center gap-1.5 bg-white text-[#0d1b3e] px-4 py-2 rounded-full text-[13px] font-semibold active:bg-white/90 transition-colors">
+                        class="ios-banner-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold active:opacity-90 transition-opacity">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
