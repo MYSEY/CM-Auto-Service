@@ -7,11 +7,13 @@
         "build:pwa": "npx @tailwindcss/cli -i resources/css/pwa.css -o public/build/pwa.css --minify"
     },
     "devDependencies": {
+        "@esbuild/win32-x64": "^0.28.2",
         "@popperjs/core": "^2.11.6",
         "@tailwindcss/cli": "^4.3.3",
         "@tailwindcss/vite": "^4.3.3",
         "axios": "^1.6.4",
         "bootstrap": "^5.2.3",
+        "esbuild": "^0.28.2",
         "laravel-vite-plugin": "^1.0.0",
         "sass": "^1.56.1",
         "tailwindcss": "^4.3.3",
