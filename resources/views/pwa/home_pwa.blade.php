@@ -11,7 +11,7 @@
     {{-- <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}"> --}}
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/favicon.png') }}">
     <title>CM Auto Service</title>
-    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ filemtime(public_path('build/pwa.css')) }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ file_exists(public_path('build/pwa.css')) ? filemtime(public_path('build/pwa.css')) : '1.0' }}">
     <style>
         *, *::before, *::after {
             -webkit-tap-highlight-color: transparent;

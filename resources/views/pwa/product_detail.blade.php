@@ -10,7 +10,7 @@
     <link rel="manifest" href="{{ asset('pwa/manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
     <title>{{ $product->name }} — CM Auto</title>
-    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ filemtime(public_path('build/pwa.css')) }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ file_exists(public_path('build/pwa.css')) ? filemtime(public_path('build/pwa.css')) : '1.0' }}">
     <style>
         .ios-header {
             background: rgba(255,255,255,0.92);

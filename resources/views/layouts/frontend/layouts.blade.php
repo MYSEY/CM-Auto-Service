@@ -82,8 +82,8 @@
 
         <link rel="icon" href="{{asset('frontends/assets/img/logo.png')}}">
         <link rel="stylesheet" href="{{asset('frontends/assets/css/plugins.css')}}">
-        <link rel="stylesheet" href="{{ asset('frontends/assets/css/style.css') }}?v={{ filemtime(public_path('frontends/assets/css/style.css')) }}">
-        <link rel="stylesheet" href="{{ asset('frontends/assets/css/cm.css') }}?v={{ filemtime(public_path('frontends/assets/css/cm.css')) }}">
+        <link rel="stylesheet" href="{{ asset('frontends/assets/css/style.css') }}?v={{ file_exists(public_path('frontends/assets/css/style.css')) ? filemtime(public_path('frontends/assets/css/style.css')) : '1.0' }}">
+        <link rel="stylesheet" href="{{ asset('frontends/assets/css/cm.css') }}?v={{ file_exists(public_path('frontends/assets/css/cm.css')) ? filemtime(public_path('frontends/assets/css/cm.css')) : '1.0' }}">
         {{-- toastr --}}
         <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
     <style>

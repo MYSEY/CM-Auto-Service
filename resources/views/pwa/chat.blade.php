@@ -10,7 +10,7 @@
     <link rel="manifest" href="{{ asset('pwa/manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('frontends/assets/img/logo.png') }}">
     <title>Chat — CM Auto</title>
-    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ filemtime(public_path('build/pwa.css')) }}">
+    <link rel="stylesheet" href="{{ asset('build/pwa.css') }}?v={{ file_exists(public_path('build/pwa.css')) ? filemtime(public_path('build/pwa.css')) : '1.0' }}">
     <style>
         @keyframes bubbleIn { 0% { opacity: 0; transform: translateY(8px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0.6); } 40% { transform: scale(1); } }
