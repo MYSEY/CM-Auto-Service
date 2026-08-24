@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && npm run build:pwa",
         "build:pwa": "npx @tailwindcss/cli -i resources/css/pwa.css -o public/build/pwa.css --minify"
     },
     "devDependencies": {

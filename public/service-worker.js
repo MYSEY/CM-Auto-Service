@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cm-auto-v17';
+const CACHE_NAME = 'cm-auto-v18';
 const OFFLINE_URL = '/offline.html';
 const urlsToCache = [
     '/',
@@ -47,6 +47,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    const url = new URL(event.request.url);
+
     if (event.request.mode === 'navigate') {
         event.respondWith(
             fetch(event.request)
@@ -66,6 +68,21 @@ self.addEventListener('fetch', (event) => {
         );
     } else if (event.request.destination === 'video' || event.request.destination === 'audio') {
         event.respondWith(fetch(event.request));
+    } else if (url.pathname.endsWith('.css') || url.pathname.endsWith('.js') || url.search.includes('v=')) {
+        // Network-first strategy for CSS and JS to ensure fresh styles on app/mobile/browser
+        event.respondWith(
+            fetch(event.request)
+                .then((response) => {
+                    if (response && response.status === 200) {
+                        const responseToCache = response.clone();
+                        caches.open(CACHE_NAME).then((cache) => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    }
+                    return response;
+                })
+                .catch(() => caches.match(event.request))
+        );
     } else {
         event.respondWith(
             caches.match(event.request)

@@ -3,10 +3,19 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then(function(registration) {
                 console.log('ServiceWorker registered: ', registration.scope);
+                registration.update();
             })
             .catch(function(error) {
                 console.log('ServiceWorker registration failed: ', error);
             });
+
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
+        });
     });
 }
 
