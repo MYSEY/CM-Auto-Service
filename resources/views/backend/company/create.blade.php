@@ -65,7 +65,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-2" style="text-align: right;">
                                             <a href="{{url('admins/company')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
-                                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
+                                            <button type="submit" id="submit-btn" class="btn btn-primary btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
                                         </div>
                                     </div>
                                 </div>
@@ -88,6 +88,51 @@
                 img.src = URL.createObjectURL(this.files[0]);
                 document.querySelector(".imagestaff_preview").files = this.files;
             }
+        });
+
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                var form = this;
+                var btn = $('#submit-btn');
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+
+                var formData = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(form).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        btn.prop('disabled', false).text('@lang("lang.submit")');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(res.message || 'Create Company successfully.');
+                        }
+                        if (res.redirect) {
+                            setTimeout(function() {
+                                window.location.href = res.redirect;
+                            }, 800);
+                        }
+                    },
+                    error: function(err) {
+                        btn.prop('disabled', false).text('@lang("lang.submit")');
+                        var msg = 'Create Company failed.';
+                        if (err.responseJSON && err.responseJSON.message) {
+                            msg = err.responseJSON.message;
+                        }
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(msg);
+                        } else {
+                            alert(msg);
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endsection

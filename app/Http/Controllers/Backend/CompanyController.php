@@ -57,10 +57,16 @@ class CompanyController extends Controller
             ]);
             DB::commit();
             Toastr::success('Create Company successfully.','Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Create Company successfully.', 'redirect' => url('admins/company')]);
+            }
             return redirect('admins/company');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Company fail','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Create Company failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back();
         }
     }
@@ -113,10 +119,16 @@ class CompanyController extends Controller
             ]);
             DB::commit();
             Toastr::success('Updated Company Successfull.','Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Updated Company successfully.', 'redirect' => url('admins/company')]);
+            }
             return redirect('admins/company');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Updated Company fail','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Updated Company failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back();
         }
     }

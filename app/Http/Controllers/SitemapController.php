@@ -11,12 +11,10 @@ class SitemapController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-        $categories = ProductCategory::all();
+        $products = Product::select('id', 'name', 'slug', 'updated_at')->get();
 
         return Response::view('sitemap', [
             'products' => $products,
-            'categories' => $categories,
         ])->header('Content-Type', 'text/xml');
     }
 }

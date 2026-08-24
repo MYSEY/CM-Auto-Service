@@ -115,10 +115,16 @@ class EngineController extends Controller
             $engine->update($data);
             DB::commit();
             Toastr::success('Product Engine updated successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Product Engine updated successfully!', 'redirect' => url('admins/engine')]);
+            }
             return redirect('admins/engine');
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Update Product Engine fail.','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Update Engine failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }

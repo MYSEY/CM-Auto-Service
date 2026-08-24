@@ -604,6 +604,11 @@
                     }
                 });
             });
+
+            $(document).on('click', '.cart_close, .mini_cart_close, .off_canvars_overlay', function (e) {
+                e.preventDefault();
+                $('.mini_cart, .off_canvars_overlay').removeClass('active open');
+            });
         });
     </script>
     <script>

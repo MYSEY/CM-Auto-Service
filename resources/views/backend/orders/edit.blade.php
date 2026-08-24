@@ -58,7 +58,7 @@
                     <div class="form-group mb-0" style="text-align: right;">
                         <input type="text" id="order_id" value="{{ $data->id }}" hidden>
                         <a href="{{url('admins/order')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
-                        <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed" id="btnCreate">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-pills waves-effect waves-themed" id="btnCreate">Submit</button>
                     </div>
                 </div>
             </div>

@@ -2,47 +2,42 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        <div class="card mb-g border-0 shadow-sm bg-white p-3" style="border-radius: 12px;">
-            <div class="row mb-2 align-items-center">
-                <div class='col-md-4'>
-                    <label class="form-label text-muted">Name</label>
-                    <input type="text" name="name" value="" id="name" class='form-control shadow-none border-light-dark'>
+        <div class="card mb-4 border-0 shadow-sm bg-white p-4" style="border-radius: 16px;">
+            <div class="d-flex align-items-center mb-3">
+                <i class="fal fa-filter text-primary mr-2 fs-lg"></i>
+                <h5 class="mb-0 font-weight-bold text-dark">Filter Products</h5>
+            </div>
+            <div class="row align-items-end">
+                <div class='col-md-3 mb-3 mb-md-0'>
+                    <label class="form-label font-weight-bold text-muted fs-xs text-uppercase">Name</label>
+                    <input type="text" name="name" value="" id="name" placeholder="Search by product name..." class='form-control shadow-none'>
                 </div>
-                <div class='col-md-4'>
-                    <label class="form-label text-muted">Product Type</label>
+                <div class='col-md-3 mb-3 mb-md-0'>
+                    <label class="form-label font-weight-bold text-muted fs-xs text-uppercase">Product Type</label>
                     <select class="select2 form-control w-100" name="product_type_id" id="product_type_id">
-                        <option value="">-- Select --</option>
+                        <option value="">-- Select Type --</option>
                         @foreach ($productTypes as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
-                <div class='col-md-4'>
-                    <label class="form-label text-muted">Category</label>
+                <div class='col-md-2 mb-3 mb-md-0'>
+                    <label class="form-label font-weight-bold text-muted fs-xs text-uppercase">Category</label>
                     <select class="select2 form-control w-100" name="category_id" id="category_id">
-                        <option value="">-- Select --</option>
+                        <option value="">-- Category --</option>
                         @foreach ($dataCategory as $item)
                             <option value="{{$item->id}}">{{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-            <div class="row mb-3 align-items-center">
-                <div class='col-md-4'>
-                    <label class="form-label text-muted">Sub Category</label>
+                <div class='col-md-2 mb-3 mb-md-0'>
+                    <label class="form-label font-weight-bold text-muted fs-xs text-uppercase">Sub Category</label>
                     <select class="select2 form-control w-100 sub_category" name="sub_category_id" id="sub_category_id">
-                        <option value="">-- Select --</option>
+                        <option value="">-- Sub Category --</option>
                     </select>
                 </div>
-                <div class='col-md-4'>
-                    <label class="form-label text-muted">Engine</label>
-                    <select class="select2 form-control w-100 engine_id" name="engine_id" id="engine_id">
-                        <option value="">-- Select --</option>
-                    </select>
-                </div>
-                <div class='col-md-1'>
-                    <label for=""></label>
-                    <button type="submit" id="btnSearch" class="btn btn-primary btn-block mt-2 rounded-pill shadow-sm">
+                <div class='col-md-2'>
+                    <button type="submit" id="btnSearch" class="btn btn-primary btn-block rounded-pill font-weight-bold shadow-sm" style="height: 42px;">
                         <i class="fal fa-search mr-1"></i> Search
                     </button>
                 </div>

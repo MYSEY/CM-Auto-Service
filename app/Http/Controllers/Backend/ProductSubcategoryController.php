@@ -47,10 +47,16 @@ class ProductSubcategoryController extends Controller
             ProductSubCategory::create($data);
             DB::commit();
             Toastr::success('Create Sub Category successfully.','Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Create Sub Category successfully.', 'redirect' => url('admins/sub-category')]);
+            }
             return redirect('admins/sub-category');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Sub Category fail','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Create Sub Category failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back();
         }
     }
@@ -97,10 +103,16 @@ class ProductSubcategoryController extends Controller
             $subCategory->update($data);
             DB::commit();
             Toastr::success('Product Sub Category updated successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Product Sub Category updated successfully!', 'redirect' => url('admins/sub-category')]);
+            }
             return redirect('admins/sub-category');
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Update Product Sub-Category fail.','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Update Sub Category failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }

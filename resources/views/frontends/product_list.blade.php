@@ -2,8 +2,10 @@
     .pagination li.current span {
         background: #220070;
         color: #fff;
-        padding: 6px 12px;
-        border-radius: 4px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(34, 0, 112, 0.3);
     }
 </style>
 <div class="product-grid-container">

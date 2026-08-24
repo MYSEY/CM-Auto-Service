@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group mb-0" style="text-align: right;">
                             <a href="{{url('admins/product-type')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">Cancel</a>
-                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</button>
+                            <button type="submit" id="submit-btn" class="btn btn-primary btn-pills waves-effect waves-themed">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -43,16 +43,48 @@
 @endsection
 @section('script')
     <script>
-        $(function(){
-            $(document).on('change','#profile', function() {
-                if (this.files && this.files[0]) {
-                    let img = document.querySelector('.image_preview');
-                    img.onload = () =>{
-                        URL.revokeObjectURL(img.src);
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                var form = this;
+                var btn = $('#submit-btn');
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+
+                var formData = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(form).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        btn.prop('disabled', false).text('Submit');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(res.message || 'Product type updated successfully!');
+                        }
+                        if (res.redirect) {
+                            setTimeout(function() {
+                                window.location.href = res.redirect;
+                            }, 800);
+                        }
+                    },
+                    error: function(err) {
+                        btn.prop('disabled', false).text('Submit');
+                        var msg = 'Product type update failed.';
+                        if (err.responseJSON && err.responseJSON.message) {
+                            msg = err.responseJSON.message;
+                        }
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(msg);
+                        } else {
+                            alert(msg);
+                        }
                     }
-                    img.src = URL.createObjectURL(this.files[0]);
-                    document.querySelector(".image_preview").files = this.files;
-                }
+                });
             });
         });
     </script>

@@ -278,30 +278,4 @@
     </div>
     <!--newsletter area end-->
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(function(){
-        $(document).on('click', '.addToCart', function () {
-            let id = $(this).data('id');
-            $.ajax({
-                url: "{{ route('addToCart') }}",
-                type: "POST",
-                data: {
-                    id: id,
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function (res) {
-                    if (res.status === 'success') {
-                        $('.cart_count').text(res.count);
-                        $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
-                    } else {
-                        alert(res.message);
-                    }
-                },
-                error: function () {
-                    alert('Something went wrong!');
-                }
-            });
-        });
-    });
-</script>
+

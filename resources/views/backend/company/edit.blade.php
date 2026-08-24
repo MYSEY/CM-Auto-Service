@@ -65,7 +65,7 @@
                                         <div class="mb-2" style="text-align: right;">
                                             <input type="hidden" name="old_profile" id="old_profile" value="{{$data->company_logo}}">
                                             <input type="hidden" name="id" value="{{ $data->id}}">
-                                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.update')</button>
+                                            <button type="submit" id="submit-btn" class="btn btn-primary btn-pills waves-effect waves-themed">@lang('lang.update')</button>
                                         </div>
                                     </div>
                                 </div>
@@ -88,6 +88,51 @@
                 img.src = URL.createObjectURL(this.files[0]);
                 document.querySelector(".imagestaff_preview").files = this.files;
             }
+        });
+
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                var form = this;
+                var btn = $('#submit-btn');
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+
+                var formData = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(form).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        btn.prop('disabled', false).text('@lang("lang.update")');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(res.message || 'Updated Company successfully.');
+                        }
+                        if (res.redirect) {
+                            setTimeout(function() {
+                                window.location.href = res.redirect;
+                            }, 800);
+                        }
+                    },
+                    error: function(err) {
+                        btn.prop('disabled', false).text('@lang("lang.update")');
+                        var msg = 'Updated Company failed.';
+                        if (err.responseJSON && err.responseJSON.message) {
+                            msg = err.responseJSON.message;
+                        }
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(msg);
+                        } else {
+                            alert(msg);
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endsection

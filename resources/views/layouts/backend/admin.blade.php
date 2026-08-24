@@ -36,123 +36,470 @@
 
     {{-- Core Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <style>
         /* ------------------------------------------------------------------- */
-        /* MODERN BACKEND ADMIN DESIGN SYSTEM                                  */
+        /* MODERN BACKEND ADMIN PREMIUM DESIGN SYSTEM                          */
         /* ------------------------------------------------------------------- */
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Battambang:wght@400;700&display=swap');
+
+        :root {
+            --admin-primary: #0f172a;
+            --admin-accent: #2563eb;
+            --admin-indigo: #4f46e5;
+            --admin-bg: #f8fafc;
+            --admin-card-bg: #ffffff;
+            --admin-border: #e2e8f0;
+            --admin-text-main: #0f172a;
+            --admin-text-muted: #64748b;
+        }
+
+        body, table, th, td, .table, .dataTable, form, input, select, textarea, button, label, .form-control, .select2, .select2-container, .dropdown-menu, .dropdown-item, .note-editor, .note-editable, .btn, .panel-hdr, h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', 'Kantumruy Pro', 'Battambang', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
+        }
 
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-            background-color: #f8fafc !important;
-            color: #0f172a;
+            background-color: var(--admin-bg) !important;
+            color: var(--admin-text-main);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         /* 1. Page Sidebar & Navigation */
         .page-sidebar {
-            background: linear-gradient(180deg, #090038 0%, #17005e 100%) !important;
-            box-shadow: 4px 0 24px rgba(15, 23, 42, 0.12) !important;
+            background: linear-gradient(180deg, #090d16 0%, #0f172a 50%, #1e1b4b 100%) !important;
+            box-shadow: 4px 0 28px rgba(15, 23, 42, 0.15) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .page-logo {
-            background: rgba(0, 0, 0, 0.25) !important;
+            background: rgba(15, 23, 42, 0.6) !important;
+            backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            padding: 0 16px !important;
         }
 
         .page-logo-text {
             color: #ffffff !important;
             font-weight: 800 !important;
-            font-size: 15px !important;
-            letter-spacing: 0.5px;
+            font-size: 16px !important;
+            letter-spacing: 0.3px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            padding: 12px 6px !important;
         }
 
         .nav-menu li a {
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(226, 232, 240, 0.8) !important;
             font-weight: 600 !important;
-            font-size: 13px !important;
+            font-size: 13.5px !important;
             padding: 10px 16px !important;
-            border-radius: 8px !important;
-            margin: 2px 8px !important;
-            transition: all 0.22s ease-in-out !important;
+            border-radius: 10px !important;
+            margin: 3px 6px !important;
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
         .nav-menu li a:hover,
         .nav-menu li.active > a {
-            background: rgba(255, 255, 255, 0.14) !important;
-            color: #ffb800 !important;
-            transform: translateX(3px);
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #60a5fa !important;
+            transform: translateX(4px);
         }
 
         .nav-menu li.active > a {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(79, 70, 229, 0.35) 100%) !important;
+            color: #93c5fd !important;
             font-weight: 700 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+            border-left: 3px solid #3b82f6;
         }
 
-        .nav-menu li a i {
-            color: rgba(255, 255, 255, 0.75) !important;
-            font-size: 15px !important;
-            transition: color 0.2s ease;
+        /* Sidebar Navigation & Sub-menu Alignment */
+        .nav-menu ul li a,
+        .nav-menu li ul li a {
+            padding-left: 34px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .nav-menu li a i,
+        .nav-menu ul li a i,
+        .nav-menu li ul li a i,
+        .page-sidebar .nav-menu ul li a i {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: rgba(148, 163, 184, 0.85) !important;
+            font-size: 14px !important;
+            width: 22px !important;
+            min-width: 22px !important;
+            margin-right: 10px !important;
+            margin-left: 2px !important;
+            transition: all 0.2s ease !important;
         }
 
         .nav-menu li:hover > a i,
-        .nav-menu li.active > a i {
-            color: #ffb800 !important;
+        .nav-menu li.active > a i,
+        .nav-menu ul li:hover > a i,
+        .nav-menu ul li.active > a i {
+            color: #60a5fa !important;
+            transform: scale(1.1) !important;
         }
 
         .nav-menu sub {
-            background: rgba(0, 0, 0, 0.2) !important;
-            border-radius: 8px !important;
-            margin: 4px 8px !important;
-            padding: 4px 0 !important;
+            background: rgba(0, 0, 0, 0.25) !important;
+            border-radius: 10px !important;
+            margin: 4px 6px !important;
+            padding: 6px 0 !important;
         }
 
         /* 2. Page Header Bar */
         .page-header {
-            background: #ffffff !important;
-            box-shadow: 0 2px 14px rgba(15, 23, 42, 0.06) !important;
-            border-bottom: 1px solid #e2e8f0 !important;
-            height: 3.8rem !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 16px rgba(15, 23, 42, 0.04) !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            height: 4.1rem !important;
         }
 
         .header_search input,
-        .header-search input {
-            border-radius: 20px !important;
+        .header-search input,
+        .search input#search-field {
+            border-radius: 30px !important;
             border: 1px solid #cbd5e1 !important;
-            background: #f8fafc !important;
-            padding: 6px 16px !important;
+            background: #f1f5f9 !important;
+            padding: 8px 18px !important;
             font-size: 13px !important;
-            transition: all 0.2s ease;
+            transition: all 0.22s ease;
         }
 
         .header_search input:focus,
-        .header-search input:focus {
+        .header-search input:focus,
+        .search input#search-field:focus {
             background: #ffffff !important;
-            border-color: #17005e !important;
-            box-shadow: 0 0 0 3px rgba(23, 0, 94, 0.15) !important;
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
         }
 
-        /* 3. Cards & Panels */
+        /* 3. Cards & Panels Modernization */
         .panel,
         .card {
-            border-radius: 14px !important;
-            border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
-            background: #ffffff !important;
+            border-radius: 16px !important;
+            border: 1px solid var(--admin-border) !important;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+            background: var(--admin-card-bg) !important;
             overflow: hidden;
             margin-bottom: 1.5rem;
+            transition: box-shadow 0.25s ease, transform 0.25s ease;
+        }
+
+        .panel:hover,
+        .card:hover {
+            box-shadow: 0 8px 28px rgba(15, 23, 42, 0.07) !important;
         }
 
         .panel-hdr {
             background: #ffffff !important;
-            border-bottom: 1px solid #e2e8f0 !important;
-            padding: 14px 20px !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            padding: 16px 22px !important;
         }
 
         .panel-hdr h2 {
-            font-weight: 700 !important;
-            font-size: 15px !important;
+            font-weight: 800 !important;
+            font-size: 15.5px !important;
             color: #0f172a !important;
+            letter-spacing: -0.01em;
+        }
+
+        /* Form Inputs & Select Controls Modernization */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label, label.form-label {
+            font-weight: 700 !important;
+            font-size: 12px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #475569 !important;
+            margin-bottom: 6px !important;
+            display: inline-block;
+        }
+
+        .form-control, .custom-select, select.form-control {
+            border-radius: 10px !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 9px 14px !important;
+            font-size: 13.5px !important;
+            color: #0f172a !important;
+            background-color: #f8fafc !important;
+            height: auto !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .form-control:focus, .custom-select:focus, select.form-control:focus {
+            background-color: #ffffff !important;
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.14) !important;
+        }
+
+        /* Select2 Single Dropdown Modernization */
+        .select2-container--default .select2-selection--single {
+            border-radius: 10px !important;
+            border: 1px solid #cbd5e1 !important;
+            background-color: #f8fafc !important;
+            height: 42px !important;
+            padding: 6px 10px !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #0f172a !important;
+            line-height: 28px !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 40px !important;
+            right: 8px !important;
+        }
+
+        .select2-container--default.select2-container--focus .select2-selection--single,
+        .select2-container--default.select2-container--open .select2-selection--single {
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3.5px rgba(37, 99, 235, 0.14) !important;
+            background-color: #ffffff !important;
+        }
+
+        .select2-dropdown {
+            border-radius: 12px !important;
+            border: 1px solid #93c5fd !important;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.12) !important;
+            overflow: hidden !important;
+        }
+
+        /* Select2 Dropdown Options & Blue Styling */
+        .select2-container--default .select2-results__option {
+            padding: 9px 14px !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            color: #1e293b !important;
+            transition: all 0.15s ease !important;
+        }
+
+        /* Hover / Highlighted item in dropdown list -> Blue */
+        .select2-container--default .select2-results__option--highlighted[aria-selected],
+        .select2-container--default .select2-results__option--highlighted[aria-selected="true"] {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+            color: #ffffff !important;
+        }
+
+        /* Selected item in dropdown list -> Soft Blue Highlight */
+        .select2-container--default .select2-results__option[aria-selected="true"] {
+            background-color: #eff6ff !important;
+            color: #1d4ed8 !important;
+            font-weight: 700 !important;
+            border-left: 4px solid #2563eb !important;
+        }
+
+        /* Search input inside Select2 Dropdown */
+        .select2-search--dropdown {
+            padding: 8px !important;
+            background-color: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        .select2-search--dropdown .select2-search__field {
+            border-radius: 8px !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 7px 12px !important;
+            font-size: 13px !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .select2-search--dropdown .select2-search__field:focus {
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+            background-color: #ffffff !important;
+        }
+
+        /* Bootstrap Dropdown Menu & Item Styling -> Blue Hover/Active */
+        .dropdown-menu {
+            border-radius: 12px !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1) !important;
+            padding: 6px !important;
+        }
+
+        .dropdown-item {
+            border-radius: 8px !important;
+            padding: 8px 14px !important;
+            font-size: 13.5px !important;
+            font-weight: 500 !important;
+            color: #1e293b !important;
+            transition: all 0.15s ease !important;
+        }
+
+        .dropdown-item:hover, 
+        .dropdown-item:focus, 
+        .dropdown-item.active,
+        .dropdown-item:active {
+            background-color: #eff6ff !important;
+            color: #2563eb !important;
+            font-weight: 600 !important;
+        }
+
+        /* Summernote Rich Text Editor Toolbar & Icon Fallbacks */
+        .note-editor.note-frame {
+            border-radius: 12px !important;
+            border: 1px solid #cbd5e1 !important;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03) !important;
+            overflow: hidden !important;
+        }
+
+        .note-editor.note-frame .note-toolbar {
+            background: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding: 8px !important;
+        }
+
+        .note-editor.note-frame .note-btn {
+            border-radius: 6px !important;
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #334155 !important;
+            padding: 5px 10px !important;
+            font-size: 13px !important;
+            margin: 2px !important;
+            transition: all 0.15s ease !important;
+        }
+
+        .note-editor.note-frame .note-btn:hover,
+        .note-editor.note-frame .note-btn:focus,
+        .note-editor.note-frame .note-btn.active {
+            background: #eff6ff !important;
+            border-color: #2563eb !important;
+            color: #2563eb !important;
+        }
+
+        /* Fallback FontAwesome icons for Summernote Toolbar */
+        .note-icon-bold::before { content: "\f032" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-italic::before { content: "\f033" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-underline::before { content: "\f0cd" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-strikethrough::before { content: "\f0cc" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-link::before { content: "\f0c1" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-picture::before { content: "\f03e" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-video::before { content: "\f03d" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-table::before { content: "\f0ce" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-align-left::before { content: "\f036" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-align-center::before { content: "\f037" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-align-right::before { content: "\f038" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-align-justify::before { content: "\f039" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-unorderedlist::before { content: "\f0ca" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-orderedlist::before { content: "\f0cb" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-font::before { content: "\f031" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-code::before { content: "\f121" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-arrows-alt::before { content: "\f0b2" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-question::before { content: "\f059" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-eraser::before { content: "\f12d" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-superscript::before { content: "\f12b" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-subscript::before { content: "\f12c" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+        .note-icon-caret::before { content: "\f0d7" !important; font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", sans-serif !important; font-weight: 900 !important; }
+
+        /* Figma & Linear Design System UI Tokens */
+        .figma-card {
+            background: #ffffff !important;
+            border-radius: 18px !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .figma-card:hover {
+            box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08) !important;
+            transform: translateY(-3px) !important;
+        }
+
+        .figma-badge-green { background: #d1fae5 !important; color: #047857 !important; border-radius: 20px !important; font-weight: 700; padding: 4px 12px; font-size: 11.5px; }
+        .figma-badge-blue { background: #e0f2fe !important; color: #0369a1 !important; border-radius: 20px !important; font-weight: 700; padding: 4px 12px; font-size: 11.5px; }
+        .figma-badge-purple { background: #f3e8ff !important; color: #6b21a8 !important; border-radius: 20px !important; font-weight: 700; padding: 4px 12px; font-size: 11.5px; }
+        .figma-badge-amber { background: #fef3c7 !important; color: #b45309 !important; border-radius: 20px !important; font-weight: 700; padding: 4px 12px; font-size: 11.5px; }
+        .figma-badge-red { background: #ffe4e6 !important; color: #be123c !important; border-radius: 20px !important; font-weight: 700; padding: 4px 12px; font-size: 11.5px; }
+
+        .figma-step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 12px;
+            margin-right: 8px;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .figma-dropzone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            background: #f8fafc;
+            transition: all 0.22s ease;
+        }
+
+        .figma-dropzone:hover {
+            border-color: #2563eb;
+            background: #f0f7ff;
+        }
+
+        /* Modern Form Section Headers */
+        .form-section-divider {
+            border-left: 4px solid #2563eb;
+            padding-left: 12px;
+            margin: 24px 0 16px 0;
+        }
+
+        .form-section-divider h6 {
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-section-divider p {
+            font-size: 12px;
+            color: #64748b;
+            margin: 0;
         }
 
         /* 4. DataTables & Tables Styling */
@@ -163,60 +510,67 @@
         }
 
         .table thead th {
-            background-color: #f1f5f9 !important;
+            background-color: #f8fafc !important;
             font-weight: 700 !important;
             text-transform: uppercase;
             font-size: 11px !important;
-            letter-spacing: 0.5px;
-            color: #475569 !important;
+            letter-spacing: 0.6px;
+            color: #64748b !important;
             border-bottom: 2px solid #e2e8f0 !important;
             vertical-align: middle !important;
-            padding: 12px 14px !important;
+            padding: 14px 16px !important;
         }
 
         .table td {
             vertical-align: middle !important;
-            padding: 10px 14px !important;
+            padding: 12px 16px !important;
             border-top: 1px solid #f1f5f9 !important;
         }
 
+        .table-hover tbody tr {
+            transition: background-color 0.18s ease;
+        }
+
         .table-hover tbody tr:hover {
-            background-color: #f8fafc !important;
+            background-color: #f1f5f9 !important;
         }
 
         /* 5. Status Badges & Action Buttons */
         .badge-pill,
         .badge {
             font-weight: 700 !important;
-            padding: 5px 12px !important;
+            padding: 6px 14px !important;
             border-radius: 20px !important;
-            font-size: 11px !important;
+            font-size: 11.5px !important;
             letter-spacing: 0.3px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
 
         .badge-success { background-color: #10b981 !important; color: #fff !important; }
-        .badge-primary { background-color: #17005e !important; color: #fff !important; }
+        .badge-primary { background-color: #2563eb !important; color: #fff !important; }
         .badge-warning { background-color: #f59e0b !important; color: #fff !important; }
         .badge-danger { background-color: #ef4444 !important; color: #fff !important; }
+        .badge-info { background-color: #0284c7 !important; color: #fff !important; }
+        .badge-secondary { background-color: #64748b !important; color: #fff !important; }
 
         .btn-icon.btn-xs {
-            width: 30px !important;
-            height: 30px !important;
-            border-radius: 50% !important;
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 10px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             transition: all 0.2s ease !important;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
         }
 
         .btn-icon.btn-xs:hover {
-            transform: translateY(-2px) scale(1.08) !important;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+            transform: translateY(-2px) scale(1.05) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;
         }
 
         .page-footer {
-            height: 3rem;
+            height: 3.2rem;
             background: #ffffff;
             border-top: 1px solid #e2e8f0;
             display: flex;
@@ -228,11 +582,11 @@
 
         /* 6. Unified DataTables & Pagination Control Template */
         .dataTables_wrapper {
-            padding: 16px !important;
+            padding: 18px !important;
         }
 
         .dataTables_wrapper .dataTables_paginate {
-            margin-top: 16px !important;
+            margin-top: 18px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: flex-end !important;
@@ -241,14 +595,14 @@
 
         .dataTables_wrapper .dataTables_paginate .paginate_button,
         .pagination .page-item .page-link {
-            border-radius: 8px !important;
+            border-radius: 10px !important;
             margin: 0 2px !important;
             border: 1px solid #cbd5e1 !important;
             background: #ffffff !important;
             color: #334155 !important;
             font-weight: 600 !important;
-            font-size: 12px !important;
-            padding: 6px 12px !important;
+            font-size: 12.5px !important;
+            padding: 6px 14px !important;
             transition: all 0.2s ease !important;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03) !important;
         }
@@ -258,10 +612,10 @@
         .dataTables_wrapper .dataTables_paginate .paginate_button:hover,
         .pagination .page-item.active .page-link,
         .pagination .page-item .page-link:hover {
-            background: linear-gradient(135deg, #17005e 0%, #2c0099 100%) !important;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
             color: #ffffff !important;
-            border-color: #17005e !important;
-            box-shadow: 0 4px 12px rgba(23, 0, 94, 0.25) !important;
+            border-color: #2563eb !important;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
@@ -275,9 +629,9 @@
 
         .dataTables_wrapper .dataTables_filter input,
         .dataTables_wrapper .dataTables_length select {
-            border-radius: 8px !important;
+            border-radius: 10px !important;
             border: 1px solid #cbd5e1 !important;
-            padding: 6px 12px !important;
+            padding: 6px 14px !important;
             font-size: 13px !important;
             background: #f8fafc !important;
             color: #0f172a !important;
@@ -288,35 +642,36 @@
         .dataTables_wrapper .dataTables_filter input:focus,
         .dataTables_wrapper .dataTables_length select:focus {
             background: #ffffff !important;
-            border-color: #17005e !important;
-            box-shadow: 0 0 0 3px rgba(23, 0, 94, 0.12) !important;
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
         }
 
         .dataTables_wrapper .dataTables_info {
             color: #64748b !important;
             font-size: 13px !important;
             font-weight: 600 !important;
-            padding-top: 10px !important;
+            padding-top: 12px !important;
         }
 
         /* 7. VIBRANT BLUE PRIMARY & ADD NEW BUTTONS */
         .btn-primary,
         .btn-primary:not(:disabled):not(.disabled) {
-            background: linear-gradient(135deg, #0084ff 0%, #0066cc 100%) !important;
-            border-color: #0066cc !important;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+            border-color: #1d4ed8 !important;
             color: #ffffff !important;
-            box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3) !important;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
             font-weight: 700 !important;
+            border-radius: 10px !important;
             transition: all 0.22s ease-in-out !important;
         }
 
         .btn-primary:hover,
         .btn-primary:focus,
         .btn-primary:not(:disabled):not(.disabled):hover {
-            background: linear-gradient(135deg, #0073e6 0%, #0052a3 100%) !important;
-            border-color: #0052a3 !important;
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+            border-color: #1e40af !important;
             color: #ffffff !important;
-            box-shadow: 0 6px 16px rgba(0, 132, 255, 0.45) !important;
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45) !important;
             transform: translateY(-2px) !important;
         }
     </style>
@@ -417,11 +772,13 @@
                                 <ul>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['chat'])) active @endif">
                                         <a href="{{ url('admins/chat') }}" title="Chat Inbox">
+                                            <i class="fal fa-inbox"></i>
                                             <span class="nav-link-text">Chat Inbox</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['chatbot'])) active @endif">
                                         <a href="{{ url('admins/chatbot') }}" title="Chat Bot">
+                                            <i class="fal fa-comment-alt"></i>
                                             <span class="nav-link-text">Chat Bot</span>
                                         </a>
                                     </li>
@@ -436,26 +793,31 @@
                                 <ul>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['product'])) active @endif">
                                         <a href="{{ url('admins/product') }}" title="Products">
+                                            <i class="fal fa-box"></i>
                                             <span class="nav-link-text" data-i18n="nav.products">Products</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['product-type'])) active @endif">
                                         <a href="{{ url('admins/product-type') }}" title="Product Type">
+                                            <i class="fal fa-tags"></i>
                                             <span class="nav-link-text">Product Type</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['category'])) active @endif">
                                         <a href="{{ url('admins/category') }}" title="Category">
+                                            <i class="fal fa-folder"></i>
                                             <span class="nav-link-text">Category</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['sub-category'])) active @endif">
                                         <a href="{{ url('admins/sub-category') }}" title="Sub Category">
+                                            <i class="fal fa-folder-open"></i>
                                             <span class="nav-link-text">Sub Category</span>
                                         </a>
                                     </li>
                                     <li class="@if (in_array(Request::instance()->segment(2), ['engine'])) active @endif">
                                         <a href="{{ url('admins/engine') }}" title="Engine">
+                                            <i class="fal fa-cogs"></i>
                                             <span class="nav-link-text">Engine</span>
                                         </a>
                                     </li>
@@ -493,13 +855,28 @@
 
                             <li>
                                 <a href="#" title="Role Permission" data-filter-tags="role permission">
-                                    <i class="fal fa-user-shield"></i>
+                                    <i class="fal fa-shield-alt"></i>
                                     <span class="nav-link-text">Role Permission</span>
                                 </a>
                                 <ul>
-                                    <li><a href="#"><span class="nav-link-text">Role</span></a></li>
-                                    <li><a href="#"><span class="nav-link-text">Permission</span></a></li>
-                                    <li><a href="#"><span class="nav-link-text">Permission Category</span></a></li>
+                                    <li>
+                                        <a href="#" title="Role">
+                                            <i class="fal fa-user-circle"></i>
+                                            <span class="nav-link-text">Role</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Permission">
+                                            <i class="fal fa-key"></i>
+                                            <span class="nav-link-text">Permission</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title="Permission Category">
+                                            <i class="fal fa-tags"></i>
+                                            <span class="nav-link-text">Permission Category</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>

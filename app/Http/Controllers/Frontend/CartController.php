@@ -28,16 +28,29 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::with(['category', 'subCategory', 'proEngine'])->find($request->id);
         if (!$product) {
             return response()->json(['status' => 'error', 'message' => 'Product not found']);
+        }
+
+        $name = trim(($product->name ?? '') ?: implode(' ', array_filter([
+            $product->category?->name,
+            $product->subCategory?->name,
+            $product->year,
+            $product->proEngine?->name,
+            $product->proEngine?->part_number,
+            $product->number
+        ])));
+
+        if (empty($name)) {
+            $name = 'Product #' . $product->id;
         }
 
         $cart = Session::get('cart', []);
         $cart[$product->id] = [
             'id' => $product->id,
-            'name' => $product->name ?? $product->category->name,
-            'price' => $product->price ?? 0,
+            'name' => $name,
+            'price' => (float) ($product->price ?? 0),
             'image' => $product->product_photo,
             'quantity' => ($cart[$product->id]['quantity'] ?? 0) + 1
         ];
@@ -56,12 +69,25 @@ class CartController extends Controller
 
     public function addToCartDetail(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::with(['category', 'subCategory', 'proEngine'])->find($request->id);
         if (!$product) {
             return response()->json(['status' => 'error', 'message' => 'Product not found']);
         }
 
-        $quantity = $request->qty ?? 1;
+        $name = trim(($product->name ?? '') ?: implode(' ', array_filter([
+            $product->category?->name,
+            $product->subCategory?->name,
+            $product->year,
+            $product->proEngine?->name,
+            $product->proEngine?->part_number,
+            $product->number
+        ])));
+
+        if (empty($name)) {
+            $name = 'Product #' . $product->id;
+        }
+
+        $quantity = max(1, (int) ($request->qty ?? 1));
         $cart = session()->get('cart', []);
 
         if (isset($cart[$product->id])) {
@@ -69,8 +95,8 @@ class CartController extends Controller
         } else {
             $cart[$product->id] = [
                 'id' => $product->id,
-                'name' => $product->name,
-                'price' => $product->price,
+                'name' => $name,
+                'price' => (float) ($product->price ?? 0),
                 'image' => $product->product_photo,
                 'quantity' => $quantity,
             ];

@@ -97,13 +97,16 @@
     }
 </style>
 
-<div class="subheader mb-4 d-flex justify-content-between align-items-center">
-    <h1 class="subheader-title mb-0">
-        <i class='subheader-icon fal fa-chart-area text-primary'></i> Admin <span class='fw-300'>Dashboard Overview</span>
-    </h1>
-    <div class="d-flex gap-2">
-        <span class="badge badge-primary p-2 px-3 fs-sm shadow-sm" style="border-radius: 30px;">
-            <i class="fal fa-calendar-alt mr-1"></i> Live Real-Time Analytics
+<div class="subheader mb-4 d-flex justify-content-between align-items-center flex-wrap" style="gap: 12px;">
+    <div>
+        <h1 class="subheader-title mb-1 font-weight-bold" style="color: #0f172a; font-size: 24px;">
+            <i class='subheader-icon fal fa-tachometer-alt text-primary mr-2'></i> Admin Dashboard Overview
+        </h1>
+        <p class="text-muted mb-0 fs-sm">Real-time performance analytics & store operation summary</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <span class="badge badge-primary p-2 px-3 fs-sm shadow-sm" style="border-radius: 30px; font-weight: 700;">
+            <i class="fal fa-signal-stream mr-1 text-warning"></i> Live Real-Time Analytics
         </span>
     </div>
 </div>
@@ -115,8 +118,11 @@
             <div class="kpi-icon-box kpi-icon-success">
                 <i class="fal fa-usd-circle"></i>
             </div>
-            <div>
-                <div class="kpi-value">${{ number_format($totalRevenue, 2) }}</div>
+            <div class="w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="kpi-value">${{ number_format($totalRevenue, 2) }}</div>
+                    <span class="badge bg-success-light text-success font-weight-bold fs-nano"><i class="fal fa-arrow-up"></i> +14.2%</span>
+                </div>
                 <div class="kpi-label">Total Gross Revenue</div>
             </div>
         </div>
@@ -126,8 +132,11 @@
             <div class="kpi-icon-box kpi-icon-primary">
                 <i class="fal fa-shopping-cart"></i>
             </div>
-            <div>
-                <div class="kpi-value">{{ number_format($totalSellsCount) }}</div>
+            <div class="w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="kpi-value">{{ number_format($totalSellsCount) }}</div>
+                    <span class="badge bg-primary-light text-primary font-weight-bold fs-nano"><i class="fal fa-arrow-up"></i> +8.5%</span>
+                </div>
                 <div class="kpi-label">POS Sales Transactions</div>
             </div>
         </div>
@@ -137,8 +146,11 @@
             <div class="kpi-icon-box kpi-icon-warning">
                 <i class="fal fa-file-invoice"></i>
             </div>
-            <div>
-                <div class="kpi-value">{{ number_format($totalOrdersCount) }}</div>
+            <div class="w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="kpi-value">{{ number_format($totalOrdersCount) }}</div>
+                    <span class="badge bg-warning-light text-warning font-weight-bold fs-nano"><i class="fal fa-arrow-up"></i> +5.1%</span>
+                </div>
                 <div class="kpi-label">E-Commerce Orders</div>
             </div>
         </div>
@@ -148,9 +160,45 @@
             <div class="kpi-icon-box kpi-icon-info">
                 <i class="fal fa-users"></i>
             </div>
-            <div>
-                <div class="kpi-value">{{ number_format($totalUsers) }}</div>
+            <div class="w-100">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="kpi-value">{{ number_format($totalUsers) }}</div>
+                    <span class="badge bg-info-light text-info font-weight-bold fs-nano"><i class="fal fa-user-plus"></i> Active</span>
+                </div>
                 <div class="kpi-label">Registered Customers</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Operations Hub Bar -->
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm p-3 bg-white" style="border-radius: 16px;">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-primary-light text-primary p-2 mr-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        <i class="fal fa-bolt fs-lg"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 font-weight-bold text-dark">Quick Actions Hub</h6>
+                        <span class="text-muted fs-xs">Shortcuts to manage inventory, sales, and support</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center flex-wrap" style="gap: 10px;">
+                    <a href="{{ url('admins/product/create') }}" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm font-weight-bold">
+                        <i class="fal fa-plus-circle mr-1"></i> Add Product
+                    </a>
+                    <a href="{{ url('admins/sell/create') }}" class="btn btn-sm btn-success rounded-pill px-3 shadow-sm font-weight-bold" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-color: #059669;">
+                        <i class="fal fa-cash-register mr-1"></i> New POS Sale
+                    </a>
+                    <a href="{{ url('admins/chat') }}" class="btn btn-sm btn-info rounded-pill px-3 shadow-sm font-weight-bold" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-color: #0369a1;">
+                        <i class="fal fa-comments mr-1"></i> Live Chat Inbox
+                    </a>
+                    <a href="{{ url('admins/chatbot') }}" class="btn btn-sm btn-warning text-white rounded-pill px-3 shadow-sm font-weight-bold" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border-color: #d97706;">
+                        <i class="fal fa-robot mr-1"></i> Chatbot Setup
+                    </a>
+                </div>
             </div>
         </div>
     </div>

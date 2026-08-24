@@ -164,11 +164,17 @@ class ProductController extends Controller
 
             DB::commit();
             Toastr::success('Product created successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Product created successfully!', 'redirect' => url('admins/product')]);
+            }
             return redirect()->back();
 
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Product creation failed: ' . $e->getMessage(), 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Product creation failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }
@@ -298,11 +304,17 @@ class ProductController extends Controller
 
             DB::commit();
             Toastr::success('Product updated successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Product updated successfully!', 'redirect' => url('admins/product')]);
+            }
             return redirect('admins/product');
 
         } catch (\Exception $e) {
             DB::rollBack();
             Toastr::error('Product update failed: ' . $e->getMessage(), 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Product update failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }
@@ -314,17 +326,22 @@ class ProductController extends Controller
     {
         DB::beginTransaction();
         try {
-            // Delete product main photo if exists
-            if ($product->product_photo && file_exists(public_path('images/products/' . $product->product_photo))) {
-                unlink(public_path('images/products/' . $product->product_photo));
+            // Delete product main photo if exists on R2 or local
+            if ($product->product_photo) {
+                Storage::disk('r2')->delete($product->product_photo);
+                if (file_exists(public_path('images/products/' . $product->product_photo))) {
+                    @unlink(public_path('images/products/' . $product->product_photo));
+                }
             }
 
             // Delete related gallery images
-            if ($product->images && $product->images->count() > 0) {
-                foreach ($product->images as $image) {
-                    $imagePath = public_path($image->path);
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
+            if ($product->productImage && $product->productImage->count() > 0) {
+                foreach ($product->productImage as $image) {
+                    if ($image->path_name) {
+                        Storage::disk('r2')->delete('gallery/' . $image->path_name);
+                    }
+                    if ($image->path && file_exists(public_path($image->path))) {
+                        @unlink(public_path($image->path));
                     }
                     $image->delete();
                 }
@@ -382,10 +399,13 @@ class ProductController extends Controller
     public function deletePhoto($id)
     {
         $product = Product::findOrFail($id);
-        $photoPath = public_path('images/products/' . $product->product_photo);
 
-        if (File::exists($photoPath) && $product->product_photo) {
-            File::delete($photoPath);
+        if ($product->product_photo) {
+            Storage::disk('r2')->delete($product->product_photo);
+            $photoPath = public_path('images/products/' . $product->product_photo);
+            if (File::exists($photoPath)) {
+                File::delete($photoPath);
+            }
         }
 
         $product->product_photo = null;
@@ -401,10 +421,13 @@ class ProductController extends Controller
     public function deleteGalleryImage($id)
     {
         $image = ProductImage::findOrFail($id);
-        $imagePath = public_path('images/products/gallery/' . $image->path_name);
 
-        if (File::exists($imagePath) && $image->path_name) {
-            File::delete($imagePath);
+        if ($image->path_name) {
+            Storage::disk('r2')->delete('gallery/' . $image->path_name);
+            $imagePath = public_path('images/products/gallery/' . $image->path_name);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
         }
 
         $image->delete();

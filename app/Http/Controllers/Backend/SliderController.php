@@ -49,11 +49,17 @@ class SliderController extends Controller
             ]);
             DB::commit();
             Toastr::success('Create Slider successfully.', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Create Slider successfully.', 'redirect' => url('admins/slide')]);
+            }
             return redirect('admins/slide');
         } catch (\Exception $e) {
             // 4. Rollback the transaction on error
             DB::rollback();
             Toastr::error('Create Slider fail', 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Create Slider failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }
@@ -112,10 +118,16 @@ class SliderController extends Controller
             ]);
             DB::commit();
             Toastr::success('Update Slider successfully.', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Update Slider successfully.', 'redirect' => url('admins/slide')]);
+            }
             return redirect('admins/slide');
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Update Slider fail', 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Update Slider failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }

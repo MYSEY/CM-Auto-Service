@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-xl-12">
-        <div id="panel-1" class="panel card mb-g border-0 shadow-sm bg-white" style="border-radius: 12px; overflow: hidden;">
+        <div id="panel-1" class="panel mb-g">
 
             <div class="panel-hdr bg-white border-bottom-0 h6 font-weight-bold text-uppercase" style="min-height: 70px; padding: 0 1.5rem;">
                 <h2 class="text-primary d-flex align-items-center">

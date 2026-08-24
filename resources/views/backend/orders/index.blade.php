@@ -5,10 +5,12 @@
         <div id="panel-1" class="panel">
             <div class="panel-hdr">
                 <h2>
-                    Orders
+                    <i class="fal fa-shopping-bag mr-2 text-primary"></i> Orders <span class="fw-300 text-muted ml-1">Management</span>
                 </h2>
                 <div class="panel-toolbar">
-                    <a href="{{url('admins/order/create')}}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1"><i class="fal fa-plus mr-1"></i> Add New</a>
+                    <a href="{{url('admins/order/create')}}" class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm font-weight-bold">
+                        <i class="fal fa-plus-circle mr-1"></i> Add New Order
+                    </a>
                 </div>
             </div>
             <div class="panel-container show">
@@ -18,22 +20,22 @@
                         <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table id="tbl_product" class="table table-bordered table-hover table-striped w-100 table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid" aria-describedby="dt-basic-example_info" style="width: 1163px;">
-                                        <thead class="">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Product Name</th>
-                                                <th>product TypeName</th>
-                                                <th>category Name</th>
-                                                <th>sub category name</th>
-                                                <th>engine name</th>
-                                                <th>part_number</th>
-                                                <th>Quantity</th>
-                                                <th>Price</th>
-                                                <th>Sub Total</th>
-                                                <th>Order Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                    <table id="tbl_product" class="table table-hover w-100 dataTable dtr-inline" role="grid">
+                                        <thead>
+                                            <tr class="text-uppercase fs-nano text-muted">
+                                                <th class="border-top-0 py-3 pl-4">#</th>
+                                                <th class="border-top-0 py-3">Product Name</th>
+                                                <th class="border-top-0 py-3">Product Type</th>
+                                                <th class="border-top-0 py-3">Category</th>
+                                                <th class="border-top-0 py-3">Sub Category</th>
+                                                <th class="border-top-0 py-3">Engine</th>
+                                                <th class="border-top-0 py-3">Part #</th>
+                                                <th class="border-top-0 py-3">Qty</th>
+                                                <th class="border-top-0 py-3">Price</th>
+                                                <th class="border-top-0 py-3">Sub Total</th>
+                                                <th class="border-top-0 py-3">Order Date</th>
+                                                <th class="border-top-0 py-3">Status</th>
+                                                <th class="border-top-0 py-3 text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

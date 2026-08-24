@@ -16,26 +16,8 @@ use App\Http\Controllers\Controller;
 class HomePageController extends Controller
 {
     public function index(Request $request){
-        $company = Company::first();
-        $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
-        $proEngine = Engine::all();
-        $slider = Slider::all();
 
-        $productAll = Product::with(['category','subCategory','productType'])
-            ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
-            ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
-            ->paginate(24, ['*'], 'page_all')
-            ->appends(['tab' => 'all']);
-
-        $productsByType = [];
-        foreach ($productType as $type) {
-            $slug = Str::slug($type->name);
-            $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
-        }
-
-        $activeTab = $request->get('tab', 'all');
         if ($request->ajax()) {
             $tab = $request->get('tab', 'all');
 
@@ -59,6 +41,26 @@ class HomePageController extends Controller
                 'html' => view('frontends.product_list', compact('products', 'tab'))->render()
             ]);
         }
+
+        $company = Company::first();
+        $category = ProductCategory::with('subCategory')->get();
+        $proEngine = Engine::all();
+        $slider = Slider::all();
+
+        $productAll = Product::with(['category','subCategory','productType'])
+            ->orderByRaw("CASE WHEN product_type_id = 1 THEN 0 ELSE 1 END")
+            ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
+            ->paginate(24, ['*'], 'page_all')
+            ->appends(['tab' => 'all']);
+
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id)->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends(['tab' => $slug]);
+        }
+
+        $activeTab = $request->get('tab', 'all');
         return view('frontends.home_page',compact('company','productAll','category','productType','proEngine','slider','productsByType','activeTab'));
     }
     public function showLoginForm(){
@@ -89,19 +91,7 @@ class HomePageController extends Controller
         $category = ProductCategory::with('subCategory')->get();
         $productType = ProductType::all();
         $slider = Slider::all();
-
-        // បង្កើត Pagination សម្រាប់ Tab ផ្សេងៗ (ទុកតាមកូដដើមរបស់អ្នក)
         $productsByType = [];
-        foreach ($productType as $type) {
-            $slug = Str::slug($type->name);
-            $pageName = 'page_' . $slug;
-            $productsByType[$type->id] = Product::with(['category','subCategory','productType'])
-                ->where('product_type_id', $type->id)
-                ->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")
-                ->orderBy('id', 'asc')
-                ->paginate(24, ['*'], $pageName)
-                ->appends(['tab' => $slug]);
-        }
 
         $r2Url = "https://cdn.cmautoservic.com/";
 

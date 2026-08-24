@@ -427,50 +427,61 @@
         let currentKeyword = '';
         let currentTabUrl = '{{ route("pwa.search") }}';
 
-        searchInput.addEventListener('keyup', function(e) {
-            currentKeyword = this.value.trim();
+        function handleSearchInput() {
+            currentKeyword = searchInput.value.trim();
             searchClear.style.display = currentKeyword ? 'flex' : 'none';
             clearTimeout(searchTimer);
 
             if (currentKeyword.length === 0) {
                 searchLoading.style.display = 'none';
-                searchProducts(currentTabUrl);
+                searchProducts(buildSearchUrl());
                 return;
             }
 
             searchLoading.style.display = 'block';
             searchTimer = setTimeout(function() {
                 searchProducts(buildSearchUrl());
-            }, 400);
-        });
+            }, 350);
+        }
 
-        searchClear.addEventListener('click', function() {
-            searchInput.value = '';
-            currentKeyword = '';
-            searchClear.style.display = 'none';
-            searchLoading.style.display = 'none';
-            searchProducts(currentTabUrl);
-        });
-
-        pwaTabs.addEventListener('click', function(e) {
-            e.preventDefault();
-            const tab = e.target.closest('.ios-tab-item');
-            if (!tab) return;
-            pwaTabs.querySelectorAll('.ios-tab-item').forEach(function(t) {
-                t.classList.remove('active');
-                t.classList.remove('bg-gray-100', 'dark:bg-white/[0.08]');
-                t.classList.add('text-gray-500', 'dark:text-gray-400');
+        if (searchInput) {
+            searchInput.addEventListener('input', handleSearchInput);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    handleSearchInput();
+                }
             });
-            tab.classList.add('active');
-            tab.classList.add('bg-gray-100', 'dark:bg-white/[0.08]');
-            tab.classList.remove('text-gray-500', 'dark:text-gray-400');
-            tab.classList.add('text-gray-900', 'dark:text-gray-100');
-            currentTabUrl = tab.getAttribute('data-url');
-            currentKeyword = '';
-            searchInput.value = '';
-            searchClear.style.display = 'none';
-            searchProducts(currentTabUrl);
-        });
+        }
+
+        if (searchClear) {
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                currentKeyword = '';
+                searchClear.style.display = 'none';
+                searchLoading.style.display = 'none';
+                searchProducts(buildSearchUrl());
+            });
+        }
+
+        if (pwaTabs) {
+            pwaTabs.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tab = e.target.closest('.ios-tab-item');
+                if (!tab) return;
+                pwaTabs.querySelectorAll('.ios-tab-item').forEach(function(t) {
+                    t.classList.remove('active');
+                    t.classList.remove('bg-gray-100', 'dark:bg-white/[0.08]');
+                    t.classList.add('text-gray-500', 'dark:text-gray-400');
+                });
+                tab.classList.add('active');
+                tab.classList.add('bg-gray-100', 'dark:bg-white/[0.08]');
+                tab.classList.remove('text-gray-500', 'dark:text-gray-400');
+                tab.classList.add('text-gray-900', 'dark:text-gray-100');
+                currentTabUrl = tab.getAttribute('data-url');
+                currentKeyword = searchInput ? searchInput.value.trim() : '';
+                searchProducts(buildSearchUrl());
+            });
+        }
 
         document.addEventListener('click', function(e) {
             const pageLink = e.target.closest('.pwa-pagination-wrap a');
@@ -482,12 +493,20 @@
         });
 
         function buildSearchUrl() {
-            let url = currentTabUrl;
-            if (currentKeyword) {
-                const separator = url.includes('?') ? '&' : '?';
-                url = '{{ route("pwa.search") }}' + separator + 'keyword=' + encodeURIComponent(currentKeyword);
+            try {
+                let base = currentTabUrl || '{{ route("pwa.search") }}';
+                let urlObj = new URL(base, window.location.origin);
+                if (currentKeyword) {
+                    urlObj.searchParams.set('keyword', currentKeyword);
+                } else {
+                    urlObj.searchParams.delete('keyword');
+                }
+                urlObj.searchParams.delete('page');
+                return urlObj.toString();
+            } catch(e) {
+                let separator = currentTabUrl.includes('?') ? '&' : '?';
+                return currentKeyword ? currentTabUrl + separator + 'keyword=' + encodeURIComponent(currentKeyword) : currentTabUrl;
             }
-            return url;
         }
 
         function searchProducts(url) {
@@ -495,17 +514,29 @@
                 if (typeof pwaHandleError === 'function') pwaHandleError('You are offline. Please check your connection.');
                 return;
             }
-            searchLoading.style.display = 'block';
-            fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-                .then(r => r.json())
-                .then(data => {
-                    searchLoading.style.display = 'none';
+            if (searchLoading) searchLoading.style.display = 'block';
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(r => {
+                if (!r.ok) throw new Error('HTTP error ' + r.status);
+                return r.json();
+            })
+            .then(data => {
+                if (searchLoading) searchLoading.style.display = 'none';
+                if (pwaProducts && data && data.html) {
                     pwaProducts.innerHTML = data.html;
-                })
-                .catch(() => {
-                    searchLoading.style.display = 'none';
-                    if (typeof pwaHandleError === 'function') pwaHandleError('Search failed. Please try again.');
-                });
+                    if (typeof checkWishlist === 'function') checkWishlist();
+                }
+            })
+            .catch(err => {
+                if (searchLoading) searchLoading.style.display = 'none';
+                console.error('PWA Search Error:', err);
+                if (typeof pwaHandleError === 'function') pwaHandleError('Search failed. Please try again.');
+            });
         }
 
         function pwaShowSuccess(msg) {

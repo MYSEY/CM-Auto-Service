@@ -29,7 +29,7 @@
         @if (!empty($product->slug))
             <url>
                 <loc>{{ url('/product/' . $product->slug) }}</loc>
-                <lastmod>{{ $product->updated_at->toAtomString() }}</lastmod>
+                <lastmod>{{ $product->updated_at?->toAtomString() ?? now()->toAtomString() }}</lastmod>
                 <changefreq>weekly</changefreq>
                 <priority>0.9</priority>
             </url>

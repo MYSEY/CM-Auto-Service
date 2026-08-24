@@ -211,6 +211,10 @@ body {
     display: none !important;
 }
 
+.cart_close, .mini_cart_close, .mini_cart_close > a {
+    cursor: pointer !important;
+}
+
 /* ------------------------------------------------------------------- */
 /* 4. CHAT MESSENGER POP-UP                                           */
 /* ------------------------------------------------------------------- */
@@ -409,4 +413,154 @@ body {
 .btn-wishlist-overlay.active {
     background: #ff3547 !important;
     color: #ffffff !important;
+}
+
+/* ====================================================================== */
+/* 7. ORIGINAL MENU COLOR DESIGN SYSTEM (#220070)                         */
+/* ====================================================================== */
+
+/* Main Header & Navigation Bar (Original Menu Color #220070) */
+.main_header {
+    background: #220070 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.header_middle {
+    background: #220070 !important;
+}
+
+.sticky-header.sticky {
+    background: #220070 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Search Container & Inputs Focus Glow */
+.search_box input,
+.search_product,
+#header_search_input,
+#search_product {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search_box input:focus,
+.search_product:focus,
+#header_search_input:focus,
+#search_product:focus {
+    background: #ffffff !important;
+    border-color: #220070 !important;
+    box-shadow: 0 0 0 4px rgba(34, 0, 112, 0.18), 0 10px 25px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Dropdowns & Mini Cart (Original Menu Color Accents) */
+.sub_menu,
+.sub_sub_menu1,
+.sub_sub_menu2,
+.mini_cart,
+.dropdown_language {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.16) !important;
+    border-radius: 14px !important;
+}
+
+/* Single Subtle Border for Frontend Product Items (Outer Container Only) */
+.product-card {
+    background: #ffffff !important;
+    border: 1px solid #f1f5f9 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+    padding: 4px !important;
+    transition: all 0.22s ease-in-out !important;
+}
+
+.product-card:hover {
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07) !important;
+}
+
+/* Reset inner single_product to prevent duplicate nested borders */
+.single_product {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.single_product:hover {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Overlay Buttons (Cart & Wishlist) */
+.item-overlay-btn {
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Primary Accent & Price Tag Original Color */
+.price_box .current_price {
+    color: #220070 !important;
+    font-weight: 800 !important;
+}
+
+/* ====================================================================== */
+/* 8. COMPACT SLIM FRONTEND HEADER HEIGHT                                */
+/* ====================================================================== */
+
+.header_top {
+    padding: 2px 0 !important;
+}
+
+.header_account > ul > li > a,
+.header_top_links ul li a {
+    line-height: 30px !important;
+    font-size: 11px !important;
+}
+
+.header_middle {
+    padding: 10px 0 !important;
+}
+
+.logo a img {
+    max-height: 44px !important;
+    width: auto !important;
+    object-fit: contain !important;
+}
+
+.search_box input,
+#header_search_input {
+    height: 38px !important;
+    font-size: 13px !important;
+    padding: 0 16px !important;
+    border-radius: 50px !important;
+}
+
+.header_bottom {
+    padding: 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.9) !important;
+}
+
+.main_menu nav > ul > li > a {
+    line-height: 38px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+.call_support p {
+    line-height: 38px !important;
+    font-size: 12px !important;
+    margin-bottom: 0 !important;
+}
+
+.sticky-header.sticky {
+    padding: 0 !important;
+}
+
+.sticky-header.sticky .main_menu nav > ul > li > a {
+    line-height: 36px !important;
 }

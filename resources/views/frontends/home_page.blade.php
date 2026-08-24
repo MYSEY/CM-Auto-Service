@@ -72,7 +72,7 @@
                                     </a>
                                 </li>
                             @endforeach
-                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 2px; background-color: blue; transition: left 0.3s ease, width 0.3s ease;"></div>
+                            <div class="sliding-underline" style="position: absolute; bottom: 0; height: 3px; background-color: #220070; border-radius: 2px; transition: left 0.3s ease, width 0.3s ease;"></div>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -273,32 +273,6 @@
             let url = "{{ url('frontend/product/search') }}?tab=" + href + "&keyword=" + encodeURIComponent(keyword) + "&ajax=4";
             
             loadProducts(url, container);
-        });
-
-        $(document).on('click', '.addToCart', function () {
-            let id = $(this).data('id');
-            event.preventDefault();
-            $.ajax({
-                url: "{{ route('addToCart') }}",
-                type: "POST",
-                data: {
-                    id: id,
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function (res) {
-                    if (res.status === 'success') {
-                        $('.cart_count').text(res.count);
-                        $('.cart_price').html(`$${res.total.toFixed(2)} <i class="ion-ios-arrow-down"></i>`);
-                        alert('Product added to cart successfully!');
-                    } else {
-                        alert(res.message || 'Failed to add product to cart!');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX Error:", status, error);
-                    alert('Something went wrong!');
-                }
-            });
         });
 
         $(document).on('click', '#cartIcon', function () {

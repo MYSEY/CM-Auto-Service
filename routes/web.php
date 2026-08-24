@@ -42,14 +42,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/clear', function() {
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('config:cache');
-    Artisan::call('view:clear');
-    // return "Cleared!";
-    return "<script>alert('Cache cleared!'); window.location.href='/';</script>";
-});
+
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
@@ -164,7 +157,15 @@ Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::delete('/product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('product.delete_photo');
     Route::delete('/category/{id}/delete-photo', [ProductCategoryController::class, 'deletePhoto'])->name('productcate.delete_photo');
     Route::delete('/gallery-image/{id}/delete', [ProductController::class, 'deleteGalleryImage'])->name('product.delete_gallery_image');
-    Route::post('admins/slide/change/status/{id}', [SliderController::class, 'changeStatus'])->name('admins.slide.change.status');
+    Route::post('slide/change/status/{id}', [SliderController::class, 'changeStatus'])->name('admins.slide.change.status');
+
+    Route::get('clear', function() {
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('config:cache');
+        Artisan::call('view:clear');
+        return "<script>alert('Cache cleared!'); window.location.href='/admins/dashboard';</script>";
+    })->name('admin.clear.cache');
 
     Route::get('chatbot', [\App\Http\Controllers\Backend\ChatBotController::class, 'index'])->name('admin.chatbot.index');
     Route::post('chatbot', [\App\Http\Controllers\Backend\ChatBotController::class, 'store'])->name('admin.chatbot.store');

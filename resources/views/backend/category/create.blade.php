@@ -98,7 +98,7 @@
                                     <div class="mb-2" style="text-align: right;">
                                         {{-- កែ route ទៅ product-categories.index --}}
                                         <a href="{{url('admins/category')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
-                                        <button type="submit" id="submit-btn" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
+                                        <button type="submit" id="submit-btn" class="btn btn-primary btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
                                     </div>
                                 </div>
                             </div>
@@ -126,14 +126,47 @@
         });
 
         $(document).ready(function() {
-            $('form').on('submit', function() {
-                // នៅពេល User ចុច Submit យើងនឹង Disable ប៊ូតុង
-                $('#submit-btn').prop('disabled', true);
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                var form = this;
+                var btn = $('#submit-btn');
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
 
-                // បន្ថែមការបង្ហាញ Loading បន្តិចដើម្បីឱ្យ User ដឹងថា Form កំពុងដំណើរការ (Optional)
-                $('#submit-btn').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+                var formData = new FormData(form);
 
-                return true; // បន្តទៅកាន់ការ Submit Form ជាធម្មតា
+                $.ajax({
+                    type: 'POST',
+                    url: $(form).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        btn.prop('disabled', false).text('Submit');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(res.message || 'Category created successfully!');
+                        }
+                        if (res.redirect) {
+                            setTimeout(function() {
+                                window.location.href = res.redirect;
+                            }, 800);
+                        }
+                    },
+                    error: function(err) {
+                        btn.prop('disabled', false).text('Submit');
+                        var msg = 'Category creation failed.';
+                        if (err.responseJSON && err.responseJSON.message) {
+                            msg = err.responseJSON.message;
+                        }
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(msg);
+                        } else {
+                            alert(msg);
+                        }
+                    }
+                });
             });
         });
         // Option 1: Live Slug Generation

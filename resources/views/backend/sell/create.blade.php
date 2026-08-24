@@ -93,7 +93,7 @@
 
                     <div class="text-right mt-3">
                         <a href="{{ url('admins/sell') }}" class="btn btn-secondary">Cancel</a>
-                        <button type="button" class="btn btn-success" id="btnSaveSell">Submit</button>
+                        <button type="button" class="btn btn-primary" id="btnSaveSell">Submit</button>
                     </div>
 
                 </div>

@@ -842,12 +842,14 @@
 
 
      /*---mini cart activation---*/
-    $('.mini_cart_wrapper > a').on('click', function(){
-        $('.mini_cart,.off_canvars_overlay').addClass('active')
+    $(document).on('click', '.mini_cart_wrapper > a', function(e){
+        e.preventDefault();
+        $('.mini_cart,.off_canvars_overlay').addClass('active');
     });
 
-    $('.mini_cart_close,.off_canvars_overlay').on('click', function(){
-        $('.mini_cart,.off_canvars_overlay').removeClass('active')
+    $(document).on('click', '.cart_close, .mini_cart_close, .off_canvars_overlay', function(e){
+        e.preventDefault();
+        $('.mini_cart,.off_canvars_overlay').removeClass('active open');
     });
 
 

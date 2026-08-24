@@ -41,10 +41,16 @@ class ProductTypeController extends Controller
             ProductType::create($data);
             DB::commit();
             Toastr::success('Product type created successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Product type created successfully!', 'redirect' => url('admins/product-type')]);
+            }
             return redirect('admins/product-type');
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Product type creation failed: ' . $e->getMessage(), 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Product type creation failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }
@@ -86,10 +92,16 @@ class ProductTypeController extends Controller
             ]);
             DB::commit();
             Toastr::success('Product type updated successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Product type updated successfully!', 'redirect' => route('product-type.index')]);
+            }
             return redirect()->route('product-type.index');
         } catch (\Exception $e) {
             DB::rollBack();
             Toastr::error('Product type update failed: ' . $e->getMessage(), 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Product type update failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }

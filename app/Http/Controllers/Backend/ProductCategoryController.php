@@ -68,11 +68,17 @@ class ProductCategoryController extends Controller
                 }
             }
             DB::commit();
-            Toastr::success('Product created successfully!', 'Success');
+            Toastr::success('Category created successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Category created successfully!', 'redirect' => url('admins/category')]);
+            }
             return redirect('admins/category');
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Product creation failed: ' . $e->getMessage(), 'Error');
+            Toastr::error('Category creation failed: ' . $e->getMessage(), 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Category creation failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }
@@ -160,11 +166,17 @@ class ProductCategoryController extends Controller
 
             DB::commit();
             Toastr::success('Updated category successfully.','Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Updated category successfully.', 'redirect' => url('admins/category')]);
+            }
             return redirect('admins/category');
 
         } catch(\Exception $e){
             DB::rollback();
             Toastr::error('Updated Category fail','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Updated Category failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }

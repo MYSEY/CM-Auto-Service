@@ -68,10 +68,16 @@ class UserController extends Controller
             // $user->assignRole($roleName);
             DB::commit();
             Toastr::success('Create Users successfully.','Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Create Users successfully.', 'redirect' => url('admins/users')]);
+            }
             return redirect('admins/users');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Create Users fail','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Create Users failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back();
         }
     }
@@ -145,10 +151,16 @@ class UserController extends Controller
             // }
             DB::commit();
             Toastr::success('Updated Users successfully.','Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Updated Users successfully.', 'redirect' => url('admins/users')]);
+            }
             return redirect('admins/users');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Updated Users fail','Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Updated Users failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back();
         }
     }

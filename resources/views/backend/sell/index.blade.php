@@ -6,10 +6,12 @@
         <div id="panel-1" class="panel">
 
             <div class="panel-hdr d-flex justify-content-between align-items-center">
-                <h2>Sell List</h2>
+                <h2>
+                    <i class="fal fa-cash-register mr-2 text-success"></i> POS Sales <span class="fw-300 text-muted ml-1">Transactions</span>
+                </h2>
                 <div class="panel-toolbar">
-                    <a href="{{ url('admins/sell/create') }}" class="btn btn-sm btn-success waves-effect waves-themed">
-                        <i class="fal fa-plus mr-1"></i> Add New
+                    <a href="{{ url('admins/sell/create') }}" class="btn btn-sm btn-success rounded-pill px-3 shadow-sm font-weight-bold" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-color: #059669;">
+                        <i class="fal fa-plus-circle mr-1"></i> New POS Sale
                     </a>
                 </div>
             </div>
@@ -17,19 +19,19 @@
             <div class="panel-container show">
                 <div class="panel-content">
                     <div class="table-responsive">
-                        <table id="tbl_product" class="table table-bordered table-hover table-striped w-100">
+                        <table id="tbl_product" class="table table-hover w-100">
                             <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Invoice No</th>
-                                    <th>Customer</th>
-                                    <th>Total Amount</th>
-                                    <th>Grand Total</th>
-                                    <th>Paid</th>
-                                    <th>Due</th>
-                                    <th>Sell Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                <tr class="text-uppercase fs-nano text-muted">
+                                    <th class="border-top-0 py-3 pl-4">#</th>
+                                    <th class="border-top-0 py-3">Invoice No</th>
+                                    <th class="border-top-0 py-3">Customer</th>
+                                    <th class="border-top-0 py-3">Total Amount</th>
+                                    <th class="border-top-0 py-3">Grand Total</th>
+                                    <th class="border-top-0 py-3">Paid</th>
+                                    <th class="border-top-0 py-3">Due</th>
+                                    <th class="border-top-0 py-3">Sell Date</th>
+                                    <th class="border-top-0 py-3">Status</th>
+                                    <th class="border-top-0 py-3 text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

@@ -55,7 +55,7 @@
                             <a href="{{ url('admins/engine') }}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">
                                 Cancel
                             </a>
-                            <a href="javascript:void(0);" id="btnSubmit" class="btn btn-outline-success btn-pills waves-effect waves-themed">Submit</a>
+                            <a href="javascript:void(0);" id="btnSubmit" class="btn btn-primary btn-pills waves-effect waves-themed">Submit</a>
                         </div>
                     </div>
                 </div>

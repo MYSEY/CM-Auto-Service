@@ -55,7 +55,7 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="form-label" for="single-default">@lang('lang.role') <span class="text-primary">*</span></label>
+                                <label class="form-label" for="single-default"><i class="fal fa-user-shield text-primary mr-1"></i> @lang('lang.role') <span class="text-primary">*</span></label>
                                 <select class="select2 form-control" name="role_id" id="role_id">
                                     <option value="1" {{$data->role_id == 1 ? 'selected' : ''}}>Administrator</option>
                                     <option value="2" {{$data->role_id == 2 ? 'selected' : ''}}>Staff</option>
@@ -78,7 +78,7 @@
                             <input type="hidden" value="{{$data->id}}" name="id">
                             <input type="hidden" value="{{$data->password}}" name="old_password">
                             <a href="{{url('admins/users')}}" class="btn btn-outline-secondary btn-pills waves-effect waves-themed">@lang('lang.cancel')</a>
-                            <button type="submit" class="btn btn-outline-success btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
+                            <button type="submit" id="submit-btn" class="btn btn-primary btn-pills waves-effect waves-themed">@lang('lang.submit')</button>
                         </div>
                     </form>
                 </div>
@@ -89,16 +89,48 @@
 @endsection
 @section('script')
     <script>
-        $(function(){
-            $(document).on('change','#profile', function() {
-                if (this.files && this.files[0]) {
-                    let img = document.querySelector('.image_preview');
-                    img.onload = () =>{
-                        URL.revokeObjectURL(img.src);
+        $(document).ready(function() {
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                var form = this;
+                var btn = $('#submit-btn');
+                btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+
+                var formData = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(form).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(res) {
+                        btn.prop('disabled', false).text('@lang("lang.submit")');
+                        if (typeof toastr !== 'undefined') {
+                            toastr.success(res.message || 'Updated Users successfully.');
+                        }
+                        if (res.redirect) {
+                            setTimeout(function() {
+                                window.location.href = res.redirect;
+                            }, 800);
+                        }
+                    },
+                    error: function(err) {
+                        btn.prop('disabled', false).text('@lang("lang.submit")');
+                        var msg = 'Updated Users failed.';
+                        if (err.responseJSON && err.responseJSON.message) {
+                            msg = err.responseJSON.message;
+                        }
+                        if (typeof toastr !== 'undefined') {
+                            toastr.error(msg);
+                        } else {
+                            alert(msg);
+                        }
                     }
-                    img.src = URL.createObjectURL(this.files[0]);
-                    document.querySelector(".image_preview").files = this.files;
-                }
+                });
             });
         });
     </script>

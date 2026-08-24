@@ -2,67 +2,72 @@
 @section('content')
 <div class="row">
     <div class="col-xl-12">
-        <div id="panel-1" class="panel">
-            <div class="panel-hdr">
-                <h2>
-                    Sliders
+        <div id="panel-1" class="panel mb-g">
+            <div class="panel-hdr bg-white border-bottom-0 h6 font-weight-bold text-uppercase" style="min-height: 70px; padding: 0 1.5rem;">
+                <h2 class="text-primary d-flex align-items-center">
+                    <span class="p-2 bg-primary-50 rounded-circle mr-2">
+                        <i class="fal fa-images text-primary"></i>
+                    </span>
+                    Sliders <span class="fw-300 text-muted ml-1">Management</span>
                 </h2>
                 <div class="panel-toolbar">
-                    <a href="{{ url('admins/slide/create') }}" class="btn btn-sm btn-success waves-effect waves-themed btn-sm mr-1">
-                        <i class="fal fa-plus mr-1"></i> Add New
+                    <a href="{{ url('admins/slide/create') }}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm font-weight-bold">
+                        <i class="fal fa-plus-circle mr-1"></i> Add New Slider
                     </a>
                 </div>
             </div>
             <div class="panel-container show">
-                <div class="panel-content">
+                <div class="panel-content p-3">
                     @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success border-0 shadow-sm rounded-lg mb-3">{{ session('success') }}</div>
                     @endif
 
                     <div class="table-responsive">
-                        <div id="dt-basic-example_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100 dataTable dtr-inline" role="grid">
-                                        <thead class="">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Image</th>
-                                                <th>Title</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($data as $key=>$item)
-                                                <tr id="slider-row-{{ $item->id }}">
-                                                    <td>{{$key + 1}}</td>
-                                                    <td>
-                                                        @if ($item->image_slider)
-                                                            <img src="{{ asset('images/sliders/' . $item->image_slider) }}" style="object-fit: cover;width: 150px;height: 80px;" alt="Slider Image">
-                                                        @endif
-                                                    </td>
-                                                    <td>{{$item->title}}</td>
-                                                    <td>
-                                                        <select class="form-control btn-status" data-id="{{ $item->id }}">
-                                                            <option value="1" {{ $item->status == 1 ? 'selected' : '' }}>Publish</option>
-                                                            <option value="0" {{ $item->status == 0 ? 'selected' : '' }}>Pending</option>
-                                                            <option value="2" {{ $item->status == 2 ? 'selected' : '' }}>Un-Publish</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex demo">
-                                                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" onclick="deleteData({{$item->id}})" title="Delete Record"><i class="fal fa-times"></i></a>
-                                                            <a href="{{url('admins/slide',$item->id)}}/edit" class="btn btn-sm btn-outline-primary btn-icon btn-inline-block mr-1" title="Edit"><i class="fal fa-edit"></i></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        <table id="dt-basic-example" class="table table-hover w-100 dataTable dtr-inline m-0" role="grid">
+                            <thead class="bg-light">
+                                <tr class="text-uppercase fs-nano text-muted">
+                                    <th style="width: 60px;" class="pl-4">#</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th style="width: 180px;">Status</th>
+                                    <th class="text-center" style="width: 120px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $key=>$item)
+                                    <tr id="slider-row-{{ $item->id }}" class="align-middle">
+                                        <td class="align-middle pl-4 font-weight-bold text-muted">{{ $key + 1 }}</td>
+                                        <td class="align-middle">
+                                            @if ($item->image_slider)
+                                                <img src="{{ asset('images/sliders/' . $item->image_slider) }}" class="rounded shadow-sm border" style="object-fit: cover; width: 140px; height: 70px;" alt="Slider Image">
+                                            @else
+                                                <span class="badge badge-secondary">No Image</span>
+                                            @endif
+                                        </td>
+                                        <td class="align-middle font-weight-bold text-dark">
+                                            {{ $item->title ?: 'N/A' }}
+                                        </td>
+                                        <td class="align-middle">
+                                            <select class="form-control form-control-sm btn-status rounded-pill" data-id="{{ $item->id }}" style="font-weight: 600;">
+                                                <option value="1" {{ $item->status == 1 ? 'selected' : '' }}>Publish (ផ្សព្វផ្សាយ)</option>
+                                                <option value="0" {{ $item->status == 0 ? 'selected' : '' }}>Pending (រង់ចាំ)</option>
+                                                <option value="2" {{ $item->status == 2 ? 'selected' : '' }}>Un-Publish (មិនផ្សព្វផ្សាយ)</option>
+                                            </select>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <div class="d-flex justify-content-center align-items-center" style="gap: 6px;">
+                                                <a href="{{url('admins/slide',$item->id)}}/edit" class="btn btn-icon btn-xs btn-outline-primary rounded-circle shadow-sm" title="Edit">
+                                                    <i class="fal fa-edit"></i>
+                                                </a>
+                                                <a href="javascript:void(0);" onclick="deleteData({{$item->id}})" class="btn btn-icon btn-xs btn-outline-danger rounded-circle shadow-sm" title="Delete">
+                                                    <i class="fal fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

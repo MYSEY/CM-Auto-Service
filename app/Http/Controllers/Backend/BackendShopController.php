@@ -51,11 +51,17 @@ class BackendShopController extends Controller
             // Create product
             Shop::create($data);
             DB::commit();
-            Toastr::success('Product created successfully!', 'Success');
+            Toastr::success('Shop created successfully!', 'Success');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'success', 'message' => 'Shop created successfully!', 'redirect' => url('admins/shops')]);
+            }
             return redirect('admins/shops');
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Product creation failed: ' . $e->getMessage(), 'Error');
+            Toastr::error('Shop creation failed: ' . $e->getMessage(), 'Error');
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Shop creation failed: ' . $e->getMessage()], 422);
+            }
             return redirect()->back()->withInput();
         }
     }
