@@ -72,7 +72,7 @@
                                                 <th class="border-top-0 py-3">Photo</th>
                                                 <th class="border-top-0 py-3">Code</th>
                                                 <th class="border-top-0 py-3 text-dark">Name</th>
-                                                <th class="border-top-0 py-3">Slug</th>
+                                                <!-- <th class="border-top-0 py-3">Slug</th> -->
                                                 <th class="border-top-0 py-3">Type</th>
                                                 <th class="border-top-0 py-3">Category</th>
                                                 <th class="border-top-0 py-3">Sub</th>
@@ -347,14 +347,14 @@
                 className: 'align-middle font-weight-bold text-dark'
             },
             // Slug
-            {
-                data: 'slug',
-                name: 'slug',
-                className: 'align-middle',
-                render: function(data) {
-                    return data ? `<code class="p-1 bg-light text-info rounded" style="font-size: 85%;">${data}</code>` : '-';
-                }
-            },
+            // {
+            //     data: 'slug',
+            //     name: 'slug',
+            //     className: 'align-middle',
+            //     render: function(data) {
+            //         return data ? `<code class="p-1 bg-light text-info rounded" style="font-size: 85%;">${data}</code>` : '-';
+            //     }
+            // },
             // 5. Type
             {
                 data: 'product_type_name',

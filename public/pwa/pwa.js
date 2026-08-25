@@ -36,3 +36,31 @@ function installPWA() {
         });
     }
 }
+
+// Ensure fast, reliable touch navigation on Android/mobile for bottom nav links
+document.addEventListener('DOMContentLoaded', function() {
+    var navLinks = document.querySelectorAll('.pwa-footer-nav a.nav-pill, .ios-bottom-nav a.nav-pill');
+    navLinks.forEach(function(link) {
+        var startY = 0;
+        var startX = 0;
+        link.addEventListener('touchstart', function(e) {
+            if (e.touches && e.touches[0]) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        link.addEventListener('touchend', function(e) {
+            if (e.changedTouches && e.changedTouches[0]) {
+                var diffX = Math.abs(e.changedTouches[0].clientX - startX);
+                var diffY = Math.abs(e.changedTouches[0].clientY - startY);
+                if (diffX < 10 && diffY < 10) {
+                    var href = this.getAttribute('href');
+                    if (href && href !== '#' && href !== 'javascript:void(0);') {
+                        window.location.href = href;
+                    }
+                }
+            }
+        }, { passive: true });
+    });
+});

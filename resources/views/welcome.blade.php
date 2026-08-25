@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-           <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
+           <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}?v={{ file_exists(public_path('backends/css/skins/skin-master.css')) ? filemtime(public_path('backends/css/skins/skin-master.css')) : '1.0' }}">
 
         <!-- Styles -->
         <style>

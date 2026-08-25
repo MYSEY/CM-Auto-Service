@@ -32,8 +32,34 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
 }
 
-.ios-bottom-nav, .pwa-bottom-nav {
-  padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px) !important;
+.ios-bottom-nav, .pwa-bottom-nav, .pwa-footer-nav {
+  padding-bottom: max(12px, calc(8px + env(safe-area-inset-bottom, 0px))) !important;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.nav-pill {
+  position: relative;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.nav-pill.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: #0d1b3e;
+}
+
+.dark .nav-pill.active::before {
+  background: #60a5fa;
 }
 
 body {

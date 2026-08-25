@@ -115,38 +115,7 @@
         @endif
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="fixed bottom-0 left-0 right-0 z-50">
-        <div class="bg-white/90 dark:bg-[#1c1e2d]/90 backdrop-blur-xl border-t border-gray-200/60 dark:border-[#2a2d3e]/60" style="padding-bottom: env(safe-area-inset-bottom, 0);">
-            <div class="max-w-lg mx-auto flex justify-around items-center h-[56px]">
-                <a href="{{ route('pwa.home') }}" class="nav-pill flex flex-col items-center justify-center gap-0.5 w-16 h-full text-gray-400 dark:text-gray-500 active:text-primary dark:active:text-blue-400 transition-colors">
-                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    <span class="text-[10px] font-medium">Home</span>
-                </a>
-                <a href="{{ route('pwa.cart') }}" class="nav-pill active flex flex-col items-center justify-center gap-0.5 w-16 h-full text-primary dark:text-blue-400 transition-colors">
-                    <span class="relative">
-                        <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                        @if(!empty($cart) && count($cart) > 0)
-                        <span class="absolute -top-1.5 -right-2 bg-red-500 text-white text-[9px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center leading-none" id="navCartBadge">{{ array_sum(array_column($cart, 'quantity')) }}</span>
-                        @endif
-                    </span>
-                    <span class="text-[10px] font-medium">Cart</span>
-                </a>
-                <a href="{{ route('pwa.chat') }}" class="nav-pill flex flex-col items-center justify-center gap-0.5 w-16 h-full text-gray-400 dark:text-gray-500 active:text-primary dark:active:text-blue-400 transition-colors">
-                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                    <span class="text-[10px] font-medium">Chat</span>
-                </a>
-                <a href="{{ route('pwa.wishlist') }}" class="nav-pill flex flex-col items-center justify-center gap-0.5 w-16 h-full text-gray-400 dark:text-gray-500 active:text-primary dark:active:text-blue-400 transition-colors">
-                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-                    <span class="text-[10px] font-medium">Wishlist</span>
-                </a>
-                <a href="{{ route('pwa.account') }}" class="nav-pill flex flex-col items-center justify-center gap-0.5 w-16 h-full text-gray-400 dark:text-gray-500 active:text-primary dark:active:text-blue-400 transition-colors">
-                    <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <span class="text-[10px] font-medium">Account</span>
-                </a>
-            </div>
-        </div>
-    </div>
+    @include('pwa.partials.footer_nav', ['activeTab' => 'cart'])
 
     <!-- Theme Panel -->
     <div class="pwa-theme-panel fixed top-[60px] right-3 bg-white dark:bg-[#1c1e2d] rounded-2xl shadow-2xl shadow-black/20 py-2 z-[199] min-w-[180px] opacity-0 -translate-y-2.5 scale-95 pointer-events-none transition-all duration-300 ease-out" id="themePanel">

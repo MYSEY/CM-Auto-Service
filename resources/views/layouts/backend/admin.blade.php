@@ -14,25 +14,25 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Core CSS --}}
-    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/vendors.bundle.css')}}">
-    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/app.bundle.css')}}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/vendors.bundle.css')}}?v={{ file_exists(public_path('backends/css/vendors.bundle.css')) ? filemtime(public_path('backends/css/vendors.bundle.css')) : '1.0' }}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/app.bundle.css')}}?v={{ file_exists(public_path('backends/css/app.bundle.css')) ? filemtime(public_path('backends/css/app.bundle.css')) : '1.0' }}">
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('backends/img/favicon/apple-touch-icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('backends/img/favicon/favicon-32x32.png')}}">
     <link rel="mask-icon" href="{{asset('backends/img/favicon/safari-pinned-tab.svg')}}" color="#5bbad5">
 
     {{-- Plugins CSS --}}
-    <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/formplugins/summernote/summernote.css') }}">
-    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}">
-    <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}">
-    <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}">
+    <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/formplugins/summernote/summernote.css') }}?v={{ file_exists(public_path('backends/css/formplugins/summernote/summernote.css')) ? filemtime(public_path('backends/css/formplugins/summernote/summernote.css')) : '1.0' }}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/notifications/toastr/toastr.css')}}?v={{ file_exists(public_path('backends/css/notifications/toastr/toastr.css')) ? filemtime(public_path('backends/css/notifications/toastr/toastr.css')) : '1.0' }}">
+    <link rel="stylesheet" media="screen, print" href="{{ asset('backends/css/datagrid/datatables/datatables.bundle.css') }}?v={{ file_exists(public_path('backends/css/datagrid/datatables/datatables.bundle.css')) ? filemtime(public_path('backends/css/datagrid/datatables/datatables.bundle.css')) : '1.0' }}">
+    <link rel="stylesheet" href="{{ asset('backends/css/skins/skin-master.css') }}?v={{ file_exists(public_path('backends/css/skins/skin-master.css')) ? filemtime(public_path('backends/css/skins/skin-master.css')) : '1.0' }}">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 
-    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/formplugins/select2/select2.bundle.css')}}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/formplugins/select2/select2.bundle.css')}}?v={{ file_exists(public_path('backends/css/formplugins/select2/select2.bundle.css')) ? filemtime(public_path('backends/css/formplugins/select2/select2.bundle.css')) : '1.0' }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/noty.css')}}">
-    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/mint.css')}}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/noty.css')}}?v={{ file_exists(public_path('backends/css/noty.css')) ? filemtime(public_path('backends/css/noty.css')) : '1.0' }}">
+    <link rel="stylesheet" media="screen, print" href="{{asset('backends/css/mint.css')}}?v={{ file_exists(public_path('backends/css/mint.css')) ? filemtime(public_path('backends/css/mint.css')) : '1.0' }}">
 
     {{-- Core Scripts --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -884,6 +884,11 @@
                         <div class="filter-message js-filter-message bg-success-600"></div>
                     </nav>
                     <!-- END PRIMARY NAVIGATION -->
+
+                    <!-- SIDEBAR MENU BOTTOM VERSION -->
+                    <div class="p-3 text-center" style="border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: auto;">
+                        <span class="badge badge-primary px-3 py-1" style="font-size: 11.5px; font-weight: 700; border-radius: 12px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35); letter-spacing: 0.5px;">v1.0.0</span>
+                    </div>
                 </aside>
                 <!-- END Left Aside -->
                 <div class="page-content-wrapper">
@@ -1676,15 +1681,15 @@
         </div>
         <!-- END Page Settings -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.7/dist/sweetalert2.all.min.js"></script>
-        <script src="{{asset('backends/js/vendors.bundle.js')}}"></script>
-        <script src="{{asset('backends/js/app.bundle.js')}}"></script>
-        <script src="{{ asset('backends/js/formplugins/summernote/summernote.js') }}"></script>
+        <script src="{{asset('backends/js/vendors.bundle.js')}}?v={{ file_exists(public_path('backends/js/vendors.bundle.js')) ? filemtime(public_path('backends/js/vendors.bundle.js')) : '1.0' }}"></script>
+        <script src="{{asset('backends/js/app.bundle.js')}}?v={{ file_exists(public_path('backends/js/app.bundle.js')) ? filemtime(public_path('backends/js/app.bundle.js')) : '1.0' }}"></script>
+        <script src="{{ asset('backends/js/formplugins/summernote/summernote.js') }}?v={{ file_exists(public_path('backends/js/formplugins/summernote/summernote.js')) ? filemtime(public_path('backends/js/formplugins/summernote/summernote.js')) : '1.0' }}"></script>
         {{-- toastr --}}
-        <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}"></script>
-        <script src="{{ asset('backends/js/datagrid/datatables/datatables.bundle.js') }}"></script>
-        <script src="{{asset('backends/js/formplugins/select2/select2.bundle.js')}}"></script>
-        <script src="{{asset('backends/js/noty.js')}}"></script>
-        <script src="{{asset('backends/js/noty.min.js')}}"></script>
+        <script src="{{asset('backends/js/notifications/toastr/toastr.js')}}?v={{ file_exists(public_path('backends/js/notifications/toastr/toastr.js')) ? filemtime(public_path('backends/js/notifications/toastr/toastr.js')) : '1.0' }}"></script>
+        <script src="{{ asset('backends/js/datagrid/datatables/datatables.bundle.js') }}?v={{ file_exists(public_path('backends/js/datagrid/datatables/datatables.bundle.js')) ? filemtime(public_path('backends/js/datagrid/datatables/datatables.bundle.js')) : '1.0' }}"></script>
+        <script src="{{asset('backends/js/formplugins/select2/select2.bundle.js')}}?v={{ file_exists(public_path('backends/js/formplugins/select2/select2.bundle.js')) ? filemtime(public_path('backends/js/formplugins/select2/select2.bundle.js')) : '1.0' }}"></script>
+        <script src="{{asset('backends/js/noty.js')}}?v={{ file_exists(public_path('backends/js/noty.js')) ? filemtime(public_path('backends/js/noty.js')) : '1.0' }}"></script>
+        <script src="{{asset('backends/js/noty.min.js')}}?v={{ file_exists(public_path('backends/js/noty.min.js')) ? filemtime(public_path('backends/js/noty.min.js')) : '1.0' }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
         {!! Toastr::message() !!}
