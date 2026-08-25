@@ -63,7 +63,7 @@
 
         <!-- Profile Card -->
         <div class="rounded-2xl bg-white dark:bg-[#1c1e2d] p-6 mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20 text-center">
-            <div class="pwa-profile-avatar w-[72px] h-[72px] rounded-full bg-[#007aff] dark:bg-[#0a84ff] text-white flex items-center justify-center text-[28px] font-semibold mx-auto mb-3">{{ substr($user->name, 0, 1) }}</div>
+            <div class="pwa-profile-avatar w-[72px] h-[72px] rounded-full bg-[#007aff] dark:bg-[#0a84ff] text-white flex items-center justify-center text-[28px] font-semibold mx-auto mb-3">{{ substr($user->name ?? 'U', 0, 1) }}</div>
             <div class="text-[17px] font-semibold text-gray-900 dark:text-white mb-0.5 pwa-profile-name">{{ $user->name }}</div>
             <div class="text-[13px] text-[#8e8e93] pwa-profile-email">{{ $user->email }}</div>
         </div>

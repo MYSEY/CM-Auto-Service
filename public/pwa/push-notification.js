@@ -20,8 +20,9 @@ const PushNotification = {
     async loadVapidKey() {
         try {
             const response = await fetch('/pwa/push/vapid-key');
+            if (!response.ok) return;
             const data = await response.json();
-            this.vapidPublicKey = data.publicKey;
+            this.vapidPublicKey = data ? data.publicKey : null;
         } catch (error) {
             console.log('Failed to load VAPID key:', error);
         }
@@ -103,7 +104,7 @@ const PushNotification = {
     },
 
     async isSubscribed() {
-        if (!this.registration) return false;
+        if (!this.registration || !('pushManager' in this.registration)) return false;
 
         try {
             const subscription = await this.registration.pushManager.getSubscription();
@@ -114,23 +115,29 @@ const PushNotification = {
     },
 
     async updateUI() {
-        const subscribed = await this.isSubscribed();
-        const toggleElements = document.querySelectorAll('.push-toggle');
+        try {
+            const subscribed = await this.isSubscribed();
+            const toggleElements = document.querySelectorAll('.push-toggle');
 
-        toggleElements.forEach(el => {
-            if (subscribed) {
-                el.classList.add('active');
-                el.setAttribute('data-subscribed', 'true');
-            } else {
-                el.classList.remove('active');
-                el.setAttribute('data-subscribed', 'false');
-            }
-        });
+            toggleElements.forEach(el => {
+                if (subscribed) {
+                    el.classList.add('active');
+                    el.setAttribute('data-subscribed', 'true');
+                } else {
+                    el.classList.remove('active');
+                    el.setAttribute('data-subscribed', 'false');
+                }
+            });
 
-        const permissionElements = document.querySelectorAll('.push-permission-status');
-        permissionElements.forEach(el => {
-            el.textContent = Notification.permission === 'granted' ? 'Granted' : 'Not Granted';
-        });
+            const permissionElements = document.querySelectorAll('.push-permission-status');
+            permissionElements.forEach(el => {
+                if (typeof Notification !== 'undefined') {
+                    el.textContent = Notification.permission === 'granted' ? 'Granted' : 'Not Granted';
+                }
+            });
+        } catch (e) {
+            console.log('Push updateUI error:', e);
+        }
     },
 
     getCsrfToken() {
@@ -139,6 +146,7 @@ const PushNotification = {
     },
 
     urlBase64ToUint8Array(base64String) {
+        if (!base64String) return new Uint8Array();
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
         const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
         const rawData = window.atob(base64);

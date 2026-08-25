@@ -162,23 +162,6 @@
         </div>
     </header>
 
-    <!-- Search Bar -->
-    <div class="ios-search-container sticky top-[52px] z-40 px-4 py-2.5 border-b border-white/10" style="top: calc(52px + env(safe-area-inset-top, 0));">
-        <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-white/15 border border-white/20 focus-within:bg-white/25 focus-within:border-white/30 focus-within:shadow-sm transition-all duration-200">
-            <svg class="flex-shrink-0 text-white/60 w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-            <input type="text" id="pwaSearchInput" name="keyword" placeholder="Search parts, ECU, tools..." autocomplete="off"
-                class="flex-1 bg-transparent border-none outline-none text-[15px] text-white placeholder-white/50">
-            <button type="button" id="pwaSearchClear"
-                class="hidden flex-shrink-0 w-[18px] h-[18px] rounded-full bg-white/30 text-white text-[11px] leading-[18px] text-center cursor-pointer p-0 border-none">&times;</button>
-        </div>
-        <div id="pwaSearchLoading" class="hidden pt-2">
-            <div class="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto"></div>
-        </div>
-    </div>
-
     <!-- Content -->
     <div class="pwa-content pb-[90px]">
 
@@ -258,6 +241,25 @@
                         <source src="https://cdn.cmautoservic.com/CM_Final_For_Fackbook.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar Section -->
+        <div class="px-4 pt-2 pb-1">
+            <div class="ios-card bg-white dark:bg-[#1c1e2d] border border-gray-200/60 dark:border-white/[0.06] p-2.5">
+                <div class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-gray-100 dark:bg-white/[0.08] border border-gray-200/80 dark:border-white/10 focus-within:border-[#007aff] dark:focus-within:border-[#60a5fa] focus-within:bg-white dark:focus-within:bg-white/15 transition-all duration-200">
+                    <svg class="flex-shrink-0 text-gray-400 dark:text-white/60 w-[17px] h-[17px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="pwaSearchInput" name="keyword" placeholder="Search parts, ECU, tools..." autocomplete="off"
+                        class="flex-1 bg-transparent border-none outline-none text-[15px] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/50">
+                    <button type="button" id="pwaSearchClear"
+                        class="hidden flex-shrink-0 w-[18px] h-[18px] rounded-full bg-gray-300 dark:bg-white/30 text-gray-700 dark:text-white text-[11px] leading-[18px] text-center cursor-pointer p-0 border-none">&times;</button>
+                </div>
+                <div id="pwaSearchLoading" class="hidden pt-2">
+                    <div class="w-5 h-5 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
                 </div>
             </div>
         </div>

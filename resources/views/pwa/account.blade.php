@@ -55,7 +55,7 @@
         @auth
         <!-- User Card -->
         <div class="text-center py-6 px-4 rounded-2xl bg-white dark:bg-[#1c1e2d] mb-4 shadow-sm shadow-black/[0.04] dark:shadow-black/20">
-            <div class="w-16 h-16 rounded-full bg-[#007aff] dark:bg-[#0a84ff] text-white flex items-center justify-center text-[24px] font-semibold mx-auto mb-3">{{ substr($user->name, 0, 1) }}</div>
+            <div class="w-16 h-16 rounded-full bg-[#007aff] dark:bg-[#0a84ff] text-white flex items-center justify-center text-[24px] font-semibold mx-auto mb-3">{{ substr($user->name ?? 'U', 0, 1) }}</div>
             <div class="text-[17px] font-semibold text-gray-900 dark:text-white">{{ $user->name }}</div>
             <div class="text-[13px] text-[#8e8e93] mt-1">{{ $user->email }}</div>
         </div>
@@ -207,22 +207,35 @@
     <script src="{{ asset('pwa/pwa.js') }}"></script>
     <script>
         function togglePushNotification() {
+            if (typeof PushNotification === 'undefined') return;
+            var statusLabel = document.getElementById('pushStatusLabel');
             if (PushNotification.isSubscribed()) {
                 PushNotification.unsubscribe().then(function() {
-                    document.getElementById('pushStatusLabel').textContent = 'Off';
+                    if (statusLabel) statusLabel.textContent = 'Off';
+                }).catch(function(err) {
+                    console.log('Unsubscribe error:', err);
                 });
             } else {
                 PushNotification.subscribe().then(function(success) {
-                    if (success) {
-                        document.getElementById('pushStatusLabel').textContent = 'On';
+                    if (success && statusLabel) {
+                        statusLabel.textContent = 'On';
                     }
+                }).catch(function(err) {
+                    console.log('Subscribe error:', err);
                 });
             }
         }
         document.addEventListener('DOMContentLoaded', function() {
-            PushNotification.isSubscribed().then(function(subscribed) {
-                document.getElementById('pushStatusLabel').textContent = subscribed ? 'On' : 'Off';
-            });
+            if (typeof PushNotification !== 'undefined' && PushNotification.isSubscribed) {
+                PushNotification.isSubscribed().then(function(subscribed) {
+                    var statusLabel = document.getElementById('pushStatusLabel');
+                    if (statusLabel) {
+                        statusLabel.textContent = subscribed ? 'On' : 'Off';
+                    }
+                }).catch(function(err) {
+                    console.log('Push notification status check error:', err);
+                });
+            }
         });
     </script>
 </body>

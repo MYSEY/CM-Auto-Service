@@ -29,22 +29,18 @@
     }
 
     window.onerror = function(msg, url, line, col, error) {
-        showSafeError(ERROR_MESSAGES.default);
-        return true;
+        console.error('PWA Error:', msg, url, line, col, error);
+        return false;
     };
 
     window.addEventListener('unhandledrejection', function(e) {
         var reason = e.reason || '';
         var msg = String(reason).toLowerCase();
+        console.warn('PWA Unhandled Rejection:', reason);
 
-        if (msg.indexOf('network') !== -1 || msg.indexOf('fetch') !== -1 || msg.indexOf('failed') !== -1) {
+        if (msg.indexOf('network') !== -1 || msg.indexOf('failed to fetch') !== -1) {
             showSafeError(ERROR_MESSAGES.network);
-        } else if (msg.indexOf('json') !== -1 || msg.indexOf('parse') !== -1) {
-            showSafeError(ERROR_MESSAGES.server);
-        } else {
-            showSafeError(ERROR_MESSAGES.server);
         }
-
         e.preventDefault();
     });
 
