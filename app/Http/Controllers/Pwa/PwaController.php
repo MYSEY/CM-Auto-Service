@@ -155,13 +155,15 @@ class PwaController extends Controller
             $name = 'Product #' . $product->id;
         }
 
+        $quantity = max(1, (int) ($request->quantity ?? $request->qty ?? 1));
+
         $cart = Session::get('cart', []);
         $cart[$product->id] = [
             'id' => $product->id,
             'name' => $name,
             'price' => (float) ($product->price ?? 0),
             'image' => $product->product_photo,
-            'quantity' => ($cart[$product->id]['quantity'] ?? 0) + 1,
+            'quantity' => ($cart[$product->id]['quantity'] ?? 0) + $quantity,
         ];
         Session::put('cart', $cart);
 

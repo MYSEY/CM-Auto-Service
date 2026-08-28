@@ -525,8 +525,11 @@
             .then(res => {
                 if (btn) { btn.textContent = 'Added ✓'; }
                 if (res.status === 'success') {
-                    document.getElementById('cartBadge').textContent = res.count;
-                    document.getElementById('navCartBadge').textContent = res.count;
+                    document.querySelectorAll('#cartBadge, #navCartBadge, .navCartBadge').forEach(function(el) {
+                        el.textContent = res.count;
+                        el.classList.remove('hidden');
+                        el.style.display = '';
+                    });
                     pwaShowSuccess('Added to cart!');
                     setTimeout(function() {
                         if (btn) { btn.textContent = 'Add to Cart'; btn.disabled = false; }
