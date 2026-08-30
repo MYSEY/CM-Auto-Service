@@ -29,7 +29,25 @@ class DashboardController extends Controller
         $totalProducts = Product::count();
         $totalUsers = User::count();
 
-        // 3. Monthly Sales & Signups Analytics (Last 12 Months)
+        // 3. Monthly Sales & Signups Analytics (Last 12 Months) - Optimized Group Queries
+        $startDate = Carbon::now()->subMonths(11)->startOfMonth();
+
+        $monthlySells = Sell::where('sell_date', '>=', $startDate)
+            ->selectRaw("DATE_FORMAT(sell_date, '%Y-%m') as ym, SUM(grand_total) as total")
+            ->groupBy('ym')
+            ->pluck('total', 'ym');
+
+        $monthlyOrders = Order::where('order_date', '>=', $startDate)
+            ->selectRaw("DATE_FORMAT(order_date, '%Y-%m') as ym, SUM(sub_total) as total, COUNT(id) as count")
+            ->groupBy('ym')
+            ->get()
+            ->keyBy('ym');
+
+        $monthlyUsers = User::where('created_at', '>=', $startDate)
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as ym, COUNT(id) as count")
+            ->groupBy('ym')
+            ->pluck('count', 'ym');
+
         $months = [];
         $salesData = [];
         $ordersData = [];
@@ -37,38 +55,23 @@ class DashboardController extends Controller
 
         for ($i = 11; $i >= 0; $i--) {
             $date = Carbon::now()->subMonths($i);
-            $year = $date->year;
-            $month = $date->month;
+            $ymKey = $date->format('Y-m');
             $months[] = $date->format('M Y');
 
-            // Sales revenue in month
-            $sellSum = Sell::whereYear('sell_date', $year)
-                ->whereMonth('sell_date', $month)
-                ->sum('grand_total');
-
-            $orderSum = Order::whereYear('order_date', $year)
-                ->whereMonth('order_date', $month)
-                ->sum('sub_total');
+            $sellSum = (float) ($monthlySells[$ymKey] ?? 0);
+            $orderObj = $monthlyOrders->get($ymKey);
+            $orderSum = (float) ($orderObj ? $orderObj->total : 0);
+            $orderCount = (int) ($orderObj ? $orderObj->count : 0);
+            $userCount = (int) ($monthlyUsers[$ymKey] ?? 0);
 
             $salesData[] = round($sellSum + $orderSum, 2);
-
-            // Orders count in month
-            $orderCount = Order::whereYear('order_date', $year)
-                ->whereMonth('order_date', $month)
-                ->count();
             $ordersData[] = $orderCount;
-
-            // Customer signups in month
-            $userCount = User::whereYear('created_at', $year)
-                ->whereMonth('created_at', $month)
-                ->count();
             $signupsData[] = $userCount;
         }
 
-        // 4. Product Type Distribution for Donut Chart
-        $typeDistribution = ProductType::withCount('products')->get();
-        $typeNames = $typeDistribution->pluck('name')->toArray();
-        $typeCounts = $typeDistribution->pluck('products_count')->toArray();
+        // 4. Product Type Distribution for Donut Chart (Reusing $productType query)
+        $typeNames = $productType->pluck('name')->toArray();
+        $typeCounts = $productType->pluck('products_count')->toArray();
 
         // 5. Category Distribution
         $categoryDistribution = ProductCategory::withCount('products')->get();

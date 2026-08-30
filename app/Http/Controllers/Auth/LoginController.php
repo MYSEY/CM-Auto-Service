@@ -45,35 +45,25 @@ class LoginController extends Controller
 
     public function login(Request $request){
         try {
-            // Retrieve the user by cs_id
             $user = User::where('user_name', $request->user_name)->first();
-            if ($user) {
-                // Use Hash::check to verify the password
-                if (Hash::check($request->password, $user->password)) {
-                    if ($user->is_active == 1) {
-                        if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
-                            // Session::put('branch_id', $branchId);
-                            Toastr::success('Login successfully.', 'Success');
-                            return redirect('admins/dashboard');
-                        }else{
-                            Toastr::error('Wrong UserName or Password.', 'Error');
-                            return redirect('logins');
-                        }
-                    } else {
-                        Auth::logout();
-                        Toastr::error('Your account has been disabled.', 'Error');
-                        return redirect('logins');
-                    }
-                }else{
-                    Toastr::error('Wrong UserName or Password.', 'Error');
-                    return redirect('logins');
-                }
-            } else {
+            if (!$user) {
                 Toastr::error('Invalid UserName or Password.', 'Error');
                 return redirect('logins');
             }
+
+            if ($user->is_active != 1) {
+                Toastr::error('Your account has been disabled.', 'Error');
+                return redirect('logins');
+            }
+
+            if (Auth::attempt(['user_name' => $request->user_name, 'password' => $request->password])) {
+                Toastr::success('Login successfully.', 'Success');
+                return redirect('admins/dashboard');
+            } else {
+                Toastr::error('Wrong UserName or Password.', 'Error');
+                return redirect('logins');
+            }
         } catch(\Exception $e) {
-            DB::rollback();
             Toastr::error('Wrong UserName or Password.', 'Error');
             return redirect()->back();
         }

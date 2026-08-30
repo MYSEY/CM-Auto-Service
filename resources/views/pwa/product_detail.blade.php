@@ -83,10 +83,10 @@
             <div class="relative cursor-pointer aspect-square bg-gray-50 dark:bg-[#151829] overflow-hidden flex items-center justify-center group" onclick="openZoomModal(currentImageIndex)">
                 <img id="mainProductImg" src="{{ $images[0] }}" alt="{{ $product->name }}" class="w-full h-full object-cover transition-all duration-300 {{ ($product->status ?? 0) == 1 ? 'grayscale opacity-80' : '' }}">
                 
-                <!-- Zoom Button Badge -->
+                <!-- Preview Button Badge -->
                 <button type="button" onclick="event.stopPropagation(); openZoomModal(currentImageIndex);" class="absolute bottom-3 right-3 bg-black/60 hover:bg-black/80 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg active:scale-95 transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
-                    <span>Zoom</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    <span>Zoom & Preview</span>
                 </button>
             </div>
 
@@ -179,49 +179,51 @@
 
     @include('pwa.partials.footer_nav', ['activeTab' => 'home'])
 
-    <!-- Fullscreen Image Zoom Modal -->
-    <div id="pwaZoomModal" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-xl hidden flex flex-col justify-between transition-opacity duration-300 opacity-0 select-none">
-        <!-- Top Bar -->
-        <div class="px-4 py-3 flex items-center justify-between text-white z-10 bg-gradient-to-b from-black/80 to-transparent" style="padding-top: max(12px, env(safe-area-inset-top, 12px));">
-            <div class="text-sm font-semibold tracking-wide text-white/90" id="zoomImgCounter">1 / 1</div>
-            
-            <!-- Control Buttons -->
+    <!-- Fullscreen Image Preview & Zoom Modal -->
+    <div id="pwaZoomModal" onclick="if(event.target === this || event.target.id === 'zoomCanvasContainer' || event.target.id === 'zoomImgWrapper') closeZoomModal();" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-2xl hidden flex flex-col justify-between transition-opacity duration-300 opacity-0 select-none">
+        <!-- Top Bar Controls -->
+        <div class="px-4 py-3 flex items-center justify-between text-white z-20 bg-gradient-to-b from-black/80 to-transparent" style="padding-top: max(14px, env(safe-area-inset-top, 14px));">
             <div class="flex items-center gap-2">
-                <button type="button" onclick="zoomImageOut()" title="Zoom Out" class="w-9 h-9 rounded-full bg-white/10 active:bg-white/30 text-white flex items-center justify-center backdrop-blur-md transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/10 text-white/90 backdrop-blur-md" id="zoomImgCounter">1 / 1</span>
+            </div>
+            
+            <!-- Zoom In, Zoom Out, Reset, Close Buttons -->
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="event.stopPropagation(); zoomOutModal();" title="Zoom Out (-)" class="w-9 h-9 rounded-full bg-white/15 active:bg-white/35 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </button>
-                <button type="button" onclick="zoomImageIn()" title="Zoom In" class="w-9 h-9 rounded-full bg-white/10 active:bg-white/30 text-white flex items-center justify-center backdrop-blur-md transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <button type="button" onclick="event.stopPropagation(); zoomInModal();" title="Zoom In (+)" class="w-9 h-9 rounded-full bg-white/15 active:bg-white/35 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </button>
-                <button type="button" onclick="resetZoomImage()" title="Reset Zoom" class="w-9 h-9 rounded-full bg-white/10 active:bg-white/30 text-white flex items-center justify-center backdrop-blur-md text-xs font-bold transition-colors">
+                <button type="button" onclick="event.stopPropagation(); resetZoomModal();" title="Reset Zoom" class="w-9 h-9 rounded-full bg-white/15 active:bg-white/35 text-white flex items-center justify-center backdrop-blur-md text-xs font-bold transition-all active:scale-90 shadow-md">
                     1:1
                 </button>
-                <button type="button" onclick="closeZoomModal()" title="Close" class="w-9 h-9 rounded-full bg-white/20 active:bg-white/40 text-white flex items-center justify-center backdrop-blur-md transition-colors ml-1">
+                <button type="button" onclick="closeZoomModal()" title="Close Preview" class="w-9 h-9 rounded-full bg-white/25 active:bg-white/45 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 ml-1 shadow-md">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Main Zoom Canvas -->
-        <div class="flex-1 relative flex items-center justify-center overflow-hidden" id="zoomCanvasContainer">
+        <!-- Main Preview Image Canvas -->
+        <div class="flex-1 relative flex items-center justify-center p-2 overflow-hidden" id="zoomCanvasContainer">
             <!-- Prev Button -->
-            <button type="button" id="zoomPrevBtn" onclick="prevZoomImage()" class="absolute left-3 z-20 w-11 h-11 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-md border border-white/10 active:scale-95 transition-transform hidden">
+            <button type="button" id="zoomPrevBtn" onclick="event.stopPropagation(); prevZoomImage();" class="absolute left-3 z-20 w-11 h-11 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-md border border-white/10 active:scale-95 transition-transform hidden">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M15 19l-7-7 7-7"/></svg>
             </button>
 
             <!-- Image Container -->
-            <div id="zoomImgWrapper" class="w-full h-full flex items-center justify-center transition-transform duration-200 cursor-grab active:cursor-grabbing">
-                <img id="zoomModalImg" src="" alt="Zoom" class="max-w-full max-h-full object-contain pointer-events-auto" style="transform: scale(1) translate(0px, 0px);">
+            <div id="zoomImgWrapper" class="w-full h-full flex items-center justify-center overflow-auto p-4">
+                <img id="zoomModalImg" src="" alt="Preview" class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl transition-transform duration-200 cursor-pointer">
             </div>
 
             <!-- Next Button -->
-            <button type="button" id="zoomNextBtn" onclick="nextZoomImage()" class="absolute right-3 z-20 w-11 h-11 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-md border border-white/10 active:scale-95 transition-transform hidden">
+            <button type="button" id="zoomNextBtn" onclick="event.stopPropagation(); nextZoomImage();" class="absolute right-3 z-20 w-11 h-11 rounded-full bg-black/50 text-white flex items-center justify-center backdrop-blur-md border border-white/10 active:scale-95 transition-transform hidden">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
             </button>
         </div>
 
         <!-- Bottom Thumbnails -->
-        <div class="px-4 py-3 bg-gradient-to-t from-black/80 to-transparent z-10 flex justify-center gap-2 overflow-x-auto scrollbar-hide" id="zoomModalThumbs" style="padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));">
+        <div class="px-4 py-3 bg-gradient-to-t from-black/80 to-transparent z-20 flex justify-center gap-2 overflow-x-auto scrollbar-hide" id="zoomModalThumbs" style="padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));">
             <!-- Rendered dynamically -->
         </div>
     </div>
@@ -253,17 +255,18 @@
     <script>
         const productImages = @json($images);
         let currentImageIndex = 0;
+        let modalScale = 1;
 
         function selectImage(index) {
             if (index < 0 || index >= productImages.length) return;
             currentImageIndex = index;
             const mainImg = document.getElementById('mainProductImg');
             if (mainImg) {
-                mainImg.style.opacity = '0.5';
+                mainImg.style.opacity = '0.4';
                 setTimeout(() => {
                     mainImg.src = productImages[index];
                     mainImg.style.opacity = '1';
-                }, 150);
+                }, 100);
             }
             document.querySelectorAll('.thumb-btn').forEach((btn, i) => {
                 if (i === index) {
@@ -284,38 +287,54 @@
             qtyInput.value = val;
         }
 
-        // Fullscreen Zoom Modal Logic
-        let currentScale = 1;
-        let translateX = 0;
-        let translateY = 0;
-        let isDragging = false;
-        let startX = 0;
-        let startY = 0;
-
-        function updateZoomTransform() {
-            const img = document.getElementById('zoomModalImg');
-            if (img) {
-                img.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+        // Modal Zoom Logic
+        function applyModalZoom() {
+            const zoomImg = document.getElementById('zoomModalImg');
+            if (zoomImg) {
+                zoomImg.style.transform = `scale(${modalScale})`;
             }
+        }
+
+        function zoomInModal() {
+            modalScale = Math.min(3.5, modalScale + 0.5);
+            applyModalZoom();
+        }
+
+        function zoomOutModal() {
+            modalScale = Math.max(1, modalScale - 0.5);
+            applyModalZoom();
+        }
+
+        function resetZoomModal() {
+            modalScale = 1;
+            applyModalZoom();
         }
 
         function openZoomModal(index) {
             currentImageIndex = index || 0;
             const modal = document.getElementById('pwaZoomModal');
             const zoomImg = document.getElementById('zoomModalImg');
+            if (!modal || !zoomImg) return;
+
+            resetZoomModal();
+            updateModalContent();
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                modal.classList.add('opacity-100');
+            });
+        }
+
+        function updateModalContent() {
+            const zoomImg = document.getElementById('zoomModalImg');
             const counter = document.getElementById('zoomImgCounter');
             const prevBtn = document.getElementById('zoomPrevBtn');
             const nextBtn = document.getElementById('zoomNextBtn');
             const thumbsContainer = document.getElementById('zoomModalThumbs');
 
-            if (!modal || !zoomImg) return;
-
-            zoomImg.src = productImages[currentImageIndex];
-            currentScale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateZoomTransform();
-
+            if (zoomImg) zoomImg.src = productImages[currentImageIndex];
             if (counter) counter.textContent = `${currentImageIndex + 1} / ${productImages.length}`;
 
             if (productImages.length > 1) {
@@ -323,7 +342,7 @@
                 if (nextBtn) nextBtn.classList.remove('hidden');
                 if (thumbsContainer) {
                     thumbsContainer.innerHTML = productImages.map((src, i) => `
-                        <button type="button" onclick="selectZoomModalImage(${i})" class="w-11 h-11 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${i === currentImageIndex ? 'border-blue-500 scale-105' : 'border-transparent opacity-60'}">
+                        <button type="button" onclick="event.stopPropagation(); selectZoomModalImage(${i})" class="w-12 h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${i === currentImageIndex ? 'border-blue-500 scale-105 opacity-100' : 'border-transparent opacity-50'}">
                             <img src="${src}" class="w-full h-full object-cover">
                         </button>
                     `).join('');
@@ -333,27 +352,14 @@
                 if (nextBtn) nextBtn.classList.add('hidden');
                 if (thumbsContainer) thumbsContainer.innerHTML = '';
             }
-
-            modal.classList.remove('hidden');
-            requestAnimationFrame(() => {
-                modal.classList.remove('opacity-0');
-                modal.classList.add('opacity-100');
-            });
-            document.body.style.overflow = 'hidden';
         }
 
         function selectZoomModalImage(i) {
+            if (i < 0 || i >= productImages.length) return;
             currentImageIndex = i;
-            currentScale = 1;
-            translateX = 0;
-            translateY = 0;
-            const zoomImg = document.getElementById('zoomModalImg');
-            const counter = document.getElementById('zoomImgCounter');
-            if (zoomImg) zoomImg.src = productImages[i];
-            if (counter) counter.textContent = `${i + 1} / ${productImages.length}`;
-            updateZoomTransform();
+            resetZoomModal();
             selectImage(i);
-            openZoomModal(i);
+            updateModalContent();
         }
 
         function prevZoomImage() {
@@ -366,24 +372,6 @@
             selectZoomModalImage(nextIdx);
         }
 
-        function zoomImageIn() {
-            currentScale = Math.min(4, currentScale + 0.5);
-            updateZoomTransform();
-        }
-
-        function zoomImageOut() {
-            currentScale = Math.max(1, currentScale - 0.5);
-            if (currentScale === 1) { translateX = 0; translateY = 0; }
-            updateZoomTransform();
-        }
-
-        function resetZoomImage() {
-            currentScale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateZoomTransform();
-        }
-
         function closeZoomModal() {
             const modal = document.getElementById('pwaZoomModal');
             if (!modal) return;
@@ -392,58 +380,29 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
                 document.body.style.overflow = '';
-            }, 300);
+                resetZoomModal();
+            }, 200);
         }
 
-        // Double tap / click to zoom
-        const zoomWrapper = document.getElementById('zoomImgWrapper');
-        let lastTap = 0;
-        if (zoomWrapper) {
-            zoomWrapper.addEventListener('click', function(e) {
-                const currentTime = new Date().getTime();
-                const tapLength = currentTime - lastTap;
-                if (tapLength < 300 && tapLength > 0) {
-                    e.preventDefault();
-                    if (currentScale > 1) {
-                        resetZoomImage();
+        // Double tap or click on preview image to toggle zoom
+        (function initModalTapToZoom() {
+            const zoomImg = document.getElementById('zoomModalImg');
+            if (!zoomImg) return;
+            let lastTap = 0;
+            zoomImg.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const now = Date.now();
+                if (now - lastTap < 300) {
+                    if (modalScale > 1) {
+                        resetZoomModal();
                     } else {
-                        currentScale = 2.5;
-                        updateZoomTransform();
+                        modalScale = 2;
+                        applyModalZoom();
                     }
                 }
-                lastTap = currentTime;
+                lastTap = now;
             });
-
-            // Touch & Mouse Dragging for Pan when zoomed in
-            const handleStart = (e) => {
-                if (currentScale <= 1) return;
-                isDragging = true;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                startX = clientX - translateX;
-                startY = clientY - translateY;
-            };
-
-            const handleMove = (e) => {
-                if (!isDragging || currentScale <= 1) return;
-                e.preventDefault();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                translateX = clientX - startX;
-                translateY = clientY - startY;
-                updateZoomTransform();
-            };
-
-            const handleEnd = () => { isDragging = false; };
-
-            zoomWrapper.addEventListener('mousedown', handleStart);
-            window.addEventListener('mousemove', handleMove);
-            window.addEventListener('mouseup', handleEnd);
-
-            zoomWrapper.addEventListener('touchstart', handleStart, { passive: true });
-            window.addEventListener('touchmove', handleMove, { passive: false });
-            window.addEventListener('touchend', handleEnd);
-        }
+        })();
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeZoomModal();
@@ -531,7 +490,6 @@
                 if (res.status === 'success') {
                     if (btn) btn.innerHTML = '<span>Added ✓</span>';
                     
-                    // Safely update all cart badge elements across page & navigation
                     var cartBadges = document.querySelectorAll('#navCartBadge, #cartBadge, .navCartBadge');
                     cartBadges.forEach(function(b) {
                         b.textContent = res.count;
