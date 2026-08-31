@@ -130,7 +130,7 @@ Route::get('/privacy-policy', function () {
 // Route សម្រាប់ AJAX
 Route::get('/frontend-categorys', [HomePageController::class, 'frontendCategory']);
 Route::get('/frontend-sub-categorys', [HomePageController::class, 'frontendSubCategory']);
-Route::get('frontend/product/search', [HomePageController::class, 'frontendSearchProduct']);
+Route::get('frontend/product/search', [HomePageController::class, 'frontendSearchProduct'])->name('frontend.product.search');
 
 Route::group(['prefix' => 'admins', 'middleware' => ['auth']], function () {
     Route::get('dashboard', [DashboardController::class,'index']);

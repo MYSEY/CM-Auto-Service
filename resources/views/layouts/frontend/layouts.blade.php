@@ -237,10 +237,9 @@
                         <div class="col-lg-10 col-md-6 col-sm-6 col-6">
                             <div class="header_right_box">
                                 <div class="search_container">
-                                    <form>
-                                        @csrf
+                                    <form action="{{ route('frontend.product.search') }}" method="GET" id="header_search_form">
                                         <div class="search_box">
-                                            <input placeholder="Search product..." type="text" name="search_product" id="header_search_input">
+                                            <input placeholder="Search product..." type="text" name="keyword" id="header_search_input" value="{{ request('keyword') }}">
                                         </div>
                                     </form>
                                 </div>
@@ -440,23 +439,67 @@
     <script>
         $(function(){
             let timer = null;
-            $("#header_search_input").on('keyup', function () {
+
+            if ($(".search_product").length && $("#header_search_input").val()) {
+                $(".search_product").val($("#header_search_input").val());
+            }
+
+            $("#header_search_input").on('keyup input', function () {
                 clearTimeout(timer);
                 let keyword = $(this).val();
-                timer = setTimeout(function () {
+
+                if ($(".search_product").length) {
+                    $(".search_product").val(keyword);
+                }
+
+                if ($("#productContent").length || $("div[id^='productContent']").length) {
+                    let $activeTab = $('#nav-tab .active.tab-link');
+                    let tab = $activeTab.length ? $activeTab.attr('href').substring(1) : 'all';
+                    let container = tab === 'all' ? '#productContent' : '#productContent_' + tab;
+
+                    timer = setTimeout(function () {
+                        $.ajax({
+                            url: "{{ route('frontend.product.search') }}",
+                            method: "GET",
+                            data: {
+                                keyword: keyword,
+                                tab: tab,
+                                ajax: 4
+                            },
+                            success: function (response) {
+                                if (response.html) {
+                                    $(container).html(response.html);
+                                }
+                            }
+                        });
+                    }, 300);
+                }
+            });
+
+            $("#header_search_form").on('submit', function (e) {
+                let keyword = $("#header_search_input").val().trim();
+                if (!$("#productContent").length && !$("div[id^='productContent']").length) {
+                    return true;
+                } else {
+                    e.preventDefault();
+                    let $activeTab = $('#nav-tab .active.tab-link');
+                    let tab = $activeTab.length ? $activeTab.attr('href').substring(1) : 'all';
+                    let container = tab === 'all' ? '#productContent' : '#productContent_' + tab;
                     $.ajax({
-                        url: "{{ url('frontend/product/search') }}",
+                        url: "{{ route('frontend.product.search') }}",
                         method: "GET",
                         data: {
                             keyword: keyword,
+                            tab: tab,
                             ajax: 4
                         },
                         success: function (response) {
-                            // update all tabs
-                            $("div[id^='productContent']").html(response.html);
+                            if (response.html) {
+                                $(container).html(response.html);
+                            }
                         }
                     });
-                }, 300);
+                }
             });
             $(document).on("click", ".menu-filter", function () {
                 let category_id = $(this).data('category') ?? '';

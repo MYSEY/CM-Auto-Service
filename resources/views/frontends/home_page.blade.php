@@ -237,16 +237,24 @@
 
     $(function(){
         let timer = null;
-        $(".search_product").on('keyup', function () {
+        $(".search_product").on('keyup keydown input', function (e) {
+            if (e.type === 'keydown' && e.key === 'Enter') {
+                e.preventDefault();
+            }
             clearTimeout(timer);
             let keyword = $(this).val();
+            
+            if ($("#header_search_input").length) {
+                $("#header_search_input").val(keyword);
+            }
+
             let $activeTab = $('#nav-tab .active.tab-link');
             let tab = $activeTab.length ? $activeTab.attr('href').substring(1) : 'all';
             let container = tab === 'all' ? '#productContent' : '#productContent_' + tab;
 
-            timer = setTimeout(function () {
+            if (e.type === 'keydown' && e.key === 'Enter') {
                 $.ajax({
-                    url: "{{ url('frontend/product/search') }}",
+                    url: "{{ route('frontend.product.search') }}",
                     method: "GET",
                     data: {
                         keyword: keyword,
@@ -254,10 +262,32 @@
                         ajax: 4
                     },
                     success: function (response) {
-                        $(container).html(response.html);
+                        if (response.html) {
+                            $(container).html(response.html);
+                        }
                     }
                 });
-            }, 300);
+                return;
+            }
+
+            if (e.type !== 'keydown') {
+                timer = setTimeout(function () {
+                    $.ajax({
+                        url: "{{ route('frontend.product.search') }}",
+                        method: "GET",
+                        data: {
+                            keyword: keyword,
+                            tab: tab,
+                            ajax: 4
+                        },
+                        success: function (response) {
+                            if (response.html) {
+                                $(container).html(response.html);
+                            }
+                        }
+                    });
+                }, 300);
+            }
         });
 
         // Click tab

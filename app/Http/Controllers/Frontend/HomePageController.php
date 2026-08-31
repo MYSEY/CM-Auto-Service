@@ -215,19 +215,14 @@ class HomePageController extends Controller
                 ->orWhere('description', 'LIKE', "%$keyword%")
                 ->orWhere('price', 'LIKE', "%$keyword%")
                 ->orWhere('number', 'LIKE', "%$keyword%")
-                ->orWhere('year', 'LIKE', "%$keyword%");
-               // 🔥 Search in Category Name
-                $q->orWhereHas('category', function($cat) use ($keyword) {
+                ->orWhere('year', 'LIKE', "%$keyword%")
+                ->orWhereHas('category', function($cat) use ($keyword) {
                     $cat->where('name', 'LIKE', "%$keyword%");
-                });
-
-                // 🔥 Search in Sub Category Name
-                $q->orWhereHas('subCategory', function($sub) use ($keyword) {
+                })
+                ->orWhereHas('subCategory', function($sub) use ($keyword) {
                     $sub->where('name', 'LIKE', "%$keyword%");
-                });
-
-                // 🔥 Search in Engine Name
-                $q->orWhereHas('proEngine', function($engine) use ($keyword) {
+                })
+                ->orWhereHas('proEngine', function($engine) use ($keyword) {
                     $engine->where('name', 'LIKE', "%$keyword%");
                 });
             });
@@ -250,6 +245,36 @@ class HomePageController extends Controller
                 ])->render()
             ]);
         }
+
+        $company = Company::first();
+        $category = ProductCategory::with('subCategory')->get();
+        $productType = ProductType::all();
+        $proEngine = Engine::all();
+        $slider = Slider::all();
+
+        $productsByType = [];
+        foreach ($productType as $type) {
+            $slug = Str::slug($type->name);
+            $pageName = 'page_' . $slug;
+            $pQuery = Product::with(['category','subCategory','productType'])->where('product_type_id', $type->id);
+            if ($request->keyword) {
+                $keyword = $request->keyword;
+                $pQuery->where(function ($q) use ($keyword) {
+                    $q->where('name', 'LIKE', "%$keyword%")
+                    ->orWhere('description', 'LIKE', "%$keyword%")
+                    ->orWhere('price', 'LIKE', "%$keyword%")
+                    ->orWhere('number', 'LIKE', "%$keyword%")
+                    ->orWhere('year', 'LIKE', "%$keyword%")
+                    ->orWhereHas('category', fn($cat) => $cat->where('name', 'LIKE', "%$keyword%"))
+                    ->orWhereHas('subCategory', fn($sub) => $sub->where('name', 'LIKE', "%$keyword%"))
+                    ->orWhereHas('proEngine', fn($engine) => $engine->where('name', 'LIKE', "%$keyword%"));
+                });
+            }
+            $productsByType[$type->id] = $pQuery->orderByRaw("CAST(SUBSTRING(number, 3) AS UNSIGNED) ASC")->orderBy('id', 'asc')->paginate(24, ['*'], $pageName)->appends($request->all());
+        }
+
+        $activeTab = $tab;
+        return view('frontends.home_page', compact('company','productAll','category','productType','proEngine','slider','productsByType','activeTab'));
     }
 }
 //***s */

@@ -197,7 +197,32 @@
 @section('script')
 <script>
     $(function(){
-        $('#btnSearch').on('click', function() {
+        let searchTimer = null;
+
+        // 🔍 Live Search on keyup / keydown / input
+        $('#name').on('keyup keydown input', function(e) {
+            if (e.type === 'keydown' && e.key === 'Enter') {
+                e.preventDefault();
+                clearTimeout(searchTimer);
+                $('#tbl_product').DataTable().ajax.reload();
+                return;
+            }
+            if (e.type !== 'keydown') {
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(function() {
+                    $('#tbl_product').DataTable().ajax.reload();
+                }, 300);
+            }
+        });
+
+        // 🔍 Auto search on filter dropdown change
+        $(document).on('change', '#product_type_id, #category_id, #sub_category_id', function() {
+            $('#tbl_product').DataTable().ajax.reload();
+        });
+
+        $('#btnSearch').on('click', function(e) {
+            e.preventDefault();
+            clearTimeout(searchTimer);
             $('#tbl_product').DataTable().ajax.reload();
         });
         dataTables();
@@ -236,11 +261,12 @@
                 dataType: "JSON",
                 success: function (response) {
                     $(".sub_category").empty();
-                    $(".sub_category").empty().append('<option value="">Please Select</option>');
+                    $(".sub_category").append('<option value="">Please Select</option>');
                     $.each(response.data, function(index, item)
                     {
                         $(".sub_category").append('<option value="' + item.id + '">' + item.name + '</option>');
                     });
+                    $(".sub_category").trigger('change');
                 }
             });
         });
@@ -255,11 +281,12 @@
                 dataType: "JSON",
                 success: function (response) {
                     $(".engine_id").empty();
-                    $(".engine_id").empty().append('<option value="">Please Select</option>');
+                    $(".engine_id").append('<option value="">Please Select</option>');
                     $.each(response.data, function(index, item)
                     {
                         $(".engine_id").append('<option value="' + item.id + '">' + item.name + '</option>');
                     });
+                    $(".engine_id").trigger('change');
                 }
             });
         });
@@ -299,6 +326,7 @@
         pageLength: 10,
         processing: true,
         serverSide: true,
+        searching: false,
         destroy: true,
         order: [[0, 'desc']],
         lengthMenu: [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],

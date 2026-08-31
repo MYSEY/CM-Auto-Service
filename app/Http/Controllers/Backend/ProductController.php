@@ -40,7 +40,15 @@ class ProductController extends Controller
             ->leftJoin('engines', 'products.engine_id', '=', 'engines.id');
             // 🔍 global search filter
             if ($request->name) {
-                $query->where('name', 'like', "%{$request->name}%");
+                $kw = $request->name;
+                $query->where(function ($q) use ($kw) {
+                    $q->where('products.name', 'like', "%{$kw}%")
+                      ->orWhere('products.number', 'like', "%{$kw}%")
+                      ->orWhere('products.description', 'like', "%{$kw}%")
+                      ->orWhere('product_categories.name', 'like', "%{$kw}%")
+                      ->orWhere('product_sub_categories.name', 'like', "%{$kw}%")
+                      ->orWhere('engines.name', 'like', "%{$kw}%");
+                });
             }
 
             if ($request->product_type_id) {
