@@ -67,6 +67,7 @@ Route::get('/pwa/wishlist', [\App\Http\Controllers\Pwa\PwaController::class, 'wi
 Route::get('/pwa/contact', [\App\Http\Controllers\Pwa\PwaController::class, 'contact'])->name('pwa.contact');
 Route::get('/pwa/account', [\App\Http\Controllers\Pwa\PwaController::class, 'account'])->name('pwa.account');
 Route::get('/pwa/login', [\App\Http\Controllers\Pwa\PwaController::class, 'login'])->name('pwa.login');
+Route::get('/login', [\App\Http\Controllers\Pwa\PwaController::class, 'login'])->name('login');
 Route::post('/pwa/login', [\App\Http\Controllers\Pwa\PwaController::class, 'loginSubmit'])->name('pwa.login.submit');
 Route::post('/pwa/logout', [\App\Http\Controllers\Pwa\PwaController::class, 'logout'])->name('pwa.logout');
 Route::get('/pwa/profile', [\App\Http\Controllers\Pwa\PwaController::class, 'profile'])->name('pwa.profile');

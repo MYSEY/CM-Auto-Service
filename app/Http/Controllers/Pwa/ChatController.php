@@ -77,7 +77,8 @@ class ChatController extends Controller
 
         // If no match, use default reply
         if (!$matchedReply) {
-            $matchedReply = setting('chat_default_reply', 'Thank you for your message. Our team will respond shortly. For urgent inquiries, call +855 031 486 6777.');
+            $defaultMsg = 'Thank you for your message. Our team will respond shortly. For urgent inquiries, call +855 031 486 6777.';
+            $matchedReply = function_exists('setting') ? setting('chat_default_reply', $defaultMsg) : $defaultMsg;
         }
 
         ChatMessage::create([

@@ -42,9 +42,9 @@ class PwaController extends Controller
         if ($request->filled('keyword')) {
             $keyword = $request->keyword;
             $query->where(function ($q) use ($keyword) {
-                $q->where('name', 'LIKE', "%$keyword%")
-                    ->orWhere('description', 'LIKE', "%$keyword%")
-                    ->orWhere('number', 'LIKE', "%$keyword%")
+                $q->where('products.name', 'LIKE', "%$keyword%")
+                    ->orWhere('products.description', 'LIKE', "%$keyword%")
+                    ->orWhere('products.number', 'LIKE', "%$keyword%")
                     ->orWhereHas('category', fn($c) => $c->where('name', 'LIKE', "%$keyword%"))
                     ->orWhereHas('subCategory', fn($s) => $s->where('name', 'LIKE', "%$keyword%"))
                     ->orWhereHas('proEngine', fn($e) => $e->where('name', 'LIKE', "%$keyword%"));
@@ -74,9 +74,9 @@ class PwaController extends Controller
         if ($request->filled('keyword')) {
             $keyword = $request->keyword;
             $query->where(function ($q) use ($keyword) {
-                $q->where('name', 'LIKE', "%$keyword%")
-                    ->orWhere('description', 'LIKE', "%$keyword%")
-                    ->orWhere('number', 'LIKE', "%$keyword%")
+                $q->where('products.name', 'LIKE', "%$keyword%")
+                    ->orWhere('products.description', 'LIKE', "%$keyword%")
+                    ->orWhere('products.number', 'LIKE', "%$keyword%")
                     ->orWhereHas('category', fn($c) => $c->where('name', 'LIKE', "%$keyword%"))
                     ->orWhereHas('subCategory', fn($s) => $s->where('name', 'LIKE', "%$keyword%"))
                     ->orWhereHas('proEngine', fn($e) => $e->where('name', 'LIKE', "%$keyword%"));
